@@ -34,9 +34,9 @@ public class PrivilegeFilter
     private static IPrivilegeService privilegeService;
     private static IAccountService accountService;
     private static IAccountSessionService accountSessionService;
-    String[] notFilter = new String[]{"/", ".js", ".css", ".jpg", ".png",".ico"
+    private final static String[] notFilter = new String[]{"/", ".js", ".css", ".jpg", ".png",".ico"
             , ".otf", ".eot", ".svg", ".ttf", ".woff"
-            , ".scss", ".woff", "index.jsp", "index.do", "login.do",
+            , ".scss", ".woff", "index.jsp", "index.do", "login.do", "registerAccountView.do",
             "logout.do", "getVerifyCodeImage.do"};
 
     @Override
