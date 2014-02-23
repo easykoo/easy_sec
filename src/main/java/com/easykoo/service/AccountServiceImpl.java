@@ -129,6 +129,7 @@ public class AccountServiceImpl implements IAccountService {
 
     @Override
     public AccountSecurity login(AccountSecurity record) {
+        //todo check ban
         return accountSecurityMapper.login(record);
     }
 

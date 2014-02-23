@@ -100,16 +100,7 @@
                                     },
                                     success: function (data) {
                                         if (data == 'true') {
-                                            $("#dataTables-example").dataTable().
-//                                alert('删除成功!');
-                                                    start = $("#dataTables-example").dataTable().fnSettings()._iDisplayStart;
-                                            total = $("#dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
                                             window.location.reload();
-                                            if ((total - start) == 1) {
-                                                if (start > 0) {
-                                                    $("#dataTables-example").dataTable().fnPageChange('previous', true);
-                                                }
-                                            }
                                         }
                                         else {
                                             var obj = $.parseJSON(data);
@@ -147,16 +138,7 @@
                                     },
                                     success: function (data) {
                                         if (data == 'true') {
-                                            $("#dataTables-example").dataTable().
-//                                alert('删除成功!');
-                                                    start = $("#dataTables-example").dataTable().fnSettings()._iDisplayStart;
-                                            total = $("#dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
                                             window.location.reload();
-                                            if ((total - start) == 1) {
-                                                if (start > 0) {
-                                                    $("#dataTables-example").dataTable().fnPageChange('previous', true);
-                                                }
-                                            }
                                         }
                                         else {
                                             var obj = $.parseJSON(data);

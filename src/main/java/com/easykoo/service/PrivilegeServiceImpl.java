@@ -83,6 +83,7 @@ public class PrivilegeServiceImpl implements IPrivilegeService {
 
     @Override
     public boolean isAuthorized(String uri, Account account) {
+        //todo check ban
         Function function = functionMapper.selectByUri(uri);
         //check permission in function
         if (function == null) {
