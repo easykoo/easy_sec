@@ -302,9 +302,9 @@
             <p>Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
                 quaeritis.</p>
             <ul>
-                <li><i class="fa fa-home"></i> <a href="prettystrap.com">http://prettystrap.com</a>
+                <li><i class="fa fa-home"></i> <a href="easykoo.com">http://easykoo.com</a>
                 </li>
-                <li><i class="fa fa-envelope-o"></i> <a href="info@email.com">info@email.com</a>
+                <li><i class="fa fa-envelope-o"></i> <a href="easykooc@gmail.com">easykooc@gmail.com</a>
                 </li>
                 <li class="social">
                     <a href="#about"><i class="fa fa-facebook-square"></i></a>
@@ -338,17 +338,17 @@
 <!-- Contact page -->
 <div id="contact" class="page color-2">
     <div class="inner-page">
-        <h2 class="page-headline">Get in touch and stay updated</h2>
+        <h2 class="page-headline"><spring:message code="label.touch.and.update" /></h2>
     </div>
     <div class="row inner-page contact">
         <div class="col-md-6">
-            <h3>Leave a message?</h3>
+            <h3><spring:message code="label.leave.message" /></h3>
 
             <form id="contact-form">
-                <textarea rows="6" class="form-control" placeholder="Your feedback"></textarea>
-                <input type="text" class="form-control" placeholder="your@e-mail.com">
-                <input type="text" class="form-control" placeholder="Name">
-                <button class="btn btn-primary btn-centered">Contact us</button>
+                <textarea rows="6" class="form-control" placeholder="<spring:message code="label.your.feedback" />"></textarea>
+                <input type="text" class="form-control" placeholder="<spring:message code="label.email.format" />">
+                <input type="text" class="form-control" placeholder="<spring:message code="label.name" />">
+                <button class="btn btn-primary btn-centered"><spring:message code="label.send" /></button>
             </form>
         </div>
         <div class="col-md-6">
@@ -359,7 +359,7 @@
                    href="https://maps.google.com/maps?q=Stationsplein,+1012+Centrum,+Amsterdam,+Noord-Holland,+The+Netherlands&hl=en"><i
                         class="pull-left fa fa-map-marker"></i>
 
-                    <div>Stationsplein, 1012 AB,<br>Amsterdam,<br> The Netherlands</div>
+                    <div>xxxxxxx, 1012 AB,<br>xxxxxx,<br> The Netherlands</div>
                 </a>
             </div>
         </div>
@@ -371,14 +371,13 @@
 <div class="newsletter color-1">
     <div class="inner-page row">
         <div class="col-md-4">
-            <h4>
-                <strong>Be cool</strong>, subscribe to get our latest news</h4>
+            <h4><spring:message code="label.subscribe.last.news" /></h4>
         </div>
         <div class="col-md-6">
-            <input type="email" placeholder="your@e-mail.com" name="EMAIL" class="subscribe">
+            <input type="email" placeholder="xxx@xxx.xxx" name="EMAIL" class="subscribe">
         </div>
         <div class="col-md-2">
-            <button type="submit" class="btn btn-primary pull-right btn-block">Subscribe</button>
+            <button type="submit" class="btn btn-primary pull-right btn-block"><spring:message code="label.subscribe" /></button>
         </div>
     </div>
 </div>
