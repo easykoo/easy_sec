@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.easykoo.mybatis.dao.AccountSessionMapper">
+    <resultMap id="BaseResultMap" type="com.easykoo.mybatis.model.AccountSession">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="session_id" property="sessionId" jdbcType="VARCHAR"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="account_id" property="accountId" jdbcType="INTEGER"/>
+        <result column="expire_date" property="expireDate" jdbcType="TIMESTAMP"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, session_id, username, account_id, expire_date, create_date
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from sec_acc_session
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sec_acc_session
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.easykoo.mybatis.model.AccountSession">
+    insert into sec_acc_session (session_id, username,
+      account_id, expire_date, create_date
+      )
+    values ( #{sessionId,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
+      #{accountId,jdbcType=INTEGER}, #{expireDate,jdbcType=TIMESTAMP}, NOW()
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.easykoo.mybatis.model.AccountSession">
+        insert into sec_acc_session
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sessionId != null">
+                session_id,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="accountId != null">
+                account_id,
+            </if>
+            <if test="expireDate != null">
+                expire_date,
+            </if>
+            create_date,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="sessionId != null">
+                #{sessionId,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="accountId != null">
+                #{accountId,jdbcType=INTEGER},
+            </if>
+            <if test="expireDate != null">
+                #{expireDate,jdbcType=TIMESTAMP},
+            </if>
+            NOW()
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.easykoo.mybatis.model.AccountSession">
+        update sec_acc_session
+        <set>
+            <if test="sessionId != null">
+                session_id = #{sessionId,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="accountId != null">
+                account_id = #{accountId,jdbcType=INTEGER},
+            </if>
+            <if test="expireDate != null">
+                expire_date = #{expireDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.easykoo.mybatis.model.AccountSession">
+    update sec_acc_session
+    set session_id = #{sessionId,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      account_id = #{accountId,jdbcType=INTEGER},
+      expire_date = #{expireDate,jdbcType=TIMESTAMP},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="getRecord" resultMap="BaseResultMap" parameterType="com.easykoo.mybatis.model.AccountSession">
+        select
+        <include refid="Base_Column_List"/>
+        from sec_acc_session
+        where session_id = #{sessionId,jdbcType=INTEGER}
+        and username = #{username,jdbcType=INTEGER}
+        and expire_date > now()
+    </select>
+
+
+    <delete id="deleteByAccountId" parameterType="java.lang.Integer">
+    delete from sec_acc_session
+    where account_id = #{accountId,jdbcType=INTEGER}
+  </delete>
+</mapper>

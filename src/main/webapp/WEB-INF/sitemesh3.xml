@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<sitemesh>
+
+    <!-- 配置默认的渲染器. 将应用于所有路径. -->
+    <mapping path="/*" decorator="/decorators/head.jsp"/>
+    <!--<mapping path="/admin/*" decorator="/left.jsp"/>-->
+
+    <mapping>
+        <path>/admin/*</path>
+        <decorator>/decorators/left.jsp</decorator>
+        <decorator>/decorators/head-admin.jsp</decorator>
+    </mapping>
+    <!--
+        &lt;!&ndash; 配置特定路径的渲染器. &ndash;&gt;
+        <mapping path="/admin/*" decorator="/another-decorator.html"/>
+        <mapping path="/*.special.jsp" decorator="/special-decorator.html"/>
+
+        &lt;!&ndash; 配置多个渲染器. &ndash;&gt;
+        <mapping>
+            <path>/articles/*</path>
+            <decorator>/decorators/article.html</decorator>
+            <decorator>/decorators/two-page-layout.html</decorator>
+            <decorator>/decorators/common.html</decorator>
+        </mapping>-->
+    <!-- 不被渲染的路径. -->
+    <mapping path="/js/*" exclue="true"/>
+    <mapping path="/ajax/*" exclue="true"/>
+    <mapping path="/css/*" exclue="true"/>
+    <mapping path="/fonts/*" exclue="true"/>
+    <mapping path="*.png" exclue="true"/>
+    <mapping path="/decorators/*" exclue="true"/>
+    <mapping path="/error/*" exclue="true"/>
+
+</sitemesh>

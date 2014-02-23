@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.easykoo.mybatis.dao.ModuleMapper" >
+  <resultMap id="ModuleResultMap" type="com.easykoo.mybatis.model.Module" >
+    <id column="module_id" property="moduleId" jdbcType="INTEGER" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="permission" property="permission" jdbcType="VARCHAR" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+      <collection property="privilegeList" ofType="com.easykoo.mybatis.model.Privilege">
+          <id column="privilege_id" property="privilegeId" jdbcType="INTEGER"/>
+          <result column="external_id" property="externalId" jdbcType="INTEGER"/>
+          <result column="type" property="type" jdbcType="INTEGER"/>
+          <result column="role_id" property="roleId" jdbcType="INTEGER"/>
+          <result column="department_id" property="departmentId" jdbcType="INTEGER"/>
+      </collection>
+  </resultMap>
+  <!--<sql id="Module_Column_List" >
+    module_id, description, permission, create_user, create_date, update_user, update_date
+  </sql>-->
+  <select id="selectByPrimaryKey" resultMap="ModuleResultMap" parameterType="java.lang.Integer" >
+    select m.*,p.*
+    from sec_module m, sec_privilege p
+    where m.module_id = p.external_id and p.type=2 and module_id = #{moduleId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sec_module
+    where module_id = #{moduleId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.easykoo.mybatis.model.Module" >
+    insert into sec_module (module_id, description, permission, 
+      create_user, create_date, update_user, 
+      update_date)
+    values (#{moduleId,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{permission,jdbcType=VARCHAR}, 
+      #{createUser,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, 
+      #{updateDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.easykoo.mybatis.model.Module" >
+    insert into sec_module
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="moduleId != null" >
+        module_id,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="permission != null" >
+        permission,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateUser != null" >
+        update_user,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="moduleId != null" >
+        #{moduleId,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="permission != null" >
+        #{permission,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.easykoo.mybatis.model.Module" >
+    update sec_module
+    <set >
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="permission != null" >
+        permission = #{permission,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        update_user = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where module_id = #{moduleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.easykoo.mybatis.model.Module" >
+    update sec_module
+    set description = #{description,jdbcType=VARCHAR},
+      permission = #{permission,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_user = #{updateUser,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where module_id = #{moduleId,jdbcType=INTEGER}
+  </update>
+</mapper>

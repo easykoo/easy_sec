@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.easykoo.mybatis.dao.AccountMapper">
+    <resultMap id="BaseResultMap" type="com.easykoo.mybatis.model.Account">
+        <id column="account_id" property="accountId" jdbcType="INTEGER"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="first_name" property="firstName" jdbcType="VARCHAR"/>
+        <result column="last_name" property="lastName" jdbcType="VARCHAR"/>
+        <result column="nick_name" property="nickname" jdbcType="VARCHAR"/>
+        <result column="gender" property="gender" jdbcType="INTEGER"/>
+        <result column="qq" property="qq" jdbcType="INTEGER"/>
+        <result column="telephone" property="telephone" jdbcType="VARCHAR"/>
+        <result column="postcode" property="postcode" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="role_id" property="roleId" jdbcType="INTEGER"/>
+        <result column="department_id" property="departmentId" jdbcType="INTEGER"/>
+        <result column="permission" property="permission" jdbcType="VARCHAR"/>
+        <result column="actived" property="actived" jdbcType="BIT"/>
+        <result column="locked" property="locked" jdbcType="BIT"/>
+        <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    account_id, username, first_name, last_name, nick_name, gender, qq, telephone, postcode,
+    address, email, role_id, department_id, permission, actived, locked, create_user,
+    create_date, update_user, update_date
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from sec_account
+        where account_id = #{accountId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sec_account
+    where account_id = #{accountId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.easykoo.mybatis.model.Account" useGeneratedKeys="true" keyProperty="accountId"
+            keyColumn="account_id">
+        insert into sec_account (username, first_name,
+        last_name, nick_name, gender,
+        qq, telephone, postcode,
+        address, email,
+        permission, actived,
+        locked, create_user, create_date,
+        update_user, update_date)
+        values (#{username,jdbcType=VARCHAR}, #{firstName,jdbcType=VARCHAR},
+        #{lastName,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER},
+        #{qq,jdbcType=INTEGER}, #{telephone,jdbcType=VARCHAR}, #{postcode,jdbcType=VARCHAR},
+        #{address,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+        #{permission,jdbcType=VARCHAR}, #{actived,jdbcType=BIT},
+        #{locked,jdbcType=BIT}, 'SYSTEM', now(),
+        'SYSTEM', now())
+        <selectKey keyProperty="accountId" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.easykoo.mybatis.model.Account" useGeneratedKeys="true"
+            keyProperty="accountId" keyColumn="account_id">
+        insert into sec_account
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null">
+                username,
+            </if>
+            <if test="firstName != null">
+                first_name,
+            </if>
+            <if test="lastName != null">
+                last_name,
+            </if>
+            <if test="nickname != null">
+                nick_name,
+            </if>
+            <if test="gender != null">
+                gender,
+            </if>
+            <if test="qq != null">
+                qq,
+            </if>
+            <if test="telephone != null">
+                telephone,
+            </if>
+            <if test="postcode != null">
+                postcode,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="roleId != null">
+                role_id,
+            </if>
+            <if test="departmentId != null">
+                department_id,
+            </if>
+            <if test="permission != null">
+                permission,
+            </if>
+            <if test="actived != null">
+                actived,
+            </if>
+            <if test="locked != null">
+                locked,
+            </if>
+            <if test="createUser != null">
+                create_user,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateUser != null">
+                update_user,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="firstName != null">
+                #{firstName,jdbcType=VARCHAR},
+            </if>
+            <if test="lastName != null">
+                #{lastName,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                #{gender,jdbcType=INTEGER},
+            </if>
+            <if test="qq != null">
+                #{qq,jdbcType=INTEGER},
+            </if>
+            <if test="telephone != null">
+                #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="postcode != null">
+                #{postcode,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="roleId != null">
+                #{roleId,jdbcType=INTEGER},
+            </if>
+            <if test="departmentId != null">
+                #{departmentId,jdbcType=INTEGER},
+            </if>
+            <if test="permission != null">
+                #{permission,jdbcType=VARCHAR},
+            </if>
+            <if test="actived != null">
+                #{actived,jdbcType=BIT},
+            </if>
+            <if test="locked != null">
+                #{locked,jdbcType=BIT},
+            </if>
+            <if test="createUser != null">
+                #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUser != null">
+                #{updateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+        <selectKey keyProperty="accountId" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.easykoo.mybatis.model.Account">
+        update sec_account
+        <set>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="firstName != null">
+                first_name = #{firstName,jdbcType=VARCHAR},
+            </if>
+            <if test="lastName != null">
+                last_name = #{lastName,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                nick_name = #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                gender = #{gender,jdbcType=INTEGER},
+            </if>
+            <if test="qq != null">
+                qq = #{qq,jdbcType=INTEGER},
+            </if>
+            <if test="telephone != null">
+                telephone = #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="postcode != null">
+                postcode = #{postcode,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="roleId != null">
+                role_id = #{roleId,jdbcType=INTEGER},
+            </if>
+            <if test="departmentId != null">
+                department_id = #{departmentId,jdbcType=INTEGER},
+            </if>
+            <if test="permission != null">
+                permission = #{permission,jdbcType=VARCHAR},
+            </if>
+            <if test="actived != null">
+                actived = #{actived,jdbcType=BIT},
+            </if>
+            <if test="locked != null">
+                locked = #{locked,jdbcType=BIT},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUser != null">
+                update_user = #{updateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where account_id = #{accountId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.easykoo.mybatis.model.Account">
+    update sec_account
+    set username = #{username,jdbcType=VARCHAR},
+      first_name = #{firstName,jdbcType=VARCHAR},
+      last_name = #{lastName,jdbcType=VARCHAR},
+      nick_name = #{nickname,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=INTEGER},
+      qq = #{qq,jdbcType=INTEGER},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      postcode = #{postcode,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      role_id = #{roleId,jdbcType=INTEGER},
+      department_id = #{departmentId,jdbcType=INTEGER},
+      permission = #{permission,jdbcType=VARCHAR},
+      actived = #{actived,jdbcType=BIT},
+      locked = #{locked,jdbcType=BIT},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_user = #{updateUser,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where account_id = #{accountId,jdbcType=INTEGER}
+  </update>
+    <select id="getAllAccount" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sec_account
+    </select>
+    <select id="findAccountWithPage" resultMap="BaseResultMap" parameterType="com.easykoo.mybatis.model.Account">
+   select * from sec_account
+    where 1=1
+        <if test="username != null">
+            and username = #{username,jdbcType=VARCHAR}
+        </if>
+        <if test="firstName != null">
+            and first_name = #{firstName,jdbcType=VARCHAR}
+        </if>
+        <if test="lastName != null">
+            and last_name = #{lastName,jdbcType=VARCHAR}
+        </if>
+        <if test="nickname != null">
+            and nick_name = #{nickname,jdbcType=VARCHAR}
+        </if>
+        <if test="gender != null">
+            and gender = #{gender,jdbcType=INTEGER}
+        </if>
+        <if test="qq != null">
+            and qq = #{qq,jdbcType=INTEGER}
+        </if>
+        <if test="telephone != null">
+            and telephone = #{telephone,jdbcType=VARCHAR}
+        </if>
+        <if test="postcode != null">
+            and postcode = #{postcode,jdbcType=VARCHAR}
+        </if>
+        <if test="address != null">
+            and address = #{address,jdbcType=VARCHAR}
+        </if>
+        <if test="email != null">
+            and email = #{email,jdbcType=VARCHAR}
+        </if>
+        <if test="roleId != null">
+            and role_id = #{roleId,jdbcType=INTEGER}
+        </if>
+        <if test="departmentId != null">
+            and department_id = #{departmentId,jdbcType=INTEGER}
+        </if>
+        <if test="permission != null">
+            and permission = #{permission,jdbcType=VARCHAR}
+        </if>
+        <if test="actived != null">
+            and actived = #{actived,jdbcType=BIT}
+        </if>
+        <if test="locked != null">
+            and locked = #{locked,jdbcType=BIT}
+        </if>
+        <if test="createUser != null">
+            and create_user = #{createUser,jdbcType=VARCHAR}
+        </if>
+        <if test="createDate != null">
+            and create_date = #{createDate,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateUser != null">
+            and update_user = #{updateUser,jdbcType=VARCHAR}
+        </if>
+        <if test="updateDate != null">
+            and update_date = #{updateDate,jdbcType=TIMESTAMP}
+        </if>
+</select>
+</mapper>

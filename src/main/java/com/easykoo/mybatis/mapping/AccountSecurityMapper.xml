@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.easykoo.mybatis.dao.AccountSecurityMapper">
+    <resultMap id="AccountSecurityResultMap" type="com.easykoo.mybatis.model.AccountSecurity">
+        <id column="account_id" property="accountId" jdbcType="INTEGER"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="temp_flag" property="tempFlag" jdbcType="BIT"/>
+        <result column="fail_time" property="failTime" jdbcType="INTEGER"/>
+        <result column="effective_date" property="effectiveDate" jdbcType="TIMESTAMP"/>
+        <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    account_id, username, password, temp_flag, fail_time, effective_date, create_user, create_date,
+    update_user, update_date
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="AccountSecurityResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from sec_acc_security
+        where account_id = #{accountId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sec_acc_security
+    where account_id = #{accountId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.easykoo.mybatis.model.AccountSecurity">
+    insert into sec_acc_security (account_id, username, password,
+      temp_flag, fail_time, effective_date, 
+      create_user, create_date, update_user, 
+      update_date)
+    values (#{accountId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+      #{tempFlag,jdbcType=BIT}, #{failTime,jdbcType=INTEGER}, #{effectiveDate,jdbcType=TIMESTAMP}, 
+      'SYSTEM', now(), 'SYSTEM', now())
+  </insert>
+    <insert id="insertSelective" parameterType="com.easykoo.mybatis.model.AccountSecurity">
+        insert into sec_acc_security
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="accountId != null">
+                account_id,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="tempFlag != null">
+                temp_flag,
+            </if>
+            <if test="failTime != null">
+                fail_time,
+            </if>
+            <if test="effectiveDate != null">
+                effective_date,
+            </if>
+            <if test="createUser != null">
+                create_user,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateUser != null">
+                update_user,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="accountId != null">
+                #{accountId,jdbcType=INTEGER},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="tempFlag != null">
+                #{tempFlag,jdbcType=BIT},
+            </if>
+            <if test="failTime != null">
+                #{failTime,jdbcType=INTEGER},
+            </if>
+            <if test="effectiveDate != null">
+                #{effectiveDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null">
+                #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUser != null">
+                #{updateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.easykoo.mybatis.model.AccountSecurity">
+        update sec_acc_security
+        <set>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="tempFlag != null">
+                temp_flag = #{tempFlag,jdbcType=BIT},
+            </if>
+            <if test="failTime != null">
+                fail_time = #{failTime,jdbcType=INTEGER},
+            </if>
+            <if test="effectiveDate != null">
+                effective_date = #{effectiveDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUser != null">
+                update_user = #{updateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where account_id = #{accountId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.easykoo.mybatis.model.AccountSecurity">
+    update sec_acc_security
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      temp_flag = #{tempFlag,jdbcType=BIT},
+      fail_time = #{failTime,jdbcType=INTEGER},
+      effective_date = #{effectiveDate,jdbcType=TIMESTAMP},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_user = #{updateUser,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where account_id = #{accountId,jdbcType=INTEGER}
+  </update>
+
+    <select id="login" resultMap="AccountSecurityResultMap" parameterType="com.easykoo.mybatis.model.AccountSecurity">
+        select
+        <include refid="Base_Column_List"/>
+        from sec_acc_security
+        where username = #{username,jdbcType=VARCHAR}
+        and password = #{password,jdbcType=VARCHAR}
+    </select>
+</mapper>
