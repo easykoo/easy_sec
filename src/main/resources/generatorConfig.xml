@@ -8,7 +8,7 @@
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>
         <!-- 数据库链接URL、用户名、密码 -->
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/easykoo"
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/easy_sec"
                         userId="root" password="pass"/>
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>

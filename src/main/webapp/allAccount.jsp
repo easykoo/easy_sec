@@ -31,59 +31,143 @@
     <script type="text/javascript">
 
         function deleteAccount(accountID) {
-            bootbox.confirm("Are you sure?", function (result) {
-                if (result) {
-                    $.ajax('ajax/deleteAccount.do', {
-                        dataType: 'json',
-                        data: {
-                            accountId: accountID
-                        },
-                        success: function (data) {
-                            if (data == 'true') {
+            bootbox.dialog({
+                message: "Are you sure to delete this account?",
+                title: "Delete Account",
+                buttons: {
+                    main: {
+                        label: "Cancel",
+                        className: "btn-default",
+                        callback: function () {
+                        }
+                    },
+                    danger: {
+                        label: "Yes",
+                        className: "btn-danger",
+                        callback: function (result) {
+                            if (result) {
+                                $.ajax('ajax/deleteAccount.do', {
+                                    dataType: 'json',
+                                    data: {
+                                        accountId: accountID
+                                    },
+                                    success: function (data) {
+                                        if (data == 'true') {
 //                                alert('删除成功!');
-                                start = $("#dataTables-example").dataTable().fnSettings()._iDisplayStart;
-                                total = $("#dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
-                                window.location.reload();
-                                if ((total - start) == 1) {
-                                    if (start > 0) {
-                                        $("#dataTables-example").dataTable().fnPageChange('previous', true);
+                                            start = $("#dataTables-example").dataTable().fnSettings()._iDisplayStart;
+                                            total = $("#dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
+                                            window.location.reload();
+                                            if ((total - start) == 1) {
+                                                if (start > 0) {
+                                                    $("#dataTables-example").dataTable().fnPageChange('previous', true);
+                                                }
+                                            }
+                                        }
+                                        else {
+                                            var obj = $.parseJSON(data);
+                                            bootbox.alert(obj.error, function () {
+                                            });
+                                        }
                                     }
-                                }
-                            }
-                            else {
-                                alert('删除发生错误，请联系管理员!');
+                                });
                             }
                         }
-                    });
+                    }
                 }
             });
         }
 
         function banAccount(accountID) {
-            bootbox.confirm("Are you sure?", function (result) {
-                if (result) {
-                    $.ajax('ajax/banAccount.do', {
-                        dataType: 'json',
-                        data: {
-                            accountId: accountID
-                        },
-                        success: function (data) {
-                            if (data == 'true') {
+            bootbox.dialog({
+                message: "Are you sure to ban this account?",
+                title: "Ban Account",
+                buttons: {
+                    main: {
+                        label: "Cancel",
+                        className: "btn-default",
+                        callback: function () {
+                        }
+                    },
+                    danger: {
+                        label: "Yes",
+                        className: "btn-danger",
+                        callback: function (result) {
+                            if (result) {
+                                $.ajax('ajax/banAccount.do', {
+                                    dataType: 'json',
+                                    data: {
+                                        accountId: accountID
+                                    },
+                                    success: function (data) {
+                                        if (data == 'true') {
+                                            $("#dataTables-example").dataTable().
 //                                alert('删除成功!');
-                                start = $("#dataTables-example").dataTable().fnSettings()._iDisplayStart;
-                                total = $("#dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
-                                window.location.reload();
-                                if ((total - start) == 1) {
-                                    if (start > 0) {
-                                        $("#dataTables-example").dataTable().fnPageChange('previous', true);
+                                                    start = $("#dataTables-example").dataTable().fnSettings()._iDisplayStart;
+                                            total = $("#dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
+                                            window.location.reload();
+                                            if ((total - start) == 1) {
+                                                if (start > 0) {
+                                                    $("#dataTables-example").dataTable().fnPageChange('previous', true);
+                                                }
+                                            }
+                                        }
+                                        else {
+                                            var obj = $.parseJSON(data);
+                                            bootbox.alert(obj.error, function () {
+                                            });
+                                        }
                                     }
-                                }
-                            }
-                            else {
-                                alert('删除发生错误，请联系管理员!');
+                                });
                             }
                         }
-                    });
+                    }
+                }
+            });
+        }
+        function unbanAccount(accountID) {
+            bootbox.dialog({
+                message: "Are you sure to unban this account?",
+                title: "Ban Account",
+                buttons: {
+                    main: {
+                        label: "Cancel",
+                        className: "btn-default",
+                        callback: function () {
+                        }
+                    },
+                    danger: {
+                        label: "Yes",
+                        className: "btn-success",
+                        callback: function (result) {
+                            if (result) {
+                                $.ajax('ajax/unbanAccount.do', {
+                                    dataType: 'json',
+                                    data: {
+                                        accountId: accountID
+                                    },
+                                    success: function (data) {
+                                        if (data == 'true') {
+                                            $("#dataTables-example").dataTable().
+//                                alert('删除成功!');
+                                                    start = $("#dataTables-example").dataTable().fnSettings()._iDisplayStart;
+                                            total = $("#dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
+                                            window.location.reload();
+                                            if ((total - start) == 1) {
+                                                if (start > 0) {
+                                                    $("#dataTables-example").dataTable().fnPageChange('previous', true);
+                                                }
+                                            }
+                                        }
+                                        else {
+                                            var obj = $.parseJSON(data);
+                                            bootbox.alert(obj.error, function () {
+                                            });
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    }
                 }
             });
         }
@@ -190,19 +274,27 @@
                 { "sTitle": "<spring:message code="label.address"/>",
                     "mData": "address"},
                 { "sTitle": "<spring:message code="label.actions"/>",
-                    "mData": "gender"}
+                    "mData": "locked"}
             ],
             "fnRowCallback": function (nRow, aData, iDisplayIndex) {
                 /* Append the grade to the default row class name */
-                $('td:eq(6)', nRow).html(
-                        '<div class="btn-group "><a class="btn btn-primary" href="javascript:"><i class="fa fa-user fa-fw"></i></a>' +
+                var html = '<div class="btn-group "><a class="btn btn-primary" href="javascript:"><i class="fa fa-user fa-fw"></i></a>' +
                         '<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:"><span class="fa fa-caret-down"></span></a>' +
                         '<ul class="dropdown-menu">' +
                         '<li><a href="javascript:editAccount(' + aData.account_id + ')"><i class="fa fa-pencil fa-fw"></i> Edit</a></li>' +
-                        '<li><a href="javascript:deleteAccount(' + aData.account_id + ')"><i class="fa fa-trash-o fa-fw"></i> Delete</a></li>' +
-                        '<li><a href="javascript:banAccount(' + aData.account_id + ')"><i class="fa fa-ban fa-fw"></i> Ban</a></li><li class="divider"></li>' +
-                        '<li><a href="javascript:adminAccount(' + aData.account_id + ')"><i class="i"></i> Make admin</a></li>' +
-                        '</ul></div>');
+                        '<li><a href="javascript:deleteAccount(' + aData.account_id + ')"><i class="fa fa-trash-o fa-fw"></i> Delete</a></li>';
+                if (!aData.locked) {
+                    html += '<li><a href="javascript:banAccount(' + aData.account_id + ')"><i class="fa fa-ban fa-fw"></i> Ban</a></li>';
+                } else {
+                    html += '<li><a href="javascript:unbanAccount(' + aData.account_id + ')"><i class="fa fa-ban fa-fw"></i> Unban</a></li>';
+                }
+                html += '<li class="divider"></li><li><a href="javascript:adminAccount(' + aData.account_id + ')"><i class="i"></i> Make admin</a></li></ul></div>';
+
+                $('td:eq(6)', nRow).html(html);
+                if (aData.locked) {
+                    $(nRow).css({"color": "#BBBBBB"})
+
+                }
                 return nRow;
             },
             "oLanguage": {
@@ -219,43 +311,10 @@
                 },
                 "sZeroRecords": "没有检索到数据",
                 "sProcessing": "加载中......"
-            }
+            }, "aoColumnDefs": [
+                { "bSortable": false, "aTargets": [ 6 ] }
+            ]
         });
-
-        function deleteAccount(deleteID) {
-            $.modal.confirm('确实要删除此用户吗?', function () {
-                $.ajax('account/deleteAccount.do', {
-                    dataType: 'json',
-                    data: {
-                        userID: deleteID
-                    },
-                    success: function (data) {
-                        if (data.success == 'true') {
-                            $.modal.alert('删除成功!');
-                            start = $("#dataTables-example").dataTable().fnSettings()._iDisplayStart;
-                            total = $("#dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
-                            window.location.reload();
-                            if ((total - start) == 1) {
-                                if (start > 0) {
-                                    $("#sorting-advanced").dataTable().fnPageChange('previous', true);
-                                }
-                            }
-                        }
-                        else {
-                            $.modal.alert('删除发生错误，请联系管理员!');
-                        }
-                    },
-                    error: function () {
-                        $.modal.alert('服务器无响应，请联系管理员!');
-                    }
-                });
-
-
-            }, function () {
-                //$.modal.alert('Meh.');
-            });
-        };
-
     });
 
 </script>

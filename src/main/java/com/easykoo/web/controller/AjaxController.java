@@ -84,7 +84,7 @@ public class AjaxController {
             accountService.deleteByPrimaryKey(accountId);
             return "true";
         }
-        return "[\"error\":\"no user\"]";
+        return "{\"error\":\"no user\"}";
     }
 
     @RequestMapping(value = "/banAccount.do", produces = "application/json")
@@ -94,11 +94,37 @@ public class AjaxController {
 
         Account dbAccount = accountService.selectByPrimaryKey(accountId);
         if (dbAccount != null) {
-            dbAccount.setActived(false);
+            dbAccount.setLocked(true);
             accountService.updateByPrimaryKey(dbAccount);
             return "true";
         }
-        return "[\"error\":\"no user\"]";
+        return "{\"error\":\"no user\"}";
+    }
+
+    @RequestMapping(value = "/unbanAccount.do", produces = "application/json")
+    public
+    @ResponseBody
+    String unbanAccount(@RequestParam(value = "accountId") int accountId) {
+        Account dbAccount = accountService.selectByPrimaryKey(accountId);
+        if (dbAccount != null) {
+            dbAccount.setLocked(false);
+            accountService.updateByPrimaryKey(dbAccount);
+            return "true";
+        }
+        return "{\"error\":\"no user\"}";
+    }
+
+    @RequestMapping(value = "/adminAccount.do", produces = "application/json")
+    public
+    @ResponseBody
+    String adminAccount(@RequestParam(value = "accountId") int accountId) {
+        Account dbAccount = accountService.selectByPrimaryKey(accountId);
+        if (dbAccount != null) {
+            dbAccount.setRoleId(1);
+            accountService.updateByPrimaryKey(dbAccount);
+            return "true";
+        }
+        return "{\"error\":\"no user\"}";
     }
 
     public IAccountService getAccountService() {

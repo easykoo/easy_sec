@@ -255,7 +255,7 @@
                             <overwrite>true</overwrite>
                             <configurationFile>src/main/resources/generatorConfig.xml</configurationFile>
                             <jdbcDriver>com.mysql.jdbc.Driver</jdbcDriver>
-                            <jdbcURL>jdbc:mysql://localhost:3306/easykoo</jdbcURL>
+                            <jdbcURL>jdbc:mysql://localhost:3306/easy-sec</jdbcURL>
                             <jdbcUserId>root</jdbcUserId>
                             <jdbcPassword>pass</jdbcPassword>
                         </configuration>
