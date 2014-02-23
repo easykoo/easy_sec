@@ -44,7 +44,7 @@ public class AjaxController {
         account.setPageSize(2);
         account.addSortProperties("nick_name", "asc");
         List<Account> accountList = accountService.findAccountWithPage(account);
-        model.addAttribute("page", (Page) account);
+        model.addAttribute("page", account);
         model.addAttribute("accountList", accountList);
         return accountList;
     }
