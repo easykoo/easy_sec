@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.easykoo.mybatis.dao.FeedbackMapper">
+    <resultMap id="BaseResultMap" type="com.easykoo.mybatis.model.Feedback">
+        <id column="feedback_id" property="feedbackId" jdbcType="INTEGER"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="viewed" property="viewed" jdbcType="BIT"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    feedback_id, email, name, content, viewed, create_date
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from feedback
+        where feedback_id = #{feedbackId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from feedback
+    where feedback_id = #{feedbackId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.easykoo.mybatis.model.Feedback" useGeneratedKeys="true"
+            keyProperty="feedbackId"
+            keyColumn="feedback_id">
+    insert into feedback (email, name, content, create_date)
+    values (#{email,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, now() )
+  </insert>
+    <insert id="insertSelective" parameterType="com.easykoo.mybatis.model.Feedback">
+        insert into feedback
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="feedbackId != null">
+                feedback_id,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="viewed != null">
+                viewed,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="feedbackId != null">
+                #{feedbackId,jdbcType=INTEGER},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="viewed != null">
+                #{viewed,jdbcType=BIT},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.easykoo.mybatis.model.Feedback">
+        update feedback
+        <set>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="viewed != null">
+                viewed = #{viewed,jdbcType=BIT},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where feedback_id = #{feedbackId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.easykoo.mybatis.model.Feedback">
+    update feedback
+    set email = #{email,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      viewed = #{viewed,jdbcType=BIT},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where feedback_id = #{feedbackId,jdbcType=INTEGER}
+  </update>
+</mapper>

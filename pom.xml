@@ -233,7 +233,7 @@
                     <!--<jettyEnvXml>${basedir}/src/main/resources/jetty-env.xml</jettyEnvXml>-->
                 </configuration>
             </plugin>
-<!--            <plugin>
+            <!--<plugin>
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-maven-plugin</artifactId>
                 <version>${mybatis-generator.version}</version>

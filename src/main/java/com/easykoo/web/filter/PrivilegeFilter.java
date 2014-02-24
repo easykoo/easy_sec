@@ -36,8 +36,8 @@ public class PrivilegeFilter
     private static IAccountSessionService accountSessionService;
     private final static String[] notFilter = new String[]{"/", ".js", ".css", ".jpg", ".png",".ico"
             , ".otf", ".eot", ".svg", ".ttf", ".woff", ".scss", ".woff"
-            , "index.html", "index.jsp", "index.do", "login.do", "registerAccountView.do",
-            "logout.do", "getVerifyCodeImage.do"};
+            , "index.html", "index.jsp", "index.do", "login.do", "logout.do"
+            , "registerAccountView.do", "getVerifyCodeImage.do", "addFeedback.do", "subscribe.do"};
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,

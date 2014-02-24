@@ -338,17 +338,20 @@
 <!-- Contact page -->
 <div id="contact" class="page color-2">
     <div class="inner-page">
-        <h2 class="page-headline"><spring:message code="label.touch.and.update" /></h2>
+        <h2 class="page-headline"><spring:message code="label.touch.and.update"/></h2>
     </div>
     <div class="row inner-page contact">
         <div class="col-md-6">
-            <h3><spring:message code="label.leave.message" /></h3>
+            <h3><spring:message code="label.leave.message"/></h3>
 
-            <form id="contact-form">
-                <textarea rows="6" class="form-control" placeholder="<spring:message code="label.your.feedback" />"></textarea>
-                <input type="text" class="form-control" placeholder="<spring:message code="label.email.format" />">
-                <input type="text" class="form-control" placeholder="<spring:message code="label.name" />">
-                <button class="btn btn-primary btn-centered"><spring:message code="label.send" /></button>
+            <form role="form" id="contact-form" action="common/addFeedback.do" method="post">
+                <input name="name" type="text" class="form-control" placeholder="<spring:message code="label.name" />">
+                <input name="email" type="text" class="form-control"
+                       placeholder="<spring:message code="label.email.format" />">
+                <textarea name="content" rows="6" class="form-control"
+                          placeholder="<spring:message code="label.your.feedback" />"></textarea>
+                <button type="button" id="feedback_btn" class="btn btn-primary btn-centered"><spring:message
+                        code="label.send"/></button>
             </form>
         </div>
         <div class="col-md-6">
@@ -370,15 +373,19 @@
 <!-- Newsletter -->
 <div class="newsletter color-1">
     <div class="inner-page row">
-        <div class="col-md-4">
-            <h4><spring:message code="label.subscribe.last.news" /></h4>
-        </div>
-        <div class="col-md-6">
-            <input type="email" placeholder="xxx@xxx.xxx" name="EMAIL" class="subscribe">
-        </div>
-        <div class="col-md-2">
-            <button type="submit" class="btn btn-primary pull-right btn-block"><spring:message code="label.subscribe" /></button>
-        </div>
+
+        <form role="form" id="subscribe-form" action="common/addFeedback.do" method="post">
+            <div class="col-md-4">
+                <h4><spring:message code="label.subscribe.last.news"/></h4>
+            </div>
+            <div class="col-md-6">
+                <input id="subscribe_mail" type="email" placeholder="xxx@xxx.xxx" name="EMAIL" class="subscribe">
+            </div>
+            <div class="col-md-2">
+                <button id="subscribe_btn" type="button" class="btn btn-primary pull-right btn-block"><spring:message
+                        code="label.subscribe"/></button>
+            </div>
+        </form>
     </div>
 </div>
 <!-- /newsletter -->
@@ -393,18 +400,91 @@
             <a href="#contact"><i class="fa fa-google-plus-square"></i></a>
         </div>
         <div class="col-md-6 text-right copyright">
-            © 2014 <a href="http://prettystrap.com/" title="twitter bootstrap themes">easykoo.com</a> | all rights
+            © 2014 <a href="http://easykoo.com/" title="twitter bootstrap themes">easykoo.com</a> | all rights
             reserved | <a href="#top" title="Got to top" class="scroll">To top <i
                 class="fa fa-caret-up"></i></a>
         </div>
     </div>
 </footer>
 <script src="js/jquery.min.js"></script>
+<script src="js/jquery.validate.min.js"></script>
 
 <!-- JQUERY END -->
 <script src="js/p-controls.min.js"></script>
 <!--Main js file. -->
 <script src="js/the-story.min.js"></script>
 
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#contact-form").validate({
+            rules: {
+                name: "required",
+                email: {
+                    required: true,
+                    email: true
+                },
+                content: {
+                    required: true,
+                    minength: 5
+                }
+            },
+            messages: {
+                name: "请输入姓名",
+                email: {
+                    required: "请输入Email地址",
+                    email: "请输入正确的email地址"
+                },
+                content: {
+                    required: "请输入内容",
+                    minlength: jQuery.format("内容不能小于{0}个字符")
+                }
+            },
+            highlight: function (element) {
+                $(element).closest('.control-group').removeClass('success').addClass('error');
+            },
+            success: function (element) {
+//                element.text('OK!').addClass('valid')
+//                        .closest('.control-group').removeClass('error').addClass('success');
+                element.addClass('valid')
+                        .closest('.control-group').removeClass('error').addClass('success');
+            }
+        });
+        $('#feedback_btn').click(function(){
+            $.ajax('ajax/addFeedback.do', {
+                dataType: 'json',
+                data: $("#contact-form").serialize(),
+                success: function (data) {
+                    if (data == 'true') {
+                                alert('发表成功!');
+                    }
+                }
+            });
+        });
+
+        function isEmail(email) {
+            var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            return regex.test(email);
+        };
+        $('#subscribe_btn').click(function(){
+            var mail = $('#subscribe_mail').val();
+            if(isEmail(mail)){
+                $.ajax('ajax/subscribe.do', {
+                    dataType: 'json',
+                    data: {
+                        email: mail
+                    },
+                    success: function (data) {
+                        if (data == 'true') {
+                            alert('订阅成功!');
+                        }
+                    }
+                });
+            } else {
+                alert('请输入正确的email格式');
+            }
+        })
+    })
+</script>
 </body>
 </html>

@@ -5,6 +5,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.easykoo.mybatis.model.*;
+import com.easykoo.service.IFeedbackService;
+import com.easykoo.service.ISubscribeService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.JsonProcessingException;
@@ -14,10 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import com.easykoo.mybatis.model.Account;
-import com.easykoo.mybatis.model.DataTablesRequest;
-import com.easykoo.mybatis.model.DataTablesResponse;
-import com.easykoo.mybatis.model.Page;
 import com.easykoo.service.IAccountService;
 import com.easykoo.service.IAccountSessionService;
 
@@ -33,6 +32,8 @@ public class AjaxController {
     protected final Log logger = LogFactory.getLog(getClass());
     private IAccountSessionService accountSessionService;
     private IAccountService accountService;
+    private IFeedbackService feedbackService;
+    private ISubscribeService subscribeService;
 
     @ResponseBody
     @RequestMapping(value = "/allAccount.do", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
@@ -127,6 +128,22 @@ public class AjaxController {
         return "{\"error\":\"no user\"}";
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/addFeedback.do")
+    public String registerAccount(@ModelAttribute("feedback") Feedback feedback) {
+        feedbackService.insert(feedback);
+        return "true";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/subscribe.do")
+    public String registerAccount(@RequestParam("email") String email) {
+        Subscribe subscribe = new Subscribe();
+        subscribe.setEmail(email);
+        subscribeService.insert(subscribe);
+        return "true";
+    }
+
     public IAccountService getAccountService() {
         return accountService;
     }
@@ -143,5 +160,23 @@ public class AjaxController {
     @Autowired
     public void setAccountSessionService(IAccountSessionService accountSessionService) {
         this.accountSessionService = accountSessionService;
+    }
+
+    public IFeedbackService getFeedbackService() {
+        return feedbackService;
+    }
+
+    @Autowired
+    public void setFeedbackService(IFeedbackService feedbackService) {
+        this.feedbackService = feedbackService;
+    }
+
+    public ISubscribeService getSubscribeService() {
+        return subscribeService;
+    }
+
+    @Autowired
+    public void setSubscribeService(ISubscribeService subscribeService) {
+        this.subscribeService = subscribeService;
     }
 }

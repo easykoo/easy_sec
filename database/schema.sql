@@ -30,7 +30,7 @@ CREATE TABLE sec_account (
   role_id int(3) NOT NULL default '0',
   department_id int(3) NOT NULL default '0',
   permission varchar(60) DEFAULT NULL,
-  actived tinyint(1) DEFAULT '0',
+  active tinyint(1) DEFAULT '0',
   locked tinyint(1) DEFAULT '0',
   create_user varchar(20) DEFAULT NULL,
   create_date datetime DEFAULT NULL,
