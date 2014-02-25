@@ -6,7 +6,7 @@
     <packaging>war</packaging>
     <version>1.0</version>
     <name>easy_sec</name>
-    <url>http://maven.apache.org</url>
+    <url>http://www.easykoo.com</url>
     <properties>
         <dao.target.dir>src/main/java</dao.target.dir>
         <compiler.version>1.7</compiler.version>
@@ -233,7 +233,7 @@
                     <!--<jettyEnvXml>${basedir}/src/main/resources/jetty-env.xml</jettyEnvXml>-->
                 </configuration>
             </plugin>
-<!--            <plugin>
+            <!--<plugin>
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-maven-plugin</artifactId>
                 <version>${mybatis-generator.version}</version>
@@ -255,7 +255,7 @@
                             <overwrite>true</overwrite>
                             <configurationFile>src/main/resources/generatorConfig.xml</configurationFile>
                             <jdbcDriver>com.mysql.jdbc.Driver</jdbcDriver>
-                            <jdbcURL>jdbc:mysql://localhost:3306/easykoo</jdbcURL>
+                            <jdbcURL>jdbc:mysql://localhost:3306/easy-sec</jdbcURL>
                             <jdbcUserId>root</jdbcUserId>
                             <jdbcPassword>pass</jdbcPassword>
                         </configuration>

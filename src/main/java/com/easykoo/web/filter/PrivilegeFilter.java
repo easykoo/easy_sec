@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -30,19 +31,18 @@ import com.easykoo.service.IPrivilegeService;
 public class PrivilegeFilter
         extends OncePerRequestFilter {
     private Log logger = LogFactory.getLog(getClass());
-    String[] notFilter = new String[]{"/", ".js", ".css", ".jpg", ".png"
-            , ".otf", ".eot", ".svg", ".ttf", ".woff"
-            , ".scss", ".woff", "index.jsp", "index.do", "login.do",
-            "logout.do", "getVerifyCodeImage.do"};
+    private static IPrivilegeService privilegeService;
+    private static IAccountService accountService;
+    private static IAccountSessionService accountSessionService;
+    private final static String[] notFilter = new String[]{"/", ".js", ".css", ".jpg", ".png",".ico"
+            , ".otf", ".eot", ".svg", ".ttf", ".woff", ".scss", ".woff"
+            , "index.html", "index.jsp", "index.do", "login.do", "logout.do"
+            , "registerAccountView.do", "getVerifyCodeImage.do", "addFeedback.do", "subscribe.do"};
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain)
             throws ServletException, IOException {
-
-        ServletContext context = request.getServletContext();
-        ApplicationContext ac = WebApplicationContextUtils.getWebApplicationContext(context);
-
         String path = request.getServletPath();
         logger.debug("Filter:" + path);
 
@@ -89,10 +89,6 @@ public class PrivilegeFilter
                 accountSession.setUsername(username);
                 accountSession.setSessionId(sessionId);
 
-                IAccountService accountService = (IAccountService) ac.getBean("accountService");
-                IAccountSessionService accountSessionService =
-                        (IAccountSessionService) ac.getBean("accountSessionService");
-
                 AccountSession dbAccountSession = accountSessionService.getRecord(accountSession);
                 logger.debug("dbAccountSession: " + dbAccountSession);
                 if (dbAccountSession != null) {
@@ -124,7 +120,6 @@ public class PrivilegeFilter
         if (checkAuthorize) {
             //check authorization
             logger.debug("Check permission...");
-            IPrivilegeService privilegeService = (IPrivilegeService) ac.getBean("privilegeService");
             if (!privilegeService.isAuthorized(path, accountSecurity)) {
                 response.sendRedirect(request.getContextPath() + "/error/403.jsp");
                 return;
@@ -132,5 +127,32 @@ public class PrivilegeFilter
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    public IPrivilegeService getPrivilegeService() {
+        return privilegeService;
+    }
+
+    @Autowired
+    public void setPrivilegeService(IPrivilegeService privilegeService) {
+        PrivilegeFilter.privilegeService = privilegeService;
+    }
+
+    public IAccountService getAccountService() {
+        return accountService;
+    }
+
+    @Autowired
+    public void setAccountService(IAccountService accountService) {
+        PrivilegeFilter.accountService = accountService;
+    }
+
+    public IAccountSessionService getAccountSessionService() {
+        return accountSessionService;
+    }
+
+    @Autowired
+    public void setAccountSessionService(IAccountSessionService accountSessionService) {
+        PrivilegeFilter.accountSessionService = accountSessionService;
     }
 }

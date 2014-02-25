@@ -35,7 +35,7 @@ public class Account extends Page {
 
     private String permission;
 
-    private Boolean actived;
+    private Boolean active;
 
     private Boolean locked;
 
@@ -159,12 +159,12 @@ public class Account extends Page {
         this.permission = permission;
     }
 
-    public Boolean getActived() {
-        return actived;
+    public Boolean getActive() {
+        return active;
     }
 
-    public void setActived(Boolean actived) {
-        this.actived = actived;
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public Boolean getLocked() {

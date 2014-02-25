@@ -2,13 +2,13 @@
 <sitemesh>
 
     <!-- 配置默认的渲染器. 将应用于所有路径. -->
-    <mapping path="/*" decorator="/decorators/head.jsp"/>
+    <!--<mapping path="/*" decorator="/decorators/head1.jsp"/>-->
     <!--<mapping path="/admin/*" decorator="/left.jsp"/>-->
 
     <mapping>
         <path>/admin/*</path>
         <decorator>/decorators/left.jsp</decorator>
-        <decorator>/decorators/head-admin.jsp</decorator>
+        <decorator>/decorators/head.jsp</decorator>
     </mapping>
     <!--
         &lt;!&ndash; 配置特定路径的渲染器. &ndash;&gt;

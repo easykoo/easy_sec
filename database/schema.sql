@@ -1,6 +1,6 @@
-CREATE SCHEMA easykoo DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+CREATE SCHEMA easy_sec DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 
-use easykoo;
+use easy_sec;
 
 drop table  if exists sec_group;
 CREATE TABLE sec_group (
@@ -30,7 +30,7 @@ CREATE TABLE sec_account (
   role_id int(3) NOT NULL default '0',
   department_id int(3) NOT NULL default '0',
   permission varchar(60) DEFAULT NULL,
-  actived tinyint(1) DEFAULT '0',
+  active tinyint(1) DEFAULT '0',
   locked tinyint(1) DEFAULT '0',
   create_user varchar(20) DEFAULT NULL,
   create_date datetime DEFAULT NULL,
@@ -82,7 +82,7 @@ CREATE TABLE sec_department (
 drop table  if exists sec_function;
 CREATE TABLE sec_function (
   function_id int(5) NOT NULL AUTO_INCREMENT,
-  description varchar(20) NOT NULL,
+  description varchar(50) NOT NULL,
   uri varchar(80) NOT NULL,
   module_id int(3) NOT NULL,
   permission varchar(45) DEFAULT NULL,
@@ -95,7 +95,7 @@ CREATE TABLE sec_function (
 drop table  if exists sec_module;
 CREATE TABLE sec_module (
   module_id int(3) NOT NULL AUTO_INCREMENT,
-  description varchar(20) NOT NULL,
+  description varchar(50) NOT NULL,
   permission varchar(60) DEFAULT NULL,
   create_user varchar(20) DEFAULT NULL,
   create_date datetime DEFAULT NULL,

@@ -43,7 +43,7 @@ public class AccountController {
         AccountSecurity currentAccountSecurity = (AccountSecurity) model.get("currentAccountSecurity");
         if (currentAccountSecurity != null && currentAccountSecurity.getUsername() != null) {
             logger.debug(currentAccountSecurity.getUsername() + " already signed in!");
-            return "redirect:/index.jsp";
+            return "redirect:/admin/dashboard.do";
         }
 
         String token = (String) request.getSession().getAttribute("currentFormToken");
@@ -79,7 +79,7 @@ public class AccountController {
                 accountSession.setExpireDate(new Date(new Date().getTime() + expiry * 1000));
                 accountSessionService.insertSelective(accountSession);
             }
-            return "redirect:/index.jsp";
+            return "redirect:/admin/dashboard.do";
         }
 
         logger.debug("Invalid username or password!");

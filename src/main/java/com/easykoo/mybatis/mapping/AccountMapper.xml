@@ -16,7 +16,7 @@
         <result column="role_id" property="roleId" jdbcType="INTEGER"/>
         <result column="department_id" property="departmentId" jdbcType="INTEGER"/>
         <result column="permission" property="permission" jdbcType="VARCHAR"/>
-        <result column="actived" property="actived" jdbcType="BIT"/>
+        <result column="active" property="active" jdbcType="BIT"/>
         <result column="locked" property="locked" jdbcType="BIT"/>
         <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
@@ -25,7 +25,7 @@
     </resultMap>
     <sql id="Base_Column_List">
     account_id, username, first_name, last_name, nick_name, gender, qq, telephone, postcode,
-    address, email, role_id, department_id, permission, actived, locked, create_user,
+    address, email, role_id, department_id, permission, active, locked, create_user,
     create_date, update_user, update_date
   </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -44,14 +44,14 @@
         last_name, nick_name, gender,
         qq, telephone, postcode,
         address, email,
-        permission, actived,
+        permission, active,
         locked, create_user, create_date,
         update_user, update_date)
         values (#{username,jdbcType=VARCHAR}, #{firstName,jdbcType=VARCHAR},
         #{lastName,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER},
         #{qq,jdbcType=INTEGER}, #{telephone,jdbcType=VARCHAR}, #{postcode,jdbcType=VARCHAR},
         #{address,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
-        #{permission,jdbcType=VARCHAR}, #{actived,jdbcType=BIT},
+        #{permission,jdbcType=VARCHAR}, #{active,jdbcType=BIT},
         #{locked,jdbcType=BIT}, 'SYSTEM', now(),
         'SYSTEM', now())
         <selectKey keyProperty="accountId" resultType="int" order="AFTER">
@@ -101,8 +101,8 @@
             <if test="permission != null">
                 permission,
             </if>
-            <if test="actived != null">
-                actived,
+            <if test="active != null">
+                active,
             </if>
             <if test="locked != null">
                 locked,
@@ -160,8 +160,8 @@
             <if test="permission != null">
                 #{permission,jdbcType=VARCHAR},
             </if>
-            <if test="actived != null">
-                #{actived,jdbcType=BIT},
+            <if test="active != null">
+                #{active,jdbcType=BIT},
             </if>
             <if test="locked != null">
                 #{locked,jdbcType=BIT},
@@ -225,8 +225,8 @@
             <if test="permission != null">
                 permission = #{permission,jdbcType=VARCHAR},
             </if>
-            <if test="actived != null">
-                actived = #{actived,jdbcType=BIT},
+            <if test="active != null">
+                active = #{active,jdbcType=BIT},
             </if>
             <if test="locked != null">
                 locked = #{locked,jdbcType=BIT},
@@ -261,7 +261,7 @@
       role_id = #{roleId,jdbcType=INTEGER},
       department_id = #{departmentId,jdbcType=INTEGER},
       permission = #{permission,jdbcType=VARCHAR},
-      actived = #{actived,jdbcType=BIT},
+      active = #{active,jdbcType=BIT},
       locked = #{locked,jdbcType=BIT},
       create_user = #{createUser,jdbcType=VARCHAR},
       create_date = #{createDate,jdbcType=TIMESTAMP},
@@ -316,8 +316,8 @@
         <if test="permission != null">
             and permission = #{permission,jdbcType=VARCHAR}
         </if>
-        <if test="actived != null">
-            and actived = #{actived,jdbcType=BIT}
+        <if test="active != null">
+            and active = #{active,jdbcType=BIT}
         </if>
         <if test="locked != null">
             and locked = #{locked,jdbcType=BIT}
