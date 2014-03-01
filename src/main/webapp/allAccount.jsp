@@ -270,8 +270,10 @@
                 } else {
                     html += '<li><a href="javascript:unbanAccount(' + aData.account_id + ')"><i class="fa fa-ban fa-fw"></i> Unban</a></li>';
                 }
-                html += '<li class="divider"></li><li><a href="javascript:adminAccount(' + aData.account_id + ')"><i class="i"></i> Make admin</a></li></ul></div>';
-
+                if (aData.roleId != 1) {
+                    html += '<li class="divider"></li><li><a href="javascript:adminAccount(' + aData.account_id + ')"><i class="i"></i> Make admin</a></li>';
+                }
+                html += '</ul></div>';
                 $('td:eq(6)', nRow).html(html);
                 if (aData.locked) {
                     $(nRow).css({"color": "#BBBBBB"})
