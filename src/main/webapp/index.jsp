@@ -15,6 +15,8 @@
     <meta name="description" content="Easy Security">
     <meta name="author" content="easykoo.com">
 
+    <%--<link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>--%>
+    <%--<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>--%>
     <!-- Load The Story -->
     <link id="the-story-css-file" rel="stylesheet" href="css/the-story.min.css" type="text/css">
 
@@ -65,8 +67,7 @@
                         <li><a href="index.do?locale=en">English</a></li>
                     </ul>
                 </li>
-                <%--<li><a title="External page sample" href="sample-page.html">Sample Page</a></li>--%>
-                <%--<c:choose>
+                <c:choose>
                     <c:when test="${not empty currentAccountSecurity.nickname}">
                         <li class="dropdown">
                             <a href="javascript:" class="dropdown-toggle"
@@ -86,10 +87,10 @@
                     </c:when>
                     <c:otherwise>
                         <li><a href="account/login.do"><spring:message code="label.sign.in"/></a></li>
+                        <%--<li><button type="button" class="btn btn-default"><spring:message code="label.sign.in"/></button></li>--%>
                         <li><a href="account/registerAccountView.do"><spring:message code="label.sign.up"/></a></li>
                     </c:otherwise>
-                </c:choose>--%>
-
+                </c:choose>
             </ul>
         </div>
     </div>
