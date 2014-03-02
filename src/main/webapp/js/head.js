@@ -17,7 +17,7 @@ var getTop5Feedback = function () {
                 feedbacks = data;
                 $.each(data, function (index, feedback) {
                     html += '<li>'
-                        + '<a href="javascript:readFeedback(' + feedback.feedbackId + ',getTop5Feedback, getFeedbackCount)">'
+                        + '<a href="javascript:readFeedbackWithCallback(' + feedback.feedbackId + ',getTop5Feedback, getFeedbackCount)">'
                         + '<div>'
                         + '<strong>' + feedback.name + '</strong>'
                         + '<span class="pull-right text-muted">'
@@ -71,7 +71,7 @@ var timeStamp2String = function (time) {
     return hour + ":" + minute + ":" + second + " " + month + "/" + date + "/" + year;
 };
 
-var readFeedback = function (id, fnCallback1, fnCallback2) {
+var readFeedbackWithCallback = function (id, fnCallback1, fnCallback2) {
     $.each(feedbacks, function (index, feedback) {
         if (feedback.feedbackId == id) {
             bootbox.dialog({

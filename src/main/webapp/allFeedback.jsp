@@ -87,8 +87,9 @@
 
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->
 <script type="text/javascript" charset="utf-8">
+    var feedbackTable;
 
-    function deleteFeedback(id) {
+    var deleteFeedback = function (id) {
         bootbox.dialog({
             message: "Are you sure to delete this feedback?",
             title: "Delete Feedback",
@@ -112,12 +113,12 @@
                                 success: function (data) {
                                     if (data == 'true') {
 //                                alert('删除成功!');
-                                        start = $("#dataTables-example").dataTable().fnSettings()._iDisplayStart;
-                                        total = $("#dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
+                                        start = feedbackTable.fnSettings()._iDisplayStart;
+                                        total = feedbackTable.fnSettings().fnRecordsDisplay();
                                         window.location.reload();
                                         if ((total - start) == 1) {
                                             if (start > 0) {
-                                                $("#dataTables-example").dataTable().fnPageChange('previous', true);
+                                                feedbackTable.fnPageChange('previous', true);
                                             }
                                         }
                                     }
@@ -135,72 +136,103 @@
         });
     }
 
+
+    var readFeedback = function (id) {
+        var feedbackList = feedbackTable.fnGetData();
+        $.each(feedbackList, function (index, feedback) {
+            if (feedback.feedbackId == id) {
+                bootbox.dialog({
+                    message: feedback.content,
+                    title: feedback.name,
+                    buttons: {
+                        success: {
+                            label: "OK",
+                            className: "btn-success",
+                            callback: function () {
+                                $.ajax({
+                                    dataType: "json",
+                                    type: "GET",
+                                    url: 'ajax/readFeedback.do',
+                                    data: {id: id},
+                                    success: function (data) {
+                                        if (data == 'true') {
+                                            feedbackTable.fnDestroy();
+                                            getAllFeedback();
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    };
+
+    var getAllFeedback = function () {
+        feedbackTable = $('#dataTables-example').dataTable({
+            bPaginate: true,
+            bProcessing: true,
+            bServerSide: true,
+            bSort: true,
+            bFilter: false,
+            bAutoWidth: true,
+            iDisplayStart: 0,
+            iDisplayLength: 10,
+            bLengthChange: true,
+            sPaginationType: 'full_numbers',
+            sAjaxSource: 'ajax/allFeedback.do',
+            fnServerData: function (sSource, aoData, fnCallback) {
+                $.ajax({
+                    dataType: "json",
+                    type: "POST",
+                    "url": sSource,
+                    "data": aoData,
+                    "success": fnCallback
+                });
+            },
+            "aoColumns": [
+                { "sTitle": "<spring:message code="label.id"/>",
+                    "mData": "feedback_id",
+                    "mDataProp": "feedback_id"},
+                { "sTitle": "<spring:message code="label.name"/>",
+                    "mData": "name"},
+                { "sTitle": "<spring:message code="label.email"/>",
+                    "mData": "email"},
+                { "sTitle": "<spring:message code="label.content"/>",
+                    "mData": "content"},
+                { "sTitle": "<spring:message code="label.create.date"/>",
+                    "mData": "create_date"},
+                { "sTitle": "<spring:message code="label.actions"/>",
+                    "mData": "viewed"}
+            ],
+            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                var createDate = timeStamp2String(aData.create_date);
+                $('td:eq(4)', nRow).text(createDate);
+                var html = '<div class="btn-group "><a class="btn btn-primary" href="javascript:"><i class="fa fa-user fa-fw"></i></a>' +
+                        '<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:"><span class="fa fa-caret-down"></span></a>' +
+                        '<ul class="dropdown-menu">' +
+                        '<li><a href="javascript:deleteFeedback(' + aData.feedback_id + ')"><i class="fa fa-trash-o fa-fw"></i> Delete</a></li>';
+                if (!aData.viewed) {
+                    html += '<li><a href="javascript:readFeedback(' + aData.feedback_id + ')"><i class="fa fa-ban fa-fw"></i> View</a></li>';
+                }
+                html += '</ul></div>';
+                $('td:eq(5)', nRow).html(html);
+                if (aData.viewed) {
+                    $(nRow).css({"color": "#BBBBBB"})
+
+                }
+                return nRow;
+            },
+            "oLanguage": {
+                sUrl: "css/plugins/dataTables/zh_CN.txt"
+            },
+            "aoColumnDefs": [
+                { "bSortable": false, "aTargets": [ 5 ] }
+            ]
+        });
+    }
     $(document).ready(function () {
-        var getAllFeedback = function () {
-            $('#dataTables-example').dataTable({
-                bPaginate: true,
-                bProcessing: true,
-                bServerSide: true,
-                bSort: true,
-                bFilter: false,
-                bAutoWidth: true,
-                iDisplayStart: 0,
-                iDisplayLength: 10,
-                bLengthChange: true,
-                sPaginationType: 'full_numbers',
-                sAjaxSource: 'ajax/allFeedback.do',
-                fnServerData: function (sSource, aoData, fnCallback) {
-                    $.ajax({
-                        dataType: "json",
-                        type: "POST",
-                        "url": sSource,
-                        "data": aoData,
-                        "success": fnCallback
-                    });
-                },
-                "aoColumns": [
-                    { "sTitle": "<spring:message code="label.id"/>",
-                        "mData": "feedback_id",
-                        "mDataProp": "feedback_id"},
-                    { "sTitle": "<spring:message code="label.name"/>",
-                        "mData": "name"},
-                    { "sTitle": "<spring:message code="label.email"/>",
-                        "mData": "email"},
-                    { "sTitle": "<spring:message code="label.content"/>",
-                        "mData": "content"},
-                    { "sTitle": "<spring:message code="label.create.date"/>",
-                        "mData": "create_date"},
-                    { "sTitle": "<spring:message code="label.actions"/>",
-                        "mData": "viewed"}
-                ],
-                "fnRowCallback": function (nRow, aData, iDisplayIndex) {
-                    /* Append the grade to the default row class name */
-
-                    var createDate = timeStamp2String(aData.create_date);
-                    $('td:eq(4)', nRow).text(createDate);
-                    var html = '<div class="btn-group "><a class="btn btn-primary" href="javascript:"><i class="fa fa-user fa-fw"></i></a>' +
-                            '<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:"><span class="fa fa-caret-down"></span></a>' +
-                            '<ul class="dropdown-menu">' +
-                            '<li><a href="javascript:deleteFeedback(' + aData.feedback_id + ')"><i class="fa fa-trash-o fa-fw"></i> Delete</a></li>';
-                    if (!aData.viewed) {
-                        html += '<li><a href="javascript:readFeedback(' + aData.feedback_id + ')"><i class="fa fa-ban fa-fw"></i> View</a></li>';
-                    }
-                    html += '</ul></div>';
-                    $('td:eq(5)', nRow).html(html);
-                    if (aData.viewed) {
-                        $(nRow).css({"color": "#BBBBBB"})
-
-                    }
-                    return nRow;
-                },
-                "oLanguage": {
-                     sUrl: "css/plugins/dataTables/zh_CN.txt"
-                },
-                "aoColumnDefs": [
-                    { "bSortable": false, "aTargets": [ 5 ] }
-                ]
-            });
-        };
         getAllFeedback();
     });
 
