@@ -27,7 +27,7 @@
     <link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
 
     <!-- SB Admin CSS - Include with every page -->
-    <link href="css/sb-admin.css" rel="stylesheet">
+    <link href="css/admin.css" rel="stylesheet">
 
     <![endif]-->
 </head>
@@ -148,6 +148,7 @@
 <!-- Core Scripts - Include with every page -->
 <script src="js/jquery-1.10.2.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/bootbox.min.js"></script>
 <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
 
 <!-- Page-Level Plugin Scripts - Tables -->
@@ -155,7 +156,7 @@
 <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
 
 <!-- SB Admin Scripts - Include with every page -->
-<script src="js/sb-admin.js"></script>
+<script src="js/admin.js"></script>
 
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->
 <script>

@@ -1,4 +1,3 @@
-
 delete from sec_role;
 delete from sec_department;
 insert into sec_role values(1,'Admin',1,now(),1,now());
@@ -22,6 +21,7 @@ delete from sec_function;
 delete from sec_privilege;
 insert into sec_module(module_id, description) values (1,'Account');
 insert into sec_module(module_id, description) values (2,'Admin');
+insert into sec_module(module_id, description) values (3,'Feedback');
 insert into sec_function ( function_id, description, uri, module_id)values (1,'View dashboard','/admin/dashboard.do',2);
 insert into sec_function ( function_id, description, uri, module_id)values (2,'View all account','/admin/allAccountView.do',1);
 insert into sec_function ( function_id, description, uri, module_id)values (3,'Get all account by ajax','/ajax/allAccount.do',1);
@@ -30,7 +30,13 @@ insert into sec_function ( function_id, description, uri, module_id)values (5,'B
 insert into sec_function ( function_id, description, uri, module_id)values (6,'Unban account by ajax','/ajax/unbanAccount.do',1);
 insert into sec_function ( function_id, description, uri, module_id)values (7,'Update account','/account/updateAccount.do',1);
 insert into sec_function ( function_id, description, uri, module_id)values (8,'Update account by ajax','/ajax/updateAccount.do',1);
-insert into sec_function ( function_id, description, uri, module_id)values (9,'Update account by ajax','/ajax/adminAccount.do',1);
+insert into sec_function ( function_id, description, uri, module_id)values (9,'Make account admin by ajax','/ajax/adminAccount.do',1);
+insert into sec_function ( function_id, description, uri, module_id)values (10,'Get top 5 feedback by ajax','/ajax/getTop5Feedback.do',3);
+insert into sec_function ( function_id, description, uri, module_id)values (11,'Read feedback by ajax','/ajax/readFeedback.do',3);
+insert into sec_function ( function_id, description, uri, module_id)values (12,'Get feedback count by ajax','/ajax/getFeedbackCount.do',3);
+insert into sec_function ( function_id, description, uri, module_id)values (13,'View all feedback','/admin/allFeedbackView.do',3);
+insert into sec_function ( function_id, description, uri, module_id)values (14,'Get all feedback by ajax','/ajax/allFeedback.do',3);
+insert into sec_function ( function_id, description, uri, module_id)values (15,'Delete feedback by ajax','/ajax/deleteFeedback.do',3);
 insert into sec_privilege ( external_id, type,role_id,department_id) values (1,1,1,1);
 insert into sec_privilege ( external_id, type,role_id,department_id) values (2,1,1,1);
 insert into sec_privilege ( external_id, type,role_id,department_id) values (3,1,1,1);
@@ -40,3 +46,15 @@ insert into sec_privilege ( external_id, type,role_id,department_id) values (6,1
 insert into sec_privilege ( external_id, type,role_id,department_id) values (7,1,1,1);
 insert into sec_privilege ( external_id, type,role_id,department_id) values (8,1,1,1);
 insert into sec_privilege ( external_id, type,role_id,department_id) values (9,1,1,1);
+insert into sec_privilege ( external_id, type,role_id,department_id) values (10,1,1,1);
+insert into sec_privilege ( external_id, type,role_id,department_id) values (10,1,2,1);
+insert into sec_privilege ( external_id, type,role_id,department_id) values (11,1,1,1);
+insert into sec_privilege ( external_id, type,role_id,department_id) values (11,1,2,1);
+insert into sec_privilege ( external_id, type,role_id,department_id) values (12,1,1,1);
+insert into sec_privilege ( external_id, type,role_id,department_id) values (12,1,2,1);
+insert into sec_privilege ( external_id, type,role_id,department_id) values (13,1,1,1);
+insert into sec_privilege ( external_id, type,role_id,department_id) values (13,1,2,1);
+insert into sec_privilege ( external_id, type,role_id,department_id) values (14,1,1,1);
+insert into sec_privilege ( external_id, type,role_id,department_id) values (14,1,2,1);
+insert into sec_privilege ( external_id, type,role_id,department_id) values (15,1,1,1);
+insert into sec_privilege ( external_id, type,role_id,department_id) values (15,1,2,1);

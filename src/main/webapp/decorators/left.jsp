@@ -32,9 +32,15 @@
                 <a href="javascript:"><i class="fa fa-dashboard fa-fw"></i> <spring:message code="label.dashboard"/></a>
             </li>
             <au:test uri="/admin/allAccountView.do">
-                <li>
+                <li id="allAccount">
                     <a href="admin/allAccountView.do"><i class="fa fa-users fa-fw"></i> <spring:message
                             code="label.all.account"/></a>
+                </li>
+            </au:test>
+            <au:test uri="/admin/allFeedbackView.do">
+                <li>
+                    <a href="/admin/allFeedbackView.do"><i class="fa fa-edit fa-fw"></i><spring:message
+                            code="label.all.feedback"/></a>
                 </li>
             </au:test>
             <li>
@@ -48,9 +54,6 @@
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->
-            </li>
-            <li>
-                <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
             </li>
             <li>
                 <a href="javascript:"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>

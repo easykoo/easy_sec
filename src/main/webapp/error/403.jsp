@@ -17,7 +17,7 @@
     <meta name="author" content="">
     <title><spring:message code="label.no.permission"/></title>
     <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/sb-admin.css" rel="stylesheet">
+    <link href="../css/admin.css" rel="stylesheet">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>

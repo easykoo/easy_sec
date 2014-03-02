@@ -24,14 +24,18 @@ public class AdminController {
     private IAccountService accountService;
 
     @RequestMapping(value = "/dashboard.do")
-    public String index(ModelMap model) {
+    public String index() {
         return "dashboard";
     }
 
-
     @RequestMapping(value = "/allAccountView.do", method = RequestMethod.GET)
-    public String allAccountView(ModelMap model) {
+    public String allAccountView() {
         return "allAccount";
+    }
+
+    @RequestMapping(value = "/allFeedbackView.do", method = RequestMethod.GET)
+    public String allFeedbackView() {
+        return "allFeedback";
     }
 
     public IAccountService getAccountService() {

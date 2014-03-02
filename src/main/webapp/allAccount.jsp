@@ -14,9 +14,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
 
-    <title><spring:message code="label.dashboard"/></title>
+    <title><spring:message code="label.all.account"/></title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -27,133 +26,7 @@
     <link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
 
     <!-- SB Admin CSS - Include with every page -->
-    <link href="css/sb-admin.css" rel="stylesheet">
-    <script type="text/javascript">
-
-        function deleteAccount(accountID) {
-            bootbox.dialog({
-                message: "Are you sure to delete this account?",
-                title: "Delete Account",
-                buttons: {
-                    main: {
-                        label: "Cancel",
-                        className: "btn-default",
-                        callback: function () {
-                        }
-                    },
-                    danger: {
-                        label: "Yes",
-                        className: "btn-danger",
-                        callback: function (result) {
-                            if (result) {
-                                $.ajax('ajax/deleteAccount.do', {
-                                    dataType: 'json',
-                                    data: {
-                                        accountId: accountID
-                                    },
-                                    success: function (data) {
-                                        if (data == 'true') {
-//                                alert('删除成功!');
-                                            start = $("#dataTables-example").dataTable().fnSettings()._iDisplayStart;
-                                            total = $("#dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
-                                            window.location.reload();
-                                            if ((total - start) == 1) {
-                                                if (start > 0) {
-                                                    $("#dataTables-example").dataTable().fnPageChange('previous', true);
-                                                }
-                                            }
-                                        }
-                                        else {
-                                            var obj = $.parseJSON(data);
-                                            bootbox.alert(obj.error, function () {
-                                            });
-                                        }
-                                    }
-                                });
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        function banAccount(accountID) {
-            bootbox.dialog({
-                message: "Are you sure to ban this account?",
-                title: "Ban Account",
-                buttons: {
-                    main: {
-                        label: "Cancel",
-                        className: "btn-default",
-                        callback: function () {
-                        }
-                    },
-                    danger: {
-                        label: "Yes",
-                        className: "btn-danger",
-                        callback: function (result) {
-                            if (result) {
-                                $.ajax('ajax/banAccount.do', {
-                                    dataType: 'json',
-                                    data: {
-                                        accountId: accountID
-                                    },
-                                    success: function (data) {
-                                        if (data == 'true') {
-                                            window.location.reload();
-                                        }
-                                        else {
-                                            var obj = $.parseJSON(data);
-                                            bootbox.alert(obj.error, function () {
-                                            });
-                                        }
-                                    }
-                                });
-                            }
-                        }
-                    }
-                }
-            });
-        }
-        function unbanAccount(accountID) {
-            bootbox.dialog({
-                message: "Are you sure to unban this account?",
-                title: "Ban Account",
-                buttons: {
-                    main: {
-                        label: "Cancel",
-                        className: "btn-default",
-                        callback: function () {
-                        }
-                    },
-                    danger: {
-                        label: "Yes",
-                        className: "btn-success",
-                        callback: function (result) {
-                            if (result) {
-                                $.ajax('ajax/unbanAccount.do', {
-                                    dataType: 'json',
-                                    data: {
-                                        accountId: accountID
-                                    },
-                                    success: function (data) {
-                                        if (data == 'true') {
-                                            window.location.reload();
-                                        }
-                                        else {
-                                            var obj = $.parseJSON(data);
-                                            bootbox.alert(obj.error, function () {
-                                            });
-                                        }
-                                    }
-                                });
-                            }
-                        }
-                    }
-                }
-            });
-        }
-    </script>
+    <link href="css/admin.css" rel="stylesheet">
 </head>
 
 <body>
@@ -161,7 +34,7 @@
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Tables</h1>
+            <h1 class="page-header"><spring:message code="label.all.account" /></h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -178,7 +51,7 @@
                         <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                             <thead>
                             <tr>
-                                <th><spring:message code="label.account.id"/></th>
+                                <th><spring:message code="label.id"/></th>
                                 <th><spring:message code="label.username"/></th>
                                 <th><spring:message code="label.qq"/></th>
                                 <th><spring:message code="label.telephone"/></th>
@@ -211,12 +84,136 @@
 <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
 
 <!-- SB Admin Scripts - Include with every page -->
-<script src="js/sb-admin.js"></script>
+<script src="js/admin.js"></script>
 
 
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->
 <script type="text/javascript" charset="utf-8">
 
+function deleteAccount(accountID) {
+    bootbox.dialog({
+        message: "Are you sure to delete this account?",
+        title: "Delete Account",
+        buttons: {
+            main: {
+                label: "Cancel",
+                className: "btn-default",
+                callback: function () {
+                }
+            },
+            danger: {
+                label: "Yes",
+                className: "btn-danger",
+                callback: function (result) {
+                    if (result) {
+                        $.ajax('ajax/deleteAccount.do', {
+                            dataType: 'json',
+                            data: {
+                                accountId: accountID
+                            },
+                            success: function (data) {
+                                if (data == 'true') {
+//                                alert('删除成功!');
+                                    start = $("#dataTables-example").dataTable().fnSettings()._iDisplayStart;
+                                    total = $("#dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
+                                    window.location.reload();
+                                    if ((total - start) == 1) {
+                                        if (start > 0) {
+                                            $("#dataTables-example").dataTable().fnPageChange('previous', true);
+                                        }
+                                    }
+                                }
+                                else {
+                                    var obj = $.parseJSON(data);
+                                    bootbox.alert(obj.error, function () {
+                                    });
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        }
+    });
+}
+
+function banAccount(accountID) {
+    bootbox.dialog({
+        message: "Are you sure to ban this account?",
+        title: "Ban Account",
+        buttons: {
+            main: {
+                label: "Cancel",
+                className: "btn-default",
+                callback: function () {
+                }
+            },
+            danger: {
+                label: "Yes",
+                className: "btn-danger",
+                callback: function (result) {
+                    if (result) {
+                        $.ajax('ajax/banAccount.do', {
+                            dataType: 'json',
+                            data: {
+                                accountId: accountID
+                            },
+                            success: function (data) {
+                                if (data == 'true') {
+                                    window.location.reload();
+                                }
+                                else {
+                                    var obj = $.parseJSON(data);
+                                    bootbox.alert(obj.error, function () {
+                                    });
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        }
+    });
+}
+
+function unbanAccount(accountID) {
+    bootbox.dialog({
+        message: "Are you sure to unban this account?",
+        title: "Ban Account",
+        buttons: {
+            main: {
+                label: "Cancel",
+                className: "btn-default",
+                callback: function () {
+                }
+            },
+            danger: {
+                label: "Yes",
+                className: "btn-success",
+                callback: function (result) {
+                    if (result) {
+                        $.ajax('ajax/unbanAccount.do', {
+                            dataType: 'json',
+                            data: {
+                                accountId: accountID
+                            },
+                            success: function (data) {
+                                if (data == 'true') {
+                                    window.location.reload();
+                                }
+                                else {
+                                    var obj = $.parseJSON(data);
+                                    bootbox.alert(obj.error, function () {
+                                    });
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        }
+    });
+}
 
     $(document).ready(function () {
 
@@ -242,7 +239,7 @@
                 });
             },
             "aoColumns": [
-                { "sTitle": "<spring:message code="label.account.id"/>",
+                { "sTitle": "<spring:message code="label.id"/>",
                     "mData": "account_id",
                     "mDataProp": "account_id"},
                 { "sTitle": "<spring:message code="label.username"/>",

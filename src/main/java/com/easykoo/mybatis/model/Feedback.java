@@ -1,8 +1,11 @@
 package com.easykoo.mybatis.model;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
 import java.util.Date;
 
 public class Feedback extends Page {
+    @JsonProperty(value = "feedback_id")
     private Integer feedbackId;
 
     private String email;
@@ -13,6 +16,7 @@ public class Feedback extends Page {
 
     private Boolean viewed;
 
+    @JsonProperty(value = "create_date")
     private Date createDate;
 
     public Integer getFeedbackId() {

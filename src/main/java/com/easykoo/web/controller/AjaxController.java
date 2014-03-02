@@ -136,12 +136,63 @@ public class AjaxController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/readFeedback.do")
+    public String readFeedback(@RequestParam(value = "id") int id) {
+        Feedback feedback = feedbackService.selectByPrimaryKey(id);
+        feedback.setViewed(true);
+        feedbackService.updateByPrimaryKey(feedback);
+        return "true";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getFeedbackCount.do")
+    public int getFeedbackCount() {
+        return feedbackService.getUnreadFeedbackCount();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getTop5Feedback.do")
+    public List<Feedback> getTop5Feedback() {
+        return feedbackService.getTop5Feedback();
+    }
+
+    @RequestMapping(value = "/deleteFeedback.do", produces = "application/json")
+    public
+    @ResponseBody
+    String deleteFeedback(@RequestParam(value = "id") int id) {
+        feedbackService.deleteByPrimaryKey(id);
+        return "true";
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/subscribe.do")
     public String registerAccount(@RequestParam("email") String email) {
         Subscribe subscribe = new Subscribe();
         subscribe.setEmail(email);
         subscribeService.insert(subscribe);
         return "true";
+    }
+
+
+    @RequestMapping(value = "/allFeedback.do", produces = "application/json")
+    public
+    @ResponseBody
+    DataTablesResponse allFeedback(@RequestParam int iDisplayStart, @RequestParam int iDisplayLength, @RequestParam int iSortCol_0, @RequestParam String sSortDir_0, HttpServletRequest request) {
+
+        DataTablesResponse<Feedback> dt = new DataTablesResponse<Feedback>();
+
+        Feedback feedback = new Feedback();
+        feedback.setPageActived(true);
+        feedback.setPageSize(iDisplayLength);
+        feedback.setDisplayStart(iDisplayStart);
+        String sortColumn = request.getParameter("mDataProp_" + iSortCol_0);
+        feedback.addSortProperties(sortColumn, sSortDir_0);
+        List<Feedback> feedbackList = feedbackService.findFeedbackWithPage(feedback);
+
+        dt.setData(feedbackList);  // this is the dataset reponse to client
+        dt.setTotalDisplayRecords(feedback.getTotalRecord());  // // the total data in db for datatables to calculate page no. and position
+        dt.setTotalRecords(feedback.getTotalRecord());   // the total data in db for datatables to calculate page no.
+        return dt;
     }
 
     public IAccountService getAccountService() {
