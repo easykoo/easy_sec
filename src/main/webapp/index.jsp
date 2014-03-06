@@ -27,8 +27,8 @@
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-    <script src="/js/html5shiv.js"></script>
-    <script src="/js/respond.min.js"></script>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.js"></script>
     <![endif]-->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 </head>
@@ -346,10 +346,11 @@
             <h3><spring:message code="label.leave.message"/></h3>
 
             <form role="form" id="contact-form" action="common/addFeedback.do" method="post">
-                <input name="name" type="text" class="form-control" placeholder="<spring:message code="label.name" />">
-                <input name="email" type="text" class="form-control"
+                <input id="name" name="name" type="text" class="form-control"
+                       placeholder="<spring:message code="label.name" />">
+                <input id="email" name="email" type="text" class="form-control"
                        placeholder="<spring:message code="label.email.format" />">
-                <textarea name="content" rows="6" class="form-control"
+                <textarea id="content" name="content" rows="6" class="form-control"
                           placeholder="<spring:message code="label.your.feedback" />"></textarea>
                 <button type="button" id="feedback_btn" class="btn btn-primary btn-centered"><spring:message
                         code="label.send"/></button>
@@ -383,7 +384,7 @@
                 <input id="subscribe_mail" type="email" placeholder="xxx@xxx.xxx" name="EMAIL" class="subscribe">
             </div>
             <div class="col-md-2">
-                <button id="subscribe_btn" type="button" class="btn btn-primary pull-right btn-block"><spring:message
+                <button id="subscribe_btn" type="submit" class="btn btn-primary pull-right btn-block"><spring:message
                         code="label.subscribe"/></button>
             </div>
         </form>
@@ -407,7 +408,7 @@
         </div>
     </div>
 </footer>
-<script src="js/jquery.min.js"></script>
+<script src="js/jquery-1.10.2.js"></script>
 <script src="js/jquery.validate.min.js"></script>
 
 <!-- JQUERY END -->
@@ -449,27 +450,32 @@
 //                        .closest('.control-group').removeClass('error').addClass('success');
                 element.addClass('valid')
                         .closest('.control-group').removeClass('error').addClass('success');
+            },
+            submitHandler:function(form){
+                alert("submitted");
+                form.submit();
             }
         });
-        $('#feedback_btn').click(function(){
+
+        /*$('#feedback_btn').click(function () {
             $.ajax('ajax/addFeedback.do', {
                 dataType: 'json',
                 data: $("#contact-form").serialize(),
                 success: function (data) {
                     if (data == 'true') {
-                                alert('发表成功!');
+                        alert('发表成功!');
                     }
                 }
             });
-        });
+        });*/
 
         function isEmail(email) {
             var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
             return regex.test(email);
         };
-        $('#subscribe_btn').click(function(){
+        $('#subscribe_btn').click(function () {
             var mail = $('#subscribe_mail').val();
-            if(isEmail(mail)){
+            if (isEmail(mail)) {
                 $.ajax('ajax/subscribe.do', {
                     dataType: 'json',
                     data: {
