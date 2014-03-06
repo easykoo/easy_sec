@@ -1,3 +1,4 @@
+<%@ page import="org.springframework.web.servlet.support.RequestContextUtils" %>
 <!DOCTYPE html>
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=utf-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -34,7 +35,7 @@
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header"><spring:message code="label.all.account" /></h1>
+            <h1 class="page-header"><spring:message code="label.all.account"/></h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -90,130 +91,130 @@
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->
 <script type="text/javascript" charset="utf-8">
 
-function deleteAccount(accountID) {
-    bootbox.dialog({
-        message: "Are you sure to delete this account?",
-        title: "Delete Account",
-        buttons: {
-            main: {
-                label: "Cancel",
-                className: "btn-default",
-                callback: function () {
-                }
-            },
-            danger: {
-                label: "Yes",
-                className: "btn-danger",
-                callback: function (result) {
-                    if (result) {
-                        $.ajax('ajax/deleteAccount.do', {
-                            dataType: 'json',
-                            data: {
-                                accountId: accountID
-                            },
-                            success: function (data) {
-                                if (data == 'true') {
+    function deleteAccount(accountID) {
+        bootbox.dialog({
+            message: "Are you sure to delete this account?",
+            title: "Delete Account",
+            buttons: {
+                main: {
+                    label: "Cancel",
+                    className: "btn-default",
+                    callback: function () {
+                    }
+                },
+                danger: {
+                    label: "Yes",
+                    className: "btn-danger",
+                    callback: function (result) {
+                        if (result) {
+                            $.ajax('ajax/deleteAccount.do', {
+                                dataType: 'json',
+                                data: {
+                                    accountId: accountID
+                                },
+                                success: function (data) {
+                                    if (data == 'true') {
 //                                alert('删除成功!');
-                                    start = $("#dataTables-example").dataTable().fnSettings()._iDisplayStart;
-                                    total = $("#dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
-                                    window.location.reload();
-                                    if ((total - start) == 1) {
-                                        if (start > 0) {
-                                            $("#dataTables-example").dataTable().fnPageChange('previous', true);
+                                        start = $("#dataTables-example").dataTable().fnSettings()._iDisplayStart;
+                                        total = $("#dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
+                                        window.location.reload();
+                                        if ((total - start) == 1) {
+                                            if (start > 0) {
+                                                $("#dataTables-example").dataTable().fnPageChange('previous', true);
+                                            }
                                         }
                                     }
+                                    else {
+                                        var obj = $.parseJSON(data);
+                                        bootbox.alert(obj.error, function () {
+                                        });
+                                    }
                                 }
-                                else {
-                                    var obj = $.parseJSON(data);
-                                    bootbox.alert(obj.error, function () {
-                                    });
-                                }
-                            }
-                        });
+                            });
+                        }
                     }
                 }
             }
-        }
-    });
-}
+        });
+    }
 
-function banAccount(accountID) {
-    bootbox.dialog({
-        message: "Are you sure to ban this account?",
-        title: "Ban Account",
-        buttons: {
-            main: {
-                label: "Cancel",
-                className: "btn-default",
-                callback: function () {
-                }
-            },
-            danger: {
-                label: "Yes",
-                className: "btn-danger",
-                callback: function (result) {
-                    if (result) {
-                        $.ajax('ajax/banAccount.do', {
-                            dataType: 'json',
-                            data: {
-                                accountId: accountID
-                            },
-                            success: function (data) {
-                                if (data == 'true') {
-                                    window.location.reload();
+    function banAccount(accountID) {
+        bootbox.dialog({
+            message: "Are you sure to ban this account?",
+            title: "Ban Account",
+            buttons: {
+                main: {
+                    label: "Cancel",
+                    className: "btn-default",
+                    callback: function () {
+                    }
+                },
+                danger: {
+                    label: "Yes",
+                    className: "btn-danger",
+                    callback: function (result) {
+                        if (result) {
+                            $.ajax('ajax/banAccount.do', {
+                                dataType: 'json',
+                                data: {
+                                    accountId: accountID
+                                },
+                                success: function (data) {
+                                    if (data == 'true') {
+                                        window.location.reload();
+                                    }
+                                    else {
+                                        var obj = $.parseJSON(data);
+                                        bootbox.alert(obj.error, function () {
+                                        });
+                                    }
                                 }
-                                else {
-                                    var obj = $.parseJSON(data);
-                                    bootbox.alert(obj.error, function () {
-                                    });
-                                }
-                            }
-                        });
+                            });
+                        }
                     }
                 }
             }
-        }
-    });
-}
+        });
+    }
 
-function unbanAccount(accountID) {
-    bootbox.dialog({
-        message: "Are you sure to unban this account?",
-        title: "Ban Account",
-        buttons: {
-            main: {
-                label: "Cancel",
-                className: "btn-default",
-                callback: function () {
-                }
-            },
-            danger: {
-                label: "Yes",
-                className: "btn-success",
-                callback: function (result) {
-                    if (result) {
-                        $.ajax('ajax/unbanAccount.do', {
-                            dataType: 'json',
-                            data: {
-                                accountId: accountID
-                            },
-                            success: function (data) {
-                                if (data == 'true') {
-                                    window.location.reload();
+    function unbanAccount(accountID) {
+        bootbox.dialog({
+            message: "Are you sure to unban this account?",
+            title: "Ban Account",
+            buttons: {
+                main: {
+                    label: "Cancel",
+                    className: "btn-default",
+                    callback: function () {
+                    }
+                },
+                danger: {
+                    label: "Yes",
+                    className: "btn-success",
+                    callback: function (result) {
+                        if (result) {
+                            $.ajax('ajax/unbanAccount.do', {
+                                dataType: 'json',
+                                data: {
+                                    accountId: accountID
+                                },
+                                success: function (data) {
+                                    if (data == 'true') {
+                                        window.location.reload();
+                                    }
+                                    else {
+                                        var obj = $.parseJSON(data);
+                                        bootbox.alert(obj.error, function () {
+                                        });
+                                    }
                                 }
-                                else {
-                                    var obj = $.parseJSON(data);
-                                    bootbox.alert(obj.error, function () {
-                                    });
-                                }
-                            }
-                        });
+                            });
+                        }
                     }
                 }
             }
-        }
-    });
-}
+        });
+    }
 
     $(document).ready(function () {
 
@@ -279,19 +280,9 @@ function unbanAccount(accountID) {
                 return nRow;
             },
             "oLanguage": {
-                "sLengthMenu": "每页显示 _MENU_ 条记录",
-                "sProcessing": "加载中......",
-                "sZeroRecords": "抱歉， 没有数据",
-                "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
-                "sInfoEmpty": "没有数据",
-                "sInfoFiltered": "(从 _MAX_ 条数据中查找)",
-                "oPaginate": {
-                    "sFirst": "首页",
-                    "sPrevious": "上页",
-                    "sNext": "下页",
-                    "sLast": "尾页"
-                }
-            }, "aoColumnDefs": [
+                sUrl: [ "css/plugins/dataTables/<%=RequestContextUtils.getLocaleResolver(request).resolveLocale(request)%>.txt"]
+            },
+            "aoColumnDefs": [
                 { "bSortable": false, "aTargets": [ 6 ] }
             ]
         });

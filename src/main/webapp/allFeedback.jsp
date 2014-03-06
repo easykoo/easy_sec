@@ -1,3 +1,4 @@
+<%@ page import="org.springframework.web.servlet.support.RequestContextUtils" %>
 <!DOCTYPE html>
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=utf-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -225,7 +226,7 @@
                 return nRow;
             },
             "oLanguage": {
-                sUrl: "css/plugins/dataTables/zh_CN.txt"
+                sUrl: [ "css/plugins/dataTables/<%=RequestContextUtils.getLocaleResolver(request).resolveLocale(request)%>.txt"]
             },
             "aoColumnDefs": [
                 { "bSortable": false, "aTargets": [ 5 ] }
