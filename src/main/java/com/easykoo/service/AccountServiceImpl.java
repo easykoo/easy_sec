@@ -86,7 +86,9 @@ public class AccountServiceImpl implements IAccountService {
         if (accountSecurity == null) {
             accountSecurity = new AccountSecurity();
         }
-        BeanUtils.copyProperties(account, accountSecurity);
+        if (account != null) {
+            BeanUtils.copyProperties(account, accountSecurity);
+        }
         return accountSecurity;
     }
 
