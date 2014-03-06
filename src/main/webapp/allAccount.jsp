@@ -280,18 +280,17 @@ function unbanAccount(accountID) {
             },
             "oLanguage": {
                 "sLengthMenu": "每页显示 _MENU_ 条记录",
-                "sZeroRecords": "抱歉， 没有找到",
+                "sProcessing": "加载中......",
+                "sZeroRecords": "抱歉， 没有数据",
                 "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
                 "sInfoEmpty": "没有数据",
-                "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
+                "sInfoFiltered": "(从 _MAX_ 条数据中查找)",
                 "oPaginate": {
                     "sFirst": "首页",
-                    "sPrevious": "前一页",
-                    "sNext": "后一页",
+                    "sPrevious": "上页",
+                    "sNext": "下页",
                     "sLast": "尾页"
-                },
-                "sZeroRecords": "没有检索到数据",
-                "sProcessing": "加载中......"
+                }
             }, "aoColumnDefs": [
                 { "bSortable": false, "aTargets": [ 6 ] }
             ]
