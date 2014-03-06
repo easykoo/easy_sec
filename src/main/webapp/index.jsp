@@ -86,7 +86,7 @@
                         </li>
                     </c:when>
                     <c:otherwise>
-                        <li><a href="account/login.do"><spring:message code="label.sign.in"/></a></li>
+                        <li><a href="account/loginView.do?url=<%=request.getRequestURL()%>"><spring:message code="label.sign.in"/></a></li>
                         <%--<li><button type="button" class="btn btn-default"><spring:message code="label.sign.in"/></button></li>--%>
                         <li><a href="account/registerAccountView.do"><spring:message code="label.sign.up"/></a></li>
                     </c:otherwise>

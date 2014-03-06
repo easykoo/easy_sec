@@ -7,6 +7,7 @@ import com.easykoo.mybatis.model.Page;
 import com.easykoo.service.IAccountService;
 import com.easykoo.service.IAccountSessionService;
 import com.easykoo.util.CookiesUtil;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,16 +35,29 @@ public class AccountController {
     private IAccountSessionService accountSessionService;
     private IAccountService accountService;
 
-    @RequestMapping(value = "/login.do", method = RequestMethod.GET)
-    public String loginForm(ModelMap model) {
+    @RequestMapping(value = "/loginView.do", method = RequestMethod.GET)
+    public String loginForm(@RequestParam(value = "url") String url, HttpServletRequest request) {
+        AccountSecurity currentAccountSecurity = (AccountSecurity) request.getSession().getAttribute("currentAccountSecurity");
+        if (currentAccountSecurity != null && currentAccountSecurity.getUsername() != null) {
+            logger.debug(currentAccountSecurity.getUsername() + " already signed in!");
+            if (StringUtils.isNotBlank(url)) {
+                return "redirect:" + url;
+            }
+            return "redirect:/admin/dashboard.do";
+        }
+        request.getSession().setAttribute("beforeLoginUrl", url);
         return "login";
     }
 
     @RequestMapping(value = "/login.do", method = RequestMethod.POST)
     public String login(@ModelAttribute("accountSecurity") AccountSecurity accountSecurity, HttpServletRequest request, HttpServletResponse response, ModelMap model) {
-        AccountSecurity currentAccountSecurity = (AccountSecurity) model.get("currentAccountSecurity");
+        AccountSecurity currentAccountSecurity = (AccountSecurity) request.getSession().getAttribute("currentAccountSecurity");
+        String url = (String) request.getSession().getAttribute("beforeLoginUrl");
         if (currentAccountSecurity != null && currentAccountSecurity.getUsername() != null) {
             logger.debug(currentAccountSecurity.getUsername() + " already signed in!");
+            if (StringUtils.isNotBlank(url)) {
+                return "redirect:" + url;
+            }
             return "redirect:/admin/dashboard.do";
         }
 
@@ -67,6 +81,9 @@ public class AccountController {
                 accountSession.setAccountId(dbAccountSecurity.getAccountId());
                 accountSession.setExpireDate(new Date(new Date().getTime() + CookiesUtil.expiry * 1000));
                 accountSessionService.insertSelective(accountSession);
+            }
+            if (StringUtils.isNotBlank(url)) {
+                return "redirect:" + url;
             }
             return "redirect:/admin/dashboard.do";
         }

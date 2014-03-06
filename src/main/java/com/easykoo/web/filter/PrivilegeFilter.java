@@ -35,12 +35,12 @@ public class PrivilegeFilter
     private static IPrivilegeService privilegeService;
     private static IAccountService accountService;
     private static IAccountSessionService accountSessionService;
-    private final static String[] notFilter = new String[]{"/", ".js", ".css", ".jpg", ".png",".ico",".txt"
+    private final static String[] noNeedFilter = new String[]{"/", ".js", ".css", ".jpg", ".png",".ico",".txt"
             , ".otf", ".eot", ".svg", ".ttf", ".woff", ".scss", ".woff"
-            , "index.html", "index.jsp"};
+            , "index.html", "index.jsp", "registerAccountView.do", "getVerifyCodeImage.do", "addFeedback.do", "subscribe.do"};
 
-    private final static String[] notAuthorize = new String[]{ "index.do", "logout.do", "login.do"
-            , "registerAccountView.do", "getVerifyCodeImage.do", "addFeedback.do", "subscribe.do"};
+    private final static String[] noNeedLogin = new String[]{ "index.do", "logout.do", "login.do", "loginView.do"
+            , };
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
@@ -55,7 +55,7 @@ public class PrivilegeFilter
             return;
         }*/
         boolean checkAuthorize = true;
-        for (String s : notFilter) {
+        for (String s : noNeedFilter) {
             if (path.endsWith(s)) {
                 logger.debug("End with:" + s);
                 filterChain.doFilter(request, response);
@@ -116,7 +116,7 @@ public class PrivilegeFilter
 
 
         logger.debug("Check privilege:" + path);
-        for (String s : notAuthorize) {
+        for (String s : noNeedLogin) {
             if (path.endsWith(s)) {
                 logger.debug("End with:" + s);
                 checkAuthorize = false;
