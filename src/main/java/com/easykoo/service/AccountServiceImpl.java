@@ -83,12 +83,10 @@ public class AccountServiceImpl implements IAccountService {
     public AccountSecurity selectFullByPrimaryKey(Integer accountId) {
         Account account = accountMapper.selectByPrimaryKey(accountId);
         AccountSecurity accountSecurity = accountSecurityMapper.selectByPrimaryKey(accountId);
-        if (accountSecurity == null) {
-            accountSecurity = new AccountSecurity();
+        if (accountSecurity == null || account == null) {
+            return null;
         }
-        if (account != null) {
-            BeanUtils.copyProperties(account, accountSecurity);
-        }
+        BeanUtils.copyProperties(account, accountSecurity);
         return accountSecurity;
     }
 

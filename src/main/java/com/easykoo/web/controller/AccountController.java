@@ -6,6 +6,7 @@ import com.easykoo.mybatis.model.AccountSession;
 import com.easykoo.mybatis.model.Page;
 import com.easykoo.service.IAccountService;
 import com.easykoo.service.IAccountSessionService;
+import com.easykoo.util.CookiesUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,24 +60,12 @@ public class AccountController {
             logger.debug(dbAccountSecurity.getUsername() + " signs in successfully!");
             model.addAttribute("currentAccountSecurity", dbAccountSecurity);
             if (accountSecurity.getRememberMe() == 1) {
-                int expiry = 7 * 24 * 60 * 60;
-                Cookie ckUsername, ckSessionId;
-                ckUsername = new Cookie("username", dbAccountSecurity.getUsername());
-                ckUsername.setMaxAge(expiry);
-                ckUsername.setPath("/");
-                response.addCookie(ckUsername);
-
-                String sessionId = request.getSession().getId(); // 取得当前的session id
-                ckSessionId = new Cookie("sessionId", sessionId);
-                ckSessionId.setMaxAge(expiry);
-                ckSessionId.setPath("/");
-                response.addCookie(ckSessionId);
-
+                CookiesUtil.createCookies(dbAccountSecurity.getUsername(), request.getSession().getId(), response);
                 AccountSession accountSession = new AccountSession();
-                accountSession.setSessionId(sessionId);
+                accountSession.setSessionId(request.getSession().getId());
                 accountSession.setUsername(dbAccountSecurity.getUsername());
                 accountSession.setAccountId(dbAccountSecurity.getAccountId());
-                accountSession.setExpireDate(new Date(new Date().getTime() + expiry * 1000));
+                accountSession.setExpireDate(new Date(new Date().getTime() + CookiesUtil.expiry * 1000));
                 accountSessionService.insertSelective(accountSession);
             }
             return "redirect:/admin/dashboard.do";
