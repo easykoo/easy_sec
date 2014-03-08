@@ -113,14 +113,8 @@
                                 },
                                 success: function (data) {
                                     if (data == 'true') {
-                                        start = feedbackTable.fnSettings()._iDisplayStart;
-                                        total = feedbackTable.fnSettings().fnRecordsDisplay();
-                                        window.location.reload();
-                                        if ((total - start) == 1) {
-                                            if (start > 0) {
-                                                feedbackTable.fnPageChange('previous', true);
-                                            }
-                                        }
+                                        feedbackTable.fnClearTable(0);
+                                        feedbackTable.fnDraw();
                                     }
                                     else {
                                         var obj = $.parseJSON(data);
@@ -156,8 +150,8 @@
                                     data: {id: id},
                                     success: function (data) {
                                         if (data == 'true') {
-                                            feedbackTable.fnDestroy();
-                                            getAllFeedback();
+                                            feedbackTable.fnClearTable(0);
+                                            feedbackTable.fnDraw();
                                         }
                                     }
                                 });
