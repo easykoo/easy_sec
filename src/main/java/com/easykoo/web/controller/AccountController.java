@@ -114,7 +114,7 @@ public class AccountController {
 
             model.addAttribute("currentAccountSecurity", new AccountSecurity());
         }
-        return "login";
+        return "index";
     }
 
 
