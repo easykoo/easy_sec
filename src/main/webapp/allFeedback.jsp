@@ -113,7 +113,6 @@
                                 },
                                 success: function (data) {
                                     if (data == 'true') {
-//                                alert('删除成功!');
                                         start = feedbackTable.fnSettings()._iDisplayStart;
                                         total = feedbackTable.fnSettings().fnRecordsDisplay();
                                         window.location.reload();
@@ -226,7 +225,7 @@
                 return nRow;
             },
             "oLanguage": {
-                sUrl: [ "css/plugins/dataTables/<%=RequestContextUtils.getLocaleResolver(request).resolveLocale(request)%>.txt"]
+                sUrl: [ "css/plugins/dataTables/<spring:message code="language"/>.txt"]
             },
             "aoColumnDefs": [
                 { "bSortable": false, "aTargets": [ 5 ] }

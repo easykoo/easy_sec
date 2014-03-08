@@ -114,7 +114,6 @@
                                 },
                                 success: function (data) {
                                     if (data == 'true') {
-//                                alert('删除成功!');
                                         start = $("#dataTables-example").dataTable().fnSettings()._iDisplayStart;
                                         total = $("#dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
                                         window.location.reload();
@@ -280,7 +279,7 @@
                 return nRow;
             },
             "oLanguage": {
-                sUrl: [ "css/plugins/dataTables/<%=RequestContextUtils.getLocaleResolver(request).resolveLocale(request)%>.txt"]
+                sUrl: [ "css/plugins/dataTables/<spring:message code="language"/>.txt"]
             },
             "aoColumnDefs": [
                 { "bSortable": false, "aTargets": [ 6 ] }
