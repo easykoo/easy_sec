@@ -30,7 +30,7 @@
         <ul class="nav navbar-top-links navbar-right">
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:">
-                    <span id="feedbackCount"></span>
+                    <span id="feedbackCount" class="badge"></span>
                     <i class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
                 </a>
                 <ul id="feedback_notification" class="dropdown-menu dropdown-messages">
