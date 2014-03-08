@@ -355,7 +355,7 @@
                           placeholder="<spring:message code="label.your.feedback" />"></textarea>
                 <button type="submit" id="feedback_btn" class="btn btn-primary btn-centered"><spring:message
                         code="label.send"/></button>
-                <input type="reset" style="display:none;" />
+                <input type="reset" style="display:none;"/>
             </form>
         </div>
         <div class="col-md-6">
@@ -382,7 +382,7 @@
                 <h4><spring:message code="label.subscribe.last.news"/></h4>
             </div>
             <div class="col-md-6">
-                <input id="subscribe_mail" type="email" placeholder="xxx@xxx.xxx" name="EMAIL" class="subscribe">
+                <input id="subscribe_mail" type="email" placeholder="xxx@xxx.xxx" name="email" class="subscribe">
             </div>
             <div class="col-md-2">
                 <button id="subscribe_btn" type="submit" class="btn btn-primary pull-right btn-block"><spring:message
@@ -444,7 +444,7 @@
                 },
                 email: {
                     required: '<spring:message code="message.error.email.is.required"/>',
-                    email:  '<spring:message code="message.error.wrong.email.format"/>'
+                    email: '<spring:message code="message.error.wrong.email.format"/>'
                 },
                 content: {
                     required: '<spring:message code="message.error.content.is.required"/>',
@@ -484,7 +484,7 @@
             messages: {
                 email: {
                     required: '<spring:message code="message.error.email.is.required"/>',
-                    email:  '<spring:message code="message.error.wrong.email.format"/>'
+                    email: '<spring:message code="message.error.wrong.email.format"/>'
                 }
             },
             focusInvalid: true,
@@ -493,45 +493,29 @@
                 $.ajax({
                     cache: true,
                     type: "POST",
-                    url: "ajax/addSubscribe.do",
+                    dataType: 'json',
+                    url: "ajax/subscribe.do",
                     data: $('#subscribeForm').serialize(),
                     async: false,
                     error: function (request) {
                         alert("Connection error");
                     },
                     success: function (data) {
-                        if (data) {
+                        if (data == 'true') {
                             alert('<spring:message code="message.subscribe.success"/>');
-                            $("#contactForm input[type=reset]").trigger("click");
+                            $("#subscribeForm input[type=email]").val('');
+                        } else {
+                            var obj = $.parseJSON(data);
+                            if (obj.error == 'Already') {
+                                alert('<spring:message code="message.already.subscribed"/>');
+                            }
+                            $("#subscribeForm input[type=email]").val('');
                         }
                     }
                 });
                 return false;
             }
         });
-
-        function isEmail(email) {
-            var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-            return regex.test(email);
-        };
-        $('#subscribe_btn').click(function () {
-            var mail = $('#subscribe_mail').val();
-            if (isEmail(mail)) {
-                $.ajax('ajax/subscribe.do', {
-                    dataType: 'json',
-                    data: {
-                        email: mail
-                    },
-                    success: function (data) {
-                        if (data == 'true') {
-                            alert('订阅成功!');
-                        }
-                    }
-                });
-            } else {
-                alert('请输入正确的email格式');
-            }
-        })
     })
 </script>
 </body>

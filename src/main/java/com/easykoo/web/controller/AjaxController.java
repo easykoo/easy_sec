@@ -1,24 +1,24 @@
 package com.easykoo.web.controller;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.easykoo.mybatis.model.*;
+import com.easykoo.mybatis.model.Account;
+import com.easykoo.mybatis.model.DataTablesResponse;
+import com.easykoo.mybatis.model.Feedback;
+import com.easykoo.mybatis.model.Subscribe;
+import com.easykoo.service.IAccountService;
+import com.easykoo.service.IAccountSessionService;
 import com.easykoo.service.IFeedbackService;
 import com.easykoo.service.ISubscribeService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.codehaus.jackson.JsonProcessingException;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import com.easykoo.service.IAccountService;
-import com.easykoo.service.IAccountSessionService;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * Feb 22, 2014    Steven
@@ -130,7 +130,7 @@ public class AjaxController {
 
     @ResponseBody
     @RequestMapping(value = "/addFeedback.do")
-    public String registerAccount(@ModelAttribute("feedback") Feedback feedback) {
+    public String addFeedback(@ModelAttribute("feedback") Feedback feedback) {
         feedbackService.insert(feedback);
         return "true";
     }
@@ -160,16 +160,23 @@ public class AjaxController {
     public
     @ResponseBody
     String deleteFeedback(@RequestParam(value = "id") int id) {
+        Feedback feedback = feedbackService.selectByPrimaryKey(id);
+        if (feedback!= null){
         feedbackService.deleteByPrimaryKey(id);
         return "true";
+        }
+        return "{\"error\":\"Feedback is not exists!\"}";
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/subscribe.do")
-    public String registerAccount(@RequestParam("email") String email) {
-        Subscribe subscribe = new Subscribe();
-        subscribe.setEmail(email);
-        subscribeService.insert(subscribe);
+
+    @RequestMapping(value = "/subscribe.do", produces = "application/json")
+    public @ResponseBody String subscribe(@ModelAttribute("subscribe") Subscribe subscribe) {
+        try {
+            subscribeService.insert(subscribe);
+        } catch (DuplicateKeyException e) {
+            logger.error(e);
+            return "{\"error\":\"Already\"}";
+        }
         return "true";
     }
 
