@@ -434,7 +434,7 @@
                 },
                 content: {
                     required: true,
-                    byteRangeLength: [3, 15]
+                    byteRangeLength: [5, 200]
                 }
             },
             messages: {
