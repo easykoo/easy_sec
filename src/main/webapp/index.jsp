@@ -86,7 +86,8 @@
                         </li>
                     </c:when>
                     <c:otherwise>
-                        <li><a href="account/loginView.do?url=<%=request.getRequestURL()%>"><spring:message code="label.sign.in"/></a></li>
+                        <li><a href="account/loginView.do?url=<%=request.getRequestURL()%>"><spring:message
+                                code="label.sign.in"/></a></li>
                         <%--<li><button type="button" class="btn btn-default"><spring:message code="label.sign.in"/></button></li>--%>
                         <li><a href="account/registerAccountView.do"><spring:message code="label.sign.up"/></a></li>
                     </c:otherwise>
@@ -345,15 +346,16 @@
         <div class="col-md-6">
             <h3><spring:message code="label.leave.message"/></h3>
 
-            <form role="form" id="contact-form" action="common/addFeedback.do" method="post">
+            <form role="form" id="contactForm" action="ajax/addFeedback.do" method="post">
                 <input id="name" name="name" type="text" class="form-control"
                        placeholder="<spring:message code="label.name" />">
                 <input id="email" name="email" type="text" class="form-control"
                        placeholder="<spring:message code="label.email.format" />">
                 <textarea id="content" name="content" rows="6" class="form-control"
                           placeholder="<spring:message code="label.your.feedback" />"></textarea>
-                <button type="button" id="feedback_btn" class="btn btn-primary btn-centered"><spring:message
+                <button type="submit" id="feedback_btn" class="btn btn-primary btn-centered"><spring:message
                         code="label.send"/></button>
+                <input type="reset" style="display:none;" />
             </form>
         </div>
         <div class="col-md-6">
@@ -375,8 +377,7 @@
 <!-- Newsletter -->
 <div class="newsletter color-1">
     <div class="inner-page row">
-
-        <form role="form" id="subscribe-form" action="common/addFeedback.do" method="post">
+        <form role="form" id="subscribeForm" action="ajax/addSubscribe.do" method="post">
             <div class="col-md-4">
                 <h4><spring:message code="label.subscribe.last.news"/></h4>
             </div>
@@ -410,6 +411,7 @@
 </footer>
 <script src="js/jquery-1.10.2.js"></script>
 <script src="js/jquery.validate.min.js"></script>
+<script src="js/jquery.validate.method.js"></script>
 
 <!-- JQUERY END -->
 <script src="js/p-controls.min.js"></script>
@@ -419,55 +421,94 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        $("#contact-form").validate({
+
+        $("#contactForm").validate({
             rules: {
-                name: "required",
+                name: {
+                    required: true,
+                    minlength: 3
+                },
                 email: {
                     required: true,
                     email: true
                 },
                 content: {
                     required: true,
-                    minength: 5
+                    byteRangeLength: [3, 15]
                 }
             },
             messages: {
-                name: "请输入姓名",
+                name: {
+                    required: '<spring:message code="message.error.name.is.required"/>',
+                    minlength: '<spring:message code="message.error.name.must.great.than.characters"/>'
+                },
                 email: {
-                    required: "请输入Email地址",
-                    email: "请输入正确的email地址"
+                    required: '<spring:message code="message.error.email.is.required"/>',
+                    email:  '<spring:message code="message.error.wrong.email.format"/>'
                 },
                 content: {
-                    required: "请输入内容",
-                    minlength: jQuery.format("内容不能小于{0}个字符")
+                    required: '<spring:message code="message.error.content.is.required"/>',
+                    byteRangeLength: '<spring:message code="message.error.content.length"/>'
                 }
             },
-            highlight: function (element) {
-                $(element).closest('.control-group').removeClass('success').addClass('error');
-            },
-            success: function (element) {
-//                element.text('OK!').addClass('valid')
-//                        .closest('.control-group').removeClass('error').addClass('success');
-                element.addClass('valid')
-                        .closest('.control-group').removeClass('error').addClass('success');
-            },
-            submitHandler:function(form){
-                alert("submitted");
-                form.submit();
+            focusInvalid: true,
+            onkeyup: false,
+            submitHandler: function (form) {
+                $.ajax({
+                    cache: true,
+                    type: "POST",
+                    url: "ajax/addFeedback.do",
+                    data: $('#contactForm').serialize(),
+                    async: false,
+                    error: function (request) {
+                        alert("Connection error");
+                    },
+                    success: function (data) {
+                        if (data) {
+                            alert('<spring:message code="message.submit.success"/>');
+                            $("#contactForm input[type=reset]").trigger("click");
+                        }
+                    }
+                });
+                return false;
             }
         });
 
-        /*$('#feedback_btn').click(function () {
-            $.ajax('ajax/addFeedback.do', {
-                dataType: 'json',
-                data: $("#contact-form").serialize(),
-                success: function (data) {
-                    if (data == 'true') {
-                        alert('发表成功!');
-                    }
+        $("#subscribeForm").validate({
+            rules: {
+                email: {
+                    required: true,
+                    email: true
                 }
-            });
-        });*/
+            },
+            messages: {
+                email: {
+                    required: '<spring:message code="message.error.email.is.required"/>',
+                    email:  '<spring:message code="message.error.wrong.email.format"/>'
+                }
+            },
+            focusInvalid: true,
+            onkeyup: false,
+            submitHandler: function (form) {
+                $.ajax({
+                    cache: true,
+                    type: "POST",
+                    url: "ajax/addSubscribe.do",
+                    data: $('#subscribeForm').serialize(),
+                    async: false,
+                    error: function (request) {
+                        alert("Connection error");
+                    },
+                    success: function (data) {
+                        if (data) {
+                            alert('<spring:message code="message.subscribe.success"/>');
+                            $("#contactForm input[type=reset]").trigger("click");
+                        }
+                    }
+                });
+                return false;
+            }
+        });
 
         function isEmail(email) {
             var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
