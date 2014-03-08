@@ -91,6 +91,8 @@
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->
 <script type="text/javascript" charset="utf-8">
 
+    var accountTable;
+
     function deleteAccount(accountID) {
         bootbox.dialog({
             message: "Are you sure to delete this account?",
@@ -114,14 +116,8 @@
                                 },
                                 success: function (data) {
                                     if (data == 'true') {
-                                        start = $("#dataTables-example").dataTable().fnSettings()._iDisplayStart;
-                                        total = $("#dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
-                                        window.location.reload();
-                                        if ((total - start) == 1) {
-                                            if (start > 0) {
-                                                $("#dataTables-example").dataTable().fnPageChange('previous', true);
-                                            }
-                                        }
+                                        accountTable.fnClearTable(0);
+                                        accountTable.fnDraw();
                                     }
                                     else {
                                         var obj = $.parseJSON(data);
@@ -160,7 +156,8 @@
                                 },
                                 success: function (data) {
                                     if (data == 'true') {
-                                        window.location.reload();
+                                        accountTable.fnClearTable(0);
+                                        accountTable.fnDraw();
                                     }
                                     else {
                                         var obj = $.parseJSON(data);
@@ -199,7 +196,8 @@
                                 },
                                 success: function (data) {
                                     if (data == 'true') {
-                                        window.location.reload();
+                                        accountTable.fnClearTable(0);
+                                        accountTable.fnDraw();
                                     }
                                     else {
                                         var obj = $.parseJSON(data);
@@ -216,8 +214,7 @@
     }
 
     $(document).ready(function () {
-
-        $('#dataTables-example').dataTable({
+        accountTable = $('#dataTables-example').dataTable({
             bPaginate: true,
             bProcessing: true,
             bServerSide: true,
