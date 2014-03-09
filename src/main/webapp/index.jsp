@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=utf-8" isELIgnored="false" %>
+
+<%@ taglib prefix="au" uri="authorize" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%
@@ -74,12 +76,20 @@
                                data-toggle="dropdown">${currentAccountSecurity.nickname}
                                 <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="admin/dashboard.do"><i class="fa fa-dashboard fa-fw"></i> <spring:message
-                                        code="label.dashboard"/></a></li>
-                                <li><a href="account/profile.do"><i class="fa fa-user fa-fw"></i> <spring:message
-                                        code="label.profile"/></a></li>
-                                <li><a href="account/settings.do"><i class="fa fa-gear fa-fw"></i> <spring:message
-                                        code="label.settings"/></a></li>
+                                <au:test uri="/admin/dashboard.do">
+                                    <li><a href="admin/dashboard.do"><i class="fa fa-dashboard fa-fw"></i>
+                                        <spring:message
+                                                code="label.dashboard"/></a></li>
+                                </au:test>
+                                <au:test uri="/admin/settings.do">
+                                    <li><a href="admin/settings.do"><i class="fa fa-gear fa-fw"></i> <spring:message
+                                            code="label.settings"/></a></li>
+                                </au:test>
+                                <au:test uri="/admin/profile.do">
+                                    <li><a href="admin/profile.do"><i class="fa fa-user fa-fw"></i> <spring:message
+                                            code="label.profile"/></a></li>
+                                </au:test>
+                                <li class="divider"></li>
                                 <li><a href="account/logout.do"><i class="fa fa-sign-out fa-fw"></i> <spring:message
                                         code="label.logout"/></a></li>
                             </ul>

@@ -43,82 +43,37 @@
                             code="label.all.feedback"/></a>
                 </li>
             </au:test>
-            <li>
-                <a href="javascript:"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level collapse">
-                    <li>
-                        <a href="flot.html">Flot Charts</a>
-                    </li>
-                    <li>
-                        <a href="morris.html">Morris.js Charts</a>
-                    </li>
-                </ul>
-                <!-- /.nav-second-level -->
-            </li>
-            <li>
-                <a href="javascript:"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level collapse">
-                    <li>
-                        <a href="panels-wells.html">Panels and Wells</a>
-                    </li>
-                    <li>
-                        <a href="buttons.html">Buttons</a>
-                    </li>
-                    <li>
-                        <a href="notifications.html">Notifications</a>
-                    </li>
-                    <li>
-                        <a href="typography.html">Typography</a>
-                    </li>
-                    <li>
-                        <a href="grid.html">Grid</a>
-                    </li>
-                </ul>
-                <!-- /.nav-second-level -->
-            </li>
-            <li>
-                <a href="javascript:"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span
-                        class="fa arrow"></span></a>
-                <ul class="nav nav-second-level collapse">
-                    <li>
-                        <a href="javascript:">Second Level Item</a>
-                    </li>
-                    <li>
-                        <a href="javascript:">Second Level Item</a>
-                    </li>
-                    <li>
-                        <a href="javascript:">Third Level <span class="fa arrow"></span></a>
-                        <ul class="nav nav-third-level collapse">
+            <au:test uri="/admin/settings.do">
+                <li id="settings">
+                    <a href="javascript:"><i class="fa fa-wrench fa-fw"></i> <spring:message
+                            code="label.settings"/><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <au:test uri="/admin/profile.do">
                             <li>
-                                <a href="javascript:">Third Level Item</a>
+                                <a href="admin/profile.do"><spring:message
+                                        code="label.profile"/></a>
                             </li>
-                            <li>
-                                <a href="javascript:">Third Level Item</a>
-                            </li>
-                            <li>
-                                <a href="javascript:">Third Level Item</a>
-                            </li>
-                            <li>
-                                <a href="javascript:">Third Level Item</a>
-                            </li>
-                        </ul>
-                        <!-- /.nav-third-level -->
-                    </li>
-                </ul>
-                <!-- /.nav-second-level -->
-            </li>
-            <li>
-                <a href="javascript:"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level collapse">
-                    <li>
-                        <a href="blank.html">Blank Page</a>
-                    </li>
-                    <li>
-                        <a href="login.html">Login Page</a>
-                    </li>
-                </ul>
-                <!-- /.nav-second-level -->
-            </li>
+                        </au:test>
+                        <li>
+                            <a href="/admin/changePasswordView.do"><spring:message
+                                    code="label.change.password"/></a>
+                        </li>
+                        <li>
+                            <a href="javascript:">Third Level <span class="fa arrow"></span></a>
+                            <ul class="nav nav-third-level collapse">
+                                <li>
+                                    <a href="javascript:">Third Level Item</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:">Third Level Item</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-third-level -->
+                        </li>
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
+            </au:test>
         </ul>
         <!-- /#side-menu -->
     </div>

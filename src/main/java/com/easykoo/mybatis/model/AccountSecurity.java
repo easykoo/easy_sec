@@ -12,36 +12,6 @@ public class AccountSecurity extends Account{
 
     private Date effectiveDate;
 
-    private String verifyCode;
-
-    private String token;
-
-    private int rememberMe;
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public int getRememberMe() {
-        return rememberMe;
-    }
-
-    public void setRememberMe(int rememberMe) {
-        this.rememberMe = rememberMe;
-    }
-
-    public String getVerifyCode() {
-        return verifyCode;
-    }
-
-    public void setVerifyCode(String verifyCode) {
-        this.verifyCode = verifyCode;
-    }
-
     public String getPassword() {
         return password;
     }

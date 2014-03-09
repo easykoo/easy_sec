@@ -1,5 +1,6 @@
 package com.easykoo.web.controller;
 
+import com.easykoo.model.ResponseMessage;
 import com.easykoo.mybatis.model.Account;
 import com.easykoo.mybatis.model.AccountSecurity;
 import com.easykoo.mybatis.model.AccountSession;
@@ -11,6 +12,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Feb 22, 2014    Steven
@@ -34,6 +37,7 @@ public class AccountController {
     protected final Log logger = LogFactory.getLog(getClass());
     private IAccountSessionService accountSessionService;
     private IAccountService accountService;
+    private MessageSource messageSource;
 
     @RequestMapping(value = "/loginView.do", method = RequestMethod.GET)
     public String loginForm(@RequestParam(value = "url") String url, HttpServletRequest request) {
@@ -58,7 +62,7 @@ public class AccountController {
             if (StringUtils.isNotBlank(url)) {
                 return "redirect:" + url;
             }
-            return "redirect:/admin/dashboard.do";
+            return "index";
         }
 
         String token = (String) request.getSession().getAttribute("currentFormToken");
@@ -85,7 +89,7 @@ public class AccountController {
             if (StringUtils.isNotBlank(url)) {
                 return "redirect:" + url;
             }
-            return "redirect:/admin/dashboard.do";
+            return "index";
         }
 
         logger.debug("Invalid username or password!");
@@ -152,6 +156,37 @@ public class AccountController {
             return "registerAccount";
         }
         return "redirect:/index.jsp";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/changeProfile.do", produces = "application/json")
+    public String changeProfile(@ModelAttribute("account") Account account, HttpServletRequest request, Locale locale, ModelMap model) {
+
+        String currentVerifyCode = (String) request.getSession().getAttribute("currentVerifyCode");
+        if (currentVerifyCode != null && !currentVerifyCode.equals(account.getVerifyCode())) {
+            logger.debug("Verify code is wrong!");
+            return new ResponseMessage(false, messageSource.getMessage("message.error.wrong.verify.code", null, locale)).toString();
+        }
+
+        try {
+            accountService.updateByPrimaryKeySelective(account);
+            logger.debug(account.getUsername() + " updated successfully!");
+            AccountSecurity dbAccountSecurity = accountService.selectFullByPrimaryKey(account.getAccountId());
+            request.getSession().setAttribute("currentAccountSecurity", dbAccountSecurity);
+        } catch (DuplicateKeyException e) {
+            logger.error("Duplicate key!", e);
+            return new ResponseMessage(false, messageSource.getMessage("message.error.duplicate.key", null, locale)).toString();
+        }
+        return new ResponseMessage(true, messageSource.getMessage("message.change.success", null, locale)).toString();
+    }
+
+    public MessageSource getMessageSource() {
+        return messageSource;
+    }
+
+    @Autowired
+    public void setMessageSource(MessageSource messageSource) {
+        this.messageSource = messageSource;
     }
 
     public IAccountService getAccountService() {

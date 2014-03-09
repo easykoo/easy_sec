@@ -24,8 +24,18 @@ public class AdminController {
     private IAccountService accountService;
 
     @RequestMapping(value = "/dashboard.do")
-    public String index() {
+    public String dashboard() {
         return "dashboard";
+    }
+
+    @RequestMapping(value = "/settings.do")
+    public String settings() {
+        return "settings";
+    }
+
+    @RequestMapping(value = "/profile.do")
+    public String profile() {
+        return "profile";
     }
 
     @RequestMapping(value = "/allAccountView.do", method = RequestMethod.GET)

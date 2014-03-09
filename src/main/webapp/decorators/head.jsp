@@ -46,12 +46,16 @@
                     ${currentAccountSecurity.username} <i class="fa fa-user fa-fw"></i><i class="fa fa-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-user">
-                    <li><a href="account/profile.do"><i class="fa fa-user fa-fw"></i><spring:message
-                            code="label.profile"/></a>
-                    </li>
-                    <li><a href="account/settings.do"><i class="fa fa-gear fa-fw"></i><spring:message
-                            code="label.settings"/></a>
-                    </li>
+                    <au:test uri="/admin/settings.do">
+                        <li><a href="admin/settings.do"><i class="fa fa-gear fa-fw"></i><spring:message
+                                code="label.settings"/></a>
+                        </li>
+                    </au:test>
+                    <au:test uri="/admin/profile.do">
+                        <li><a href="admin/profile.do"><i class="fa fa-user fa-fw"></i><spring:message
+                                code="label.profile"/></a>
+                        </li>
+                    </au:test>
                     <li class="divider"></li>
                     <li><a href="account/logout.do"><i class="fa fa-sign-out fa-fw"></i><spring:message
                             code="label.logout"/></a>
