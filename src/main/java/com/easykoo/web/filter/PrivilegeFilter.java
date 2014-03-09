@@ -35,12 +35,13 @@ public class PrivilegeFilter
     private static IPrivilegeService privilegeService;
     private static IAccountService accountService;
     private static IAccountSessionService accountSessionService;
-    private final static String[] noNeedFilter = new String[]{"/", ".js", ".css", ".jpg", ".png",".ico",".txt"
+    private final static String[] noNeedFilter = new String[]{"/", ".js", ".css", ".jpg", ".png", ".ico", ".txt"
             , ".otf", ".eot", ".svg", ".ttf", ".woff", ".scss", ".woff"
-            , "index.html", "index.jsp", "registerAccountView.do", "getVerifyCodeImage.do", "addFeedback.do", "subscribe.do"};
+    };
 
-    private final static String[] noNeedLogin = new String[]{ "index.do", "logout.do", "login.do", "loginView.do"
-            , };
+    private final static String[] noNeedLogin = new String[]{"index.html", "index.jsp", "registerAccountView.do", "registerAccount.do",
+            "getVerifyCodeImage.do", "addFeedback.do", "subscribe.do", "index.do", "logout.do", "login.do", "loginView.do"
+            , "checkEmail.do", "checkUsername.do"};
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
@@ -96,7 +97,7 @@ public class PrivilegeFilter
                 logger.debug("dbAccountSession: " + dbAccountSession);
                 if (dbAccountSession != null) {
                     accountSecurity = accountService.selectFullByPrimaryKey(dbAccountSession.getAccountId());
-                    if (accountSecurity == null){
+                    if (accountSecurity == null) {
                         CookiesUtil.clearCookies(response);
                         accountSessionService.deleteByAccountId(dbAccountSession.getAccountId());
                     }

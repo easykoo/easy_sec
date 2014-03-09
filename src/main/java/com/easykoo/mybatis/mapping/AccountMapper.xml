@@ -38,7 +38,8 @@
     delete from sec_account
     where account_id = #{accountId,jdbcType=INTEGER}
   </delete>
-    <insert id="insert" parameterType="com.easykoo.mybatis.model.Account" useGeneratedKeys="true" keyProperty="accountId"
+    <insert id="insert" parameterType="com.easykoo.mybatis.model.Account" useGeneratedKeys="true"
+            keyProperty="accountId"
             keyColumn="account_id">
         insert into sec_account (username, first_name,
         last_name, nick_name, gender,
@@ -275,8 +276,8 @@
         from sec_account
     </select>
     <select id="findAccountWithPage" resultMap="BaseResultMap" parameterType="com.easykoo.mybatis.model.Account">
-   select * from sec_account
-    where 1=1
+        select * from sec_account
+        where 1=1
         <if test="username != null">
             and username = #{username,jdbcType=VARCHAR}
         </if>
@@ -334,5 +335,11 @@
         <if test="updateDate != null">
             and update_date = #{updateDate,jdbcType=TIMESTAMP}
         </if>
-</select>
+    </select>
+    <select id="checkUsername" resultType="java.lang.Boolean">
+        select count(*) from sec_account where username = #{username,jdbcType=VARCHAR} ;
+    </select>
+    <select id="checkEmail" resultType="java.lang.Boolean">
+        select count(*) from sec_account where email = #{email,jdbcType=VARCHAR} ;
+    </select>
 </mapper>

@@ -137,4 +137,14 @@ public class AccountServiceImpl implements IAccountService {
     public List<Account> findAccountWithPage(Account record) {
         return accountMapper.findAccountWithPage(record);
     }
+
+    @Override
+    public boolean checkUsername(String username) {
+        return accountMapper.checkUsername(username);
+    }
+
+    @Override
+    public boolean checkEmail(String email) {
+        return accountMapper.checkEmail(email);
+    }
 }

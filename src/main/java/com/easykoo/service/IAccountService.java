@@ -46,4 +46,8 @@ public interface IAccountService {
     public AccountSecurity login(AccountSecurity record);
 
     List<Account> findAccountWithPage(Account record);
+
+    boolean checkUsername(String username);
+
+    boolean checkEmail(String email);
 }

@@ -21,4 +21,8 @@ public interface AccountMapper {
     List<Account> getAllAccount();
 
     List<Account> findAccountWithPage(Account record);
+
+    boolean checkUsername(String username);
+
+    boolean checkEmail(String email);
 }

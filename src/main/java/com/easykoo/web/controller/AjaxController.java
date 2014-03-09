@@ -1,9 +1,6 @@
 package com.easykoo.web.controller;
 
-import com.easykoo.mybatis.model.Account;
-import com.easykoo.mybatis.model.DataTablesResponse;
-import com.easykoo.mybatis.model.Feedback;
-import com.easykoo.mybatis.model.Subscribe;
+import com.easykoo.mybatis.model.*;
 import com.easykoo.service.IAccountService;
 import com.easykoo.service.IAccountSessionService;
 import com.easykoo.service.IFeedbackService;
@@ -50,11 +47,9 @@ public class AjaxController {
         return accountList;
     }
 
-    @RequestMapping(value = "/allAccount.do", produces = "application/json")
-    public
     @ResponseBody
-//    DataTablesResponse showUser(@ModelAttribute("request") DataTablesRequest request) {
-    DataTablesResponse showUser(@RequestParam int iDisplayStart, @RequestParam int iDisplayLength, @RequestParam int iSortCol_0, @RequestParam String sSortDir_0, HttpServletRequest request) {
+    @RequestMapping(value = "/allAccount.do", produces = "application/json")
+    public DataTablesResponse showUser(@RequestParam int iDisplayStart, @RequestParam int iDisplayLength, @RequestParam int iSortCol_0, @RequestParam String sSortDir_0, HttpServletRequest request) {
 
         DataTablesResponse<Account> dt = new DataTablesResponse<Account>();
 
@@ -75,10 +70,9 @@ public class AjaxController {
         return dt;
     }
 
-    @RequestMapping(value = "/deleteAccount.do", produces = "application/json")
-    public
     @ResponseBody
-    String deleteAccount(@RequestParam(value = "accountId") int accountId) {
+    @RequestMapping(value = "/deleteAccount.do", produces = "application/json")
+    public String deleteAccount(@RequestParam(value = "accountId") int accountId) {
 
         Account dbAccount = accountService.selectByPrimaryKey(accountId);
         if (dbAccount != null) {
@@ -88,10 +82,9 @@ public class AjaxController {
         return "{\"error\":\"no user\"}";
     }
 
-    @RequestMapping(value = "/banAccount.do", produces = "application/json")
-    public
     @ResponseBody
-    String banAccount(@RequestParam(value = "accountId") int accountId) {
+    @RequestMapping(value = "/banAccount.do", produces = "application/json")
+    public String banAccount(@RequestParam(value = "accountId") int accountId) {
 
         Account dbAccount = accountService.selectByPrimaryKey(accountId);
         if (dbAccount != null) {
@@ -102,10 +95,9 @@ public class AjaxController {
         return "{\"error\":\"no user\"}";
     }
 
-    @RequestMapping(value = "/unbanAccount.do", produces = "application/json")
-    public
     @ResponseBody
-    String unbanAccount(@RequestParam(value = "accountId") int accountId) {
+    @RequestMapping(value = "/unbanAccount.do", produces = "application/json")
+    public String unbanAccount(@RequestParam(value = "accountId") int accountId) {
         Account dbAccount = accountService.selectByPrimaryKey(accountId);
         if (dbAccount != null) {
             dbAccount.setLocked(false);
@@ -115,10 +107,9 @@ public class AjaxController {
         return "{\"error\":\"no user\"}";
     }
 
-    @RequestMapping(value = "/adminAccount.do", produces = "application/json")
-    public
     @ResponseBody
-    String adminAccount(@RequestParam(value = "accountId") int accountId) {
+    @RequestMapping(value = "/adminAccount.do", produces = "application/json")
+    public String adminAccount(@RequestParam(value = "accountId") int accountId) {
         Account dbAccount = accountService.selectByPrimaryKey(accountId);
         if (dbAccount != null) {
             dbAccount.setRoleId(1);
@@ -161,16 +152,17 @@ public class AjaxController {
     @ResponseBody
     String deleteFeedback(@RequestParam(value = "id") int id) {
         Feedback feedback = feedbackService.selectByPrimaryKey(id);
-        if (feedback!= null){
-        feedbackService.deleteByPrimaryKey(id);
-        return "true";
+        if (feedback != null) {
+            feedbackService.deleteByPrimaryKey(id);
+            return "true";
         }
-        return "{\"error\":\"Feedback is not exists!\"}";
+        return "{\"error\":\"Feedback doesn't exist!\"}";
     }
 
 
+    @ResponseBody
     @RequestMapping(value = "/subscribe.do", produces = "application/json")
-    public @ResponseBody String subscribe(@ModelAttribute("subscribe") Subscribe subscribe) {
+    public String subscribe(@ModelAttribute("subscribe") Subscribe subscribe) {
         try {
             subscribeService.insert(subscribe);
         } catch (DuplicateKeyException e) {
@@ -180,11 +172,28 @@ public class AjaxController {
         return "true";
     }
 
-
-    @RequestMapping(value = "/allFeedback.do", produces = "application/json")
-    public
     @ResponseBody
-    DataTablesResponse allFeedback(@RequestParam int iDisplayStart, @RequestParam int iDisplayLength, @RequestParam int iSortCol_0, @RequestParam String sSortDir_0, HttpServletRequest request) {
+    @RequestMapping(value = "/checkUsername.do", produces = "application/json")
+    public String checkUsername(@RequestParam("username") String username) {
+        if (accountService.checkUsername(username)) {
+            return "false";
+        }
+        return "true";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/checkEmail.do", produces = "application/json")
+    public String checkEmail(@RequestParam("email") String email) {
+        if (accountService.checkEmail(email)) {
+            return "false";
+        }
+        return "true";
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/allFeedback.do", produces = "application/json")
+    public DataTablesResponse allFeedback(@RequestParam int iDisplayStart, @RequestParam int iDisplayLength, @RequestParam int iSortCol_0, @RequestParam String sSortDir_0, HttpServletRequest request) {
 
         DataTablesResponse<Feedback> dt = new DataTablesResponse<Feedback>();
 
