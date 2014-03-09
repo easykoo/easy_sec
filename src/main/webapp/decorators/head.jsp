@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=utf-8" isELIgnored="false" %>
 
+<%@ taglib prefix="au" uri="authorize" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%
@@ -28,15 +29,17 @@
         <!-- /.navbar-header -->
 
         <ul class="nav navbar-top-links navbar-right">
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:">
-                    <span id="feedbackCount" class="badge"></span>
-                    <i class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
-                </a>
-                <ul id="feedback_notification" class="dropdown-menu dropdown-messages">
-                </ul>
-                <!-- /.dropdown-messages -->
-            </li>
+            <au:test uri="/admin/allFeedbackView.do">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:">
+                        <span id="feedbackCount" class="badge"></span>
+                        <i class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul id="feedback_notification" class="dropdown-menu dropdown-messages">
+                    </ul>
+                    <!-- /.dropdown-messages -->
+                </li>
+            </au:test>
             <!-- /.dropdown -->
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:">
@@ -67,10 +70,13 @@
 <script src="js/head.js" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+
+        <au:test uri="/admin/allFeedbackView.do">
         getFeedbackCount();
         setInterval(getFeedbackCount, 10000);
         getTop5Feedback();
         setInterval(getTop5Feedback, 10000);
+        </au:test>
     });
 </script>
 </html>
