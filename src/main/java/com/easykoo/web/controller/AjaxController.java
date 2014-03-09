@@ -8,14 +8,19 @@ import com.easykoo.service.ISubscribeService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Feb 22, 2014    Steven
@@ -31,6 +36,7 @@ public class AjaxController {
     private IAccountService accountService;
     private IFeedbackService feedbackService;
     private ISubscribeService subscribeService;
+    private MessageSource messageSource;
 
     @ResponseBody
     @RequestMapping(value = "/allAccount.do", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
@@ -174,18 +180,18 @@ public class AjaxController {
 
     @ResponseBody
     @RequestMapping(value = "/checkUsername.do", produces = "application/json")
-    public String checkUsername(@RequestParam("username") String username) {
+    public String checkUsername(@RequestParam("username") String username, Locale locale) {
         if (accountService.checkUsername(username)) {
-            return "false";
+            return messageSource.getMessage("message.error.already.exists", null, locale);
         }
         return "true";
     }
 
     @ResponseBody
     @RequestMapping(value = "/checkEmail.do", produces = "application/json")
-    public String checkEmail(@RequestParam("email") String email) {
+    public String checkEmail(@RequestParam("email") String email, Locale locale) {
         if (accountService.checkEmail(email)) {
-            return "false";
+            return messageSource.getMessage("message.error.already.exists", null, locale);
         }
         return "true";
     }
@@ -209,6 +215,15 @@ public class AjaxController {
         dt.setTotalDisplayRecords(feedback.getTotalRecord());  // // the total data in db for datatables to calculate page no. and position
         dt.setTotalRecords(feedback.getTotalRecord());   // the total data in db for datatables to calculate page no.
         return dt;
+    }
+
+    public MessageSource getMessageSource() {
+        return messageSource;
+    }
+
+    @Autowired
+    public void setMessageSource(MessageSource messageSource) {
+        this.messageSource = messageSource;
     }
 
     public IAccountService getAccountService() {

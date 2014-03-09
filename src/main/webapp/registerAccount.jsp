@@ -124,11 +124,9 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="js/jquery-1.10.2.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.validate.min.js"></script>
 <script src="js/jquery.validate.method.js"></script>
-<%--<script src="js/bootstrap3-validation.js"></script>--%>
 
 
 <script type="text/javascript">
@@ -141,17 +139,7 @@
                     required: true,
                     minlength: 5,
                     username: true,
-                    remote:"ajax/checkUsername.do"
-           /*         {
-                        url: "ajax/checkUsername.do",
-                        type: "post",
-                        dataType: 'json',
-                        data: {
-                            username: function () {
-                                return $("#username").val();
-                            }
-                        }
-                    }*/
+                    remote: "ajax/checkUsername.do"
                 },
                 nickname: {
                     required: true,
@@ -160,22 +148,8 @@
                 },
                 email: {
                     email: true,
-                    remote: {                         //自带远程验证存在的方法
-                        url: "ajax/checkEmail.do",
-                        type: "post",
-                        dataType: "json",
-                        data: {
-                            email: function () {
-                                return $("#email").val();
-                            }
-                        },
-                        dataFilter: function (data, type) {
-                            if (data == "true")
-                                return true;
-                            else
-                                return false;
-                        }
-                    }
+                    remote: "ajax/checkEmail.do"
+
                 },
                 password: {
                     required: true,
