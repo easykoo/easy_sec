@@ -24,24 +24,21 @@ import java.util.Random;
 @Controller
 @RequestMapping("/common")
 public class CommonController {
-
     protected final Log logger = LogFactory.getLog(getClass());
 
     @RequestMapping("/getVerifyCodeImage.do")
     public void getVerifyCodeImage(HttpServletRequest request, HttpServletResponse response, ModelMap model) throws IOException {
-        //设置页面不缓存
-        response.setHeader("Pragma", "no-cache");
-        response.setHeader("Cache-Control", "no-cache");
-        response.setDateHeader("Expires", 0);
         String verifyCode = VerifyCodeUtil.generateTextCode(VerifyCodeUtil.TYPE_NUM_ONLY, 4, null);
-        //将验证码放到HttpSession里面
+        BufferedImage bufferedImage = VerifyCodeUtil.generateImageCode(verifyCode, 90, 30, 3, true, Color.WHITE, Color.BLACK, null);
+
         request.getSession().setAttribute("currentVerifyCode", verifyCode);
         model.addAttribute("currentVerifyCode", verifyCode);
         logger.debug("CurrentVerifyCode is " + verifyCode + "!");
-        //设置输出的内容的类型为JPEG图像
+
+        response.setHeader("Pragma", "no-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setDateHeader("Expires", 0);
         response.setContentType("image/jpeg");
-        BufferedImage bufferedImage = VerifyCodeUtil.generateImageCode(verifyCode, 90, 30, 3, true, Color.WHITE, Color.BLACK, null);
-        //写给浏览器
         ImageIO.write(bufferedImage, "JPEG", response.getOutputStream());
     }
 

@@ -29,7 +29,6 @@ import java.util.Locale;
 @Controller
 @RequestMapping("/ajax")
 public class AjaxController {
-
     protected final Log logger = LogFactory.getLog(getClass());
     private IAccountSessionService accountSessionService;
     private IAccountService accountService;
@@ -38,46 +37,27 @@ public class AjaxController {
     private MessageSource messageSource;
 
     @ResponseBody
-    @RequestMapping(value = "/allAccount.do", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public List<Account> doAjax(ModelMap model) {
-        Account account = new Account();
-        account.setDepartmentId(1);
-        account.setPageNo(1);
-        account.setPageSize(2);
-        account.addSortProperties("nick_name", "asc");
-        List<Account> accountList = accountService.findAccountWithPage(account);
-        model.addAttribute("page", account);
-        model.addAttribute("accountList", accountList);
-        return accountList;
-    }
-
-    @ResponseBody
     @RequestMapping(value = "/allAccount.do", produces = "application/json")
     public DataTablesResponse showUser(@RequestParam int iDisplayStart, @RequestParam int iDisplayLength, @RequestParam int iSortCol_0, @RequestParam String sSortDir_0, HttpServletRequest request) {
-
-        DataTablesResponse<Account> dt = new DataTablesResponse<Account>();
+        DataTablesResponse<Account> dt = new DataTablesResponse();
 
         Account account = new Account();
         account.setPageActived(true);
-//    account.setDepartmentId(1);
         account.setPageSize(iDisplayLength);
         account.setDisplayStart(iDisplayStart);
         String sortColumn = request.getParameter("mDataProp_" + iSortCol_0);
         account.addSortProperties(sortColumn, sSortDir_0);
         List<Account> accountList = accountService.findAccountWithPage(account);
 
-        dt.setData(accountList);  // this is the dataset reponse to client
-        dt.setTotalDisplayRecords(account.getTotalRecord());  // // the total data in db for datatables to calculate page no. and position
-        dt.setTotalRecords(account.getTotalRecord());   // the total data in db for datatables to calculate page no.
-//        dt.setEcho(request.getEcho());
-
+        dt.setData(accountList);
+        dt.setTotalDisplayRecords(account.getTotalRecord());
+        dt.setTotalRecords(account.getTotalRecord());
         return dt;
     }
 
     @ResponseBody
     @RequestMapping(value = "/deleteAccount.do", produces = "application/json")
     public String deleteAccount(@RequestParam(value = "accountId") int accountId) {
-
         Account dbAccount = accountService.selectByPrimaryKey(accountId);
         if (dbAccount != null) {
             accountService.deleteByPrimaryKey(accountId);
@@ -89,7 +69,6 @@ public class AjaxController {
     @ResponseBody
     @RequestMapping(value = "/banAccount.do", produces = "application/json")
     public String banAccount(@RequestParam(value = "accountId") int accountId) {
-
         Account dbAccount = accountService.selectByPrimaryKey(accountId);
         if (dbAccount != null) {
             dbAccount.setLocked(true);
@@ -207,8 +186,7 @@ public class AjaxController {
     @ResponseBody
     @RequestMapping(value = "/allFeedback.do", produces = "application/json")
     public DataTablesResponse allFeedback(@RequestParam int iDisplayStart, @RequestParam int iDisplayLength, @RequestParam int iSortCol_0, @RequestParam String sSortDir_0, HttpServletRequest request) {
-
-        DataTablesResponse<Feedback> dt = new DataTablesResponse<Feedback>();
+        DataTablesResponse<Feedback> dt = new DataTablesResponse();
 
         Feedback feedback = new Feedback();
         feedback.setPageActived(true);
@@ -218,9 +196,9 @@ public class AjaxController {
         feedback.addSortProperties(sortColumn, sSortDir_0);
         List<Feedback> feedbackList = feedbackService.findFeedbackWithPage(feedback);
 
-        dt.setData(feedbackList);  // this is the dataset reponse to client
-        dt.setTotalDisplayRecords(feedback.getTotalRecord());  // // the total data in db for datatables to calculate page no. and position
-        dt.setTotalRecords(feedback.getTotalRecord());   // the total data in db for datatables to calculate page no.
+        dt.setData(feedbackList);
+        dt.setTotalDisplayRecords(feedback.getTotalRecord());
+        dt.setTotalRecords(feedback.getTotalRecord());
         return dt;
     }
 

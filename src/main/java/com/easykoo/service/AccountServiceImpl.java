@@ -4,7 +4,6 @@ import com.easykoo.mybatis.dao.AccountMapper;
 import com.easykoo.mybatis.dao.AccountSecurityMapper;
 import com.easykoo.mybatis.model.Account;
 import com.easykoo.mybatis.model.AccountSecurity;
-import com.easykoo.mybatis.model.Page;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,24 +17,6 @@ import java.util.List;
 public class AccountServiceImpl implements IAccountService {
     private AccountMapper accountMapper;
     private AccountSecurityMapper accountSecurityMapper;
-
-    public AccountMapper getAccountMapper() {
-        return accountMapper;
-    }
-
-    @Autowired
-    public void setAccountMapper(AccountMapper accountMapper) {
-        this.accountMapper = accountMapper;
-    }
-
-    public AccountSecurityMapper getAccountSecurityMapper() {
-        return accountSecurityMapper;
-    }
-
-    @Autowired
-    public void setAccountSecurityMapper(AccountSecurityMapper accountSecurityMapper) {
-        this.accountSecurityMapper = accountSecurityMapper;
-    }
 
     @Override
     public void deleteByPrimaryKey(Integer accountId) {
@@ -146,5 +127,23 @@ public class AccountServiceImpl implements IAccountService {
     @Override
     public boolean checkEmail(String email) {
         return accountMapper.checkEmail(email);
+    }
+
+    public AccountMapper getAccountMapper() {
+        return accountMapper;
+    }
+
+    @Autowired
+    public void setAccountMapper(AccountMapper accountMapper) {
+        this.accountMapper = accountMapper;
+    }
+
+    public AccountSecurityMapper getAccountSecurityMapper() {
+        return accountSecurityMapper;
+    }
+
+    @Autowired
+    public void setAccountSecurityMapper(AccountSecurityMapper accountSecurityMapper) {
+        this.accountSecurityMapper = accountSecurityMapper;
     }
 }

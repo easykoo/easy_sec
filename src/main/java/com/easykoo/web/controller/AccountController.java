@@ -30,7 +30,6 @@ import java.util.Locale;
 @Controller
 @RequestMapping("/account")
 public class AccountController {
-
     protected final Log logger = LogFactory.getLog(getClass());
     private IAccountSessionService accountSessionService;
     private IAccountService accountService;

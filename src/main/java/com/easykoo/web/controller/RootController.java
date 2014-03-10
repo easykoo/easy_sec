@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/")
 public class RootController {
-
     protected final Log logger = LogFactory.getLog(getClass());
 
     @RequestMapping(value = "index.do")
