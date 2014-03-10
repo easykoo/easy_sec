@@ -4,6 +4,7 @@ import com.easykoo.mybatis.dao.AccountMapper;
 import com.easykoo.mybatis.dao.AccountSecurityMapper;
 import com.easykoo.mybatis.model.Account;
 import com.easykoo.mybatis.model.AccountSecurity;
+import com.easykoo.util.EncryptUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,7 @@ public class AccountServiceImpl implements IAccountService {
 
     @Override
     public void insert(AccountSecurity record) {
+        record.setPassword(EncryptUtils.MD5(record.getPassword()));
         accountSecurityMapper.insert(record);
     }
 
@@ -38,6 +40,7 @@ public class AccountServiceImpl implements IAccountService {
 
     @Override
     public void insertFullAccount(AccountSecurity record) {
+        record.setPassword(EncryptUtils.MD5(record.getPassword()));
         accountMapper.insert(record);
         accountSecurityMapper.insert(record);
     }
@@ -49,11 +52,13 @@ public class AccountServiceImpl implements IAccountService {
 
     @Override
     public void insertSelective(AccountSecurity record) {
+        record.setPassword(EncryptUtils.MD5(record.getPassword()));
         accountSecurityMapper.insertSelective(record);
     }
 
     @Override
     public void insertFullSelective(AccountSecurity record) {
+        record.setPassword(EncryptUtils.MD5(record.getPassword()));
         accountMapper.insertSelective(record);
         accountSecurityMapper.insertSelective(record);
     }
@@ -113,6 +118,7 @@ public class AccountServiceImpl implements IAccountService {
     @Override
     public AccountSecurity login(AccountSecurity record) {
         //todo check ban
+        record.setPassword(EncryptUtils.MD5(record.getPassword()));
         return accountSecurityMapper.login(record);
     }
 
@@ -135,7 +141,7 @@ public class AccountServiceImpl implements IAccountService {
     public boolean checkPassword(Integer accountId, String password) {
         Map<String, Object> params = new HashMap<>();
         params.put("accountId", accountId);
-        params.put("password", password);
+        params.put("password", EncryptUtils.MD5(password));
         return accountSecurityMapper.checkPassword(params);
     }
 
