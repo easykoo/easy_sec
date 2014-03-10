@@ -333,7 +333,7 @@ function fire(accountID) {
     });
 }
 
-$(document).ready(function () {
+var getAllAccounts = function () {
     accountTable = $('#dataTables-example').dataTable({
         bPaginate: true,
         bProcessing: true,
@@ -418,6 +418,11 @@ $(document).ready(function () {
             { "bSortable": false, "aTargets": [ 6 ] }
         ]
     });
+}
+
+$(document).ready(function () {
+    $('#account').css({"background": "#DDDDDD"});
+    getAllAccounts();
 });
 
 </script>

@@ -101,6 +101,7 @@
 
     $(document).ready(function () {
         $('#settings').toggleClass('active').children('ul').collapse('toggle');
+        $('#password').css({"background":"#DDDDDD"});
 
         $("#profileForm").validate({
             rules: {

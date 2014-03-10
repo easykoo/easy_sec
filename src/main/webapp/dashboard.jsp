@@ -161,6 +161,7 @@
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->
 <script>
     $(document).ready(function() {
+        $('#dashboard').css({"background":"#DDDDDD"});
         $('#dataTables-example').dataTable();
     });
 </script>

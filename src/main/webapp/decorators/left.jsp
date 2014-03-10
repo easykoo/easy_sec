@@ -29,18 +29,18 @@
                 <!-- /input-group -->
             </li>
             <au:test uri="/admin/dashboard.do">
-                <li>
+                <li id="dashboard">
                     <a href="admin/dashboard.do"><i class="fa fa-dashboard fa-fw"></i> <spring:message code="label.dashboard"/></a>
                 </li>
             </au:test>
             <au:test uri="/admin/allAccountView.do">
-                <li id="allAccount">
+                <li id="account">
                     <a href="admin/allAccountView.do"><i class="fa fa-users fa-fw"></i> <spring:message
                             code="label.all.account"/></a>
                 </li>
             </au:test>
             <au:test uri="/admin/allFeedbackView.do">
-                <li>
+                <li id="feedback">
                     <a href="/admin/allFeedbackView.do"><i class="fa fa-edit fa-fw"></i><spring:message
                             code="label.all.feedback"/></a>
                 </li>
@@ -51,12 +51,12 @@
                             code="label.settings"/><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <au:test uri="/admin/profile.do">
-                            <li>
+                            <li id="profile">
                                 <a href="admin/profile.do"><spring:message
                                         code="label.profile"/></a>
                             </li>
                         </au:test>
-                        <li>
+                        <li id="password">
                             <a href="/admin/password.do"><spring:message
                                     code="label.change.password"/></a>
                         </li>

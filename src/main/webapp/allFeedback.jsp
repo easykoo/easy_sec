@@ -232,6 +232,7 @@
         });
     }
     $(document).ready(function () {
+        $('#feedback').css({"background":"#DDDDDD"});
         getAllFeedback();
     });
 

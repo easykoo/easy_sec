@@ -148,6 +148,7 @@
 
     $(document).ready(function () {
         $('#settings').toggleClass('active').children('ul').collapse('toggle');
+        $('#profile').css({"background":"#DDDDDD"});
 
         $("#profileForm").validate({
             rules: {
