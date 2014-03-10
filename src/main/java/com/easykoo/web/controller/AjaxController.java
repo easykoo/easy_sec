@@ -27,7 +27,6 @@ import java.util.Locale;
  */
 
 @Controller
-@SessionAttributes({"currentAccountSecurity", "currentVerifyCode"})
 @RequestMapping("/ajax")
 public class AjaxController {
 
