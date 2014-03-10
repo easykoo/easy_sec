@@ -213,6 +213,46 @@
         });
     }
 
+    function adminAccount(accountID) {
+        bootbox.dialog({
+            message: "Are you sure to make this account administrator?",
+            title: "Ban Account",
+            buttons: {
+                main: {
+                    label: "Cancel",
+                    className: "btn-default",
+                    callback: function () {
+                    }
+                },
+                danger: {
+                    label: "Yes",
+                    className: "btn-danger",
+                    callback: function (result) {
+                        if (result) {
+                            $.ajax('ajax/adminAccount.do', {
+                                dataType: 'json',
+                                data: {
+                                    accountId: accountID
+                                },
+                                success: function (data) {
+                                    if (data == 'true') {
+                                        accountTable.fnClearTable(0);
+                                        accountTable.fnDraw();
+                                    }
+                                    else {
+                                        var obj = $.parseJSON(data);
+                                        bootbox.alert(obj.error, function () {
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+        });
+    }
+
     $(document).ready(function () {
         accountTable = $('#dataTables-example').dataTable({
             bPaginate: true,
