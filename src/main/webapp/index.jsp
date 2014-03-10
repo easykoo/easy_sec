@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=utf-8" isELIgnored="false" %>
+
+<%@ taglib prefix="au" uri="authorize" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%
@@ -15,6 +17,8 @@
     <meta name="description" content="Easy Security">
     <meta name="author" content="easykoo.com">
 
+    <%--<link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>--%>
+    <%--<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>--%>
     <!-- Load The Story -->
     <link id="the-story-css-file" rel="stylesheet" href="css/the-story.min.css" type="text/css">
 
@@ -25,8 +29,8 @@
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-    <script src="/js/html5shiv.js"></script>
-    <script src="/js/respond.min.js"></script>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.js"></script>
     <![endif]-->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 </head>
@@ -65,31 +69,39 @@
                         <li><a href="index.do?locale=en">English</a></li>
                     </ul>
                 </li>
-                <%--<li><a title="External page sample" href="sample-page.html">Sample Page</a></li>--%>
-                <%--<c:choose>
+                <c:choose>
                     <c:when test="${not empty currentAccountSecurity.nickname}">
                         <li class="dropdown">
                             <a href="javascript:" class="dropdown-toggle"
                                data-toggle="dropdown">${currentAccountSecurity.nickname}
                                 <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="admin/dashboard.do"><i class="fa fa-dashboard fa-fw"></i> <spring:message
-                                        code="label.dashboard"/></a></li>
-                                <li><a href="account/profile.do"><i class="fa fa-user fa-fw"></i> <spring:message
-                                        code="label.profile"/></a></li>
-                                <li><a href="account/settings.do"><i class="fa fa-gear fa-fw"></i> <spring:message
-                                        code="label.settings"/></a></li>
+                                <au:test uri="/admin/dashboard.do">
+                                    <li><a href="admin/dashboard.do"><i class="fa fa-dashboard fa-fw"></i>
+                                        <spring:message
+                                                code="label.dashboard"/></a></li>
+                                </au:test>
+                                <au:test uri="/admin/settings.do">
+                                    <li><a href="admin/settings.do"><i class="fa fa-gear fa-fw"></i> <spring:message
+                                            code="label.settings"/></a></li>
+                                </au:test>
+                                <au:test uri="/admin/profile.do">
+                                    <li><a href="admin/profile.do"><i class="fa fa-user fa-fw"></i> <spring:message
+                                            code="label.profile"/></a></li>
+                                </au:test>
+                                <li class="divider"></li>
                                 <li><a href="account/logout.do"><i class="fa fa-sign-out fa-fw"></i> <spring:message
                                         code="label.logout"/></a></li>
                             </ul>
                         </li>
                     </c:when>
                     <c:otherwise>
-                        <li><a href="account/login.do"><spring:message code="label.sign.in"/></a></li>
+                        <li><a href="account/loginView.do?url=<%=request.getRequestURL()%>"><spring:message
+                                code="label.sign.in"/></a></li>
+                        <%--<li><button type="button" class="btn btn-default"><spring:message code="label.sign.in"/></button></li>--%>
                         <li><a href="account/registerAccountView.do"><spring:message code="label.sign.up"/></a></li>
                     </c:otherwise>
-                </c:choose>--%>
-
+                </c:choose>
             </ul>
         </div>
     </div>
@@ -344,14 +356,16 @@
         <div class="col-md-6">
             <h3><spring:message code="label.leave.message"/></h3>
 
-            <form role="form" id="contact-form" action="common/addFeedback.do" method="post">
-                <input name="name" type="text" class="form-control" placeholder="<spring:message code="label.name" />">
-                <input name="email" type="text" class="form-control"
+            <form role="form" id="contactForm" action="ajax/addFeedback.do" method="post">
+                <input id="name" name="name" type="text" class="form-control"
+                       placeholder="<spring:message code="label.name" />">
+                <input id="email" name="email" type="text" class="form-control"
                        placeholder="<spring:message code="label.email.format" />">
-                <textarea name="content" rows="6" class="form-control"
+                <textarea id="content" name="content" rows="6" class="form-control"
                           placeholder="<spring:message code="label.your.feedback" />"></textarea>
-                <button type="button" id="feedback_btn" class="btn btn-primary btn-centered"><spring:message
+                <button type="submit" id="feedback_btn" class="btn btn-primary btn-centered"><spring:message
                         code="label.send"/></button>
+                <input type="reset" style="display:none;"/>
             </form>
         </div>
         <div class="col-md-6">
@@ -373,16 +387,15 @@
 <!-- Newsletter -->
 <div class="newsletter color-1">
     <div class="inner-page row">
-
-        <form role="form" id="subscribe-form" action="common/addFeedback.do" method="post">
+        <form role="form" id="subscribeForm" action="ajax/addSubscribe.do" method="post">
             <div class="col-md-4">
                 <h4><spring:message code="label.subscribe.last.news"/></h4>
             </div>
             <div class="col-md-6">
-                <input id="subscribe_mail" type="email" placeholder="xxx@xxx.xxx" name="EMAIL" class="subscribe">
+                <input id="subscribe_mail" type="email" placeholder="xxx@xxx.xxx" name="email" class="subscribe">
             </div>
             <div class="col-md-2">
-                <button id="subscribe_btn" type="button" class="btn btn-primary pull-right btn-block"><spring:message
+                <button id="subscribe_btn" type="submit" class="btn btn-primary pull-right btn-block"><spring:message
                         code="label.subscribe"/></button>
             </div>
         </form>
@@ -406,8 +419,9 @@
         </div>
     </div>
 </footer>
-<script src="js/jquery.min.js"></script>
+<script src="js/jquery-1.10.2.js"></script>
 <script src="js/jquery.validate.min.js"></script>
+<script src="js/jquery.validate.method.js"></script>
 
 <!-- JQUERY END -->
 <script src="js/p-controls.min.js"></script>
@@ -417,73 +431,101 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        $("#contact-form").validate({
+
+        $("#contactForm").validate({
             rules: {
-                name: "required",
+                name: {
+                    required: true,
+                    minlength: 3
+                },
                 email: {
                     required: true,
                     email: true
                 },
                 content: {
                     required: true,
-                    minength: 5
+                    byteRangeLength: [5, 200]
                 }
             },
             messages: {
-                name: "请输入姓名",
+                name: {
+                    required: '<spring:message code="message.error.name.is.required"/>',
+                    minlength: '<spring:message code="message.error.name.must.great.than.characters"/>'
+                },
                 email: {
-                    required: "请输入Email地址",
-                    email: "请输入正确的email地址"
+                    required: '<spring:message code="message.error.email.is.required"/>',
+                    email: '<spring:message code="message.error.wrong.email.format"/>'
                 },
                 content: {
-                    required: "请输入内容",
-                    minlength: jQuery.format("内容不能小于{0}个字符")
+                    required: '<spring:message code="message.error.content.is.required"/>',
+                    byteRangeLength: '<spring:message code="message.error.content.length"/>'
                 }
             },
-            highlight: function (element) {
-                $(element).closest('.control-group').removeClass('success').addClass('error');
-            },
-            success: function (element) {
-//                element.text('OK!').addClass('valid')
-//                        .closest('.control-group').removeClass('error').addClass('success');
-                element.addClass('valid')
-                        .closest('.control-group').removeClass('error').addClass('success');
-            }
-        });
-        $('#feedback_btn').click(function(){
-            $.ajax('ajax/addFeedback.do', {
-                dataType: 'json',
-                data: $("#contact-form").serialize(),
-                success: function (data) {
-                    if (data == 'true') {
-                                alert('发表成功!');
-                    }
-                }
-            });
-        });
-
-        function isEmail(email) {
-            var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-            return regex.test(email);
-        };
-        $('#subscribe_btn').click(function(){
-            var mail = $('#subscribe_mail').val();
-            if(isEmail(mail)){
-                $.ajax('ajax/subscribe.do', {
-                    dataType: 'json',
-                    data: {
-                        email: mail
+            focusInvalid: true,
+            onkeyup: false,
+            submitHandler: function (form) {
+                $.ajax({
+                    cache: true,
+                    type: "POST",
+                    url: "ajax/addFeedback.do",
+                    data: $('#contactForm').serialize(),
+                    async: false,
+                    error: function (request) {
+                        alert("Connection error");
                     },
                     success: function (data) {
-                        if (data == 'true') {
-                            alert('订阅成功!');
+                        if (data) {
+                            alert('<spring:message code="message.submit.success"/>');
+                            $("#contactForm input[type=reset]").trigger("click");
                         }
                     }
                 });
-            } else {
-                alert('请输入正确的email格式');
+                return false;
             }
-        })
+        });
+
+        $("#subscribeForm").validate({
+            rules: {
+                email: {
+                    required: true,
+                    email: true
+                }
+            },
+            messages: {
+                email: {
+                    required: '<spring:message code="message.error.email.is.required"/>',
+                    email: '<spring:message code="message.error.wrong.email.format"/>'
+                }
+            },
+            focusInvalid: true,
+            onkeyup: false,
+            submitHandler: function (form) {
+                $.ajax({
+                    cache: true,
+                    type: "POST",
+                    dataType: 'json',
+                    url: "ajax/subscribe.do",
+                    data: $('#subscribeForm').serialize(),
+                    async: false,
+                    error: function (request) {
+                        alert("Connection error");
+                    },
+                    success: function (data) {
+                        if (data == 'true') {
+                            alert('<spring:message code="message.subscribe.success"/>');
+                            $("#subscribeForm input[type=email]").val('');
+                        } else {
+                            var obj = $.parseJSON(data);
+                            if (obj.error == 'Already') {
+                                alert('<spring:message code="message.already.subscribed"/>');
+                            }
+                            $("#subscribeForm input[type=email]").val('');
+                        }
+                    }
+                });
+                return false;
+            }
+        });
     })
 </script>
 </body>

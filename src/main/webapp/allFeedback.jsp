@@ -16,7 +16,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title><spring:message code="label.all.account"/></title>
+    <title><spring:message code="label.all.feedback"/></title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -35,7 +35,7 @@
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header"><spring:message code="label.all.account"/></h1>
+            <h1 class="page-header"><spring:message code="label.all.feedback"/></h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -53,11 +53,10 @@
                             <thead>
                             <tr>
                                 <th><spring:message code="label.id"/></th>
-                                <th><spring:message code="label.username"/></th>
-                                <th><spring:message code="label.qq"/></th>
-                                <th><spring:message code="label.telephone"/></th>
+                                <th><spring:message code="label.name"/></th>
                                 <th><spring:message code="label.email"/></th>
-                                <th><spring:message code="label.address"/></th>
+                                <th><spring:message code="label.content"/></th>
+                                <th><spring:message code="label.create.date"/></th>
                                 <th><spring:message code="label.actions"/></th>
                             </tr>
                             </thead>
@@ -87,16 +86,14 @@
 <!-- SB Admin Scripts - Include with every page -->
 <script src="js/admin.js"></script>
 
-
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->
 <script type="text/javascript" charset="utf-8">
+    var feedbackTable;
 
-    var accountTable;
-
-    function deleteAccount(accountID) {
+    var deleteFeedback = function (id) {
         bootbox.dialog({
-            message: "Are you sure to delete this account?",
-            title: "Delete Account",
+            message: "Are you sure to delete this feedback?",
+            title: "Delete Feedback",
             buttons: {
                 main: {
                     label: "Cancel",
@@ -109,15 +106,15 @@
                     className: "btn-danger",
                     callback: function (result) {
                         if (result) {
-                            $.ajax('ajax/deleteAccount.do', {
+                            $.ajax('ajax/deleteFeedback.do', {
                                 dataType: 'json',
                                 data: {
-                                    accountId: accountID
+                                    id: id
                                 },
                                 success: function (data) {
                                     if (data == 'true') {
-                                        accountTable.fnClearTable(0);
-                                        accountTable.fnDraw();
+                                        feedbackTable.fnClearTable(0);
+                                        feedbackTable.fnDraw();
                                     }
                                     else {
                                         var obj = $.parseJSON(data);
@@ -133,88 +130,41 @@
         });
     }
 
-    function banAccount(accountID) {
-        bootbox.dialog({
-            message: "Are you sure to ban this account?",
-            title: "Ban Account",
-            buttons: {
-                main: {
-                    label: "Cancel",
-                    className: "btn-default",
-                    callback: function () {
-                    }
-                },
-                danger: {
-                    label: "Yes",
-                    className: "btn-danger",
-                    callback: function (result) {
-                        if (result) {
-                            $.ajax('ajax/banAccount.do', {
-                                dataType: 'json',
-                                data: {
-                                    accountId: accountID
-                                },
-                                success: function (data) {
-                                    if (data == 'true') {
-                                        accountTable.fnClearTable(0);
-                                        accountTable.fnDraw();
+
+    var readFeedback = function (id) {
+        var feedbackList = feedbackTable.fnGetData();
+        $.each(feedbackList, function (index, feedback) {
+            if (feedback.feedbackId == id) {
+                bootbox.dialog({
+                    message: feedback.content,
+                    title: feedback.name,
+                    buttons: {
+                        success: {
+                            label: "OK",
+                            className: "btn-success",
+                            callback: function () {
+                                $.ajax({
+                                    dataType: "json",
+                                    type: "GET",
+                                    url: 'ajax/readFeedback.do',
+                                    data: {id: id},
+                                    success: function (data) {
+                                        if (data == 'true') {
+                                            feedbackTable.fnClearTable(0);
+                                            feedbackTable.fnDraw();
+                                        }
                                     }
-                                    else {
-                                        var obj = $.parseJSON(data);
-                                        bootbox.alert(obj.error, function () {
-                                        });
-                                    }
-                                }
-                            });
+                                });
+                            }
                         }
                     }
-                }
+                });
             }
         });
-    }
+    };
 
-    function unbanAccount(accountID) {
-        bootbox.dialog({
-            message: "Are you sure to unban this account?",
-            title: "Ban Account",
-            buttons: {
-                main: {
-                    label: "Cancel",
-                    className: "btn-default",
-                    callback: function () {
-                    }
-                },
-                danger: {
-                    label: "Yes",
-                    className: "btn-success",
-                    callback: function (result) {
-                        if (result) {
-                            $.ajax('ajax/unbanAccount.do', {
-                                dataType: 'json',
-                                data: {
-                                    accountId: accountID
-                                },
-                                success: function (data) {
-                                    if (data == 'true') {
-                                        accountTable.fnClearTable(0);
-                                        accountTable.fnDraw();
-                                    }
-                                    else {
-                                        var obj = $.parseJSON(data);
-                                        bootbox.alert(obj.error, function () {
-                                        });
-                                    }
-                                }
-                            });
-                        }
-                    }
-                }
-            }
-        });
-    }
-
-    $(document).ready(function () {
-        accountTable = $('#dataTables-example').dataTable({
+    var getAllFeedback = function () {
+        feedbackTable = $('#dataTables-example').dataTable({
             bPaginate: true,
             bProcessing: true,
             bServerSide: true,
@@ -225,7 +175,7 @@
             iDisplayLength: 10,
             bLengthChange: true,
             sPaginationType: 'full_numbers',
-            sAjaxSource: 'ajax/allAccount.do',
+            sAjaxSource: 'ajax/allFeedback.do',
             fnServerData: function (sSource, aoData, fnCallback) {
                 $.ajax({
                     dataType: "json",
@@ -237,39 +187,32 @@
             },
             "aoColumns": [
                 { "sTitle": "<spring:message code="label.id"/>",
-                    "mData": "account_id",
-                    "mDataProp": "account_id"},
-                { "sTitle": "<spring:message code="label.username"/>",
-                    "mData": "username"},
-                { "sTitle": "<spring:message code="label.qq"/>",
-                    "mData": "qq"},
-                { "sTitle": "<spring:message code="label.telephone"/>",
-                    "mData": "telephone"},
+                    "mData": "feedback_id",
+                    "mDataProp": "feedback_id"},
+                { "sTitle": "<spring:message code="label.name"/>",
+                    "mData": "name"},
                 { "sTitle": "<spring:message code="label.email"/>",
                     "mData": "email"},
-                { "sTitle": "<spring:message code="label.address"/>",
-                    "mData": "address"},
+                { "sTitle": "<spring:message code="label.content"/>",
+                    "mData": "content"},
+                { "sTitle": "<spring:message code="label.create.date"/>",
+                    "mData": "create_date"},
                 { "sTitle": "<spring:message code="label.actions"/>",
-                    "mData": "locked"}
+                    "mData": "viewed"}
             ],
             "fnRowCallback": function (nRow, aData, iDisplayIndex) {
-                /* Append the grade to the default row class name */
+                var createDate = timeStamp2String(aData.create_date);
+                $('td:eq(4)', nRow).text(createDate);
                 var html = '<div class="btn-group "><a class="btn btn-primary" href="javascript:"><i class="fa fa-user fa-fw"></i></a>' +
                         '<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:"><span class="fa fa-caret-down"></span></a>' +
                         '<ul class="dropdown-menu">' +
-                        '<li><a href="javascript:editAccount(' + aData.account_id + ')"><i class="fa fa-pencil fa-fw"></i> Edit</a></li>' +
-                        '<li><a href="javascript:deleteAccount(' + aData.account_id + ')"><i class="fa fa-trash-o fa-fw"></i> Delete</a></li>';
-                if (!aData.locked) {
-                    html += '<li><a href="javascript:banAccount(' + aData.account_id + ')"><i class="fa fa-ban fa-fw"></i> Ban</a></li>';
-                } else {
-                    html += '<li><a href="javascript:unbanAccount(' + aData.account_id + ')"><i class="fa fa-ban fa-fw"></i> Unban</a></li>';
-                }
-                if (aData.roleId != 1) {
-                    html += '<li class="divider"></li><li><a href="javascript:adminAccount(' + aData.account_id + ')"><i class="i"></i> Make admin</a></li>';
+                        '<li><a href="javascript:deleteFeedback(' + aData.feedback_id + ')"><i class="fa fa-trash-o fa-fw"></i> Delete</a></li>';
+                if (!aData.viewed) {
+                    html += '<li><a href="javascript:readFeedback(' + aData.feedback_id + ')"><i class="fa fa-ban fa-fw"></i> View</a></li>';
                 }
                 html += '</ul></div>';
-                $('td:eq(6)', nRow).html(html);
-                if (aData.locked) {
+                $('td:eq(5)', nRow).html(html);
+                if (aData.viewed) {
                     $(nRow).css({"color": "#BBBBBB"})
 
                 }
@@ -279,9 +222,12 @@
                 sUrl: [ "css/plugins/dataTables/<spring:message code="language"/>.txt"]
             },
             "aoColumnDefs": [
-                { "bSortable": false, "aTargets": [ 6 ] }
+                { "bSortable": false, "aTargets": [ 5 ] }
             ]
         });
+    }
+    $(document).ready(function () {
+        getAllFeedback();
     });
 
 </script>

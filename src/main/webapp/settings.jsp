@@ -17,7 +17,7 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
 
-    <title><spring:message code="label.dashboard"/></title>
+    <title><spring:message code="label.settings"/></title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -162,6 +162,7 @@
 <script>
     $(document).ready(function() {
         $('#dataTables-example').dataTable();
+        $('#settings').toggleClass('active').children('ul').collapse('toggle');
     });
 </script>
 

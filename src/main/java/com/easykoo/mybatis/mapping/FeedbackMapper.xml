@@ -101,4 +101,39 @@
       create_date = #{createDate,jdbcType=TIMESTAMP}
     where feedback_id = #{feedbackId,jdbcType=INTEGER}
   </update>
+
+    <select id="getTop5Feedback" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from feedback where viewed = 0 order by create_date desc limit 0,5;
+    </select>
+
+    <select id="getUnreadFeedbackCount" resultType="java.lang.Integer">
+        select count(*) from feedback where viewed = 0;
+    </select>
+
+    <select id="findFeedbackWithPage" resultMap="BaseResultMap" parameterType="com.easykoo.mybatis.model.Feedback">
+        select
+        <include refid="Base_Column_List"/>
+        from feedback
+        where 1=1
+        <if test="feedbackId != null">
+            and feedback_id = #{feedbackId,jdbcType=INTEGER},
+        </if>
+        <if test="email != null">
+            and email = #{email,jdbcType=VARCHAR},
+        </if>
+        <if test="name != null">
+            and name = #{name,jdbcType=VARCHAR},
+        </if>
+        <if test="content != null">
+            and content = #{content,jdbcType=VARCHAR},
+        </if>
+        <if test="viewed != null">
+            and viewed = #{viewed,jdbcType=BIT},
+        </if>
+        <if test="createDate != null">
+            and create_date = #{createDate,jdbcType=TIMESTAMP}
+        </if>
+    </select>
 </mapper>

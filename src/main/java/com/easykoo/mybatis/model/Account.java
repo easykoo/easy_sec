@@ -47,6 +47,36 @@ public class Account extends Page {
 
     private Date updateDate;
 
+    private String verifyCode;
+
+    private String token;
+
+    private int rememberMe;
+
+    public String getVerifyCode() {
+        return verifyCode;
+    }
+
+    public void setVerifyCode(String verifyCode) {
+        this.verifyCode = verifyCode;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public int getRememberMe() {
+        return rememberMe;
+    }
+
+    public void setRememberMe(int rememberMe) {
+        this.rememberMe = rememberMe;
+    }
+
     public Integer getAccountId() {
         return accountId;
     }

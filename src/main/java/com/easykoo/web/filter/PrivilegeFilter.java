@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.easykoo.util.CookiesUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +35,14 @@ public class PrivilegeFilter
     private static IPrivilegeService privilegeService;
     private static IAccountService accountService;
     private static IAccountSessionService accountSessionService;
-    private final static String[] notFilter = new String[]{"/", ".js", ".css", ".jpg", ".png",".ico"
-            , ".otf", ".eot", ".svg", ".ttf", ".woff", ".scss", ".woff"
-            , "index.html", "index.jsp", "index.do", "login.do", "logout.do"
-            , "registerAccountView.do", "getVerifyCodeImage.do", "addFeedback.do", "subscribe.do"};
+    private final static String[] noNeedFilter =
+            new String[]{"/", ".js", ".css", ".jpg", ".png", ".ico", ".txt"
+                    , ".otf", ".eot", ".svg", ".ttf", ".woff", ".scss", ".woff"
+            };
+
+    private final static String[] noNeedLogin = new String[]{"index.html", "index.jsp", "registerAccountView.do", "registerAccount.do",
+            "getVerifyCodeImage.do", "addFeedback.do", "subscribe.do", "index.do", "logout.do", "login.do", "loginView.do"
+            , "checkEmail.do", "checkUsername.do", "checkVerifyCode.do"};
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
@@ -52,7 +57,7 @@ public class PrivilegeFilter
             return;
         }*/
         boolean checkAuthorize = true;
-        for (String s : notFilter) {
+        for (String s : noNeedFilter) {
             if (path.endsWith(s)) {
                 logger.debug("End with:" + s);
                 filterChain.doFilter(request, response);
@@ -74,13 +79,15 @@ public class PrivilegeFilter
 
             logger.debug("Check cookies...");
             Cookie[] cookies = request.getCookies();
-            for (int i = 0; i < cookies.length; i++) {
-                Cookie c = cookies[i];
-                if (c.getName().equalsIgnoreCase("username")) {
-                    username = c.getValue();
-                }
-                if (c.getName().equalsIgnoreCase("sessionId")) {
-                    sessionId = c.getValue();
+            if (cookies != null) {
+                for (int i = 0; i < cookies.length; i++) {
+                    Cookie c = cookies[i];
+                    if (c.getName().equalsIgnoreCase("username")) {
+                        username = c.getValue();
+                    }
+                    if (c.getName().equalsIgnoreCase("sessionId")) {
+                        sessionId = c.getValue();
+                    }
                 }
             }
             if (username != null && sessionId != null) {
@@ -93,30 +100,34 @@ public class PrivilegeFilter
                 logger.debug("dbAccountSession: " + dbAccountSession);
                 if (dbAccountSession != null) {
                     accountSecurity = accountService.selectFullByPrimaryKey(dbAccountSession.getAccountId());
-                    session.setAttribute("currentAccountSecurity", accountSecurity); // 将user bean添加到session中。
+                    if (accountSecurity == null) {
+                        CookiesUtil.clearCookies(response);
+                        accountSessionService.deleteByAccountId(dbAccountSession.getAccountId());
+                    }
+                    session.setAttribute("currentAccountSecurity", accountSecurity);
                 } else {
                     logger.debug("There's no session in DB, clean the cookies!");
-                    Cookie ckUsername, ckSessionId;
-                    ckUsername = new Cookie("username", null);
-                    ckUsername.setMaxAge(0);
-                    ckUsername.setPath("/");
-                    response.addCookie(ckUsername);
-
-                    ckSessionId = new Cookie("sessionId", null);
-                    ckSessionId.setMaxAge(0);
-                    ckSessionId.setPath("/");
-                    response.addCookie(ckSessionId);
+                    CookiesUtil.clearCookies(response);
+                    response.sendRedirect(request.getContextPath() + "/index.jsp");
+                    return;
                 }
-                response.sendRedirect(request.getContextPath() + "/index.jsp");
-                return;
             } else {
                 logger.debug("No cookies...");
-                response.sendRedirect(request.getContextPath() + "/index.jsp");
-                return;
             }
         }
 
         logger.debug("Current AccountSecurity: " + accountSecurity);
+
+
+        logger.debug("Check privilege:" + path);
+        for (String s : noNeedLogin) {
+            if (path.endsWith(s)) {
+                logger.debug("End with:" + s);
+                checkAuthorize = false;
+                break;
+            }
+        }
+
         if (checkAuthorize) {
             //check authorization
             logger.debug("Check permission...");

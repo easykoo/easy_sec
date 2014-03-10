@@ -5,6 +5,8 @@ import com.easykoo.mybatis.model.Feedback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by easykooc on 14-2-25.
  */
@@ -49,5 +51,20 @@ public class FeedbackServiceImpl implements IFeedbackService {
     @Override
     public int updateByPrimaryKey(Feedback record) {
         return feedbackMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public List<Feedback> getTop5Feedback() {
+        return feedbackMapper.getTop5Feedback();
+    }
+
+    @Override
+    public int getUnreadFeedbackCount() {
+        return feedbackMapper.getUnreadFeedbackCount();
+    }
+
+    @Override
+    public List<Feedback> findFeedbackWithPage(Feedback record) {
+        return feedbackMapper.findFeedbackWithPage(record);
     }
 }
