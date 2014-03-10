@@ -17,6 +17,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title><spring:message code="main.title"/> - <spring:message code="label.sign.up"/></title>
+    <link rel="shortcut icon" href="img/favicon.ico">
     <link rel="stylesheet" href="css/the-story.min.css">
     <link rel="stylesheet" href="css/p-controls.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -63,7 +64,7 @@
     </div>
     <!-- /.navbar-container -->
 </nav>
-<div style="margin-top:100px;margin-bottom:200px;max-width: 600px" class="container">
+<div style="margin-top:100px;margin-bottom:200px;max-width: 700px" class="container">
     <form id="registerForm" role="form" class="form-horizontal" action="register.do" method="post">
         <h2 class="form-signin-heading"><spring:message code="label.sign.up"/></h2>
         <c:if test="${not empty errorMessage}">

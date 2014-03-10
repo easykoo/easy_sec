@@ -17,6 +17,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title><spring:message code="main.title"/> - <spring:message code="label.sign.in"/></title>
+    <link rel="shortcut icon" href="img/favicon.ico">
     <link rel="stylesheet" href="css/the-story.min.css">
     <link rel="stylesheet" href="css/p-controls.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
