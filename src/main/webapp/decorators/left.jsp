@@ -30,7 +30,7 @@
             </li>
             <au:test uri="/admin/dashboard.do">
                 <li>
-                    <a href="javascript:"><i class="fa fa-dashboard fa-fw"></i> <spring:message code="label.dashboard"/></a>
+                    <a href="admin/dashboard.do"><i class="fa fa-dashboard fa-fw"></i> <spring:message code="label.dashboard"/></a>
                 </li>
             </au:test>
             <au:test uri="/admin/allAccountView.do">

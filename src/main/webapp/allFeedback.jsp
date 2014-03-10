@@ -206,9 +206,13 @@
                 var html = '<div class="btn-group "><a class="btn btn-primary" href="javascript:"><i class="fa fa-user fa-fw"></i></a>' +
                         '<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:"><span class="fa fa-caret-down"></span></a>' +
                         '<ul class="dropdown-menu">' +
-                        '<li><a href="javascript:deleteFeedback(' + aData.feedback_id + ')"><i class="fa fa-trash-o fa-fw"></i> Delete</a></li>';
+                        '<li><a href="javascript:deleteFeedback(' + aData.feedback_id + ')"><i class="fa fa-trash-o fa-fw"></i>'
+                        + '<strong> <spring:message code="label.delete"/></strong>'
+                        + '</a></li>';
                 if (!aData.viewed) {
-                    html += '<li><a href="javascript:readFeedback(' + aData.feedback_id + ')"><i class="fa fa-ban fa-fw"></i> View</a></li>';
+                    html += '<li><a href="javascript:readFeedback(' + aData.feedback_id + ')"><i class="fa fa-eye fa-fw"></i>'
+                            + '<strong> <spring:message code="label.view"/></strong>'
+                            + '</a></li>';
                 }
                 html += '</ul></div>';
                 $('td:eq(5)', nRow).html(html);

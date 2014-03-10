@@ -32,7 +32,7 @@ var getTop5Feedback = function () {
 
                 html += '<li>'
                     + '<a class="text-center" href="javascript:viewAllFeedback()">'
-                    + '<strong>Read All Messages</strong>'
+                    + '<strong>Read All Messages<spring:message code="label.read.all.message"/></strong>'
                     + '<i class="fa fa-angle-right"></i>'
                     + '</a>'
                     + '</li>'
