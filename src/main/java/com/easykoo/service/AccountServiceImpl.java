@@ -8,7 +8,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Feb 22, 2014    Steven
@@ -127,6 +129,14 @@ public class AccountServiceImpl implements IAccountService {
     @Override
     public boolean checkEmail(String email) {
         return accountMapper.checkEmail(email);
+    }
+
+    @Override
+    public boolean checkPassword(Integer accountId, String password) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("accountId", accountId);
+        params.put("password", password);
+        return accountSecurityMapper.checkPassword(params);
     }
 
     public AccountMapper getAccountMapper() {

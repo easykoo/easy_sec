@@ -64,6 +64,9 @@ insert into sec_privilege ( external_id, type,role_id,department_id) values (2,2
 insert into sec_privilege ( external_id, type,role_id,department_id) values (2,2,2,1);
 insert into sec_privilege ( external_id, type,role_id,department_id) values (2,2,3,1);
 insert into sec_privilege ( external_id, type,role_id,department_id) values (3,2,1,1);
+insert into sec_privilege ( external_id, type,role_id,department_id) values (3,2,2,1);
 insert into sec_privilege ( external_id, type,role_id,department_id) values (4,2,1,1);
+insert into sec_privilege ( external_id, type,role_id,department_id) values (4,2,2,1);
 insert into sec_privilege ( external_id, type,role_id,department_id) values (5,2,1,1);
+insert into sec_privilege ( external_id, type,role_id,department_id) values (5,2,2,1);
 

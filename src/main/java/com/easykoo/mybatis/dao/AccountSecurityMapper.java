@@ -2,6 +2,8 @@ package com.easykoo.mybatis.dao;
 
 import com.easykoo.mybatis.model.AccountSecurity;
 
+import java.util.Map;
+
 public interface AccountSecurityMapper {
     int deleteByPrimaryKey(Integer accountId);
 
@@ -16,4 +18,6 @@ public interface AccountSecurityMapper {
     int updateByPrimaryKey(AccountSecurity record);
 
     AccountSecurity login(AccountSecurity record);
+
+    boolean checkPassword(Map params);
 }

@@ -154,4 +154,10 @@
         where username = #{username,jdbcType=VARCHAR}
         and password = #{password,jdbcType=VARCHAR}
     </select>
+
+    <select id="checkPassword" resultType="java.lang.Boolean" parameterType="java.util.Map">
+        select count(*) from sec_acc_security
+        where account_id = #{accountId,jdbcType=VARCHAR}
+        and password = #{password,jdbcType=VARCHAR}
+    </select>
 </mapper>

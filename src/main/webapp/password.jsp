@@ -33,97 +33,51 @@
     </div>
     <div class="row">
         <div class="col-lg-5">
-            <form id="profileForm" role="form" class="form-horizontal" method="post">
+            <form id="profileForm" role="form" class="form-horizontal" method="post" action="account/changePassword.do">
 
                 <input type="text" name="accountId" value="${currentAccountSecurity.accountId}" hidden>
+                <c:if test="${not empty message}">
+                    <div class="form-group alert
+                        <c:if test="${!message.success}">alert-danger</c:if>
+                        <c:if test="${message.success}">alert-success</c:if>
+                         fade in">
+                        <button id='alert1' type="button" class="close" data-dismiss="alert"
+                                aria-hidden="true">&times;</button>
+                            ${message.message}
+                    </div>
+                </c:if>
                 <div class="form-group">
-                    <label for="nickname" class="col-sm-2 control-label"><span style="color: red">*</span>
+                    <label for="currentPassword" class="col-sm-2 control-label"><span style="color: red">*</span>
                         <spring:message
-                                code="label.nickname"/></label>
+                                code="label.current.password"/></label>
 
                     <div class="col-sm-6">
-                        <input type="text" id="nickname" class="form-control" name="nickname"
-                               value="${currentAccountSecurity.nickname}">
+                        <input type="password" id="currentPassword" class="form-control" name="currentPassword">
                     </div>
                     <div class="col-sm-4 control-label"></div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label"><span style="color: red">*</span> <spring:message
-                            code="label.gender"/></label>
-
-                    <div class="col-sm-1">
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="gender" id="gender1" value="1"
-                                       <c:if test="${currentAccountSecurity.gender==1}">checked</c:if>>
-                                <spring:message
-                                        code="label.male"/>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-sm-5">
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="gender" id="gender2" value="0"
-                                       <c:if test="${currentAccountSecurity.gender==0}">checked</c:if>><spring:message
-                                    code="label.female"/>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-sm-4 control-label gender"></div>
-                </div>
-                <div class="form-group">
-                    <label for="qq" class="col-sm-2 control-label"> <spring:message
-                            code="label.qq"/></label>
+                    <label for="newPassword" class="col-sm-2 control-label"><span style="color: red">*</span>
+                        <spring:message
+                                code="label.new.password"/></label>
 
                     <div class="col-sm-6">
-                        <input type="text" id="qq" class="form-control" name="qq"
-                               value="${currentAccountSecurity.qq}">
+                        <input type="password" id="newPassword" class="form-control" name="newPassword">
                     </div>
                     <div class="col-sm-4 control-label"></div>
                 </div>
                 <div class="form-group">
-                    <label for="telephone" class="col-sm-2 control-label"> <spring:message
-                            code="label.telephone"/></label>
+                    <label for="confirmPassword" class="col-sm-2 control-label"><span style="color: red">*</span>
+                        <spring:message code="label.confirmPassword"/></label>
 
                     <div class="col-sm-6">
-                        <input type="text" id="telephone" class="form-control" name="telephone"
-                               value="${currentAccountSecurity.telephone}">
-                    </div>
-                    <div class="col-sm-4 control-label"></div>
-                </div>
-                <div class="form-group">
-                    <label for="postcode" class="col-sm-2 control-label"> <spring:message
-                            code="label.postcode"/></label>
-
-                    <div class="col-sm-6">
-                        <input type="text" id="postcode" class="form-control" name="postcode"
-                               value="${currentAccountSecurity.postcode}">
-                    </div>
-                    <div class="col-sm-4 control-label"></div>
-                </div>
-                <div class="form-group">
-                    <label for="address" class="col-sm-2 control-label"> <spring:message
-                            code="label.address"/></label>
-
-                    <div class="col-sm-6">
-                        <input type="text" id="address" class="form-control" name="address"
-                               value="${currentAccountSecurity.address}">
-                    </div>
-                    <div class="col-sm-4 control-label"></div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-3">
-                        <input type="text" id="verifyCode" class="form-control" name="verifyCode">
-                    </div>
-                    <div class="col-sm-3">
-                        <img id="verifyCodeImg" onclick="reloadVerifyCode()" src="common/getVerifyCodeImage.do"/>
+                        <input type="password" id="confirmPassword" class="form-control" name="confirmPassword">
                     </div>
                     <div class="col-sm-4 control-label"></div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-6">
-                        <button type="submit" class="btn btn-default btn-lg"><spring:message
+                        <button type="submit" class="btn btn-success btn-block"><spring:message
                                 code="label.change"/></button>
                     </div>
                 </div>
@@ -144,38 +98,45 @@
 
 
 <script type="text/javascript">
-    var reloadVerifyCode = function () {
-        document.getElementById("verifyCodeImg").src = "common/getVerifyCodeImage.do";
-    }
 
     $(document).ready(function () {
         $('#settings').toggleClass('active').children('ul').collapse('toggle');
 
         $("#profileForm").validate({
             rules: {
-                nickname: {
+                currentPassword: {
                     required: true,
-                    minlength: 4,
-                    stringCheck: true
+                    minlength: 5,
+                    password: true
                 },
-                gender: {
-                    required: true
-                },
-                verifyCode: {
+                newPassword: {
                     required: true,
-                    remote: "ajax/checkVerifyCode.do"
+                    minlength: 5,
+                    password: true
+                },
+                confirmPassword: {
+                    required: true,
+                    minlength: 5,
+                    password: true,
+                    equalTo: "#newPassword"
                 }
             },
             messages: {
-                nickname: {
+                currentPassword: {
                     required: '<spring:message code="message.error.required"/>',
                     minlength: '<spring:message code="message.error.min.length"/>',
-                    stringCheck: '<spring:message code="message.error.string.check"/>'
+                    password: '<spring:message code="message.error.password.format"/>'
                 },
-                gender: '<spring:message code="message.error.required"/>',
-                verifyCode: {
+                newPassword: {
                     required: '<spring:message code="message.error.required"/>',
-                    remote: '<spring:message code="message.error.wrong.verify.code"/>'
+                    minlength: '<spring:message code="message.error.min.length"/>',
+                    password: '<spring:message code="message.error.password.format"/>'
+                },
+                confirmPassword: {
+                    required: '<spring:message code="message.error.required"/>',
+                    minlength: '<spring:message code="message.error.min.length"/>',
+                    password: '<spring:message code="message.error.password.format"/>',
+                    equalTo: '<spring:message code="message.error.confirm.password"/>'
                 }
             },
             focusInvalid: true,
@@ -199,21 +160,7 @@
                 label.parent("div").parent("div").removeClass("has-error").addClass("has-success");
             },
             submitHandler: function (form) {
-                $.ajax({
-                    cache: true,
-                    type: "POST",
-                    url: "account/changeProfile.do",
-                    data: $('#profileForm').serialize(),
-                    dataType: "json",
-                    async: false,
-                    error: function (request) {
-                        alert("Connection error");
-                    },
-                    success: function (data) {
-                            alert(data.message)
-                        window.location.reload()
-                    }
-                });
+                form.submit();
                 return false;
             }
         });

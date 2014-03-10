@@ -50,4 +50,6 @@ public interface IAccountService {
     boolean checkUsername(String username);
 
     boolean checkEmail(String email);
+
+    boolean checkPassword(Integer accountId, String password);
 }

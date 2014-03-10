@@ -33,6 +33,11 @@ public class AdminController {
         return "profile";
     }
 
+    @RequestMapping(value = "/password.do")
+    public String password() {
+        return "password";
+    }
+
     @RequestMapping(value = "/allAccountView.do", method = RequestMethod.GET)
     public String allAccountView() {
         return "allAccount";

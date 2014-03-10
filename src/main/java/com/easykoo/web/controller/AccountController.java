@@ -128,7 +128,7 @@ public class AccountController {
 
     @RequestMapping(value = "/register.do")
     public String register(@ModelAttribute("accountSecurity") AccountSecurity accountSecurity,
-                                  HttpServletRequest request, ModelMap model) {
+                           HttpServletRequest request, ModelMap model) {
 
         String currentVerifyCode = (String) request.getSession().getAttribute("currentVerifyCode");
         if (currentVerifyCode != null && !currentVerifyCode.equals(accountSecurity.getVerifyCode())) {
@@ -160,18 +160,33 @@ public class AccountController {
 
     @RequestMapping(value = "/account/changeProfile.do")
     public String changeProfile(@ModelAttribute("account") Account account,
-                                         HttpServletRequest request, Locale locale, ModelMap model) {
+                                HttpServletRequest request, Locale locale, ModelMap model) {
         try {
             accountService.updateByPrimaryKeySelective(account);
             logger.debug(account.getUsername() + " updated successfully!");
             AccountSecurity dbAccountSecurity = accountService.selectFullByPrimaryKey(account.getAccountId());
             request.getSession().setAttribute("currentAccountSecurity", dbAccountSecurity);
-            model.addAttribute("message",  new ResponseMessage(true, messageSource.getMessage("message.change.success", null, locale)));
+            model.addAttribute("message", new ResponseMessage(true, messageSource.getMessage("message.change.success", null, locale)));
         } catch (DuplicateKeyException e) {
             logger.error("Duplicate key!", e);
-            model.addAttribute("message",  new ResponseMessage(true, messageSource.getMessage("message.error.duplicate.key", null, locale)));
+            model.addAttribute("message", new ResponseMessage(true, messageSource.getMessage("message.error.duplicate.key", null, locale)));
         }
         return "profile";
+    }
+
+    @RequestMapping(value = "/account/changePassword.do")
+    public String changePassword(@RequestParam("accountId") Integer accountId, @RequestParam("currentPassword") String currentPassword,
+                                 @RequestParam("newPassword") String newPassword, Locale locale, ModelMap model) {
+        boolean checked = accountService.checkPassword(accountId, currentPassword);
+        if (checked) {
+            AccountSecurity dbAccountSecurity = accountService.selectFullByPrimaryKey(accountId);
+            dbAccountSecurity.setPassword(newPassword);
+            accountService.updateByPrimaryKey(dbAccountSecurity);
+            model.addAttribute("message", new ResponseMessage(true, messageSource.getMessage("message.change.success", null, locale)));
+        } else {
+            model.addAttribute("message", new ResponseMessage(false, messageSource.getMessage("message.error.wrong.password", null, locale)));
+        }
+        return "password";
     }
 
     @ResponseBody

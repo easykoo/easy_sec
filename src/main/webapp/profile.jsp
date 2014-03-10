@@ -36,7 +36,16 @@
             <form id="profileForm" role="form" class="form-horizontal" method="post" action="account/changeProfile.do">
 
                 <input type="text" name="accountId" value="${currentAccountSecurity.accountId}" hidden>
-
+                <c:if test="${not empty message}">
+                    <div class="form-group alert
+                        <c:if test="${!message.success}">alert-danger</c:if>
+                        <c:if test="${message.success}">alert-success</c:if>
+                         fade in">
+                        <button id='alert1' type="button" class="close" data-dismiss="alert"
+                                aria-hidden="true">&times;</button>
+                            ${message.message}
+                    </div>
+                </c:if>
                 <div class="form-group">
                     <label for="nickname" class="col-sm-2 control-label"><span style="color: red">*</span>
                         <spring:message
@@ -115,7 +124,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-6">
-                        <button type="submit" class="btn btn-success btn-lg"><spring:message
+                        <button type="submit" class="btn btn-success btn-block"><spring:message
                                 code="label.change"/></button>
                     </div>
                 </div>
@@ -180,21 +189,6 @@
                 label.parent("div").parent("div").removeClass("has-error").addClass("has-success");
             },
             submitHandler: function (form) {
-                /*$.ajax({
-                 cache: true,
-                 type: "POST",
-                 url: "account/changeProfile.do",
-                 data: $('#profileForm').serialize(),
-                 dataType: "json",
-                 async: false,
-                 error: function (request) {
-                 alert("Connection error");
-                 },
-                 success: function (data) {
-                 alert(data.message);
-                 window.location.reload()
-                 }
-                 });*/
                 form.submit();
                 return false;
             }
