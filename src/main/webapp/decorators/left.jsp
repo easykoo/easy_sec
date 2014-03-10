@@ -28,9 +28,11 @@
                 </div>
                 <!-- /input-group -->
             </li>
-            <li>
-                <a href="javascript:"><i class="fa fa-dashboard fa-fw"></i> <spring:message code="label.dashboard"/></a>
-            </li>
+            <au:test uri="/admin/dashboard.do">
+                <li>
+                    <a href="javascript:"><i class="fa fa-dashboard fa-fw"></i> <spring:message code="label.dashboard"/></a>
+                </li>
+            </au:test>
             <au:test uri="/admin/allAccountView.do">
                 <li id="allAccount">
                     <a href="admin/allAccountView.do"><i class="fa fa-users fa-fw"></i> <spring:message

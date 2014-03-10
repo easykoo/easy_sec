@@ -469,6 +469,7 @@
                     type: "POST",
                     url: "ajax/addFeedback.do",
                     data: $('#contactForm').serialize(),
+                    dataType: "json",
                     async: false,
                     error: function (request) {
                         alert("Connection error");

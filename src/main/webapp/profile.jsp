@@ -33,16 +33,9 @@
     </div>
     <div class="row">
         <div class="col-lg-5">
-            <form id="profileForm" role="form" class="form-horizontal" action="account/changeProfile.do" method="post">
+            <form id="profileForm" role="form" class="form-horizontal" method="post">
 
                 <input type="text" name="accountId" value="${currentAccountSecurity.accountId}" hidden>
-                <c:if test="${not empty errorMessage || not empty successMessage}">
-                    <div class="alert <c:if test="${not empty errorMessage}">alert-danger</c:if> <c:if test="${not empty successMessage}">alert-success</c:if> fade in">
-                        <button id='alert1' type="button" class="close" data-dismiss="alert"
-                                aria-hidden="true">&times;</button>
-                            ${errorMessage}${successMessage}
-                    </div>
-                </c:if>
                 <div class="form-group">
                     <label for="nickname" class="col-sm-2 control-label"><span style="color: red">*</span>
                         <spring:message
@@ -156,7 +149,6 @@
     }
 
     $(document).ready(function () {
-
         $('#settings').toggleClass('active').children('ul').collapse('toggle');
 
         $("#profileForm").validate({
@@ -212,15 +204,14 @@
                     type: "POST",
                     url: "account/changeProfile.do",
                     data: $('#profileForm').serialize(),
+                    dataType: "json",
                     async: false,
                     error: function (request) {
                         alert("Connection error");
                     },
                     success: function (data) {
-                        var o = $.toJSON(data);
-                        if (o.isSuccess) {
-                            alert('<spring:message code="message.change.success"/>');
-                        }
+                            alert(data.message)
+                        window.location.reload()
                     }
                 });
                 return false;

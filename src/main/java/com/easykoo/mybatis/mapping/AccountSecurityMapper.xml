@@ -29,12 +29,9 @@
   </delete>
     <insert id="insert" parameterType="com.easykoo.mybatis.model.AccountSecurity">
     insert into sec_acc_security (account_id, username, password,
-      temp_flag, fail_time, effective_date, 
-      create_user, create_date, update_user, 
-      update_date)
+      effective_date, create_user, create_date, update_user, update_date)
     values (#{accountId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
-      #{tempFlag,jdbcType=BIT}, #{failTime,jdbcType=INTEGER}, #{effectiveDate,jdbcType=TIMESTAMP}, 
-      'SYSTEM', now(), 'SYSTEM', now())
+      now(), 'SYSTEM', now(), 'SYSTEM', now())
   </insert>
     <insert id="insertSelective" parameterType="com.easykoo.mybatis.model.AccountSecurity">
         insert into sec_acc_security

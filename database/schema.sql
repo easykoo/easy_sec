@@ -27,7 +27,7 @@ CREATE TABLE sec_account (
   postcode varchar(10) DEFAULT NULL,
   address varchar(80) DEFAULT NULL,
   email varchar(45) DEFAULT NULL,
-  role_id int(3) NOT NULL default '0',
+  role_id int(3) NOT NULL default '3',
   department_id int(3) NOT NULL default '1',
   permission varchar(60) DEFAULT NULL,
   active tinyint(1) DEFAULT '0',
