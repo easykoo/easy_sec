@@ -176,6 +176,7 @@
             bLengthChange: true,
             sPaginationType: 'full_numbers',
             sAjaxSource: 'ajax/allFeedback.do',
+            aaSorting: [[0,'desc'],[5,'asc']],
             fnServerData: function (sSource, aoData, fnCallback) {
                 $.ajax({
                     dataType: "json",
