@@ -241,6 +241,30 @@ public class AccountController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/ajax/hire.do", produces = "application/json")
+    public String hire(@RequestParam(value = "accountId") int accountId) {
+        Account dbAccount = accountService.selectByPrimaryKey(accountId);
+        if (dbAccount != null) {
+            dbAccount.setRoleId(2);
+            accountService.updateByPrimaryKey(dbAccount);
+            return "true";
+        }
+        return "{\"error\":\"no user\"}";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/ajax/fire.do", produces = "application/json")
+    public String fire(@RequestParam(value = "accountId") int accountId) {
+        Account dbAccount = accountService.selectByPrimaryKey(accountId);
+        if (dbAccount != null) {
+            dbAccount.setRoleId(3);
+            accountService.updateByPrimaryKey(dbAccount);
+            return "true";
+        }
+        return "{\"error\":\"no user\"}";
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/ajax/checkUsername.do", produces = "application/json")
     public String checkUsername(@RequestParam("username") String username, Locale locale) {
         if (accountService.checkUsername(username)) {

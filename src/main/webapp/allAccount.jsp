@@ -176,7 +176,7 @@
     function unbanAccount(accountID) {
         bootbox.dialog({
             message: "Are you sure to unban this account?",
-            title: "Ban Account",
+            title: "Unban Account",
             buttons: {
                 main: {
                     label: "Cancel",
@@ -216,7 +216,7 @@
     function makeAdmin(accountID) {
         bootbox.dialog({
             message: "Are you sure to make this account administrator?",
-            title: "Ban Account",
+            title: "Make Admin",
             buttons: {
                 main: {
                     label: "Cancel",
@@ -230,6 +230,86 @@
                     callback: function (result) {
                         if (result) {
                             $.ajax('ajax/makeAdmin.do', {
+                                dataType: 'json',
+                                data: {
+                                    accountId: accountID
+                                },
+                                success: function (data) {
+                                    if (data == 'true') {
+                                        accountTable.fnClearTable(0);
+                                        accountTable.fnDraw();
+                                    }
+                                    else {
+                                        var obj = $.parseJSON(data);
+                                        bootbox.alert(obj.error, function () {
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    function hire(accountID) {
+        bootbox.dialog({
+            message: "Are you sure to hire this user?",
+            title: "Hire",
+            buttons: {
+                main: {
+                    label: "Cancel",
+                    className: "btn-default",
+                    callback: function () {
+                    }
+                },
+                danger: {
+                    label: "Yes",
+                    className: "btn-danger",
+                    callback: function (result) {
+                        if (result) {
+                            $.ajax('ajax/hire.do', {
+                                dataType: 'json',
+                                data: {
+                                    accountId: accountID
+                                },
+                                success: function (data) {
+                                    if (data == 'true') {
+                                        accountTable.fnClearTable(0);
+                                        accountTable.fnDraw();
+                                    }
+                                    else {
+                                        var obj = $.parseJSON(data);
+                                        bootbox.alert(obj.error, function () {
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    function fire(accountID) {
+        bootbox.dialog({
+            message: "Are you sure to fire this employee?",
+            title: "Fire Employee",
+            buttons: {
+                main: {
+                    label: "Cancel",
+                    className: "btn-default",
+                    callback: function () {
+                    }
+                },
+                danger: {
+                    label: "Yes",
+                    className: "btn-danger",
+                    callback: function (result) {
+                        if (result) {
+                            $.ajax('ajax/fire.do', {
                                 dataType: 'json',
                                 data: {
                                     accountId: accountID
@@ -306,6 +386,11 @@
                 }
                 if (aData.roleId != 1) {
                     html += '<li class="divider"></li><li><a href="javascript:makeAdmin(' + aData.account_id + ')"><i class="i"></i> Make admin</a></li>';
+                }
+                if (aData.roleId == 3) {
+                    html += '<li class="divider"></li><li><a href="javascript:hire(' + aData.account_id + ')"><i class="i"></i> Hire</a></li>';
+                } else {
+                    html += '<li class="divider"></li><li><a href="javascript:fire(' + aData.account_id + ')"><i class="i"></i> Fire</a></li>';
                 }
                 html += '</ul></div>';
                 $('td:eq(6)', nRow).html(html);
