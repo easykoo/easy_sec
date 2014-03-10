@@ -36,7 +36,7 @@ insert into sec_function ( function_id, description, uri, module_id)values (22,'
 insert into sec_function ( function_id, description, uri, module_id)values (23,'Change profile','/account/changeProfile.do',2);
 insert into sec_function ( function_id, description, uri, module_id)values (24,'View change email','/admin/changeEmailView.do',2);
 insert into sec_function ( function_id, description, uri, module_id)values (25,'Change email','/account/changeEmail.do',2);
-insert into sec_function ( function_id, description, uri, module_id)values (26,'View change password','/admin/changePasswordView.do',2);
+insert into sec_function ( function_id, description, uri, module_id)values (26,'View change password','/admin/password.do',2);
 insert into sec_function ( function_id, description, uri, module_id)values (27,'Change password','/account/changePassword.do',2);
 
 insert into sec_function ( function_id, description, uri, module_id)values (30,'View accounts','/admin/allAccountView.do',3);

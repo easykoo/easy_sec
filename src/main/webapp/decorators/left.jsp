@@ -57,7 +57,7 @@
                             </li>
                         </au:test>
                         <li>
-                            <a href="/admin/changePasswordView.do"><spring:message
+                            <a href="/admin/password.do"><spring:message
                                     code="label.change.password"/></a>
                         </li>
                         <li>
