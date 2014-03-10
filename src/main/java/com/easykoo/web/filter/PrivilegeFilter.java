@@ -40,7 +40,7 @@ public class PrivilegeFilter
                     , ".otf", ".eot", ".svg", ".ttf", ".woff", ".scss", ".woff"
             };
 
-    private final static String[] noNeedLogin = new String[]{"index.html", "index.jsp", "registerAccountView.do", "registerAccount.do",
+    private final static String[] noNeedLogin = new String[]{"index.html", "index.jsp", "registerView.do", "register.do",
             "getVerifyCodeImage.do", "addFeedback.do", "subscribe.do", "index.do", "logout.do", "login.do", "loginView.do"
             , "checkEmail.do", "checkUsername.do", "checkVerifyCode.do"};
 

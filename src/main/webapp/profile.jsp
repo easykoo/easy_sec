@@ -33,9 +33,10 @@
     </div>
     <div class="row">
         <div class="col-lg-5">
-            <form id="profileForm" role="form" class="form-horizontal" method="post">
+            <form id="profileForm" role="form" class="form-horizontal" method="post" action="account/changeProfile.do">
 
                 <input type="text" name="accountId" value="${currentAccountSecurity.accountId}" hidden>
+
                 <div class="form-group">
                     <label for="nickname" class="col-sm-2 control-label"><span style="color: red">*</span>
                         <spring:message
@@ -113,17 +114,8 @@
                     <div class="col-sm-4 control-label"></div>
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-3">
-                        <input type="text" id="verifyCode" class="form-control" name="verifyCode">
-                    </div>
-                    <div class="col-sm-3">
-                        <img id="verifyCodeImg" onclick="reloadVerifyCode()" src="common/getVerifyCodeImage.do"/>
-                    </div>
-                    <div class="col-sm-4 control-label"></div>
-                </div>
-                <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-6">
-                        <button type="submit" class="btn btn-default btn-lg"><spring:message
+                        <button type="submit" class="btn btn-success btn-lg"><spring:message
                                 code="label.change"/></button>
                     </div>
                 </div>
@@ -144,9 +136,6 @@
 
 
 <script type="text/javascript">
-    var reloadVerifyCode = function () {
-        document.getElementById("verifyCodeImg").src = "common/getVerifyCodeImage.do";
-    }
 
     $(document).ready(function () {
         $('#settings').toggleClass('active').children('ul').collapse('toggle');
@@ -160,10 +149,6 @@
                 },
                 gender: {
                     required: true
-                },
-                verifyCode: {
-                    required: true,
-                    remote: "ajax/checkVerifyCode.do"
                 }
             },
             messages: {
@@ -172,11 +157,7 @@
                     minlength: '<spring:message code="message.error.min.length"/>',
                     stringCheck: '<spring:message code="message.error.string.check"/>'
                 },
-                gender: '<spring:message code="message.error.required"/>',
-                verifyCode: {
-                    required: '<spring:message code="message.error.required"/>',
-                    remote: '<spring:message code="message.error.wrong.verify.code"/>'
-                }
+                gender: '<spring:message code="message.error.required"/>'
             },
             focusInvalid: true,
             onkeyup: false,
@@ -199,21 +180,22 @@
                 label.parent("div").parent("div").removeClass("has-error").addClass("has-success");
             },
             submitHandler: function (form) {
-                $.ajax({
-                    cache: true,
-                    type: "POST",
-                    url: "account/changeProfile.do",
-                    data: $('#profileForm').serialize(),
-                    dataType: "json",
-                    async: false,
-                    error: function (request) {
-                        alert("Connection error");
-                    },
-                    success: function (data) {
-                            alert(data.message)
-                        window.location.reload()
-                    }
-                });
+                /*$.ajax({
+                 cache: true,
+                 type: "POST",
+                 url: "account/changeProfile.do",
+                 data: $('#profileForm').serialize(),
+                 dataType: "json",
+                 async: false,
+                 error: function (request) {
+                 alert("Connection error");
+                 },
+                 success: function (data) {
+                 alert(data.message);
+                 window.location.reload()
+                 }
+                 });*/
+                form.submit();
                 return false;
             }
         });

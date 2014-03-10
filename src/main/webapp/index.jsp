@@ -90,16 +90,15 @@
                                             code="label.profile"/></a></li>
                                 </au:test>
                                 <li class="divider"></li>
-                                <li><a href="account/logout.do"><i class="fa fa-sign-out fa-fw"></i> <spring:message
+                                <li><a href="logout.do"><i class="fa fa-sign-out fa-fw"></i> <spring:message
                                         code="label.logout"/></a></li>
                             </ul>
                         </li>
                     </c:when>
                     <c:otherwise>
-                        <li><a href="account/loginView.do?url=<%=request.getRequestURL()%>"><spring:message
+                        <li><a href="loginView.do?url=<%=request.getRequestURL()%>"><spring:message
                                 code="label.sign.in"/></a></li>
-                        <%--<li><button type="button" class="btn btn-default"><spring:message code="label.sign.in"/></button></li>--%>
-                        <li><a href="account/registerAccountView.do"><spring:message code="label.sign.up"/></a></li>
+                        <li><a href="registerView.do"><spring:message code="label.sign.up"/></a></li>
                     </c:otherwise>
                 </c:choose>
             </ul>

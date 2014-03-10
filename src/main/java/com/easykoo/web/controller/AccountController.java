@@ -4,6 +4,7 @@ import com.easykoo.model.ResponseMessage;
 import com.easykoo.mybatis.model.Account;
 import com.easykoo.mybatis.model.AccountSecurity;
 import com.easykoo.mybatis.model.AccountSession;
+import com.easykoo.mybatis.model.DataTablesResponse;
 import com.easykoo.service.IAccountService;
 import com.easykoo.service.IAccountSessionService;
 import com.easykoo.util.CookiesUtil;
@@ -21,6 +22,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -28,7 +30,6 @@ import java.util.Locale;
  */
 
 @Controller
-@RequestMapping("/account")
 public class AccountController {
     protected final Log logger = LogFactory.getLog(getClass());
     private IAccountSessionService accountSessionService;
@@ -120,27 +121,27 @@ public class AccountController {
         return "redirect:/index.jsp";
     }
 
-    @RequestMapping(value = "/registerAccountView.do")
-    public String registerAccountView() {
-        return "registerAccount";
+    @RequestMapping(value = "/registerView.do")
+    public String registerView() {
+        return "register";
     }
 
-    @RequestMapping(value = "/registerAccount.do")
-    public String registerAccount(@ModelAttribute("accountSecurity") AccountSecurity accountSecurity,
+    @RequestMapping(value = "/register.do")
+    public String register(@ModelAttribute("accountSecurity") AccountSecurity accountSecurity,
                                   HttpServletRequest request, ModelMap model) {
 
         String currentVerifyCode = (String) request.getSession().getAttribute("currentVerifyCode");
         if (currentVerifyCode != null && !currentVerifyCode.equals(accountSecurity.getVerifyCode())) {
             logger.debug("Verify code is wrong!");
             model.addAttribute("errorMessage", "wrong verify code!");
-            return "registerAccount";
+            return "register";
         }
 
         String token = (String) request.getSession().getAttribute("currentFormToken");
         if (token != null && !token.equals(accountSecurity.getToken())) {
             logger.debug("Token is wrong!");
             model.addAttribute("errorMessage", "Duplicate submit!");
-            return "registerAccount";
+            return "register";
         }
 
         try {
@@ -152,31 +153,109 @@ public class AccountController {
         } catch (DuplicateKeyException e) {
             logger.error("Duplicate key!", e);
             model.addAttribute("errorMessage", "Duplicate key!");
-            return "registerAccount";
+            return "register";
         }
         return "redirect:/index.jsp";
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/changeProfile.do", produces = "application/json")
-    public ResponseMessage changeProfile(@ModelAttribute("account") Account account,
-                                         HttpServletRequest request, Locale locale) {
-        String currentVerifyCode = (String) request.getSession().getAttribute("currentVerifyCode");
-        if (currentVerifyCode != null && !currentVerifyCode.equals(account.getVerifyCode())) {
-            logger.debug("Verify code is wrong!");
-            return new ResponseMessage(false, messageSource.getMessage("message.error.wrong.verify.code", null, locale));
-        }
-
+    @RequestMapping(value = "/account/changeProfile.do")
+    public String changeProfile(@ModelAttribute("account") Account account,
+                                         HttpServletRequest request, Locale locale, ModelMap model) {
         try {
             accountService.updateByPrimaryKeySelective(account);
             logger.debug(account.getUsername() + " updated successfully!");
             AccountSecurity dbAccountSecurity = accountService.selectFullByPrimaryKey(account.getAccountId());
             request.getSession().setAttribute("currentAccountSecurity", dbAccountSecurity);
-            return new ResponseMessage(true, messageSource.getMessage("message.change.success", null, locale));
+            model.addAttribute("message",  new ResponseMessage(true, messageSource.getMessage("message.change.success", null, locale)));
         } catch (DuplicateKeyException e) {
             logger.error("Duplicate key!", e);
-            return new ResponseMessage(false, messageSource.getMessage("message.error.duplicate.key", null, locale));
+            model.addAttribute("message",  new ResponseMessage(true, messageSource.getMessage("message.error.duplicate.key", null, locale)));
         }
+        return "profile";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/ajax/allAccount.do", produces = "application/json")
+    public DataTablesResponse showUser(@RequestParam int iDisplayStart, @RequestParam int iDisplayLength, @RequestParam int iSortCol_0, @RequestParam String sSortDir_0, HttpServletRequest request) {
+        DataTablesResponse<Account> dt = new DataTablesResponse();
+
+        Account account = new Account();
+        account.setPageActived(true);
+        account.setPageSize(iDisplayLength);
+        account.setDisplayStart(iDisplayStart);
+        String sortColumn = request.getParameter("mDataProp_" + iSortCol_0);
+        account.addSortProperties(sortColumn, sSortDir_0);
+        List<Account> accountList = accountService.findAccountWithPage(account);
+
+        dt.setData(accountList);
+        dt.setTotalDisplayRecords(account.getTotalRecord());
+        dt.setTotalRecords(account.getTotalRecord());
+        return dt;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/ajax/deleteAccount.do", produces = "application/json")
+    public String deleteAccount(@RequestParam(value = "accountId") int accountId) {
+        Account dbAccount = accountService.selectByPrimaryKey(accountId);
+        if (dbAccount != null) {
+            accountService.deleteByPrimaryKey(accountId);
+            return "true";
+        }
+        return "{\"error\":\"no user\"}";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/ajax/banAccount.do", produces = "application/json")
+    public String banAccount(@RequestParam(value = "accountId") int accountId) {
+        Account dbAccount = accountService.selectByPrimaryKey(accountId);
+        if (dbAccount != null) {
+            dbAccount.setLocked(true);
+            accountService.updateByPrimaryKey(dbAccount);
+            return "true";
+        }
+        return "{\"error\":\"no user\"}";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/ajax/unbanAccount.do", produces = "application/json")
+    public String unbanAccount(@RequestParam(value = "accountId") int accountId) {
+        Account dbAccount = accountService.selectByPrimaryKey(accountId);
+        if (dbAccount != null) {
+            dbAccount.setLocked(false);
+            accountService.updateByPrimaryKey(dbAccount);
+            return "true";
+        }
+        return "{\"error\":\"no user\"}";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/ajax/adminAccount.do", produces = "application/json")
+    public String adminAccount(@RequestParam(value = "accountId") int accountId) {
+        Account dbAccount = accountService.selectByPrimaryKey(accountId);
+        if (dbAccount != null) {
+            dbAccount.setRoleId(1);
+            accountService.updateByPrimaryKey(dbAccount);
+            return "true";
+        }
+        return "{\"error\":\"no user\"}";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/ajax/checkUsername.do", produces = "application/json")
+    public String checkUsername(@RequestParam("username") String username, Locale locale) {
+        if (accountService.checkUsername(username)) {
+            return messageSource.getMessage("message.error.already.exists", null, locale);
+        }
+        return "true";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/ajax/checkEmail.do", produces = "application/json")
+    public String checkEmail(@RequestParam("email") String email, Locale locale) {
+        if (accountService.checkEmail(email)) {
+            return messageSource.getMessage("message.error.already.exists", null, locale);
+        }
+        return "true";
     }
 
     public MessageSource getMessageSource() {

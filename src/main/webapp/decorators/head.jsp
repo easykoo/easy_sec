@@ -57,7 +57,7 @@
                         </li>
                     </au:test>
                     <li class="divider"></li>
-                    <li><a href="account/logout.do"><i class="fa fa-sign-out fa-fw"></i><spring:message
+                    <li><a href="logout.do"><i class="fa fa-sign-out fa-fw"></i><spring:message
                             code="label.logout"/></a>
                     </li>
                 </ul>

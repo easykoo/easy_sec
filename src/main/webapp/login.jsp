@@ -16,16 +16,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title><spring:message code="label.sign.in"/></title>
+    <title><spring:message code="main.title"/> - <spring:message code="label.sign.in"/></title>
+    <link rel="stylesheet" href="css/the-story.min.css">
+    <link rel="stylesheet" href="css/p-controls.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
 </head>
 <body>
 
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="navbar-container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand" href="#">Easy Security</a>
+        </div>
+        <div id="nav-collapse" class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class=""><a title="Home page" class="scroll brand-1" href="#home"><spring:message
+                        code="label.home"/></a></li>
+                <li class=""><a title="Check out our awesome services" href="#features"
+                                class=" scroll brand-4"><spring:message code="label.features"/></a></li>
+                <li class=""><a title="Themes assets" href="#assets" class="scroll brand-3"><spring:message
+                        code="label.assets"/></a></li>
+                <li class=""><a title="Who we are" href="#about" class="scroll fadeto brand-4"><spring:message
+                        code="label.about.us"/></a></li>
+                <li class=""><a title="Get in touch!" href="#contact" class="scroll brand-2"><spring:message
+                        code="label.contact.us"/></a></li>
+
+                <li class="dropdown">
+                    <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown"><spring:message
+                            code="label.language"/>
+                        <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="loginView.do?url=http://localhost/&locale=zh_CN">中文/简体</a></li>
+                        <li><a href="loginView.do?url=http://localhost/&locale=en">English</a></li>
+                    </ul>
+                </li>
+                <li><a href="registerView.do"><spring:message code="label.sign.up"/></a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- /.navbar-container -->
+</nav>
 <div style="margin-top:100px;margin-bottom:200px;max-width: 400px" class="container">
 
-    <form role="form" action="account/login.do" method="post">
-        <input type="hidden" name="token" value="/common/getFormToken.do">
+    <form role="form" action="login.do" method="post">
         <h2 class="form-signin-heading"><spring:message code="label.please.sign.in"/></h2>
         <c:if test="${not empty errorMessage}">
         <div class="alert alert-danger  fade in">

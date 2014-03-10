@@ -10,18 +10,12 @@
         <decorator>/decorators/left.jsp</decorator>
         <decorator>/decorators/head.jsp</decorator>
     </mapping>
-    <!--
-        &lt;!&ndash; 配置特定路径的渲染器. &ndash;&gt;
-        <mapping path="/admin/*" decorator="/another-decorator.html"/>
-        <mapping path="/*.special.jsp" decorator="/special-decorator.html"/>
+    <mapping>
+        <path>/account/*</path>
+        <decorator>/decorators/left.jsp</decorator>
+        <decorator>/decorators/head.jsp</decorator>
+    </mapping>
 
-        &lt;!&ndash; 配置多个渲染器. &ndash;&gt;
-        <mapping>
-            <path>/articles/*</path>
-            <decorator>/decorators/article.html</decorator>
-            <decorator>/decorators/two-page-layout.html</decorator>
-            <decorator>/decorators/common.html</decorator>
-        </mapping>-->
     <!-- 不被渲染的路径. -->
     <mapping path="/js/*" exclue="true"/>
     <mapping path="/ajax/*" exclue="true"/>
