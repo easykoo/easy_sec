@@ -132,8 +132,7 @@
 
 <script type="text/javascript">
     var reloadVerifyCode = function () {
-        var el = document.getElementById("verifyCodeImg");
-        el.src = el.src + '?';
+        document.getElementById("verifyCodeImg").src="common/getVerifyCodeImage.do";
     }
 
     $(document).ready(function () {
@@ -158,7 +157,6 @@
                     required: true,
                     email: true,
                     remote: "ajax/checkEmail.do"
-
                 },
                 password: {
                     required: true,

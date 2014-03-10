@@ -1,9 +1,9 @@
 delete from sec_role;
 delete from sec_department;
+insert into sec_role values(0,'User',1,now(),1,now());
 insert into sec_role values(1,'Admin',1,now(),1,now());
 insert into sec_role values(2,'Employee',1,now(),1,now());
 insert into sec_department values(1,'人事部',1,now(),1,now());
-insert into sec_department values(2,'销售部',1,now(),1,now());
 
 delete from sec_account;
 delete from sec_acc_security;
@@ -38,6 +38,7 @@ insert into sec_function ( function_id, description, uri, module_id)values (13,'
 insert into sec_function ( function_id, description, uri, module_id)values (14,'Get all feedback by ajax','/ajax/allFeedback.do',3);
 insert into sec_function ( function_id, description, uri, module_id)values (15,'Delete feedback by ajax','/ajax/deleteFeedback.do',3);
 insert into sec_privilege ( external_id, type,role_id,department_id) values (1,1,1,1);
+insert into sec_privilege ( external_id, type,role_id,department_id) values (1,1,0,1);
 insert into sec_privilege ( external_id, type,role_id,department_id) values (2,1,1,1);
 insert into sec_privilege ( external_id, type,role_id,department_id) values (3,1,1,1);
 insert into sec_privilege ( external_id, type,role_id,department_id) values (4,1,1,1);

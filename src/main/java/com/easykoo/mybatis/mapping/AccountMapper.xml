@@ -44,17 +44,13 @@
         insert into sec_account (username, first_name,
         last_name, nick_name, gender,
         qq, telephone, postcode,
-        address, email,
-        permission, active,
-        locked, create_user, create_date,
+        address, email, create_user, create_date,
         update_user, update_date)
         values (#{username,jdbcType=VARCHAR}, #{firstName,jdbcType=VARCHAR},
         #{lastName,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER},
         #{qq,jdbcType=INTEGER}, #{telephone,jdbcType=VARCHAR}, #{postcode,jdbcType=VARCHAR},
         #{address,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
-        #{permission,jdbcType=VARCHAR}, #{active,jdbcType=BIT},
-        #{locked,jdbcType=BIT}, 'SYSTEM', now(),
-        'SYSTEM', now())
+        'SYSTEM', now(), 'SYSTEM', now())
         <selectKey keyProperty="accountId" resultType="int" order="AFTER">
             SELECT LAST_INSERT_ID();
         </selectKey>
