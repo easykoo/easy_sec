@@ -45,7 +45,7 @@ public class CommonController {
     }
 
     @RequestMapping("/common/getVerifyCodeImage.do")
-    public void getVerifyCodeImage(HttpServletRequest request, HttpServletResponse response, ModelMap model) throws IOException {
+    public void getVerifyCodeImage(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String verifyCode = VerifyCodeUtil.generateTextCode(VerifyCodeUtil.TYPE_NUM_ONLY, 4, null);
         BufferedImage bufferedImage = VerifyCodeUtil.generateImageCode(verifyCode, 90, 30, 3, true, Color.WHITE, Color.BLACK, null);
 
