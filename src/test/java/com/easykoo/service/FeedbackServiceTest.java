@@ -1,8 +1,6 @@
 package com.easykoo.service;
 
-import com.easykoo.mybatis.model.Account;
 import com.easykoo.mybatis.model.Feedback;
-import com.easykoo.mybatis.model.Page;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;

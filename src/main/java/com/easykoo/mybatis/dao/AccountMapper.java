@@ -1,7 +1,6 @@
 package com.easykoo.mybatis.dao;
 
 import com.easykoo.mybatis.model.Account;
-import com.easykoo.mybatis.model.Page;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.easykoo.web.controller;
 
-import com.easykoo.mybatis.model.DataTablesResponse;
+import com.easykoo.model.DataTablesResponse;
 import com.easykoo.mybatis.model.Feedback;
 import com.easykoo.mybatis.model.Subscribe;
 import com.easykoo.service.IFeedbackService;

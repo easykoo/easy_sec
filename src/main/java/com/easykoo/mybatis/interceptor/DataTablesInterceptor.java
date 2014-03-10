@@ -1,7 +1,6 @@
 package com.easykoo.mybatis.interceptor;
 
-import com.easykoo.mybatis.model.DataTablesModel;
-import com.easykoo.mybatis.model.Page;
+import com.easykoo.model.DataTablesModel;
 import org.apache.ibatis.executor.parameter.ParameterHandler;
 import org.apache.ibatis.executor.statement.RoutingStatementHandler;
 import org.apache.ibatis.executor.statement.StatementHandler;

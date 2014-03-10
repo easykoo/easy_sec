@@ -2,7 +2,6 @@ package com.easykoo.service;
 
 import com.easykoo.mybatis.model.Account;
 import com.easykoo.mybatis.model.AccountSecurity;
-import com.easykoo.mybatis.model.Page;
 
 import java.util.List;
 

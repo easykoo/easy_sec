@@ -1,4 +1,4 @@
-package com.easykoo.mybatis.model;
+package com.easykoo.model;
 
 /**
  * Feb 22, 2014    Steven

@@ -4,7 +4,7 @@ import com.easykoo.model.ResponseMessage;
 import com.easykoo.mybatis.model.Account;
 import com.easykoo.mybatis.model.AccountSecurity;
 import com.easykoo.mybatis.model.AccountSession;
-import com.easykoo.mybatis.model.DataTablesResponse;
+import com.easykoo.model.DataTablesResponse;
 import com.easykoo.service.IAccountService;
 import com.easykoo.service.IAccountSessionService;
 import com.easykoo.util.CookiesUtil;

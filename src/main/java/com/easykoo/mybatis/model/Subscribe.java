@@ -1,8 +1,10 @@
 package com.easykoo.mybatis.model;
 
+import com.easykoo.model.Page;
+
 import java.util.Date;
 
-public class Subscribe extends Page{
+public class Subscribe extends Page {
     private String email;
 
     private String name;

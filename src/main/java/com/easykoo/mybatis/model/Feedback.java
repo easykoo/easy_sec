@@ -1,5 +1,6 @@
 package com.easykoo.mybatis.model;
 
+import com.easykoo.model.Page;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.Date;
