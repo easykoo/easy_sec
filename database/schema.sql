@@ -1,3 +1,4 @@
+drop schema if exists easy_sec;
 CREATE SCHEMA easy_sec DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 
 use easy_sec;

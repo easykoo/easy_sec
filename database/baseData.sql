@@ -31,7 +31,6 @@ insert into sec_module(module_id, description) values (5,'Products');
 
 insert into sec_function ( function_id, description, uri, module_id)values (1,'View dashboard','/admin/dashboard.do',1);
 
-insert into sec_function ( function_id, description, uri, module_id)values (20,'View accounts','/admin/allAccountView.do',2);
 insert into sec_function ( function_id, description, uri, module_id)values (21,'View setting','/admin/settings.do',2);
 insert into sec_function ( function_id, description, uri, module_id)values (22,'View profile','/admin/profile.do',2);
 insert into sec_function ( function_id, description, uri, module_id)values (23,'Change profile','/account/changeProfile.do',2);
@@ -40,12 +39,13 @@ insert into sec_function ( function_id, description, uri, module_id)values (25,'
 insert into sec_function ( function_id, description, uri, module_id)values (26,'View change password','/admin/changePasswordView.do',2);
 insert into sec_function ( function_id, description, uri, module_id)values (27,'Change password','/account/changePassword.do',2);
 
-insert into sec_function ( function_id, description, uri, module_id)values (30,'Get all account by ajax','/ajax/allAccount.do',3);
-insert into sec_function ( function_id, description, uri, module_id)values (31,'Delete account by ajax','/ajax/deleteAccount.do',3);
-insert into sec_function ( function_id, description, uri, module_id)values (32,'Ban account by ajax','/ajax/banAccount.do',3);
-insert into sec_function ( function_id, description, uri, module_id)values (33,'Unban account by ajax','/ajax/unbanAccount.do',3);
-insert into sec_function ( function_id, description, uri, module_id)values (34,'Update account by ajax','/ajax/updateAccount.do',3);
-insert into sec_function ( function_id, description, uri, module_id)values (35,'Make account admin by ajax','/ajax/adminAccount.do',3);
+insert into sec_function ( function_id, description, uri, module_id)values (30,'View accounts','/admin/allAccountView.do',3);
+insert into sec_function ( function_id, description, uri, module_id)values (31,'Get all account by ajax','/ajax/allAccount.do',3);
+insert into sec_function ( function_id, description, uri, module_id)values (32,'Delete account by ajax','/ajax/deleteAccount.do',3);
+insert into sec_function ( function_id, description, uri, module_id)values (33,'Ban account by ajax','/ajax/banAccount.do',3);
+insert into sec_function ( function_id, description, uri, module_id)values (34,'Unban account by ajax','/ajax/unbanAccount.do',3);
+insert into sec_function ( function_id, description, uri, module_id)values (35,'Update account by ajax','/ajax/updateAccount.do',3);
+insert into sec_function ( function_id, description, uri, module_id)values (36,'Make account admin by ajax','/ajax/adminAccount.do',3);
 
 insert into sec_function ( function_id, description, uri, module_id)values (40,'View feedback','/admin/allFeedbackView.do',4);
 insert into sec_function ( function_id, description, uri, module_id)values (41,'Get top 5 feedback by ajax','/ajax/getTop5Feedback.do',4);

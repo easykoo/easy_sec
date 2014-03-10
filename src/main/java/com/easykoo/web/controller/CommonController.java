@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +22,6 @@ import java.util.Random;
  */
 
 @Controller
-@SessionAttributes({"currentVerifyCode","currentFormToken"})
 @RequestMapping("/common")
 public class CommonController {
 
@@ -52,7 +50,6 @@ public class CommonController {
     public String getVerifyCode(HttpServletRequest request, ModelMap model) throws IOException {
         String formToken = new BigInteger(165, new Random()).toString(36).toUpperCase();
         request.getSession().setAttribute("currentFormToken", formToken);
-        model.addAttribute("currentFormToken", formToken);
         return formToken;
     }
 

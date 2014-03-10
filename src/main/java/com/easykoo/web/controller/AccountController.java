@@ -1,12 +1,12 @@
 package com.easykoo.web.controller;
 
-import java.util.Date;
-import java.util.Locale;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.easykoo.model.ResponseMessage;
+import com.easykoo.mybatis.model.Account;
+import com.easykoo.mybatis.model.AccountSecurity;
+import com.easykoo.mybatis.model.AccountSession;
+import com.easykoo.service.IAccountService;
+import com.easykoo.service.IAccountSessionService;
+import com.easykoo.util.CookiesUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -17,13 +17,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import com.easykoo.model.ResponseMessage;
-import com.easykoo.mybatis.model.Account;
-import com.easykoo.mybatis.model.AccountSecurity;
-import com.easykoo.mybatis.model.AccountSession;
-import com.easykoo.service.IAccountService;
-import com.easykoo.service.IAccountSessionService;
-import com.easykoo.util.CookiesUtil;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Feb 22, 2014 Steven
@@ -100,7 +98,7 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/logout.do", method = RequestMethod.GET)
-    public String logout(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
         AccountSecurity currentAccountSecurity =
                 (AccountSecurity) request.getSession().getAttribute("currentAccountSecurity");
         if (currentAccountSecurity != null && currentAccountSecurity.getUsername() != null) {
@@ -118,7 +116,7 @@ public class AccountController {
             response.addCookie(ckSessionId);
             logger.debug(currentAccountSecurity.getUsername() + " logout!");
 
-            model.addAttribute("currentAccountSecurity", new AccountSecurity());
+            request.getSession().setAttribute("currentAccountSecurity", new AccountSecurity());
         }
         return "redirect:/index.jsp";
     }

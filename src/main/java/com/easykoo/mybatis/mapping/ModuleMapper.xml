@@ -9,21 +9,15 @@
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
     <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
     <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
-      <collection property="privilegeList" ofType="com.easykoo.mybatis.model.Privilege">
-          <id column="privilege_id" property="privilegeId" jdbcType="INTEGER"/>
-          <result column="external_id" property="externalId" jdbcType="INTEGER"/>
-          <result column="type" property="type" jdbcType="INTEGER"/>
-          <result column="role_id" property="roleId" jdbcType="INTEGER"/>
-          <result column="department_id" property="departmentId" jdbcType="INTEGER"/>
-      </collection>
   </resultMap>
-  <!--<sql id="Module_Column_List" >
+  <sql id="Module_Column_List" >
     module_id, description, permission, create_user, create_date, update_user, update_date
-  </sql>-->
+  </sql>
   <select id="selectByPrimaryKey" resultMap="ModuleResultMap" parameterType="java.lang.Integer" >
-    select m.*,p.*
-    from sec_module m, sec_privilege p
-    where m.module_id = p.external_id and p.type=2 and module_id = #{moduleId,jdbcType=INTEGER}
+    select
+    <include refid="Module_Column_List"/>
+    from sec_module
+    where module_id = #{moduleId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from sec_module

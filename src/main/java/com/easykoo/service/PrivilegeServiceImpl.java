@@ -84,12 +84,6 @@ public class PrivilegeServiceImpl implements IPrivilegeService {
     @Override
     public boolean isAuthorized(String uri, Account account) {
         //todo check ban
-        Function function = functionMapper.selectByUri(uri);
-        //check permission in function
-        if (function == null) {
-            logger.debug("Not configured in function!");
-            return false;
-        }
         //check function privilege
         if (checkFunctionPrivilege(account.getRoleId(), account.getDepartmentId(), uri)) {
             logger.debug("Authorized in function!");
@@ -99,7 +93,7 @@ public class PrivilegeServiceImpl implements IPrivilegeService {
 
         //check function privilege
         if (checkModulePrivilege(account.getRoleId(), account.getDepartmentId(), uri)) {
-            logger.debug("Authorized in function!");
+            logger.debug("Authorized in module!");
             return true;
         }
         logger.debug("Not authorized in module!");

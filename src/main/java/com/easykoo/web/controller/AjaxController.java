@@ -1,6 +1,9 @@
 package com.easykoo.web.controller;
 
-import com.easykoo.mybatis.model.*;
+import com.easykoo.mybatis.model.Account;
+import com.easykoo.mybatis.model.DataTablesResponse;
+import com.easykoo.mybatis.model.Feedback;
+import com.easykoo.mybatis.model.Subscribe;
 import com.easykoo.service.IAccountService;
 import com.easykoo.service.IAccountSessionService;
 import com.easykoo.service.IFeedbackService;
@@ -13,12 +16,8 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
-import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -41,8 +40,7 @@ public class AjaxController {
 
     @ResponseBody
     @RequestMapping(value = "/allAccount.do", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public List<Account> doAjax(HttpServletResponse response, ModelMap model) {
-
+    public List<Account> doAjax(ModelMap model) {
         Account account = new Account();
         account.setDepartmentId(1);
         account.setPageNo(1);
@@ -199,7 +197,7 @@ public class AjaxController {
 
     @ResponseBody
     @RequestMapping("/checkVerifyCode.do")
-    public String checkVerifyCode(@RequestParam("verifyCode") String verifyCode,HttpServletRequest request, Locale locale) throws IOException {
+    public String checkVerifyCode(@RequestParam("verifyCode") String verifyCode, HttpServletRequest request, Locale locale) throws IOException {
         String currentVerifyCode = (String) request.getSession().getAttribute("currentVerifyCode");
         if (currentVerifyCode != null && currentVerifyCode.equals(verifyCode)) {
             return "true";

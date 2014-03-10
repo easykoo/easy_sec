@@ -140,7 +140,7 @@
     where privilege_id = #{privilegeId,jdbcType=INTEGER}
   </update>
 
-  <select id="checkFunctionPrivilege" resultMap="java.lang.Boolean" parameterType="java.util.Map">
+  <select id="checkFunctionPrivilege" resultType="java.lang.Boolean" parameterType="java.util.Map">
         select count(*)
         from sec_function f, sec_privilege p
         where f.function_id= p.external_id
@@ -149,7 +149,7 @@
         and department_id = #{departmentId,jdbcType=VARCHAR}
         and uri = #{uri,jdbcType=VARCHAR}
   </select>
-  <select id="checkModulePrivilege" resultMap="java.lang.Boolean" parameterType="java.util.Map">
+  <select id="checkModulePrivilege" resultType="java.lang.Boolean" parameterType="java.util.Map">
         select count(*)
         from sec_function f, sec_module m, sec_privilege p
         where f.module_id = m.module_id

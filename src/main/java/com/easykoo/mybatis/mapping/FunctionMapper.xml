@@ -11,25 +11,15 @@
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
         <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
         <result column="update_date" property="createDate" jdbcType="TIMESTAMP"/>
-        <collection property="privilegeList" ofType="com.easykoo.mybatis.model.Privilege">
-            <id column="privilege_id" property="privilegeId" jdbcType="INTEGER"/>
-            <result column="external_id" property="externalId" jdbcType="INTEGER"/>
-            <result column="type" property="type" jdbcType="INTEGER"/>
-            <result column="role_id" property="roleId" jdbcType="INTEGER"/>
-            <result column="department_id" property="departmentId" jdbcType="INTEGER"/>
-            <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
-            <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
-            <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
-            <result column="update_date" property="createDate" jdbcType="TIMESTAMP"/>
-        </collection>
     </resultMap>
-    <!--   <sql id="Function_Column_List">
+    <sql id="Function_Column_List">
        function_id, description, uri, module_id, permission, create_user, create_date, update_user
-     </sql>-->
+     </sql>
     <select id="selectByPrimaryKey" resultMap="FunctionResultMap" parameterType="java.lang.Integer">
-        select f.*,p.*
-        from sec_function f, sec_privilege p
-        where f.function_id= p.external_id and p.type = 1 and function_id = #{functionId,jdbcType=INTEGER}
+        select
+        <include refid="Function_Column_List"/>
+        from sec_function f
+        where function_id = #{functionId,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sec_function
@@ -137,8 +127,9 @@
     where function_id = #{functionId,jdbcType=INTEGER}
   </update>
     <select id="selectByUri" resultMap="FunctionResultMap" parameterType="java.lang.String">
-        select f.*,p.*
-        from sec_function f, sec_privilege p
-        where f.function_id= p.external_id and p.type = 1 and uri = #{uri,jdbcType=INTEGER}
+        select
+        <include refid="Function_Column_List"/>
+        from sec_function
+        where uri = #{uri,jdbcType=INTEGER}
     </select>
 </mapper>
