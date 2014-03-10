@@ -229,8 +229,8 @@ public class AccountController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/ajax/adminAccount.do", produces = "application/json")
-    public String adminAccount(@RequestParam(value = "accountId") int accountId) {
+    @RequestMapping(value = "/ajax/makeAdmin.do", produces = "application/json")
+    public String makeAdmin(@RequestParam(value = "accountId") int accountId) {
         Account dbAccount = accountService.selectByPrimaryKey(accountId);
         if (dbAccount != null) {
             dbAccount.setRoleId(1);

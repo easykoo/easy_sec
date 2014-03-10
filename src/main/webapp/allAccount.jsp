@@ -213,7 +213,7 @@
         });
     }
 
-    function adminAccount(accountID) {
+    function makeAdmin(accountID) {
         bootbox.dialog({
             message: "Are you sure to make this account administrator?",
             title: "Ban Account",
@@ -229,7 +229,7 @@
                     className: "btn-danger",
                     callback: function (result) {
                         if (result) {
-                            $.ajax('ajax/adminAccount.do', {
+                            $.ajax('ajax/makeAdmin.do', {
                                 dataType: 'json',
                                 data: {
                                     accountId: accountID
@@ -305,7 +305,7 @@
                     html += '<li><a href="javascript:unbanAccount(' + aData.account_id + ')"><i class="fa fa-ban fa-fw"></i> Unban</a></li>';
                 }
                 if (aData.roleId != 1) {
-                    html += '<li class="divider"></li><li><a href="javascript:adminAccount(' + aData.account_id + ')"><i class="i"></i> Make admin</a></li>';
+                    html += '<li class="divider"></li><li><a href="javascript:makeAdmin(' + aData.account_id + ')"><i class="i"></i> Make admin</a></li>';
                 }
                 html += '</ul></div>';
                 $('td:eq(6)', nRow).html(html);

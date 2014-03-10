@@ -45,7 +45,7 @@ insert into sec_function ( function_id, description, uri, module_id)values (32,'
 insert into sec_function ( function_id, description, uri, module_id)values (33,'Ban account by ajax','/ajax/banAccount.do',3);
 insert into sec_function ( function_id, description, uri, module_id)values (34,'Unban account by ajax','/ajax/unbanAccount.do',3);
 insert into sec_function ( function_id, description, uri, module_id)values (35,'Update account by ajax','/ajax/updateAccount.do',3);
-insert into sec_function ( function_id, description, uri, module_id)values (36,'Make account admin by ajax','/ajax/adminAccount.do',3);
+insert into sec_function ( function_id, description, uri, module_id)values (36,'Make account admin by ajax','/ajax/makeAdmin.do',3);
 
 insert into sec_function ( function_id, description, uri, module_id)values (40,'View feedback','/admin/allFeedbackView.do',4);
 insert into sec_function ( function_id, description, uri, module_id)values (41,'Get top 5 feedback by ajax','/ajax/getTop5Feedback.do',4);
