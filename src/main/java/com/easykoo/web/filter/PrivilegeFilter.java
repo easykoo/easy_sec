@@ -35,13 +35,14 @@ public class PrivilegeFilter
     private static IPrivilegeService privilegeService;
     private static IAccountService accountService;
     private static IAccountSessionService accountSessionService;
-    private final static String[] noNeedFilter = new String[]{"/", ".js", ".css", ".jpg", ".png", ".ico", ".txt"
-            , ".otf", ".eot", ".svg", ".ttf", ".woff", ".scss", ".woff"
-    };
+    private final static String[] noNeedFilter =
+            new String[]{"/", ".js", ".css", ".jpg", ".png", ".ico", ".txt"
+                    , ".otf", ".eot", ".svg", ".ttf", ".woff", ".scss", ".woff"
+            };
 
     private final static String[] noNeedLogin = new String[]{"index.html", "index.jsp", "registerAccountView.do", "registerAccount.do",
             "getVerifyCodeImage.do", "addFeedback.do", "subscribe.do", "index.do", "logout.do", "login.do", "loginView.do"
-            , "checkEmail.do", "checkUsername.do"};
+            , "checkEmail.do", "checkUsername.do", "checkVerifyCode.do"};
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
@@ -78,13 +79,15 @@ public class PrivilegeFilter
 
             logger.debug("Check cookies...");
             Cookie[] cookies = request.getCookies();
-            for (int i = 0; i < cookies.length; i++) {
-                Cookie c = cookies[i];
-                if (c.getName().equalsIgnoreCase("username")) {
-                    username = c.getValue();
-                }
-                if (c.getName().equalsIgnoreCase("sessionId")) {
-                    sessionId = c.getValue();
+            if (cookies != null) {
+                for (int i = 0; i < cookies.length; i++) {
+                    Cookie c = cookies[i];
+                    if (c.getName().equalsIgnoreCase("username")) {
+                        username = c.getValue();
+                    }
+                    if (c.getName().equalsIgnoreCase("sessionId")) {
+                        sessionId = c.getValue();
+                    }
                 }
             }
             if (username != null && sessionId != null) {

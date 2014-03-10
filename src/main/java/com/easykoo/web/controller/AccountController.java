@@ -141,6 +141,7 @@ public class AccountController {
         }
 
         try {
+            accountSecurity.setRoleId(2);
             accountService.insertFullAccount(accountSecurity);
             AccountSecurity dbAccountSecurity = accountService.selectFullByPrimaryKey(accountSecurity.getAccountId());
             logger.debug(dbAccountSecurity.getUsername() + " signs in successfully!");

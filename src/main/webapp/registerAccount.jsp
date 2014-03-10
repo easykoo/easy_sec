@@ -68,14 +68,16 @@
             <div class="col-sm-5">
                 <div class="radio">
                     <label>
-                        <input type="radio" name="gender" id="gender2" value="2"><spring:message
+                        <input type="radio" name="gender" id="gender2" value="0"><spring:message
                             code="label.female"/>
                     </label>
                 </div>
             </div>
+            <div class="col-sm-4 control-label gender"></div>
         </div>
         <div class="form-group">
-            <label for="email" class="col-sm-2 control-label"><spring:message code="label.email"/></label>
+            <label for="email" class="col-sm-2 control-label"><span style="color: red">*</span> <spring:message
+                    code="label.email"/></label>
 
             <div class="col-sm-6">
                 <input type="text" id="email" class="form-control" name="email">
@@ -93,8 +95,7 @@
         </div>
         <div class="form-group">
             <label for="confirmPassword" class="col-sm-2 control-label"><span style="color: red">*</span>
-                <spring:message
-                        code="label.confirmPassword"/></label>
+                <spring:message code="label.confirmPassword"/></label>
 
             <div class="col-sm-6">
                 <input type="password" id="confirmPassword" class="form-control" name="confirmPassword">
@@ -106,7 +107,7 @@
                 <input type="text" id="verifyCode" class="form-control" name="verifyCode">
             </div>
             <div class="col-sm-3">
-                <img id="verifyCodeImage" onclick="reloadVerifyCode()" src="common/getVerifyCodeImage.do"/>
+                <img id="verifyCodeImg" onclick="reloadVerifyCode()" src="common/getVerifyCodeImage.do"/>
             </div>
             <div class="col-sm-4 control-label"></div>
         </div>
@@ -130,6 +131,10 @@
 
 
 <script type="text/javascript">
+    var reloadVerifyCode = function () {
+        var el = document.getElementById("verifyCodeImg");
+        el.src = el.src + '?';
+    }
 
     $(document).ready(function () {
 
@@ -146,7 +151,11 @@
                     minlength: 4,
                     stringCheck: true
                 },
+                gender: {
+                    required: true
+                },
                 email: {
+                    required: true,
                     email: true,
                     remote: "ajax/checkEmail.do"
 
@@ -163,7 +172,8 @@
                     equalTo: "#password"
                 },
                 verifyCode: {
-                    required: true
+                    required: true,
+                    remote: "ajax/checkVerifyCode.do"
                 }
             },
             messages: {
@@ -178,7 +188,9 @@
                     minlength: '<spring:message code="message.error.min.length"/>',
                     stringCheck: '<spring:message code="message.error.string.check"/>'
                 },
+                gender: '<spring:message code="message.error.required"/>',
                 email: {
+                    required: '<spring:message code="message.error.required"/>',
                     email: '<spring:message code="message.error.wrong.email.format"/>',
                     remote: '<spring:message code="message.error.already.exists"/>'
                 },
@@ -194,17 +206,26 @@
                     equalTo: '<spring:message code="message.error.confirm.password"/>'
                 },
                 verifyCode: {
-                    required: '<spring:message code="message.error.required"/>'
+                    required: '<spring:message code="message.error.required"/>',
+                    remote: '<spring:message code="message.error.wrong.verify.code"/>'
                 }
             },
             focusInvalid: true,
             onkeyup: false,
             errorClass: "error",
             errorPlacement: function (error, element) {
-                error.appendTo(element.parent("div").next("div"));
+                if (element.attr("name") == "verifyCode")
+                    error.appendTo(element.parent("div").next("div").next("div"));
+                else if (element.attr("name") == "gender") {
+                    error.appendTo($(".gender"));
+                } else
+                    error.appendTo(element.parent("div").next("div"));
             },
             highlight: function (element, errorClass) {
-                $(element).parent("div").parent("div").addClass("has-error").removeClass("has-success");
+                if ($(element).attr("name") == "gender") {
+                    $(".gender").parent("div").addClass("has-error").removeClass("has-success");
+                } else
+                    $(element).parent("div").parent("div").addClass("has-error").removeClass("has-success");
             },
             success: function (label) {
                 label.parent("div").parent("div").removeClass("has-error").addClass("has-success");

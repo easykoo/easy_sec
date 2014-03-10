@@ -4,12 +4,6 @@ import java.util.Date;
 
 public class AccountSecurity extends Account{
 
-    private Account account;
-
-    private Integer accountId;
-
-    private String username;
-
     private String password;
 
     private Boolean tempFlag;
@@ -23,14 +17,6 @@ public class AccountSecurity extends Account{
     private String token;
 
     private int rememberMe;
-
-    private String createUser;
-
-    private Date createDate;
-
-    private String updateUser;
-
-    private Date updateDate;
 
     public String getToken() {
         return token;
@@ -54,30 +40,6 @@ public class AccountSecurity extends Account{
 
     public void setVerifyCode(String verifyCode) {
         this.verifyCode = verifyCode;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-
-    public Integer getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(Integer accountId) {
-        this.accountId = accountId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {
@@ -110,37 +72,5 @@ public class AccountSecurity extends Account{
 
     public void setEffectiveDate(Date effectiveDate) {
         this.effectiveDate = effectiveDate;
-    }
-
-    public String getCreateUser() {
-        return createUser;
-    }
-
-    public void setCreateUser(String createUser) {
-        this.createUser = createUser;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public String getUpdateUser() {
-        return updateUser;
-    }
-
-    public void setUpdateUser(String updateUser) {
-        this.updateUser = updateUser;
-    }
-
-    public Date getUpdateDate() {
-        return updateDate;
-    }
-
-    public void setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
     }
 }

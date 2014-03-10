@@ -19,6 +19,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
@@ -196,6 +197,15 @@ public class AjaxController {
         return "true";
     }
 
+    @ResponseBody
+    @RequestMapping("/checkVerifyCode.do")
+    public String checkVerifyCode(@RequestParam("verifyCode") String verifyCode,HttpServletRequest request, Locale locale) throws IOException {
+        String currentVerifyCode = (String) request.getSession().getAttribute("currentVerifyCode");
+        if (currentVerifyCode != null && currentVerifyCode.equals(verifyCode)) {
+            return "true";
+        }
+        return messageSource.getMessage("message.error.wrong.verify.code", null, locale);
+    }
 
     @ResponseBody
     @RequestMapping(value = "/allFeedback.do", produces = "application/json")
