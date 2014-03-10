@@ -377,7 +377,6 @@
                 var html = '<div class="btn-group "><a class="btn btn-primary" href="javascript:"><i class="fa fa-user fa-fw"></i></a>' +
                         '<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:"><span class="fa fa-caret-down"></span></a>' +
                         '<ul class="dropdown-menu">' +
-                        '<li><a href="javascript:editAccount(' + aData.account_id + ')"><i class="fa fa-pencil fa-fw"></i> Edit</a></li>' +
                         '<li><a href="javascript:deleteAccount(' + aData.account_id + ')"><i class="fa fa-trash-o fa-fw"></i> Delete</a></li>';
                 if (!aData.locked) {
                     html += '<li><a href="javascript:banAccount(' + aData.account_id + ')"><i class="fa fa-ban fa-fw"></i> Ban</a></li>';
