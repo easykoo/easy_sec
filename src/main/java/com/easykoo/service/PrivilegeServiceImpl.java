@@ -5,14 +5,14 @@ import com.easykoo.mybatis.dao.ModuleMapper;
 import com.easykoo.mybatis.dao.PrivilegeMapper;
 import com.easykoo.mybatis.model.Account;
 import com.easykoo.mybatis.model.Function;
-import com.easykoo.mybatis.model.Module;
 import com.easykoo.mybatis.model.Privilege;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  * Feb 22, 2014    Steven
@@ -90,27 +90,35 @@ public class PrivilegeServiceImpl implements IPrivilegeService {
             logger.debug("Not configured in function!");
             return false;
         }
-        for (Privilege privilege : function.getPrivilegeList()) {
-            if (privilege.getRoleId() == account.getRoleId() && privilege.getDepartmentId() == account.getDepartmentId()) {
-                logger.debug("Authorized in function!");
-                return true;
-            }
+        //check function privilege
+        if (checkFunctionPrivilege(account.getRoleId(), account.getDepartmentId(), uri)) {
+            logger.debug("Authorized in function!");
+            return true;
         }
         logger.debug("Not authorized in function!");
 
-        //check permission in module
-        Module module = moduleMapper.selectByPrimaryKey(function.getModuleId());
-        if (module == null) {
-            logger.debug("Not configured in module!");
-            return false;
-        }
-        for (Privilege privilege : module.getPrivilegeList()) {
-            if (privilege.getRoleId() == account.getRoleId() && privilege.getDepartmentId() == account.getDepartmentId()) {
-                logger.debug("Authorized in module!");
-                return true;
-            }
+        //check function privilege
+        if (checkModulePrivilege(account.getRoleId(), account.getDepartmentId(), uri)) {
+            logger.debug("Authorized in function!");
+            return true;
         }
         logger.debug("Not authorized in module!");
         return false;
+    }
+
+    boolean checkFunctionPrivilege(int roleId, int departmentId, String uri) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("roleId", roleId);
+        params.put("departmentId", departmentId);
+        params.put("uri", uri);
+        return privilegeMapper.checkFunctionPrivilege(params);
+    }
+
+    boolean checkModulePrivilege(int roleId, int departmentId, String uri) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("roleId", roleId);
+        params.put("departmentId", departmentId);
+        params.put("uri", uri);
+        return privilegeMapper.checkModulePrivilege(params);
     }
 }

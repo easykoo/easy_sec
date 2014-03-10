@@ -139,4 +139,24 @@
       update_date = #{updateDate,jdbcType=TIMESTAMP}
     where privilege_id = #{privilegeId,jdbcType=INTEGER}
   </update>
+
+  <select id="checkFunctionPrivilege" resultMap="java.lang.Boolean" parameterType="java.util.Map">
+        select count(*)
+        from sec_function f, sec_privilege p
+        where f.function_id= p.external_id
+        and p.type = 1
+        and role_id = #{roleId,jdbcType=VARCHAR}
+        and department_id = #{departmentId,jdbcType=VARCHAR}
+        and uri = #{uri,jdbcType=VARCHAR}
+  </select>
+  <select id="checkModulePrivilege" resultMap="java.lang.Boolean" parameterType="java.util.Map">
+        select count(*)
+        from sec_function f, sec_module m, sec_privilege p
+        where f.module_id = m.module_id
+        and m.module_id= p.external_id
+        and p.type = 2
+        and role_id = #{roleId,jdbcType=VARCHAR}
+        and department_id = #{departmentId,jdbcType=VARCHAR}
+        and f.uri = #{uri,jdbcType=INTEGER}
+  </select>
 </mapper>

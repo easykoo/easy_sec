@@ -2,7 +2,7 @@ package com.easykoo.mybatis.dao;
 
 import com.easykoo.mybatis.model.Privilege;
 
-import java.util.List;
+import java.util.Map;
 
 public interface PrivilegeMapper {
     int deleteByPrimaryKey(Integer privilegeId);
@@ -17,5 +17,7 @@ public interface PrivilegeMapper {
 
     int updateByPrimaryKey(Privilege record);
 
-    List<Privilege> getPrivilegeListByUri(String uri);
+    boolean checkFunctionPrivilege(Map<String, Object> params);
+
+    boolean checkModulePrivilege(Map<String, Object> params);
 }
