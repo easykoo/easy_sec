@@ -37,7 +37,8 @@ public class AccountController {
     private MessageSource messageSource;
 
     @RequestMapping(value = "/loginView.do", method = RequestMethod.GET)
-    public String loginView(@RequestParam(value = "url") String url, HttpServletRequest request) {
+    public String loginView(HttpServletRequest request) {
+        String url = request.getParameter("url");
         AccountSecurity currentAccountSecurity =
                 (AccountSecurity) request.getSession().getAttribute("currentAccountSecurity");
         if (currentAccountSecurity != null && currentAccountSecurity.getUsername() != null) {
@@ -47,13 +48,15 @@ public class AccountController {
             }
             return "index";
         }
-        request.getSession().setAttribute("beforeLoginUrl", url);
+        if (StringUtils.isNotBlank(url)) {
+            request.getSession().setAttribute("beforeLoginUrl", url);
+        }
         return "login";
     }
 
     @RequestMapping(value = "/login.do", method = RequestMethod.POST)
     public String login(@ModelAttribute("accountSecurity") AccountSecurity accountSecurity,
-                        HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+                        HttpServletRequest request, HttpServletResponse response, Locale locale, ModelMap model) {
         AccountSecurity currentAccountSecurity =
                 (AccountSecurity) request.getSession().getAttribute("currentAccountSecurity");
         String url = (String) request.getSession().getAttribute("beforeLoginUrl");
@@ -63,13 +66,6 @@ public class AccountController {
                 return "redirect:" + url;
             }
             return "redirect:/index.jsp";
-        }
-
-        String token = (String) request.getSession().getAttribute("currentFormToken");
-        if (token != null && !token.equals(accountSecurity.getToken())) {
-            logger.debug("Token is wrong!");
-            model.addAttribute("errorMessage", "Duplicate submit!");
-            return "login";
         }
 
         AccountSecurity dbAccountSecurity = accountService.login(accountSecurity);
@@ -93,7 +89,7 @@ public class AccountController {
         }
 
         logger.debug("Invalid username or password!");
-        model.addAttribute("errorMessage", "Invalid username or password!");
+        model.addAttribute("message", new ResponseMessage(false, messageSource.getMessage("message.error.invalid.username.or.password", null, locale)));
         return "login";
     }
 
@@ -122,25 +118,30 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/registerView.do")
-    public String registerView() {
+    public String registerView(HttpServletRequest request) {
+        AccountSecurity currentAccountSecurity =
+                (AccountSecurity) request.getSession().getAttribute("currentAccountSecurity");
+        if (currentAccountSecurity != null && currentAccountSecurity.getUsername() != null) {
+            logger.debug(currentAccountSecurity.getUsername() + " already signed in!");
+            return "redirect:/index.jsp";
+        }
         return "register";
     }
 
     @RequestMapping(value = "/register.do")
     public String register(@ModelAttribute("accountSecurity") AccountSecurity accountSecurity,
-                           HttpServletRequest request, ModelMap model) {
+                           HttpServletRequest request, Locale locale, ModelMap model) {
+        AccountSecurity currentAccountSecurity =
+                (AccountSecurity) request.getSession().getAttribute("currentAccountSecurity");
+        if (currentAccountSecurity != null && currentAccountSecurity.getUsername() != null) {
+            logger.debug(currentAccountSecurity.getUsername() + " already signed in!");
+            return "redirect:/index.jsp";
+        }
 
         String currentVerifyCode = (String) request.getSession().getAttribute("currentVerifyCode");
         if (currentVerifyCode != null && !currentVerifyCode.equals(accountSecurity.getVerifyCode())) {
             logger.debug("Verify code is wrong!");
-            model.addAttribute("errorMessage", "wrong verify code!");
-            return "register";
-        }
-
-        String token = (String) request.getSession().getAttribute("currentFormToken");
-        if (token != null && !token.equals(accountSecurity.getToken())) {
-            logger.debug("Token is wrong!");
-            model.addAttribute("errorMessage", "Duplicate submit!");
+            model.addAttribute("message", new ResponseMessage(false, messageSource.getMessage("message.error.wrong.verify.code", null, locale)));
             return "register";
         }
 
@@ -152,7 +153,7 @@ public class AccountController {
             request.getSession().setAttribute("currentAccountSecurity", dbAccountSecurity);
         } catch (DuplicateKeyException e) {
             logger.error("Duplicate key!", e);
-            model.addAttribute("errorMessage", "Duplicate key!");
+            model.addAttribute("message", new ResponseMessage(false, messageSource.getMessage("message.error.duplicate.key", null, locale)));
             return "register";
         }
         return "redirect:/index.jsp";
@@ -210,73 +211,73 @@ public class AccountController {
 
     @ResponseBody
     @RequestMapping(value = "/ajax/deleteAccount.do", produces = "application/json")
-    public String deleteAccount(@RequestParam(value = "accountId") int accountId) {
+    public ResponseMessage deleteAccount(@RequestParam(value = "accountId") int accountId, Locale locale) {
         Account dbAccount = accountService.selectByPrimaryKey(accountId);
         if (dbAccount != null) {
             accountService.deleteByPrimaryKey(accountId);
-            return "true";
+            return new ResponseMessage(true);
         }
-        return "{\"error\":\"no user\"}";
+        return new ResponseMessage(false, messageSource.getMessage("message.error.can.not.find.record", null, locale));
     }
 
     @ResponseBody
     @RequestMapping(value = "/ajax/banAccount.do", produces = "application/json")
-    public String banAccount(@RequestParam(value = "accountId") int accountId) {
+    public ResponseMessage banAccount(@RequestParam(value = "accountId") int accountId, Locale locale) {
         Account dbAccount = accountService.selectByPrimaryKey(accountId);
         if (dbAccount != null) {
             dbAccount.setLocked(true);
             accountService.updateByPrimaryKey(dbAccount);
-            return "true";
+            return new ResponseMessage(true);
         }
-        return "{\"error\":\"no user\"}";
+        return new ResponseMessage(false, messageSource.getMessage("message.error.can.not.find.record", null, locale));
     }
 
     @ResponseBody
     @RequestMapping(value = "/ajax/unbanAccount.do", produces = "application/json")
-    public String unbanAccount(@RequestParam(value = "accountId") int accountId) {
+    public ResponseMessage unbanAccount(@RequestParam(value = "accountId") int accountId, Locale locale) {
         Account dbAccount = accountService.selectByPrimaryKey(accountId);
         if (dbAccount != null) {
             dbAccount.setLocked(false);
             accountService.updateByPrimaryKey(dbAccount);
-            return "true";
+            return new ResponseMessage(true);
         }
-        return "{\"error\":\"no user\"}";
+        return new ResponseMessage(false, messageSource.getMessage("message.error.can.not.find.record", null, locale));
     }
 
     @ResponseBody
     @RequestMapping(value = "/ajax/makeAdmin.do", produces = "application/json")
-    public String makeAdmin(@RequestParam(value = "accountId") int accountId) {
+    public ResponseMessage makeAdmin(@RequestParam(value = "accountId") int accountId, Locale locale) {
         Account dbAccount = accountService.selectByPrimaryKey(accountId);
         if (dbAccount != null) {
             dbAccount.setRoleId(1);
             accountService.updateByPrimaryKey(dbAccount);
-            return "true";
+            return new ResponseMessage(true);
         }
-        return "{\"error\":\"no user\"}";
+        return new ResponseMessage(false, messageSource.getMessage("message.error.can.not.find.record", null, locale));
     }
 
     @ResponseBody
     @RequestMapping(value = "/ajax/hire.do", produces = "application/json")
-    public String hire(@RequestParam(value = "accountId") int accountId) {
+    public ResponseMessage hire(@RequestParam(value = "accountId") int accountId, Locale locale) {
         Account dbAccount = accountService.selectByPrimaryKey(accountId);
         if (dbAccount != null) {
             dbAccount.setRoleId(2);
             accountService.updateByPrimaryKey(dbAccount);
-            return "true";
+            return new ResponseMessage(true);
         }
-        return "{\"error\":\"no user\"}";
+        return new ResponseMessage(false, messageSource.getMessage("message.error.can.not.find.record", null, locale));
     }
 
     @ResponseBody
     @RequestMapping(value = "/ajax/fire.do", produces = "application/json")
-    public String fire(@RequestParam(value = "accountId") int accountId) {
+    public ResponseMessage fire(@RequestParam(value = "accountId") int accountId, Locale locale) {
         Account dbAccount = accountService.selectByPrimaryKey(accountId);
         if (dbAccount != null) {
             dbAccount.setRoleId(3);
             accountService.updateByPrimaryKey(dbAccount);
-            return "true";
+            return new ResponseMessage(true);
         }
-        return "{\"error\":\"no user\"}";
+        return new ResponseMessage(false, messageSource.getMessage("message.error.can.not.find.record", null, locale));
     }
 
     @ResponseBody
@@ -290,7 +291,12 @@ public class AccountController {
 
     @ResponseBody
     @RequestMapping(value = "/ajax/checkEmail.do", produces = "application/json")
-    public String checkEmail(@RequestParam("email") String email, Locale locale) {
+    public String checkEmail(@RequestParam("email") String email, HttpServletRequest request, Locale locale) {
+        AccountSecurity currentAccountSecurity =
+                (AccountSecurity) request.getSession().getAttribute("currentAccountSecurity");
+        if (currentAccountSecurity != null && email.equals(currentAccountSecurity.getEmail())) {
+            return "true";
+        }
         if (accountService.checkEmail(email)) {
             return messageSource.getMessage("message.error.already.exists", null, locale);
         }

@@ -14,6 +14,10 @@ public class ResponseMessage implements Serializable {
         this.message = message;
     }
 
+    public ResponseMessage(boolean success) {
+        this.success = success;
+    }
+
     public boolean isSuccess() {
         return success;
     }

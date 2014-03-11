@@ -67,11 +67,11 @@
 <div style="margin-top:100px;margin-bottom:200px;max-width: 700px" class="container">
     <form id="registerForm" role="form" class="form-horizontal" action="register.do" method="post">
         <h2 class="form-signin-heading"><spring:message code="label.sign.up"/></h2>
-        <c:if test="${not empty errorMessage}">
+        <c:if test="${not empty message}">
             <div class="alert alert-danger  fade in">
                 <button id='alert1' type="button" class="close" data-dismiss="alert"
                         aria-hidden="true">&times;</button>
-                    ${errorMessage}
+                    ${message}
             </div>
         </c:if>
         <div class="form-group">

@@ -115,15 +115,11 @@ function deleteAccount(accountID) {
                                 accountId: accountID
                             },
                             success: function (data) {
-                                if (data == 'true') {
-                                    accountTable.fnClearTable(0);
-                                    accountTable.fnDraw();
+                                if (!data.success) {
+                                    bootbox.alert(data.message, null);
                                 }
-                                else {
-                                    var obj = $.parseJSON(data);
-                                    bootbox.alert(obj.error, function () {
-                                    });
-                                }
+                                accountTable.fnClearTable(0);
+                                accountTable.fnDraw();
                             }
                         });
                     }
@@ -155,15 +151,11 @@ function banAccount(accountID) {
                                 accountId: accountID
                             },
                             success: function (data) {
-                                if (data == 'true') {
-                                    accountTable.fnClearTable(0);
-                                    accountTable.fnDraw();
+                                if (!data.success) {
+                                    bootbox.alert(data.message, null);
                                 }
-                                else {
-                                    var obj = $.parseJSON(data);
-                                    bootbox.alert(obj.error, function () {
-                                    });
-                                }
+                                accountTable.fnClearTable(0);
+                                accountTable.fnDraw();
                             }
                         });
                     }
@@ -195,15 +187,11 @@ function unbanAccount(accountID) {
                                 accountId: accountID
                             },
                             success: function (data) {
-                                if (data == 'true') {
-                                    accountTable.fnClearTable(0);
-                                    accountTable.fnDraw();
+                                if (!data.success) {
+                                    bootbox.alert(data.message, null);
                                 }
-                                else {
-                                    var obj = $.parseJSON(data);
-                                    bootbox.alert(obj.error, function () {
-                                    });
-                                }
+                                accountTable.fnClearTable(0);
+                                accountTable.fnDraw();
                             }
                         });
                     }
@@ -235,15 +223,11 @@ function makeAdmin(accountID) {
                                 accountId: accountID
                             },
                             success: function (data) {
-                                if (data == 'true') {
-                                    accountTable.fnClearTable(0);
-                                    accountTable.fnDraw();
+                                if (!data.success) {
+                                    bootbox.alert(data.message, null);
                                 }
-                                else {
-                                    var obj = $.parseJSON(data);
-                                    bootbox.alert(obj.error, function () {
-                                    });
-                                }
+                                accountTable.fnClearTable(0);
+                                accountTable.fnDraw();
                             }
                         });
                     }
@@ -275,15 +259,11 @@ function hire(accountID) {
                                 accountId: accountID
                             },
                             success: function (data) {
-                                if (data == 'true') {
-                                    accountTable.fnClearTable(0);
-                                    accountTable.fnDraw();
+                                if (!data.success) {
+                                    bootbox.alert(data.message, null);
                                 }
-                                else {
-                                    var obj = $.parseJSON(data);
-                                    bootbox.alert(obj.error, function () {
-                                    });
-                                }
+                                accountTable.fnClearTable(0);
+                                accountTable.fnDraw();
                             }
                         });
                     }
@@ -315,15 +295,11 @@ function fire(accountID) {
                                 accountId: accountID
                             },
                             success: function (data) {
-                                if (data == 'true') {
-                                    accountTable.fnClearTable(0);
-                                    accountTable.fnDraw();
+                                if (!data.success) {
+                                    bootbox.alert(data.message, null);
                                 }
-                                else {
-                                    var obj = $.parseJSON(data);
-                                    bootbox.alert(obj.error, function () {
-                                    });
-                                }
+                                accountTable.fnClearTable(0);
+                                accountTable.fnDraw();
                             }
                         });
                     }

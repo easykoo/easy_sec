@@ -10,11 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.easykoo.model.ResponseMessage;
 import com.easykoo.util.CookiesUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -29,12 +31,13 @@ import com.easykoo.service.IPrivilegeService;
  * Created by easykooc on 14-2-11.
  */
 @Component
-public class PrivilegeFilter
-        extends OncePerRequestFilter {
+public class PrivilegeFilter extends OncePerRequestFilter {
     private Log logger = LogFactory.getLog(getClass());
     private static IPrivilegeService privilegeService;
     private static IAccountService accountService;
     private static IAccountSessionService accountSessionService;
+    private static MessageSource messageSource;
+
     private final static String[] noNeedFilter =
             new String[]{"/", ".js", ".css", ".jpg", ".png", ".ico", ".txt"
                     , ".otf", ".eot", ".svg", ".ttf", ".woff", ".scss", ".woff"
@@ -115,11 +118,9 @@ public class PrivilegeFilter
                 logger.debug("No cookies...");
             }
         }
-
         logger.debug("Current AccountSecurity: " + accountSecurity);
 
-
-        logger.debug("Check privilege:" + path);
+        logger.debug("Filter no need login:" + path);
         for (String s : noNeedLogin) {
             if (path.endsWith(s)) {
                 logger.debug("End with:" + s);
@@ -129,8 +130,13 @@ public class PrivilegeFilter
         }
 
         if (checkAuthorize) {
-            //check authorization
-            logger.debug("Check permission...");
+            logger.debug("Check session...");
+            if (accountSecurity == null || accountSecurity.getUsername() == null) {
+                request.setAttribute("message", new ResponseMessage(false, messageSource.getMessage("message.error.invalid.username.or.password", null, request.getLocale())));
+                response.sendRedirect(request.getContextPath() + "/loginView.do");
+                return;
+            }
+            logger.debug("Check privilege...");
             if (!privilegeService.isAuthorized(path, accountSecurity)) {
                 response.sendRedirect(request.getContextPath() + "/error/403.jsp");
                 return;
@@ -138,6 +144,15 @@ public class PrivilegeFilter
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    public MessageSource getMessageSource() {
+        return messageSource;
+    }
+
+    @Autowired
+    public void setMessageSource(MessageSource messageSource) {
+        this.messageSource = messageSource;
     }
 
     public IPrivilegeService getPrivilegeService() {

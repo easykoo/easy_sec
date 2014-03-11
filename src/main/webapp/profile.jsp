@@ -103,6 +103,16 @@
                     <div class="col-sm-4 control-label"></div>
                 </div>
                 <div class="form-group">
+                    <label for="email" class="col-sm-2 control-label"> <spring:message
+                            code="label.email"/></label>
+
+                    <div class="col-sm-6">
+                        <input type="text" id="email" class="form-control" name="email"
+                               value="${currentAccountSecurity.email}">
+                    </div>
+                    <div class="col-sm-4 control-label"></div>
+                </div>
+                <div class="form-group">
                     <label for="postcode" class="col-sm-2 control-label"> <spring:message
                             code="label.postcode"/></label>
 
@@ -159,6 +169,11 @@
                 },
                 gender: {
                     required: true
+                },
+                email: {
+                    required: true,
+                    email:true,
+                    remote: "ajax/checkEmail.do"
                 }
             },
             messages: {
@@ -167,7 +182,12 @@
                     minlength: '<spring:message code="message.error.min.length"/>',
                     stringCheck: '<spring:message code="message.error.string.check"/>'
                 },
-                gender: '<spring:message code="message.error.required"/>'
+                gender: '<spring:message code="message.error.required"/>',
+                email: {
+                    required: '<spring:message code="message.error.required"/>',
+                    email: '<spring:message code="message.error.wrong.email.format"/>',
+                    remote: '<spring:message code="message.error.already.exists"/>'
+                }
             },
             focusInvalid: true,
             onkeyup: false,

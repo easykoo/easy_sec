@@ -66,10 +66,10 @@
 
     <form role="form" action="login.do" method="post">
         <h2 class="form-signin-heading"><spring:message code="label.please.sign.in"/></h2>
-        <c:if test="${not empty errorMessage}">
+        <c:if test="${not empty message}">
         <div class="alert alert-danger  fade in">
             <button id='alert1' type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            ${errorMessage}
+            ${message.message}
         </div>
         </c:if>
         <div class="form-group">
@@ -96,11 +96,6 @@
 </div>
 <!-- /container -->
 <script type="text/javascript">
-    var errorMessage =  "${errorMessage}";
-    if(errorMessage == undefined || errorMessage == null || errorMessage ==""){
-        $("#alert1").alert('close');
-    }
-
     function Test()
     {
         $("#alert1").alert('close');
