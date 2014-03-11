@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.easykoo.model.ResponseMessage;
+import com.easykoo.util.ConfigUtils;
 import com.easykoo.util.CookiesUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -38,14 +39,8 @@ public class PrivilegeFilter extends OncePerRequestFilter {
     private static IAccountSessionService accountSessionService;
     private static MessageSource messageSource;
 
-    private final static String[] noNeedFilter =
-            new String[]{"/", ".js", ".css", ".jpg", ".png", ".ico", ".txt"
-                    , ".otf", ".eot", ".svg", ".ttf", ".woff", ".scss", ".woff", "/ajax/checkSession.do"
-            };
-
-    private final static String[] noNeedLogin = new String[]{"index.html", "index.jsp", "registerView.do", "register.do",
-            "getVerifyCodeImage.do", "addFeedback.do", "subscribe.do", "index.do", "logout.do", "login.do", "loginView.do"
-            , "checkEmail.do", "checkUsername.do", "checkVerifyCode.do"};
+    private final static String[] noNeedFilter = ConfigUtils.getInstance().getNoNeedFilterUrl();
+    private final static String[] noNeedLogin = ConfigUtils.getInstance().getNoNeedLoginUrl();
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
