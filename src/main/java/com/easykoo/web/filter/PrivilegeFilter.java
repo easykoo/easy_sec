@@ -40,7 +40,7 @@ public class PrivilegeFilter extends OncePerRequestFilter {
 
     private final static String[] noNeedFilter =
             new String[]{"/", ".js", ".css", ".jpg", ".png", ".ico", ".txt"
-                    , ".otf", ".eot", ".svg", ".ttf", ".woff", ".scss", ".woff"
+                    , ".otf", ".eot", ".svg", ".ttf", ".woff", ".scss", ".woff", "/ajax/checkSession.do"
             };
 
     private final static String[] noNeedLogin = new String[]{"index.html", "index.jsp", "registerView.do", "register.do",

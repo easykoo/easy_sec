@@ -165,6 +165,7 @@
                 return false;
             }
         });
+        setCheckSession();
     })
 </script>
 </body>

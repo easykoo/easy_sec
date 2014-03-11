@@ -163,6 +163,7 @@
     $(document).ready(function() {
         $('#dataTables-example').dataTable();
         $('#settings').toggleClass('active').children('ul').collapse('toggle');
+        setCheckSession();
     });
 </script>
 

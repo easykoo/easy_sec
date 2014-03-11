@@ -1,6 +1,8 @@
 package com.easykoo.web.controller;
 
 import com.easykoo.model.DataTablesResponse;
+import com.easykoo.model.ResponseMessage;
+import com.easykoo.mybatis.model.AccountSecurity;
 import com.easykoo.mybatis.model.Feedback;
 import com.easykoo.mybatis.model.Subscribe;
 import com.easykoo.service.IFeedbackService;
@@ -147,6 +149,17 @@ public class CommonController {
         dt.setTotalDisplayRecords(feedback.getTotalRecord());
         dt.setTotalRecords(feedback.getTotalRecord());
         return dt;
+    }
+
+    @ResponseBody
+    @RequestMapping("/ajax/checkSession.do")
+    public ResponseMessage checkSession(HttpServletRequest request) throws IOException {
+        AccountSecurity currentAccountSecurity =
+                (AccountSecurity) request.getSession().getAttribute("currentAccountSecurity");
+        if (currentAccountSecurity != null && currentAccountSecurity.getUsername() != null) {
+            return new ResponseMessage(true);
+        }
+        return new ResponseMessage(false);
     }
 
     public IFeedbackService getFeedbackService() {

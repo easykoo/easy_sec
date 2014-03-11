@@ -163,6 +163,7 @@
     $(document).ready(function() {
         $('#dashboard').css({"background":"#DDDDDD"});
         $('#dataTables-example').dataTable();
+        setCheckSession();
     });
 </script>
 

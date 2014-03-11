@@ -399,6 +399,7 @@ var getAllAccounts = function () {
 $(document).ready(function () {
     $('#account').css({"background": "#DDDDDD"});
     getAllAccounts();
+    setCheckSession();
 });
 
 </script>
