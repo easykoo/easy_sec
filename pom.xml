@@ -240,10 +240,6 @@
                     <source>${compiler.version}</source>
                     <target>${compiler.version}</target>
                     <encoding>utf-8</encoding>
-                    <includes>
-                        <include>src/main/java</include>
-                        <include>src/main/resource</include>
-                    </includes>
                 </configuration>
             </plugin>
             <plugin>
@@ -251,6 +247,13 @@
                 <artifactId>maven-resources-plugin</artifactId>
                 <configuration>
                     <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                  <warName>${project.artifactId}</warName>
                 </configuration>
             </plugin>
             <plugin>
