@@ -20,13 +20,13 @@
     <%--<link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>--%>
     <%--<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>--%>
     <!-- Load The Story -->
-   <%-- <link id="the-story-css-file" rel="stylesheet" href="css/the-story.min.css" type="text/css">
+    <link id="the-story-css-file" rel="stylesheet" href="css/the-story.min.css" type="text/css">
 
     <link rel="stylesheet" href="css/p-controls.min.css" type="text/css">
-    &lt;%&ndash;<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">&ndash;%&gt;
+    <%--<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">--%>
     <!-- Favicon -->
-                  --%>
     <link rel="shortcut icon" href="img/favicon.ico">
+
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
@@ -418,7 +418,7 @@
         </div>
     </div>
 </footer>
-<%--<script src="js/jquery-1.10.2.js"></script>
+<script src="js/jquery-1.10.2.js"></script>
 <script src="js/jquery.validate.min.js"></script>
 <script src="js/jquery.validate.method.js"></script>
 
@@ -527,6 +527,6 @@
             }
         });
     })
-</script>--%>
+</script>
 </body>
 </html>

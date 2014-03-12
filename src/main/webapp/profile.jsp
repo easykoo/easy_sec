@@ -154,7 +154,7 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.validate.min.js"></script>
 <script src="js/jquery.validate.method.js"></script>
-<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="js/jquery.metisMenu.js"></script>
 <script src="js/admin.js"></script>
 
 
