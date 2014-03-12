@@ -1,0 +1,103 @@
+package com.easykoo.web.controller;
+
+import com.easykoo.model.DataTablesResponse;
+import com.easykoo.model.ResponseMessage;
+import com.easykoo.mybatis.model.Product;
+import com.easykoo.service.IProductService;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Locale;
+
+/**
+ * Feb 22, 2014 Steven
+ */
+
+@Controller
+public class ProductController {
+    protected final Log logger = LogFactory.getLog(getClass());
+    private IProductService productService;
+    private MessageSource messageSource;
+
+    @RequestMapping(value = "/product/changeProductView.do", method = RequestMethod.GET)
+    public String changeProductView() {
+        return "changeProduct";
+    }
+
+    @RequestMapping(value = "/product/publishProduct.do", method = RequestMethod.POST)
+    public String publishProduct(@ModelAttribute("product") Product product, Locale locale, ModelMap model) {
+        try {
+            productService.insert(product);
+            logger.debug("Product " + product.getProductId() + " publish successfully!");
+        } catch (DuplicateKeyException e) {
+            logger.error("Duplicate key!", e);
+            model.addAttribute("message", new ResponseMessage(false, messageSource.getMessage("message.error.duplicate.key", null, locale)));
+            return "publishProduct";
+        }
+        return "changeProduct";
+    }
+
+    @RequestMapping(value = "/product/changeProduct.do", method = RequestMethod.POST)
+    public String changeProfile(@ModelAttribute("product") Product product, Locale locale, ModelMap model) {
+        productService.updateByPrimaryKeySelective(product);
+        logger.debug("Product updated successfully!");
+        model.addAttribute("message", new ResponseMessage(true, messageSource.getMessage("message.change.success", null, locale)));
+        return "changeProduct";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/ajax/allProduct.do", produces = "application/json", method = RequestMethod.POST)
+    public DataTablesResponse allProduct(@RequestParam int iDisplayStart, @RequestParam int iDisplayLength, @RequestParam int iSortCol_0, @RequestParam String sSortDir_0, HttpServletRequest request) {
+        DataTablesResponse<Product> dt = new DataTablesResponse();
+
+        Product product = new Product();
+        product.setPageActived(true);
+        product.setPageSize(iDisplayLength);
+        product.setDisplayStart(iDisplayStart);
+        String sortColumn = request.getParameter("mDataProp_" + iSortCol_0);
+        product.addSortProperties(sortColumn, sSortDir_0);
+        List<Product> productList = productService.findProductWithPage(product);
+
+        dt.setData(productList);
+        dt.setTotalDisplayRecords(product.getTotalRecord());
+        dt.setTotalRecords(product.getTotalRecord());
+        return dt;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/ajax/deleteProduct.do", produces = "application/json", method = RequestMethod.POST)
+    public ResponseMessage deleteProduct(@RequestParam(value = "productId") int productId, Locale locale) {
+        Product dbProduct = productService.selectByPrimaryKey(productId);
+        if (dbProduct != null) {
+            productService.deleteByPrimaryKey(productId);
+            return new ResponseMessage(true);
+        }
+        return new ResponseMessage(false, messageSource.getMessage("message.error.can.not.find.record", null, locale));
+    }
+
+    public MessageSource getMessageSource() {
+        return messageSource;
+    }
+
+    @Autowired
+    public void setMessageSource(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
+
+    public IProductService getProductService() {
+        return productService;
+    }
+
+    @Autowired
+    public void setProductService(IProductService productService) {
+        this.productService = productService;
+    }
+}
