@@ -7,7 +7,7 @@ var feedbacks = null;
 var getTop5Feedback = function () {
     $.ajax({
         dataType: "json",
-        type: "GET",
+        type: "POST",
         url: 'ajax/getTop5Feedback.do',
         data: null,
         success: function (data) {
@@ -46,7 +46,7 @@ var getTop5Feedback = function () {
 var getFeedbackCount = function () {
     $.ajax({
         dataType: "json",
-        type: "GET",
+        type: "POST",
         url: 'ajax/getFeedbackCount.do',
         data: null,
         success: function (data) {
@@ -84,7 +84,7 @@ var readFeedbackWithCallback = function (id, fnCallback1, fnCallback2) {
                         callback: function () {
                             $.ajax({
                                 dataType: "json",
-                                type: "GET",
+                                type: "POST",
                                 url: 'ajax/readFeedback.do',
                                 data: {id: id},
                                 success: function (data) {
@@ -103,5 +103,5 @@ var readFeedbackWithCallback = function (id, fnCallback1, fnCallback2) {
 };
 
 var viewAllFeedback = function () {
-    location.href = "admin/allFeedbackView.do";
+    location.href = "admin/allFeedback.do";
 }

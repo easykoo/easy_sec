@@ -112,6 +112,7 @@
                         if (result) {
                             $.ajax('ajax/deleteFeedback.do', {
                                 dataType: 'json',
+                                type: "POST",
                                 data: {
                                     id: id
                                 },
@@ -149,7 +150,7 @@
                             callback: function () {
                                 $.ajax({
                                     dataType: "json",
-                                    type: "GET",
+                                    type: "POST",
                                     url: 'ajax/readFeedback.do',
                                     data: {id: id},
                                     success: function (data) {

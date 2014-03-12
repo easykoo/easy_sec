@@ -18,39 +18,64 @@ public class AdminController {
     protected final Log logger = LogFactory.getLog(getClass());
     private IAccountService accountService;
 
-    @RequestMapping(value = "/dashboard.do")
+    @RequestMapping(value = "/dashboard.do", method = RequestMethod.GET)
     public String dashboard() {
         return "dashboard";
     }
 
-    @RequestMapping(value = "/settings.do")
+    @RequestMapping(value = "/settings.do", method = RequestMethod.GET)
     public String settings() {
         return "settings";
     }
 
-    @RequestMapping(value = "/profile.do")
+    @RequestMapping(value = "/profile.do", method = RequestMethod.GET)
     public String profile() {
         return "profile";
     }
 
-    @RequestMapping(value = "/password.do")
+    @RequestMapping(value = "/preferences.do", method = RequestMethod.GET)
+    public String preferences() {
+        return "preferences";
+    }
+
+    @RequestMapping(value = "/password.do", method = RequestMethod.GET)
     public String password() {
         return "password";
     }
 
-    @RequestMapping(value = "/allAccountView.do", method = RequestMethod.GET)
-    public String allAccountView() {
+    @RequestMapping(value = "/allAccount.do", method = RequestMethod.GET)
+    public String allAccount() {
         return "allAccount";
     }
 
-    @RequestMapping(value = "/allFeedbackView.do", method = RequestMethod.GET)
-    public String allFeedbackView() {
+    @RequestMapping(value = "/allFeedback.do", method = RequestMethod.GET)
+    public String allFeedback() {
         return "allFeedback";
     }
 
-    @RequestMapping(value = "/allProductView.do", method = RequestMethod.GET)
-    public String allProductView() {
-        return "allProductView";
+    @RequestMapping(value = "/allProduct.do", method = RequestMethod.GET)
+    public String allProduct() {
+        return "allProduct";
+    }
+
+    @RequestMapping(value = "/publishProduct.do", method = RequestMethod.GET)
+    public String publishProduct() {
+        return "publishProduct";
+    }
+
+    @RequestMapping(value = "/allCategory.do", method = RequestMethod.GET)
+    public String allCategory() {
+        return "allCategory";
+    }
+
+    @RequestMapping(value = "/allNotice.do", method = RequestMethod.GET)
+    public String allNotice() {
+        return "allNotice";
+    }
+
+    @RequestMapping(value = "/publishNotice.do", method = RequestMethod.GET)
+    public String publishNotice() {
+        return "publishNotice";
     }
 
     public IAccountService getAccountService() {

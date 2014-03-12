@@ -24,6 +24,7 @@ var setCheckSession = function () {
 var checkSession = function () {
     $.ajax('ajax/checkSession.do', {
         dataType: 'json',
+        type: "POST",
         success: function (data) {
             if (!data.success) {
                 window.location.href = "index.jsp";

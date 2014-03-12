@@ -11,24 +11,24 @@ import javax.servlet.jsp.tagext.BodyTagSupport;
 @Component
 public class AuthorizeTag extends BodyTagSupport {
     private static IPrivilegeService privilegeService;
-    private String uri;
+    private String test;
 
 
     public int doStartTag() throws JspException {
         AccountSecurity accountSecurity = (AccountSecurity) pageContext.getSession().getAttribute("currentAccountSecurity");
-        if (privilegeService.isAuthorized(uri, accountSecurity)) {
+        if (privilegeService.isAuthorized(test, accountSecurity)) {
             return EVAL_BODY_INCLUDE;
         } else {
             return SKIP_BODY;
         }
     }
 
-    public String getUri() {
-        return uri;
+    public String getTest() {
+        return test;
     }
 
-    public void setUri(String uri) {
-        this.uri = uri;
+    public void setTest(String test) {
+        this.test = test;
     }
 
     public IPrivilegeService getPrivilegeService() {

@@ -82,22 +82,40 @@ public class PrivilegeServiceImpl implements IPrivilegeService {
     }
 
     @Override
-    public boolean isAuthorized(String uri, Account account) {
+    public boolean isAuthorized(String test, Account account) {
         //todo check ban
-        //check function privilege
-        if (checkFunctionPrivilege(account.getRoleId(), account.getDepartmentId(), uri)) {
-            logger.debug("Authorized in function!");
-            return true;
-        }
-        logger.debug("Not authorized in function!");
+        try {
+            //check module privilege with moduleId
+            Integer moduleId = Integer.parseInt(test);
+            checkModulePrivilege(account.getRoleId(), account.getDepartmentId(), moduleId);
+            if (checkFunctionPrivilege(account.getRoleId(), account.getDepartmentId(), test)) {
+                logger.debug("Authorized in function!");
+                return true;
+            }
+        } catch (NumberFormatException e) {
+            //check function privilege
+            if (checkFunctionPrivilege(account.getRoleId(), account.getDepartmentId(), test)) {
+                logger.debug("Authorized in function!");
+                return true;
+            }
+            logger.debug("Not authorized in function!");
 
-        //check function privilege
-        if (checkModulePrivilege(account.getRoleId(), account.getDepartmentId(), uri)) {
-            logger.debug("Authorized in module!");
-            return true;
+            //check module privilege
+            if (checkModulePrivilege(account.getRoleId(), account.getDepartmentId(), test)) {
+                logger.debug("Authorized in module!");
+                return true;
+            }
         }
         logger.debug("Not authorized in module!");
         return false;
+    }
+
+    private boolean checkModulePrivilege(Integer roleId, Integer departmentId, Integer moduleId) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("roleId", roleId);
+        params.put("departmentId", departmentId);
+        params.put("moduleId", moduleId);
+        return privilegeMapper.checkModulePrivilegeWithModuleId(params);
     }
 
     boolean checkFunctionPrivilege(int roleId, int departmentId, String uri) {

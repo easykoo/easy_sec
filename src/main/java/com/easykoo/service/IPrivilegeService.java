@@ -18,5 +18,5 @@ public interface IPrivilegeService {
 
     int updateByPrimaryKey(Privilege record);
 
-    boolean isAuthorized(String uri, Account account);
+    boolean isAuthorized(String test, Account account);
 }

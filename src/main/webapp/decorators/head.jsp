@@ -29,7 +29,7 @@
         <!-- /.navbar-header -->
 
         <ul class="nav navbar-top-links navbar-right">
-            <au:test uri="/admin/allFeedbackView.do">
+            <au:check test="/admin/allFeedback.do">
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:">
                         <span id="feedbackCount" class="badge"></span>
@@ -39,23 +39,23 @@
                     </ul>
                     <!-- /.dropdown-messages -->
                 </li>
-            </au:test>
+            </au:check>
             <!-- /.dropdown -->
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:">
                     ${currentAccountSecurity.username} <i class="fa fa-user fa-fw"></i><i class="fa fa-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-user">
-                    <au:test uri="/admin/settings.do">
+                    <au:check test="/admin/settings.do">
                         <li><a href="admin/settings.do"><i class="fa fa-gear fa-fw"></i><spring:message
                                 code="label.settings"/></a>
                         </li>
-                    </au:test>
-                    <au:test uri="/admin/profile.do">
+                    </au:check>
+                    <au:check test="/admin/profile.do">
                         <li><a href="admin/profile.do"><i class="fa fa-user fa-fw"></i><spring:message
                                 code="label.profile"/></a>
                         </li>
-                    </au:test>
+                    </au:check>
                     <li class="divider"></li>
                     <li><a href="logout.do"><i class="fa fa-sign-out fa-fw"></i><spring:message
                             code="label.logout"/></a>
@@ -79,7 +79,7 @@
     var getTop5Feedback = function () {
         $.ajax({
             dataType: "json",
-            type: "GET",
+            type: "POST",
             url: 'ajax/getTop5Feedback.do',
             data: null,
             success: function (data) {
@@ -117,7 +117,7 @@
     var getFeedbackCount = function () {
         $.ajax({
             dataType: "json",
-            type: "GET",
+            type: "POST",
             url: 'ajax/getFeedbackCount.do',
             data: null,
             success: function (data) {
@@ -155,7 +155,7 @@
                             callback: function () {
                                 $.ajax({
                                     dataType: "json",
-                                    type: "GET",
+                                    type: "POST",
                                     url: 'ajax/readFeedback.do',
                                     data: {id: id},
                                     success: function (data) {
@@ -174,17 +174,17 @@
     };
 
     var viewAllFeedback = function () {
-        location.href = "admin/allFeedbackView.do";
+        location.href = "admin/allFeedback.do";
     }
 
     $(document).ready(function () {
 
-        <au:test uri="/admin/allFeedbackView.do">
+        <au:check test="/admin/allFeedback.do">
         getFeedbackCount();
         setInterval(getFeedbackCount, 10000);
         getTop5Feedback();
         setInterval(getTop5Feedback, 10000);
-        </au:test>
+        </au:check>
     });
 
 </script>

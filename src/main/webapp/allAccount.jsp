@@ -115,6 +115,7 @@ function deleteAccount(accountID) {
                     if (result) {
                         $.ajax('ajax/deleteAccount.do', {
                             dataType: 'json',
+                            type: "POST",
                             data: {
                                 accountId: accountID
                             },
@@ -151,6 +152,7 @@ function banAccount(accountID) {
                     if (result) {
                         $.ajax('ajax/banAccount.do', {
                             dataType: 'json',
+                            type: "POST",
                             data: {
                                 accountId: accountID
                             },
@@ -187,6 +189,7 @@ function unbanAccount(accountID) {
                     if (result) {
                         $.ajax('ajax/unbanAccount.do', {
                             dataType: 'json',
+                            type: "POST",
                             data: {
                                 accountId: accountID
                             },
@@ -223,6 +226,7 @@ function makeAdmin(accountID) {
                     if (result) {
                         $.ajax('ajax/makeAdmin.do', {
                             dataType: 'json',
+                            type: "POST",
                             data: {
                                 accountId: accountID
                             },
@@ -259,6 +263,7 @@ function hire(accountID) {
                     if (result) {
                         $.ajax('ajax/hire.do', {
                             dataType: 'json',
+                            type: "POST",
                             data: {
                                 accountId: accountID
                             },
@@ -295,6 +300,7 @@ function fire(accountID) {
                     if (result) {
                         $.ajax('ajax/fire.do', {
                             dataType: 'json',
+                            type: "POST",
                             data: {
                                 accountId: accountID
                             },

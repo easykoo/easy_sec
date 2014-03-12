@@ -58,11 +58,11 @@
                             code="label.language"/>
                         <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="registerView.do?url=http://localhost/&locale=zh_CN">中文/简体</a></li>
-                        <li><a href="registerView.do?url=http://localhost/&locale=en">English</a></li>
+                        <li><a href="register.do?url=http://localhost/&locale=zh_CN">中文/简体</a></li>
+                        <li><a href="register.do?url=http://localhost/&locale=en">English</a></li>
                     </ul>
                 </li>
-                <li><a href="loginView.do?url=http://localhost/"><spring:message
+                <li><a href="login.do?url=http://localhost/"><spring:message
                         code="label.sign.in"/></a></li>
             </ul>
         </div>

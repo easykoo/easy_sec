@@ -197,8 +197,8 @@
         </profile>
     </profiles>
     <build>
-        <finalName>easykoo</finalName>
-        <filters> <!-- 指定使用的 filter -->
+        <finalName>${project.artifactId}</finalName>
+        <filters>
             <filter>${basedir}/env/${env}.properties</filter>
         </filters>
         <resources>
@@ -308,7 +308,7 @@
                             <overwrite>true</overwrite>
                             <configurationFile>src/main/resources/generatorConfig.xml</configurationFile>
                             <jdbcDriver>com.mysql.jdbc.Driver</jdbcDriver>
-                            <jdbcURL>jdbc:mysql://localhost:3306/easy-sec</jdbcURL>
+                            <jdbcURL>jdbc:mysql://localhost:3306/easy_sec</jdbcURL>
                             <jdbcUserId>root</jdbcUserId>
                             <jdbcPassword>pass</jdbcPassword>
                         </configuration>
