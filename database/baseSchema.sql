@@ -164,9 +164,8 @@ CREATE TABLE notice (
 
 drop table if exists category;
 CREATE TABLE category (
-  category_id INT(11) NOT NULL AUTO_INCREMENT,
+  category_id VARCHAR(20) NOT NULL,
   level INT(1) NOT NULL,
-  name VARCHAR(60) NOT NULL,
   description VARCHAR(200) NOT NULL,
   parent_category INT(11) NOT NULL,
   create_user VARCHAR(20) NULL,
