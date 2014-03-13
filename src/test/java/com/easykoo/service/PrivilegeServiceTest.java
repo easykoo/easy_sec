@@ -42,7 +42,7 @@ public class PrivilegeServiceTest {
         Account account =new Account();
         account.setRoleId(1);
         account.setDepartmentId(1);
-        boolean b = privilegeService.isAuthorized("admin/allAccount.do", account);
+        boolean b = privilegeService.isAuthorized("account/allAccount.do", account);
         logger.debug(b);
     }
 }

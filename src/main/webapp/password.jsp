@@ -37,7 +37,7 @@
     </div>
     <div class="row">
         <div class="col-lg-5">
-            <form id="profileForm" role="form" class="form-horizontal" method="post" action="account/changePassword.do">
+            <form id="profileForm" role="form" class="form-horizontal" method="post" action="profile/password.do">
 
                 <input type="text" name="accountId" value="${currentAccountSecurity.accountId}" hidden>
                 <c:if test="${not empty message}">

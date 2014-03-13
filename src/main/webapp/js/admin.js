@@ -22,7 +22,7 @@ var setCheckSession = function () {
 }
 
 var checkSession = function () {
-    $.ajax('ajax/checkSession.do', {
+    $.ajax('common/ajax/checkSession.do', {
         dataType: 'json',
         type: "POST",
         success: function (data) {

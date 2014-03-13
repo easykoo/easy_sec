@@ -37,7 +37,7 @@
     </div>
     <div class="row">
         <div class="col-lg-5">
-            <form id="profileForm" role="form" class="form-horizontal" method="post" action="account/changeProfile.do">
+            <form id="profileForm" role="form" class="form-horizontal" method="post" action="profile/changeProfile.do">
 
                 <input type="text" name="accountId" value="${currentAccountSecurity.accountId}" hidden>
                 <c:if test="${not empty message}">
@@ -177,7 +177,7 @@
                 email: {
                     required: true,
                     email:true,
-                    remote: "ajax/checkEmail.do"
+                    remote: "profile/ajax/checkEmail.do"
                 }
             },
             messages: {

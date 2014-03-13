@@ -27,6 +27,12 @@ public class NoticeController {
     private INoticeService noticeService;
     private MessageSource messageSource;
 
+
+    @RequestMapping(value = "/notice/allNotice.do", method = RequestMethod.GET)
+    public String allNotice() {
+        return "allNotice";
+    }
+
     @RequestMapping(value = "/notice/publishNotice.do", method = RequestMethod.GET)
     public String publishNotice() {
         return "publishNotice";
@@ -59,7 +65,7 @@ public class NoticeController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/ajax/allNotice.do", produces = "application/json", method = RequestMethod.POST)
+    @RequestMapping(value = "/notice/ajax/allNotice.do", produces = "application/json", method = RequestMethod.POST)
     public DataTablesResponse allNotice(@RequestParam int iDisplayStart, @RequestParam int iDisplayLength, @RequestParam int iSortCol_0, @RequestParam String sSortDir_0, HttpServletRequest request) {
         DataTablesResponse<Notice> dt = new DataTablesResponse();
 
@@ -78,7 +84,7 @@ public class NoticeController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/ajax/deleteNotice.do", produces = "application/json", method = RequestMethod.POST)
+    @RequestMapping(value = "/notice/ajax/deleteNotice.do", produces = "application/json", method = RequestMethod.POST)
     public ResponseMessage deleteNotice(@RequestParam(value = "noticeId") int noticeId, Locale locale) {
         Notice dbNotice = noticeService.selectByPrimaryKey(noticeId);
         if (dbNotice != null) {

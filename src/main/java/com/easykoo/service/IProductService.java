@@ -1,5 +1,6 @@
 package com.easykoo.service;
 
+import com.easykoo.mybatis.model.Category;
 import com.easykoo.mybatis.model.Product;
 
 import java.util.List;
@@ -18,4 +19,10 @@ public interface IProductService {
     int updateByPrimaryKey(Product record);
 
     List<Product> findProductWithPage(Product record);
+
+    List<Category> getAllCategory();
+
+    List<Category> getTopLevelCategory();
+
+    List<Category> getChildrenCategory(String categoryId);
 }

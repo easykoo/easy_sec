@@ -177,18 +177,6 @@
             </activation>
         </profile>
         <profile>
-            <id>pre</id>
-            <properties>
-                <env>pre</env>
-            </properties>
-        </profile>
-        <profile>
-            <id>prd</id>
-            <properties>
-                <env>prd</env>
-            </properties>
-        </profile>
-        <profile>
             <id>wei</id>
             <properties>
                 <env>wei</env>

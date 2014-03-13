@@ -13,11 +13,9 @@ public class Product extends Page {
 
     private String description;
 
-    private Integer categoryId;
+    private String categoryId;
 
     private String img;
-
-    private Integer priority;
 
     private String createUser;
 
@@ -51,11 +49,11 @@ public class Product extends Page {
         this.description = description;
     }
 
-    public Integer getCategoryId() {
+    public String getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(Integer categoryId) {
+    public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
     }
 
@@ -65,14 +63,6 @@ public class Product extends Page {
 
     public void setImg(String img) {
         this.img = img;
-    }
-
-    public Integer getPriority() {
-        return priority;
-    }
-
-    public void setPriority(Integer priority) {
-        this.priority = priority;
     }
 
     public String getCreateUser() {

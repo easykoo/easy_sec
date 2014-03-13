@@ -187,7 +187,7 @@
                     required: true,
                     minlength: 5,
                     username: true,
-                    remote: "ajax/checkUsername.do"
+                    remote: "profile/ajax/checkUsername.do"
                 },
                 nickname: {
                     required: true,
@@ -200,7 +200,7 @@
                 email: {
                     required: true,
                     email: true,
-                    remote: "ajax/checkEmail.do"
+                    remote: "profile/ajax/checkEmail.do"
                 },
                 password: {
                     required: true,
@@ -215,7 +215,7 @@
                 },
                 verifyCode: {
                     required: true,
-                    remote: "ajax/checkVerifyCode.do"
+                    remote: "common/ajax/checkVerifyCode.do"
                 }
             },
             messages: {

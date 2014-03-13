@@ -2,8 +2,10 @@ package com.easykoo.web.controller;
 
 import com.easykoo.model.DataTablesResponse;
 import com.easykoo.model.ResponseMessage;
+import com.easykoo.mybatis.model.Category;
 import com.easykoo.mybatis.model.Product;
 import com.easykoo.service.IProductService;
+import com.easykoo.util.ConfigUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +14,13 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.ServletContextAware;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -22,10 +29,27 @@ import java.util.Locale;
  */
 
 @Controller
-public class ProductController {
+public class ProductController implements ServletContextAware {
     protected final Log logger = LogFactory.getLog(getClass());
     private IProductService productService;
     private MessageSource messageSource;
+    private ServletContext servletContext;
+
+
+    @RequestMapping(value = "/product/allProduct.do", method = RequestMethod.GET)
+    public String allProduct() {
+        return "allProduct";
+    }
+
+    @RequestMapping(value = "/product/publishProduct.do", method = RequestMethod.GET)
+    public String publishProduct() {
+        return "publishProduct";
+    }
+
+    @RequestMapping(value = "/product/allCategory.do", method = RequestMethod.GET)
+    public String allCategory() {
+        return "allCategory";
+    }
 
     @RequestMapping(value = "/product/changeProductView.do", method = RequestMethod.GET)
     public String changeProductView() {
@@ -33,16 +57,41 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/product/publishProduct.do", method = RequestMethod.POST)
-    public String publishProduct(@ModelAttribute("product") Product product, Locale locale, ModelMap model) {
-        try {
-            productService.insert(product);
-            logger.debug("Product " + product.getProductId() + " publish successfully!");
-        } catch (DuplicateKeyException e) {
-            logger.error("Duplicate key!", e);
-            model.addAttribute("message", new ResponseMessage(false, messageSource.getMessage("message.error.duplicate.key", null, locale)));
-            return "publishProduct";
+    public String handleFormUpload(@RequestParam("category") String category, @RequestParam("name") String name, @RequestParam("description") String description,
+                                   @RequestParam("image") CommonsMultipartFile mFile, Locale locale, ModelMap model) {
+        File file = null;
+        if (!mFile.isEmpty()) {
+            try {
+                Product product = new Product();
+                product.setCategoryId(category);
+                product.setName(name);
+                product.setDescription(description);
+
+                String productDirectory = ConfigUtils.getInstance().getProductDirectory();
+                String path = this.servletContext.getRealPath(productDirectory);
+                File directory = new File(path);
+                if (!directory.exists()) {
+                    directory.mkdir();
+                }
+                file = new File(directory.getPath() + "/" + new Date().getTime() + ".jpg");
+                mFile.transferTo(file);
+                product.setImg(productDirectory + "/" + file.getName());
+                productService.insert(product);
+                model.addAttribute("message", new ResponseMessage(true, messageSource.getMessage("message.publish.success", null, locale)));
+            } catch (DuplicateKeyException e) {
+                if (file.exists()) {
+                    file.delete();
+                }
+                logger.error(e);
+                model.addAttribute("message", new ResponseMessage(false, messageSource.getMessage("message.error.publish.failed", null, locale)));
+            } catch (Exception e) {
+                logger.error(e);
+                model.addAttribute("message", new ResponseMessage(false, messageSource.getMessage("message.error.publish.failed", null, locale)));
+            }
+        } else {
+            model.addAttribute("message", new ResponseMessage(false, messageSource.getMessage("message.error.file.not.exists", null, locale)));
         }
-        return "changeProduct";
+        return "publishProduct";
     }
 
     @RequestMapping(value = "/product/changeProduct.do", method = RequestMethod.POST)
@@ -54,7 +103,7 @@ public class ProductController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/ajax/allProduct.do", produces = "application/json", method = RequestMethod.POST)
+    @RequestMapping(value = "/product/ajax/allProduct.do", produces = "application/json", method = RequestMethod.POST)
     public DataTablesResponse allProduct(@RequestParam int iDisplayStart, @RequestParam int iDisplayLength, @RequestParam int iSortCol_0, @RequestParam String sSortDir_0, HttpServletRequest request) {
         DataTablesResponse<Product> dt = new DataTablesResponse();
 
@@ -73,7 +122,7 @@ public class ProductController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/ajax/deleteProduct.do", produces = "application/json", method = RequestMethod.POST)
+    @RequestMapping(value = "/product/ajax/deleteProduct.do", produces = "application/json", method = RequestMethod.POST)
     public ResponseMessage deleteProduct(@RequestParam(value = "productId") int productId, Locale locale) {
         Product dbProduct = productService.selectByPrimaryKey(productId);
         if (dbProduct != null) {
@@ -82,6 +131,20 @@ public class ProductController {
         }
         return new ResponseMessage(false, messageSource.getMessage("message.error.can.not.find.record", null, locale));
     }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/product/ajax/getTopLevelCategory.do", produces = "application/json", method = RequestMethod.POST)
+    public List<Category> getTopLevelCategory(HttpServletRequest request) {
+        List<Category> categoryList = productService.getTopLevelCategory();
+        return categoryList;
+    }
+
+    @Override
+    public void setServletContext(ServletContext servletContext) {
+        this.servletContext = servletContext;
+    }
+
 
     public MessageSource getMessageSource() {
         return messageSource;

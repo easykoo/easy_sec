@@ -51,8 +51,8 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
             <value>UTF-8</value>
         </property>
         <property name="maxUploadSize">
-            <value>32505856</value>
-            <!-- 上传文件大小限制为31M，31*1024*1024 -->
+            <value>204800</value>
+            <!-- max 200KB，200*1024 -->
         </property>
         <property name="maxInMemorySize">
             <value>4096</value>

@@ -85,8 +85,8 @@
                                     <li><a href="admin/settings.do"><i class="fa fa-gear fa-fw"></i> <spring:message
                                             code="label.settings"/></a></li>
                                 </au:check>
-                                <au:check test="/admin/profile.do">
-                                    <li><a href="admin/profile.do"><i class="fa fa-user fa-fw"></i> <spring:message
+                                <au:check test="/profile/profile.do">
+                                    <li><a href="profile/profile.do"><i class="fa fa-user fa-fw"></i> <spring:message
                                             code="label.profile"/></a></li>
                                 </au:check>
                                 <li class="divider"></li>
@@ -355,7 +355,7 @@
         <div class="col-md-6">
             <h3><spring:message code="label.leave.message"/></h3>
 
-            <form role="form" id="contactForm" action="ajax/addFeedback.do" method="post">
+            <form role="form" id="contactForm" action="feedback/ajax/addFeedback.do" method="post">
                 <input id="name" name="name" type="text" class="form-control"
                        placeholder="<spring:message code="label.name" />">
                 <input id="email" name="email" type="text" class="form-control"
@@ -466,7 +466,7 @@
                 $.ajax({
                     cache: true,
                     type: "POST",
-                    url: "ajax/addFeedback.do",
+                    url: "feedback/ajax/addFeedback.do",
                     data: $('#contactForm').serialize(),
                     dataType: "json",
                     async: false,
@@ -504,7 +504,7 @@
                     cache: true,
                     type: "POST",
                     dataType: 'json',
-                    url: "ajax/subscribe.do",
+                    url: "feedback/ajax/subscribe.do",
                     data: $('#subscribeForm').serialize(),
                     async: false,
                     error: function (request) {

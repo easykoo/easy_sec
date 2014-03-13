@@ -8,7 +8,7 @@ var getTop5Feedback = function () {
     $.ajax({
         dataType: "json",
         type: "POST",
-        url: 'ajax/getTop5Feedback.do',
+        url: 'feedback/ajax/getTop5Feedback.do',
         data: null,
         success: function (data) {
             $('#feedback_notification').empty();
@@ -47,7 +47,7 @@ var getFeedbackCount = function () {
     $.ajax({
         dataType: "json",
         type: "POST",
-        url: 'ajax/getFeedbackCount.do',
+        url: 'feedback/ajax/getFeedbackCount.do',
         data: null,
         success: function (data) {
             if (data == 0) {
@@ -85,7 +85,7 @@ var readFeedbackWithCallback = function (id, fnCallback1, fnCallback2) {
                             $.ajax({
                                 dataType: "json",
                                 type: "POST",
-                                url: 'ajax/readFeedback.do',
+                                url: 'feedback/ajax/readFeedback.do',
                                 data: {id: id},
                                 success: function (data) {
                                     if (data == 'true') {
@@ -103,5 +103,5 @@ var readFeedbackWithCallback = function (id, fnCallback1, fnCallback2) {
 };
 
 var viewAllFeedback = function () {
-    location.href = "admin/allFeedback.do";
+    location.href = "feedback/allFeedback.do";
 }

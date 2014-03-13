@@ -4,18 +4,17 @@ import com.easykoo.model.Page;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.Date;
+import java.util.List;
 
 public class Category extends Page {
     @JsonProperty("category_id")
-    private Integer categoryId;
-
-    private Integer level;
-
-    private String name;
+    private String categoryId;
 
     private String description;
 
-    private Integer parentCategory;
+    private String parentCategory;
+
+    private List<Category> children;
 
     private String createUser;
 
@@ -25,28 +24,20 @@ public class Category extends Page {
 
     private Date updateDate;
 
-    public Integer getCategoryId() {
+    public List<Category> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Category> children) {
+        this.children = children;
+    }
+
+    public String getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(Integer categoryId) {
+    public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
-    }
-
-    public Integer getLevel() {
-        return level;
-    }
-
-    public void setLevel(Integer level) {
-        this.level = level;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getDescription() {
@@ -57,11 +48,11 @@ public class Category extends Page {
         this.description = description;
     }
 
-    public Integer getParentCategory() {
+    public String getParentCategory() {
         return parentCategory;
     }
 
-    public void setParentCategory(Integer parentCategory) {
+    public void setParentCategory(String parentCategory) {
         this.parentCategory = parentCategory;
     }
 

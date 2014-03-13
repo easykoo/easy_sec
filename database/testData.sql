@@ -15,15 +15,15 @@ INSERT INTO sec_acc_security (account_id,username,password,effective_date,create
 VALUES (3,'user','C4CA4238A0B923820DCC509A6F75849B',now(),'SYSTEM',now(),'SYSTEM',now());
 
 delete from category;
-insert into category (category_id, level, description, parent_category, create_user, create_date, update_user, update_date)
-values ('101',1,'101', null, 'SYSTEM', now(), 'SYSTEM', now());
-insert into category (category_id, level, description, parent_category, create_user, create_date, update_user, update_date)
-values ('102',1,'102', null, 'SYSTEM', now(), 'SYSTEM', now());
-insert into category (category_id, level, description, parent_category, create_user, create_date, update_user, update_date)
-values ('101001',2,'101001', '101', 'SYSTEM', now(), 'SYSTEM', now());
-insert into category (category_id, level, description, parent_category, create_user, create_date, update_user, update_date)
-values ('101002',2,'101002', '101', 'SYSTEM', now(), 'SYSTEM', now());
-insert into category (category_id, level, description, parent_category, create_user, create_date, update_user, update_date)
-values ('101001001',3,'101001001', '101001', 'SYSTEM', now(), 'SYSTEM', now());
-insert into category (category_id, level, description, parent_category, create_user, create_date, update_user, update_date)
-values ('101002001',3,'101002001', '101002', 'SYSTEM', now(), 'SYSTEM', now());
+insert into category (category_id,  description, parent_category, create_user, create_date, update_user, update_date)
+values ('101', '101', null, 'SYSTEM', now(), 'SYSTEM', now());
+insert into category (category_id, description, parent_category, create_user, create_date, update_user, update_date)
+values ('102', '102', null, 'SYSTEM', now(), 'SYSTEM', now());
+insert into category (category_id, description, parent_category, create_user, create_date, update_user, update_date)
+values ('101001', '101001', '101', 'SYSTEM', now(), 'SYSTEM', now());
+insert into category (category_id, description, parent_category, create_user, create_date, update_user, update_date)
+values ('101002', '101002', '101', 'SYSTEM', now(), 'SYSTEM', now());
+insert into category (category_id, description, parent_category, create_user, create_date, update_user, update_date)
+values ('101001001', '101001001', '101001', 'SYSTEM', now(), 'SYSTEM', now());
+insert into category (category_id, description, parent_category, create_user, create_date, update_user, update_date)
+values ('101002001', '101002001', '101002', 'SYSTEM', now(), 'SYSTEM', now());

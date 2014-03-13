@@ -56,4 +56,8 @@ public class ConfigUtils {
         return array;
     }
 
+    public String getProductDirectory(){
+        return properties.getProperty("product.directory");
+    }
+
 }

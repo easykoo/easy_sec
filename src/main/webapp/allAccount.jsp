@@ -113,7 +113,7 @@ function deleteAccount(accountID) {
                 className: "btn-danger",
                 callback: function (result) {
                     if (result) {
-                        $.ajax('ajax/deleteAccount.do', {
+                        $.ajax('account/ajax/deleteAccount.do', {
                             dataType: 'json',
                             type: "POST",
                             data: {
@@ -150,7 +150,7 @@ function banAccount(accountID) {
                 className: "btn-danger",
                 callback: function (result) {
                     if (result) {
-                        $.ajax('ajax/banAccount.do', {
+                        $.ajax('account/ajax/banAccount.do', {
                             dataType: 'json',
                             type: "POST",
                             data: {
@@ -187,7 +187,7 @@ function unbanAccount(accountID) {
                 className: "btn-success",
                 callback: function (result) {
                     if (result) {
-                        $.ajax('ajax/unbanAccount.do', {
+                        $.ajax('account/ajax/unbanAccount.do', {
                             dataType: 'json',
                             type: "POST",
                             data: {
@@ -224,7 +224,7 @@ function makeAdmin(accountID) {
                 className: "btn-danger",
                 callback: function (result) {
                     if (result) {
-                        $.ajax('ajax/makeAdmin.do', {
+                        $.ajax('account/ajax/makeAdmin.do', {
                             dataType: 'json',
                             type: "POST",
                             data: {
@@ -261,7 +261,7 @@ function hire(accountID) {
                 className: "btn-danger",
                 callback: function (result) {
                     if (result) {
-                        $.ajax('ajax/hire.do', {
+                        $.ajax('account/ajax/hire.do', {
                             dataType: 'json',
                             type: "POST",
                             data: {
@@ -298,7 +298,7 @@ function fire(accountID) {
                 className: "btn-danger",
                 callback: function (result) {
                     if (result) {
-                        $.ajax('ajax/fire.do', {
+                        $.ajax('account/ajax/fire.do', {
                             dataType: 'json',
                             type: "POST",
                             data: {
@@ -331,7 +331,7 @@ var getAllAccounts = function () {
         iDisplayLength: 10,
         bLengthChange: true,
         sPaginationType: 'full_numbers',
-        sAjaxSource: 'ajax/allAccount.do',
+        sAjaxSource: 'account/ajax/allAccount.do',
         fnServerData: function (sSource, aoData, fnCallback) {
             $.ajax({
                 dataType: "json",

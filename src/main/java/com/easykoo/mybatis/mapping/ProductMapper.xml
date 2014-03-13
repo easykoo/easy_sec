@@ -7,15 +7,14 @@
         <result column="description" property="description" jdbcType="VARCHAR"/>
         <result column="category_id" property="categoryId" jdbcType="INTEGER"/>
         <result column="img" property="img" jdbcType="VARCHAR"/>
-        <result column="priority" property="priority" jdbcType="INTEGER"/>
         <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
         <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
         <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
     </resultMap>
     <sql id="Base_Column_List">
-    product_id, name, description, category_id, img, priority, create_user, create_date, 
-    update_user, update_date
+    product_id, name, description, category_id, img,
+    create_user, create_date, update_user, update_date
   </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
@@ -28,14 +27,11 @@
     where product_id = #{productId,jdbcType=INTEGER}
   </delete>
     <insert id="insert" parameterType="com.easykoo.mybatis.model.Product">
-    insert into product (product_id, name, description, 
-      category_id, img, priority, 
-      create_user, create_date, update_user, 
-      update_date)
-    values (#{productId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{categoryId,jdbcType=INTEGER}, #{img,jdbcType=VARCHAR}, #{priority,jdbcType=INTEGER}, 
-      #{createUser,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, 
-      #{updateDate,jdbcType=TIMESTAMP})
+    insert into product ( name, description, category_id, img,
+      create_user, create_date, update_user, update_date)
+    values (#{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+      #{categoryId,jdbcType=VARCHAR}, #{img,jdbcType=VARCHAR},
+      #{createUser,jdbcType=VARCHAR}, now(), #{updateUser,jdbcType=VARCHAR}, now())
   </insert>
     <insert id="insertSelective" parameterType="com.easykoo.mybatis.model.Product">
         insert into product
@@ -54,9 +50,6 @@
             </if>
             <if test="img != null">
                 img,
-            </if>
-            <if test="priority != null">
-                priority,
             </if>
             <if test="createUser != null">
                 create_user,
@@ -82,13 +75,10 @@
                 #{description,jdbcType=VARCHAR},
             </if>
             <if test="categoryId != null">
-                #{categoryId,jdbcType=INTEGER},
+                #{categoryId,jdbcType=VARCHAR},
             </if>
             <if test="img != null">
                 #{img,jdbcType=VARCHAR},
-            </if>
-            <if test="priority != null">
-                #{priority,jdbcType=INTEGER},
             </if>
             <if test="createUser != null">
                 #{createUser,jdbcType=VARCHAR},
@@ -114,13 +104,10 @@
                 description = #{description,jdbcType=VARCHAR},
             </if>
             <if test="categoryId != null">
-                category_id = #{categoryId,jdbcType=INTEGER},
+                category_id = #{categoryId,jdbcType=VARCHAR},
             </if>
             <if test="img != null">
                 img = #{img,jdbcType=VARCHAR},
-            </if>
-            <if test="priority != null">
-                priority = #{priority,jdbcType=INTEGER},
             </if>
             <if test="createUser != null">
                 create_user = #{createUser,jdbcType=VARCHAR},
@@ -141,9 +128,8 @@
     update product
     set name = #{name,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
-      category_id = #{categoryId,jdbcType=INTEGER},
+      category_id = #{categoryId,jdbcType=VARCHAR},
       img = #{img,jdbcType=VARCHAR},
-      priority = #{priority,jdbcType=INTEGER},
       create_user = #{createUser,jdbcType=VARCHAR},
       create_date = #{createDate,jdbcType=TIMESTAMP},
       update_user = #{updateUser,jdbcType=VARCHAR},
@@ -165,13 +151,10 @@
             description = #{description,jdbcType=VARCHAR},
         </if>
         <if test="categoryId != null">
-            category_id = #{categoryId,jdbcType=INTEGER},
+            category_id = #{categoryId,jdbcType=VARCHAR},
         </if>
         <if test="img != null">
             img = #{img,jdbcType=VARCHAR},
-        </if>
-        <if test="priority != null">
-            priority = #{priority,jdbcType=INTEGER},
         </if>
         <if test="createUser != null">
             create_user = #{createUser,jdbcType=VARCHAR},

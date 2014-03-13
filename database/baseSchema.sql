@@ -165,9 +165,8 @@ CREATE TABLE notice (
 drop table if exists category;
 CREATE TABLE category (
   category_id VARCHAR(20) NOT NULL,
-  level INT(1) NOT NULL,
   description VARCHAR(200) NOT NULL,
-  parent_category INT(11) NOT NULL,
+  parent_category VARCHAR(20) NULL,
   create_user VARCHAR(20) NULL,
   create_date DATETIME NULL,
   update_user varchar(20) DEFAULT NULL,
@@ -180,9 +179,8 @@ CREATE TABLE product (
   product_id INT(11) NOT NULL AUTO_INCREMENT,
   name VARCHAR(60) NOT NULL,
   description VARCHAR(200) NOT NULL,
-  category_id INT(11) NOT NULL,
+  category_id VARCHAR(20) NOT NULL,
   img VARCHAR(60) NULL,
-  priority INT(2) NULL,
   create_user VARCHAR(20) NULL,
   create_date DATETIME NULL,
   update_user varchar(20) DEFAULT NULL,

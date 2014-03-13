@@ -110,7 +110,7 @@
                     className: "btn-danger",
                     callback: function (result) {
                         if (result) {
-                            $.ajax('ajax/deleteFeedback.do', {
+                            $.ajax('feedback/ajax/deleteFeedback.do', {
                                 dataType: 'json',
                                 type: "POST",
                                 data: {
@@ -151,7 +151,7 @@
                                 $.ajax({
                                     dataType: "json",
                                     type: "POST",
-                                    url: 'ajax/readFeedback.do',
+                                    url: 'feedback/ajax/readFeedback.do',
                                     data: {id: id},
                                     success: function (data) {
                                         if (data == 'true') {
@@ -180,7 +180,7 @@
             iDisplayLength: 10,
             bLengthChange: true,
             sPaginationType: 'full_numbers',
-            sAjaxSource: 'ajax/allFeedback.do',
+            sAjaxSource: 'feedback/ajax/allFeedback.do',
             aaSorting: [[0,'desc'],[5,'asc']],
             fnServerData: function (sSource, aoData, fnCallback) {
                 $.ajax({

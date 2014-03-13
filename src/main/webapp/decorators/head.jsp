@@ -29,7 +29,7 @@
         <!-- /.navbar-header -->
 
         <ul class="nav navbar-top-links navbar-right">
-            <au:check test="/admin/allFeedback.do">
+            <au:check test="/feedback/allFeedback.do">
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:">
                         <span id="feedbackCount" class="badge"></span>
@@ -51,8 +51,8 @@
                                 code="label.settings"/></a>
                         </li>
                     </au:check>
-                    <au:check test="/admin/profile.do">
-                        <li><a href="admin/profile.do"><i class="fa fa-user fa-fw"></i><spring:message
+                    <au:check test="/profile/profile.do">
+                        <li><a href="profile/profile.do"><i class="fa fa-user fa-fw"></i><spring:message
                                 code="label.profile"/></a>
                         </li>
                     </au:check>
@@ -80,7 +80,7 @@
         $.ajax({
             dataType: "json",
             type: "POST",
-            url: 'ajax/getTop5Feedback.do',
+            url: 'feedback/ajax/getTop5Feedback.do',
             data: null,
             success: function (data) {
                 $('#feedback_notification').empty();
@@ -118,7 +118,7 @@
         $.ajax({
             dataType: "json",
             type: "POST",
-            url: 'ajax/getFeedbackCount.do',
+            url: 'feedback/ajax/getFeedbackCount.do',
             data: null,
             success: function (data) {
                 if (data == 0) {
@@ -156,7 +156,7 @@
                                 $.ajax({
                                     dataType: "json",
                                     type: "POST",
-                                    url: 'ajax/readFeedback.do',
+                                    url: 'feedback/ajax/readFeedback.do',
                                     data: {id: id},
                                     success: function (data) {
                                         if (data == 'true') {
@@ -174,12 +174,12 @@
     };
 
     var viewAllFeedback = function () {
-        location.href = "admin/allFeedback.do";
+        location.href = "feedback/allFeedback.do";
     }
 
     $(document).ready(function () {
 
-        <au:check test="/admin/allFeedback.do">
+        <au:check test="/feedback/allFeedback.do">
         getFeedbackCount();
         setInterval(getFeedbackCount, 10000);
         getTop5Feedback();

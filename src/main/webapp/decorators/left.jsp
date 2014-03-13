@@ -40,32 +40,32 @@
                             code="label.settings"/></a>
                 </li>
             </au:check>
-            <au:check test="/admin/allAccount.do">
+            <au:check test="/account/allAccount.do">
                 <li id="account">
-                    <a href="admin/allAccount.do"><i class="fa fa-users fa-fw"></i> <spring:message
+                    <a href="account/allAccount.do"><i class="fa fa-users fa-fw"></i> <spring:message
                             code="label.all.account"/></a>
                 </li>
             </au:check>
-            <au:check test="/admin/allFeedback.do">
+            <au:check test="/feedback/allFeedback.do">
                 <li id="feedback">
-                    <a href="/admin/allFeedback.do"><i class="fa fa-edit fa-fw"></i><spring:message
+                    <a href="/feedback/allFeedback.do"><i class="fa fa-edit fa-fw"></i><spring:message
                             code="label.all.feedback"/></a>
                 </li>
             </au:check>
-            <au:check test="/admin/allNotice.do">
+            <au:check test="/notice/allNotice.do">
                 <li id="notice">
                     <a href="javascript:"><i class="fa fa-volume-up fa-fw"></i> <spring:message
                             code="label.notice"/><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <au:check test="/admin/allNotice.do">
+                        <au:check test="/notice/allNotice.do">
                             <li id="allAnnouncement">
-                                <a href="admin/allNotice.do"><spring:message
+                                <a href="notice/allNotice.do"><spring:message
                                         code="label.all.notice"/></a>
                             </li>
                         </au:check>
                         <au:check test="/notice/publishNotice.do">
                             <li id="announce">
-                                <a href="/admin/publishNotice.do"><spring:message
+                                <a href="/notice/publishNotice.do"><spring:message
                                         code="label.publish.notice"/></a>
                             </li>
                         </au:check>
@@ -73,26 +73,26 @@
                     <!-- /.nav-second-level -->
                 </li>
             </au:check>
-            <au:check test="/admin/allProduct.do">
+            <au:check test="/product/allProduct.do">
                 <li id="product">
                     <a href="javascript:"><i class="fa fa-lightbulb-o fa-fw"></i> <spring:message
                             code="label.product"/><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <au:check test="/admin/allProduct.do">
+                        <au:check test="/product/allProduct.do">
                             <li id="allProduct">
-                                <a href="admin/allProduct.do"><spring:message
+                                <a href="product/allProduct.do"><spring:message
                                         code="label.all.product"/></a>
                             </li>
                         </au:check>
                         <au:check test="/product/publishProduct.do">
-                            <li id="createProduct">
+                            <li id="publishProduct">
                                 <a href="/product/publishProduct.do"><spring:message
                                         code="label.publish.product"/></a>
                             </li>
                         </au:check>
-                        <au:check test="/admin/allCategory.do">
+                        <au:check test="/product/allCategory.do">
                             <li id="category">
-                                <a href="/admin/allCategory.do"><spring:message
+                                <a href="/product/allCategory.do"><spring:message
                                         code="label.category"/></a>
                             </li>
                         </au:check>
@@ -100,21 +100,21 @@
                     <!-- /.nav-second-level -->
                 </li>
             </au:check>
-            <au:check test="/admin/profile.do">
+            <au:check test="/profile/profile.do">
                 <li id="profile">
                     <a href="javascript:"><i class="fa fa-wrench fa-fw"></i> <spring:message
                             code="label.profile"/><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <li id="changeProfile">
-                            <a href="admin/profile.do"><spring:message
+                            <a href="profile/profile.do"><spring:message
                                     code="label.change.profile"/></a>
                         </li>
                         <li id="preferences">
-                            <a href="admin/preferences.do"><spring:message
+                            <a href="profile/preferences.do"><spring:message
                                     code="label.preferences"/></a>
                         </li>
                         <li id="password">
-                            <a href="/admin/password.do"><spring:message
+                            <a href="/profile/password.do"><spring:message
                                     code="label.change.password"/></a>
                         </li>
                             <%--<li>

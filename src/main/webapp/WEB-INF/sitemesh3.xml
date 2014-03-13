@@ -11,14 +11,34 @@
         <decorator>/decorators/head.jsp</decorator>
     </mapping>
     <mapping>
+        <path>/profile/*</path>
+        <decorator>/decorators/left.jsp</decorator>
+        <decorator>/decorators/head.jsp</decorator>
+    </mapping>
+    <mapping>
         <path>/account/*</path>
+        <decorator>/decorators/left.jsp</decorator>
+        <decorator>/decorators/head.jsp</decorator>
+    </mapping>
+    <mapping>
+        <path>/feedback/*</path>
+        <decorator>/decorators/left.jsp</decorator>
+        <decorator>/decorators/head.jsp</decorator>
+    </mapping>
+    <mapping>
+        <path>/notice/*</path>
+        <decorator>/decorators/left.jsp</decorator>
+        <decorator>/decorators/head.jsp</decorator>
+    </mapping>
+    <mapping>
+        <path>/product/*</path>
         <decorator>/decorators/left.jsp</decorator>
         <decorator>/decorators/head.jsp</decorator>
     </mapping>
 
     <!-- 不被渲染的路径. -->
     <mapping path="/js/*" exclue="true"/>
-    <mapping path="/ajax/*" exclue="true"/>
+    <mapping path="*/ajax/*" exclue="true"/>
     <mapping path="/css/*" exclue="true"/>
     <mapping path="/fonts/*" exclue="true"/>
     <mapping path="*.png" exclue="true"/>
