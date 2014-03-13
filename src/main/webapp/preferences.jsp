@@ -37,7 +37,7 @@
     </div>
     <div class="row">
         <div class="col-lg-5">
-            <form id="profileForm" role="form" class="form-horizontal" method="post" action="account/changePassword.do">
+            <form id="profileForm" role="form" class="form-horizontal" method="post" action="account/changeProfile.do">
 
                 <input type="text" name="accountId" value="${currentAccountSecurity.accountId}" hidden>
                 <c:if test="${not empty message}">
@@ -51,31 +51,88 @@
                     </div>
                 </c:if>
                 <div class="form-group">
-                    <label for="currentPassword" class="col-sm-2 control-label"><span style="color: red">*</span>
+                    <label for="nickname" class="col-sm-2 control-label"><span style="color: red">*</span>
                         <spring:message
-                                code="label.current.password"/></label>
+                                code="label.nickname"/></label>
 
                     <div class="col-sm-6">
-                        <input type="password" id="currentPassword" class="form-control" name="currentPassword">
+                        <input type="text" id="nickname" class="form-control" name="nickname"
+                               value="${currentAccountSecurity.nickname}">
                     </div>
                     <div class="col-sm-4 control-label"></div>
                 </div>
                 <div class="form-group">
-                    <label for="newPassword" class="col-sm-2 control-label"><span style="color: red">*</span>
-                        <spring:message
-                                code="label.new.password"/></label>
+                    <label class="col-sm-2 control-label"><span style="color: red">*</span> <spring:message
+                            code="label.gender"/></label>
+
+                    <div class="col-sm-1">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="gender" id="gender1" value="1"
+                                       <c:if test="${currentAccountSecurity.gender==1}">checked</c:if>>
+                                <spring:message
+                                        code="label.male"/>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="gender" id="gender2" value="0"
+                                       <c:if test="${currentAccountSecurity.gender==0}">checked</c:if>><spring:message
+                                    code="label.female"/>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 control-label gender"></div>
+                </div>
+                <div class="form-group">
+                    <label for="qq" class="col-sm-2 control-label"> <spring:message
+                            code="label.qq"/></label>
 
                     <div class="col-sm-6">
-                        <input type="password" id="newPassword" class="form-control" name="newPassword">
+                        <input type="text" id="qq" class="form-control" name="qq"
+                               value="${currentAccountSecurity.qq}">
                     </div>
                     <div class="col-sm-4 control-label"></div>
                 </div>
                 <div class="form-group">
-                    <label for="confirmPassword" class="col-sm-2 control-label"><span style="color: red">*</span>
-                        <spring:message code="label.confirmPassword"/></label>
+                    <label for="telephone" class="col-sm-2 control-label"> <spring:message
+                            code="label.telephone"/></label>
 
                     <div class="col-sm-6">
-                        <input type="password" id="confirmPassword" class="form-control" name="confirmPassword">
+                        <input type="text" id="telephone" class="form-control" name="telephone"
+                               value="${currentAccountSecurity.telephone}">
+                    </div>
+                    <div class="col-sm-4 control-label"></div>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="col-sm-2 control-label"> <spring:message
+                            code="label.email"/></label>
+
+                    <div class="col-sm-6">
+                        <input type="text" id="email" class="form-control" name="email"
+                               value="${currentAccountSecurity.email}">
+                    </div>
+                    <div class="col-sm-4 control-label"></div>
+                </div>
+                <div class="form-group">
+                    <label for="postcode" class="col-sm-2 control-label"> <spring:message
+                            code="label.postcode"/></label>
+
+                    <div class="col-sm-6">
+                        <input type="text" id="postcode" class="form-control" name="postcode"
+                               value="${currentAccountSecurity.postcode}">
+                    </div>
+                    <div class="col-sm-4 control-label"></div>
+                </div>
+                <div class="form-group">
+                    <label for="address" class="col-sm-2 control-label"> <spring:message
+                            code="label.address"/></label>
+
+                    <div class="col-sm-6">
+                        <input type="text" id="address" class="form-control" name="address"
+                               value="${currentAccountSecurity.address}">
                     </div>
                     <div class="col-sm-4 control-label"></div>
                 </div>
@@ -105,43 +162,35 @@
 
     $(document).ready(function () {
         $('#profile').toggleClass('active').children('ul').collapse('toggle');
-        $('#password').css({"background":"#DDDDDD"});
+        $('#preferences').css({"background":"#DDDDDD"});
 
         $("#profileForm").validate({
             rules: {
-                currentPassword: {
+                nickname: {
                     required: true,
-                    minlength: 5,
-                    password: true
+                    minlength: 4,
+                    stringCheck: true
                 },
-                newPassword: {
-                    required: true,
-                    minlength: 5,
-                    password: true
+                gender: {
+                    required: true
                 },
-                confirmPassword: {
+                email: {
                     required: true,
-                    minlength: 5,
-                    password: true,
-                    equalTo: "#newPassword"
+                    email:true,
+                    remote: "ajax/checkEmail.do"
                 }
             },
             messages: {
-                currentPassword: {
+                nickname: {
                     required: '<spring:message code="message.error.required"/>',
                     minlength: '<spring:message code="message.error.min.length"/>',
-                    password: '<spring:message code="message.error.password.format"/>'
+                    stringCheck: '<spring:message code="message.error.string.check"/>'
                 },
-                newPassword: {
+                gender: '<spring:message code="message.error.required"/>',
+                email: {
                     required: '<spring:message code="message.error.required"/>',
-                    minlength: '<spring:message code="message.error.min.length"/>',
-                    password: '<spring:message code="message.error.password.format"/>'
-                },
-                confirmPassword: {
-                    required: '<spring:message code="message.error.required"/>',
-                    minlength: '<spring:message code="message.error.min.length"/>',
-                    password: '<spring:message code="message.error.password.format"/>',
-                    equalTo: '<spring:message code="message.error.confirm.password"/>'
+                    email: '<spring:message code="message.error.wrong.email.format"/>',
+                    remote: '<spring:message code="message.error.already.exists"/>'
                 }
             },
             focusInvalid: true,

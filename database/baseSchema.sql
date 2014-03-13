@@ -1,9 +1,8 @@
 drop schema if exists easy_sec;
-CREATE SCHEMA easy_sec DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
-
+CREATE SCHEMA easy_sec DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 use easy_sec;
 
-drop table  if exists sec_group;
+drop table if exists sec_group;
 CREATE TABLE sec_group (
   group_id int(3) NOT NULL AUTO_INCREMENT,
   description varchar(20) NOT NULL,
@@ -15,7 +14,7 @@ CREATE TABLE sec_group (
   UNIQUE KEY description_UNIQUE (description)
 ) ;
 
-drop table  if exists sec_account;
+drop table if exists sec_account;
 CREATE TABLE sec_account (
   account_id int(11) NOT NULL AUTO_INCREMENT,
   username varchar(20) NOT NULL,
@@ -42,7 +41,7 @@ CREATE TABLE sec_account (
   UNIQUE KEY email_UNIQUE (email)
 ) ;
 
-drop table  if exists sec_acc_security;
+drop table if exists sec_acc_security;
 CREATE TABLE sec_acc_security (
   account_id int(11) NOT NULL,
   username varchar(20) NOT NULL,
@@ -57,7 +56,7 @@ CREATE TABLE sec_acc_security (
   PRIMARY KEY (account_id)
 ) ;
 
-drop table  if exists sec_acc_session;
+drop table if exists sec_acc_session;
 CREATE TABLE sec_acc_session (
   id int(11) NOT NULL AUTO_INCREMENT,
   session_id varchar(60) NOT NULL,
@@ -69,7 +68,7 @@ CREATE TABLE sec_acc_session (
 );
 
 
-drop table  if exists sec_department;
+drop table if exists sec_department;
 CREATE TABLE sec_department (
   department_id int(3) NOT NULL AUTO_INCREMENT,
   description varchar(20) NOT NULL,
@@ -80,7 +79,7 @@ CREATE TABLE sec_department (
   PRIMARY KEY (department_id)
 );
 
-drop table  if exists sec_function;
+drop table if exists sec_function;
 CREATE TABLE sec_function (
   function_id int(5) NOT NULL AUTO_INCREMENT,
   description varchar(50) NOT NULL,
@@ -93,7 +92,7 @@ CREATE TABLE sec_function (
   PRIMARY KEY (function_id)
 ) ;
 
-drop table  if exists sec_module;
+drop table if exists sec_module;
 CREATE TABLE sec_module (
   module_id int(3) NOT NULL AUTO_INCREMENT,
   description varchar(50) NOT NULL,
@@ -105,7 +104,7 @@ CREATE TABLE sec_module (
   PRIMARY KEY (module_id)
 ) ;
 
-drop table  if exists sec_privilege;
+drop table if exists sec_privilege;
 CREATE TABLE sec_privilege (
   privilege_id int(3) NOT NULL AUTO_INCREMENT,
   external_id int(11) NOT NULL,
@@ -119,7 +118,7 @@ CREATE TABLE sec_privilege (
   PRIMARY KEY (privilege_id)
 ) ;
 
-drop table  if exists sec_role;
+drop table if exists sec_role;
 CREATE TABLE sec_role (
   role_id int(3) NOT NULL AUTO_INCREMENT,
   description varchar(20) NOT NULL,
@@ -131,19 +130,64 @@ CREATE TABLE sec_role (
   UNIQUE KEY description_UNIQUE (description)
 ) ;
 
-drop table  if exists feedback;
-CREATE  TABLE feedback (
+drop table if exists feedback;
+CREATE TABLE feedback (
   feedback_id INT(11) NOT NULL AUTO_INCREMENT,
-  email VARCHAR(45) NOT NULL ,
-  name VARCHAR(20) NOT NULL ,
-  content VARCHAR(200) NOT NULL ,
+  email VARCHAR(45) NOT NULL,
+  name VARCHAR(20) NOT NULL,
+  content VARCHAR(200) NOT NULL,
   viewed tinyint(1) DEFAULT '0',
-  create_date DATETIME NULL ,
-  PRIMARY KEY (feedback_id) );
+  create_date DATETIME NULL,
+  PRIMARY KEY (feedback_id)
+);
 
-drop table  if exists subscribe;
-CREATE  TABLE subscribe (
-  email VARCHAR(45) NOT NULL ,
-  name VARCHAR(20) NULL ,
-  create_date DATETIME NULL ,
-  PRIMARY KEY (email) );
+drop table if exists subscribe;
+CREATE TABLE subscribe (
+  email VARCHAR(45) NOT NULL,
+  name VARCHAR(20) NULL,
+  create_date DATETIME NULL,
+  PRIMARY KEY (email)
+);
+
+drop table if exists notice;
+CREATE TABLE notice (
+  notice_id INT(11) NOT NULL AUTO_INCREMENT,
+  title VARCHAR(60) NOT NULL,
+  content VARCHAR(200) NOT NULL,
+  priority INT(2) NULL,
+  create_user VARCHAR(20) NULL,
+  create_date DATETIME NULL,
+  update_user varchar(20) DEFAULT NULL,
+  update_date datetime DEFAULT NULL,
+  PRIMARY KEY (notice_id)
+);
+
+drop table if exists category;
+CREATE TABLE category (
+  category_id INT(11) NOT NULL AUTO_INCREMENT,
+  level INT(1) NOT NULL,
+  name VARCHAR(60) NOT NULL,
+  description VARCHAR(200) NOT NULL,
+  parent_category INT(11) NOT NULL,
+  create_user VARCHAR(20) NULL,
+  create_date DATETIME NULL,
+  update_user varchar(20) DEFAULT NULL,
+  update_date datetime DEFAULT NULL,
+  PRIMARY KEY (category_id)
+);
+
+drop table if exists product;
+CREATE TABLE product (
+  product_id INT(11) NOT NULL AUTO_INCREMENT,
+  name VARCHAR(60) NOT NULL,
+  description VARCHAR(200) NOT NULL,
+  category_id INT(11) NOT NULL,
+  img VARCHAR(60) NULL,
+  priority INT(2) NULL,
+  create_user VARCHAR(20) NULL,
+  create_date DATETIME NULL,
+  update_user varchar(20) DEFAULT NULL,
+  update_date datetime DEFAULT NULL,
+  PRIMARY KEY (product_id)
+);
+

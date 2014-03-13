@@ -128,7 +128,7 @@ public class PrivilegeFilter extends OncePerRequestFilter {
             logger.debug("Check session...");
             if (accountSecurity == null || accountSecurity.getUsername() == null) {
                 request.setAttribute("message", new ResponseMessage(false, messageSource.getMessage("message.error.invalid.username.or.password", null, request.getLocale())));
-                response.sendRedirect(request.getContextPath() + "/loginView.do");
+                response.sendRedirect(request.getContextPath() + "/login.do");
                 return;
             }
             logger.debug("Check privilege...");

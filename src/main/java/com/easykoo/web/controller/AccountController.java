@@ -36,8 +36,8 @@ public class AccountController {
     private IAccountService accountService;
     private MessageSource messageSource;
 
-    @RequestMapping(value = "/loginView.do", method = RequestMethod.GET)
-    public String loginView(HttpServletRequest request) {
+    @RequestMapping(value = "/login.do", method = RequestMethod.GET)
+    public String login(HttpServletRequest request) {
         String url = request.getParameter("url");
         AccountSecurity currentAccountSecurity =
                 (AccountSecurity) request.getSession().getAttribute("currentAccountSecurity");
@@ -93,7 +93,7 @@ public class AccountController {
         return "login";
     }
 
-    @RequestMapping(value = "/logout.do", method = RequestMethod.GET)
+    @RequestMapping(value = "/logout.do")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         AccountSecurity currentAccountSecurity =
                 (AccountSecurity) request.getSession().getAttribute("currentAccountSecurity");
@@ -117,8 +117,8 @@ public class AccountController {
         return "redirect:/index.jsp";
     }
 
-    @RequestMapping(value = "/registerView.do")
-    public String registerView(HttpServletRequest request) {
+    @RequestMapping(value = "/register.do", method = RequestMethod.GET)
+    public String register(HttpServletRequest request) {
         AccountSecurity currentAccountSecurity =
                 (AccountSecurity) request.getSession().getAttribute("currentAccountSecurity");
         if (currentAccountSecurity != null && currentAccountSecurity.getUsername() != null) {
@@ -128,7 +128,7 @@ public class AccountController {
         return "register";
     }
 
-    @RequestMapping(value = "/register.do")
+    @RequestMapping(value = "/register.do", method = RequestMethod.POST)
     public String register(@ModelAttribute("accountSecurity") AccountSecurity accountSecurity,
                            HttpServletRequest request, Locale locale, ModelMap model) {
         AccountSecurity currentAccountSecurity =
@@ -159,7 +159,7 @@ public class AccountController {
         return "redirect:/index.jsp";
     }
 
-    @RequestMapping(value = "/account/changeProfile.do")
+    @RequestMapping(value = "/account/changeProfile.do", method = RequestMethod.POST)
     public String changeProfile(@ModelAttribute("account") Account account,
                                 HttpServletRequest request, Locale locale, ModelMap model) {
         try {
@@ -175,7 +175,7 @@ public class AccountController {
         return "profile";
     }
 
-    @RequestMapping(value = "/account/changePassword.do")
+    @RequestMapping(value = "/account/changePassword.do", method = RequestMethod.POST)
     public String changePassword(@RequestParam("accountId") Integer accountId, @RequestParam("currentPassword") String currentPassword,
                                  @RequestParam("newPassword") String newPassword, Locale locale, ModelMap model) {
         boolean checked = accountService.checkPassword(accountId, currentPassword);
@@ -191,8 +191,8 @@ public class AccountController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/ajax/allAccount.do", produces = "application/json")
-    public DataTablesResponse showUser(@RequestParam int iDisplayStart, @RequestParam int iDisplayLength, @RequestParam int iSortCol_0, @RequestParam String sSortDir_0, HttpServletRequest request) {
+    @RequestMapping(value = "/ajax/allAccount.do", produces = "application/json", method = RequestMethod.POST)
+    public DataTablesResponse allAccount(@RequestParam int iDisplayStart, @RequestParam int iDisplayLength, @RequestParam int iSortCol_0, @RequestParam String sSortDir_0, HttpServletRequest request) {
         DataTablesResponse<Account> dt = new DataTablesResponse();
 
         Account account = new Account();
@@ -210,7 +210,7 @@ public class AccountController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/ajax/deleteAccount.do", produces = "application/json")
+    @RequestMapping(value = "/ajax/deleteAccount.do", produces = "application/json", method = RequestMethod.POST)
     public ResponseMessage deleteAccount(@RequestParam(value = "accountId") int accountId, Locale locale) {
         Account dbAccount = accountService.selectByPrimaryKey(accountId);
         if (dbAccount != null) {
@@ -221,7 +221,7 @@ public class AccountController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/ajax/banAccount.do", produces = "application/json")
+    @RequestMapping(value = "/ajax/banAccount.do", produces = "application/json", method = RequestMethod.POST)
     public ResponseMessage banAccount(@RequestParam(value = "accountId") int accountId, Locale locale) {
         Account dbAccount = accountService.selectByPrimaryKey(accountId);
         if (dbAccount != null) {
@@ -233,7 +233,7 @@ public class AccountController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/ajax/unbanAccount.do", produces = "application/json")
+    @RequestMapping(value = "/ajax/unbanAccount.do", produces = "application/json", method = RequestMethod.POST)
     public ResponseMessage unbanAccount(@RequestParam(value = "accountId") int accountId, Locale locale) {
         Account dbAccount = accountService.selectByPrimaryKey(accountId);
         if (dbAccount != null) {
@@ -245,7 +245,7 @@ public class AccountController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/ajax/makeAdmin.do", produces = "application/json")
+    @RequestMapping(value = "/ajax/makeAdmin.do", produces = "application/json", method = RequestMethod.POST)
     public ResponseMessage makeAdmin(@RequestParam(value = "accountId") int accountId, Locale locale) {
         Account dbAccount = accountService.selectByPrimaryKey(accountId);
         if (dbAccount != null) {
@@ -257,7 +257,7 @@ public class AccountController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/ajax/hire.do", produces = "application/json")
+    @RequestMapping(value = "/ajax/hire.do", produces = "application/json", method = RequestMethod.POST)
     public ResponseMessage hire(@RequestParam(value = "accountId") int accountId, Locale locale) {
         Account dbAccount = accountService.selectByPrimaryKey(accountId);
         if (dbAccount != null) {
@@ -269,7 +269,7 @@ public class AccountController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/ajax/fire.do", produces = "application/json")
+    @RequestMapping(value = "/ajax/fire.do", produces = "application/json", method = RequestMethod.POST)
     public ResponseMessage fire(@RequestParam(value = "accountId") int accountId, Locale locale) {
         Account dbAccount = accountService.selectByPrimaryKey(accountId);
         if (dbAccount != null) {
@@ -281,7 +281,7 @@ public class AccountController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/ajax/checkUsername.do", produces = "application/json")
+    @RequestMapping(value = "/ajax/checkUsername.do", produces = "application/json", method = RequestMethod.POST)
     public String checkUsername(@RequestParam("username") String username, Locale locale) {
         if (accountService.checkUsername(username)) {
             return messageSource.getMessage("message.error.already.exists", null, locale);
@@ -290,7 +290,7 @@ public class AccountController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/ajax/checkEmail.do", produces = "application/json")
+    @RequestMapping(value = "/ajax/checkEmail.do", produces = "application/json", method = RequestMethod.POST)
     public String checkEmail(@RequestParam("email") String email, HttpServletRequest request, Locale locale) {
         AccountSecurity currentAccountSecurity =
                 (AccountSecurity) request.getSession().getAttribute("currentAccountSecurity");

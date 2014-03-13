@@ -10,11 +10,11 @@
     <short-name>au</short-name>
     <uri>authorize-tag</uri>
     <tag>
-        <name>test</name>
+        <name>check</name>
         <tag-class>com.easykoo.web.tag.AuthorizeTag</tag-class>
         <body-content>JSP</body-content>
         <attribute>
-            <name>uri</name>
+            <name>test</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>

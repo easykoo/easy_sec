@@ -20,4 +20,6 @@ public interface PrivilegeMapper {
     boolean checkFunctionPrivilege(Map<String, Object> params);
 
     boolean checkModulePrivilege(Map<String, Object> params);
+
+    boolean checkModulePrivilegeWithModuleId(Map<String, Object> params);
 }

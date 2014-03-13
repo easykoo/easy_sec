@@ -161,8 +161,8 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        $('#settings').toggleClass('active').children('ul').collapse('toggle');
-        $('#profile').css({"background":"#DDDDDD"});
+        $('#profile').toggleClass('active').children('ul').collapse('toggle');
+        $('#changeProfile').css({"background":"#DDDDDD"});
 
         $("#profileForm").validate({
             rules: {

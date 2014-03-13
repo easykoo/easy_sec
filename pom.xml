@@ -26,6 +26,7 @@
             <groupId>javax.servlet.jsp</groupId>
             <artifactId>javax.servlet.jsp-api</artifactId>
             <version>2.3.1</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -102,6 +103,7 @@
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>${javax.servlet-api.version}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.mybatis.generator</groupId>
@@ -252,7 +254,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
-                  <warName>${project.artifactId}</warName>
+                    <warName>${project.artifactId}</warName>
                 </configuration>
             </plugin>
             <plugin>
@@ -305,7 +307,7 @@
                             <overwrite>true</overwrite>
                             <configurationFile>src/main/resources/generatorConfig.xml</configurationFile>
                             <jdbcDriver>com.mysql.jdbc.Driver</jdbcDriver>
-                            <jdbcURL>jdbc:mysql://localhost:3306/easy-sec</jdbcURL>
+                            <jdbcURL>jdbc:mysql://localhost:3306/easy_sec</jdbcURL>
                             <jdbcUserId>root</jdbcUserId>
                             <jdbcPassword>pass</jdbcPassword>
                         </configuration>

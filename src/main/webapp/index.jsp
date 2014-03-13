@@ -76,19 +76,19 @@
                                data-toggle="dropdown">${currentAccountSecurity.nickname}
                                 <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <au:test uri="/admin/dashboard.do">
+                                <au:check test="/admin/dashboard.do">
                                     <li><a href="admin/dashboard.do"><i class="fa fa-dashboard fa-fw"></i>
                                         <spring:message
                                                 code="label.dashboard"/></a></li>
-                                </au:test>
-                                <au:test uri="/admin/settings.do">
+                                </au:check>
+                                <au:check test="/admin/settings.do">
                                     <li><a href="admin/settings.do"><i class="fa fa-gear fa-fw"></i> <spring:message
                                             code="label.settings"/></a></li>
-                                </au:test>
-                                <au:test uri="/admin/profile.do">
+                                </au:check>
+                                <au:check test="/admin/profile.do">
                                     <li><a href="admin/profile.do"><i class="fa fa-user fa-fw"></i> <spring:message
                                             code="label.profile"/></a></li>
-                                </au:test>
+                                </au:check>
                                 <li class="divider"></li>
                                 <li><a href="logout.do"><i class="fa fa-sign-out fa-fw"></i> <spring:message
                                         code="label.logout"/></a></li>
@@ -96,9 +96,9 @@
                         </li>
                     </c:when>
                     <c:otherwise>
-                        <li><a href="loginView.do?url=<%=request.getRequestURL()%>"><spring:message
+                        <li><a href="login.do?url=<%=request.getRequestURL()%>"><spring:message
                                 code="label.sign.in"/></a></li>
-                        <li><a href="registerView.do"><spring:message code="label.sign.up"/></a></li>
+                        <li><a href="register.do"><spring:message code="label.sign.up"/></a></li>
                     </c:otherwise>
                 </c:choose>
             </ul>
