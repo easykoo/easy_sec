@@ -37,8 +37,14 @@
     </mapping>
 
     <!-- 不被渲染的路径. -->
+    <mapping path="/admin/ajax/*" exclue="true"/>
+    <mapping path="/common/ajax/*" exclue="true"/>
+    <mapping path="/profile/ajax/*" exclue="true"/>
+    <mapping path="/account/ajax/*" exclue="true"/>
+    <mapping path="/feedback/ajax/*" exclue="true"/>
+    <mapping path="/notice/ajax/*" exclue="true"/>
+    <mapping path="/product/ajax/*" exclue="true"/>
     <mapping path="/js/*" exclue="true"/>
-    <mapping path="*/ajax/*" exclue="true"/>
     <mapping path="/css/*" exclue="true"/>
     <mapping path="/fonts/*" exclue="true"/>
     <mapping path="*.png" exclue="true"/>
