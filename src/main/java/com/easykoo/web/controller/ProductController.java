@@ -57,13 +57,13 @@ public class ProductController implements ServletContextAware {
     }
 
     @RequestMapping(value = "/product/publishProduct.do", method = RequestMethod.POST)
-    public String handleFormUpload(@RequestParam("category") String category, @RequestParam("name") String name, @RequestParam("description") String description,
+    public String handleFormUpload(@RequestParam("categoryId") String categoryId, @RequestParam("name") String name, @RequestParam("description") String description,
                                    @RequestParam("image") CommonsMultipartFile mFile, Locale locale, ModelMap model) {
         File file = null;
         if (!mFile.isEmpty()) {
             try {
                 Product product = new Product();
-                product.setCategoryId(category);
+                product.setCategoryId(categoryId);
                 product.setName(name);
                 product.setDescription(description);
 

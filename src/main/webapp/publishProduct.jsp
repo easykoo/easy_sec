@@ -52,12 +52,13 @@
                     </div>
                 </c:if>
                 <div class="form-group">
-                    <label for="category" class="col-sm-2 control-label"><span style="color: red">*</span>
+                    <label for="categoryIdd" id="test" class="col-sm-2 control-label"><span style="color: red">*</span>
                         <spring:message
                                 code="label.category"/></label>
 
                     <div class="col-sm-6">
-                        <select id="category" class="form-control" name="category">
+                        <input id="categoryId" name="categoryId" hidden/>
+                        <select id="categoryIdd" class="form-control" name="categoryIdd">
                             <option><spring:message code="label.please.select"/></option>
                         </select>
                     </div>
@@ -115,10 +116,40 @@
 
 <script type="text/javascript">
 
+
+    var checkOption = function (obj, data) {
+
+        if (obj.val() != null && obj.val() != ''){
+            $('#categoryId').val(obj.val());
+        }
+        if (data.children.length != 0) {
+            var select = $('<select class="form-control"></select>');
+            var option1 = $('<option>' + '<spring:message code="label.please.select"/>' + '</option>');
+            select.append(option1);
+            $.each(data.children, function (i, category) {
+                var option = $('<option value="' + category.categoryId + '">' + category.description + '</option>')
+                option.on('click', function () {
+                    checkOption(option, category);
+                });
+                select.append(option);
+            });
+            select.on('change', function () {
+                changeSelect(select);
+            });
+            $(obj).parent().nextAll().remove();
+            $(obj).parent().parent().append(select);
+        }
+    }
+
+    var changeSelect = function (select) {
+        var option = select.children('option:selected');
+        $(option).click();
+    };
+
     $(document).ready(function () {
         $('#product').toggleClass('active').children('ul').collapse('toggle');
         $('#publishProduct').css({"background": "#DDDDDD"});
-
+        var categories = null;
         $.ajax({
             cache: true,
             type: "POST",
@@ -128,97 +159,36 @@
                 alert("Connection error");
             },
             success: function (data) {
-                if (data == 'true') {
-                    alert('<spring:message code="message.subscribe.success"/>');
-                    $("#subscribeForm input[type=email]").val('');
-                } else {
-                    var obj = $.parseJSON(data);
-                    if (obj.error == 'Already') {
-                        alert('<spring:message code="message.already.subscribed"/>');
+                if (data.success) {
+                    categories = data.obj;
+                    if (categories.length != 0) {
+                        $.each(categories, function (i, category) {
+                            var option = $('<option value="' + category.categoryId + '">' + category.description + '</option>');
+                            $("#categoryIdd").append(option);
+                            $(option).on('click', function () {
+                                checkOption(option, category);
+                            });
+                        });
                     }
-                    $("#subscribeForm input[type=email]").val('');
                 }
             }
         });
 
-        $('#category').on('change', function () {
-
-            var value = $(this).children('option:selected').val();
-
-            for (var i = 0; i < lists.length; i++) {
-                if (lists[i] == id) {
-                    var index = i;
-                }
-            }
-            //取得相邻下拉框id在lists中的索引
-            //var nextIndex = index + 1;
-            if (index + 1 < lists.length) {
-                var nextIndex = index + 1;
-            }
-            //移除相邻下拉框级后续下拉框的值
-            remove(nextIndex);
-            getList(nextIndex, value);
-        })
-        //通过Ajax方式为下拉框加载数据
-        function getList(index, value) {
-            Ext.Ajax.request({
-                url: 'bookServer.php',
-                params: {
-                    target: lists[index],
-                    value: value
-                },
-                callback: function (options, success, response) {
-                    if (success) {
-                        //取得下拉框的值
-                        var select = Ext.get(lists[index]);
-                        //执行返回字符串，取的数组对象
-                        var array = eval(response.responseText);
-                        var firstValue;
-                        for (var i = 0; i < array.length; i++) {
-                            var o = array[i];
-                            if (i == 0) {
-                                firstValue = o.value
-                            }
-                            //想下拉框中追加条目
-                            select.appendChild(createOption(o.value, o.name));
-                        }
-                        //如果不是最后一个下拉框则继续加载相邻下拉框的数据
-                        if (++index < lists.length) {
-                            getList(index, firstValue);
-                        }
-                    }
-                }
-            })
-        }
-
-        //根据传入的value和text创建选项
-        function createOption(value, text) {
-            var opt = document.createElement('option');
-            opt.setAttribute('value', value);
-            opt.appendChild(document.createTextNode(text));
-            return opt;
-        }
-
-        //级联删除下拉框及子下拉框的值
-        function remove(index) {
-            for (var i = index; i < lists.length; i++) {
-                var select = Ext.get(lists[i]).dom;
-                while (select.length > 0) {
-                    select.options.remove(select.length - 1)
-                }
-            }
-        }
-
+        $('#categoryIdd').on('change', function () {
+            var option = $(this).children('option:selected');
+            $(this).nextAll().remove();
+            $(option).click();
+        });
 
         $("#productForm").validate({
             rules: {
-                category: "required",
+                categoryIdd: "required",
                 name: "required",
                 image: "required",
                 description: "required"
             },
             messages: {
-                category: '<spring:message code="message.error.required"/>',
+                categoryIdd: '<spring:message code="message.error.required"/>',
                 name: '<spring:message code="message.error.required"/>',
                 image: '<spring:message code="message.error.required"/>',
                 description: '<spring:message code="message.error.required"/>'
@@ -239,6 +209,7 @@
                 label.parent("div").parent("div").removeClass("has-error").addClass("has-success");
             },
             submitHandler: function (form) {
+                alert($('#categoryId').val())
                 form.submit();
                 return false;
             }
