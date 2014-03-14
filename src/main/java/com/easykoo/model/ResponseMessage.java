@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class ResponseMessage implements Serializable {
     private boolean success;
     private String message;
+    private Object obj;
 
     public ResponseMessage(boolean success, String message) {
         this.success = success;
@@ -16,6 +17,14 @@ public class ResponseMessage implements Serializable {
 
     public ResponseMessage(boolean success) {
         this.success = success;
+    }
+
+    public Object getObj() {
+        return obj;
+    }
+
+    public void setObj(Object obj) {
+        this.obj = obj;
     }
 
     public boolean isSuccess() {
