@@ -65,7 +65,7 @@ public class CommonController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/common/ajax/checkSession.do", produces = "application/json", method = RequestMethod.POST)
+    @RequestMapping(value = "/common/ajax/checkSession.do", produces = "application/json")
     public ResponseMessage checkSession(HttpServletRequest request) throws IOException {
         AccountSecurity currentAccountSecurity =
                 (AccountSecurity) request.getSession().getAttribute("currentAccountSecurity");

@@ -36,7 +36,7 @@ public class AccountController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/account/ajax/allAccount.do", produces = "application/json", method = RequestMethod.POST)
+    @RequestMapping(value = "/account/ajax/allAccount.do", produces = "application/json")
     public DataTablesResponse allAccount(@RequestParam int iDisplayStart, @RequestParam int iDisplayLength, @RequestParam int iSortCol_0, @RequestParam String sSortDir_0, HttpServletRequest request) {
         DataTablesResponse<Account> dt = new DataTablesResponse();
 
@@ -55,7 +55,7 @@ public class AccountController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/account/ajax/deleteAccount.do", produces = "application/json", method = RequestMethod.POST)
+    @RequestMapping(value = "/account/ajax/deleteAccount.do", produces = "application/json")
     public ResponseMessage deleteAccount(@RequestParam(value = "accountId") int accountId, Locale locale) {
         Account dbAccount = accountService.selectByPrimaryKey(accountId);
         if (dbAccount != null) {
@@ -66,7 +66,7 @@ public class AccountController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/account/ajax/banAccount.do", produces = "application/json", method = RequestMethod.POST)
+    @RequestMapping(value = "/account/ajax/banAccount.do", produces = "application/json")
     public ResponseMessage banAccount(@RequestParam(value = "accountId") int accountId, Locale locale) {
         Account dbAccount = accountService.selectByPrimaryKey(accountId);
         if (dbAccount != null) {
@@ -78,7 +78,7 @@ public class AccountController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/account/ajax/unbanAccount.do", produces = "application/json", method = RequestMethod.POST)
+    @RequestMapping(value = "/account/ajax/unbanAccount.do", produces = "application/json")
     public ResponseMessage unbanAccount(@RequestParam(value = "accountId") int accountId, Locale locale) {
         Account dbAccount = accountService.selectByPrimaryKey(accountId);
         if (dbAccount != null) {
@@ -90,7 +90,7 @@ public class AccountController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/account/ajax/makeAdmin.do", produces = "application/json", method = RequestMethod.POST)
+    @RequestMapping(value = "/account/ajax/makeAdmin.do", produces = "application/json")
     public ResponseMessage makeAdmin(@RequestParam(value = "accountId") int accountId, Locale locale) {
         Account dbAccount = accountService.selectByPrimaryKey(accountId);
         if (dbAccount != null) {
@@ -102,7 +102,7 @@ public class AccountController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/account/ajax/hire.do", produces = "application/json", method = RequestMethod.POST)
+    @RequestMapping(value = "/account/ajax/hire.do", produces = "application/json")
     public ResponseMessage hire(@RequestParam(value = "accountId") int accountId, Locale locale) {
         Account dbAccount = accountService.selectByPrimaryKey(accountId);
         if (dbAccount != null) {
@@ -114,7 +114,7 @@ public class AccountController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/account/ajax/fire.do", produces = "application/json", method = RequestMethod.POST)
+    @RequestMapping(value = "/account/ajax/fire.do", produces = "application/json")
     public ResponseMessage fire(@RequestParam(value = "accountId") int accountId, Locale locale) {
         Account dbAccount = accountService.selectByPrimaryKey(accountId);
         if (dbAccount != null) {

@@ -103,7 +103,7 @@ public class ProductController implements ServletContextAware {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/product/ajax/allProduct.do", produces = "application/json", method = RequestMethod.POST)
+    @RequestMapping(value = "/product/ajax/allProduct.do", produces = "application/json")
     public DataTablesResponse allProduct(@RequestParam int iDisplayStart, @RequestParam int iDisplayLength, @RequestParam int iSortCol_0, @RequestParam String sSortDir_0, HttpServletRequest request) {
         DataTablesResponse<Product> dt = new DataTablesResponse();
 
@@ -122,7 +122,7 @@ public class ProductController implements ServletContextAware {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/product/ajax/deleteProduct.do", produces = "application/json", method = RequestMethod.POST)
+    @RequestMapping(value = "/product/ajax/deleteProduct.do", produces = "application/json")
     public ResponseMessage deleteProduct(@RequestParam(value = "productId") int productId, Locale locale) {
         Product dbProduct = productService.selectByPrimaryKey(productId);
         if (dbProduct != null) {
@@ -134,17 +134,18 @@ public class ProductController implements ServletContextAware {
 
 
     @ResponseBody
-    @RequestMapping(value = "/product/ajax/getTopLevelCategory.do", produces = "application/json", method = RequestMethod.POST)
-    public List<Category> getTopLevelCategory(HttpServletRequest request) {
+    @RequestMapping(value = "/product/ajax/getTopLevelCategory.do", produces = "application/json")
+    public ResponseMessage getTopLevelCategory(HttpServletRequest request) {
         List<Category> categoryList = productService.getTopLevelCategory();
-        return categoryList;
+        ResponseMessage message = new ResponseMessage(true);
+        message.setObj(categoryList);
+        return message;
     }
 
     @Override
     public void setServletContext(ServletContext servletContext) {
         this.servletContext = servletContext;
     }
-
 
     public MessageSource getMessageSource() {
         return messageSource;

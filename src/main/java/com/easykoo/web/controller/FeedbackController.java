@@ -33,14 +33,14 @@ public class FeedbackController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/feedback/ajax/addFeedback.do", produces = "application/json", method = RequestMethod.POST)
+    @RequestMapping(value = "/feedback/ajax/addFeedback.do", produces = "application/json")
     public String addFeedback(@ModelAttribute("feedback") Feedback feedback) {
         feedbackService.insert(feedback);
         return "true";
     }
 
     @ResponseBody
-    @RequestMapping(value = "/feedback/ajax/readFeedback.do", produces = "application/json", method = RequestMethod.POST)
+    @RequestMapping(value = "/feedback/ajax/readFeedback.do", produces = "application/json")
     public String readFeedback(@RequestParam(value = "id") int id) {
         Feedback feedback = feedbackService.selectByPrimaryKey(id);
         feedback.setViewed(true);
@@ -49,19 +49,19 @@ public class FeedbackController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/feedback/ajax/getFeedbackCount.do", produces = "application/json", method = RequestMethod.POST)
+    @RequestMapping(value = "/feedback/ajax/getFeedbackCount.do", produces = "application/json")
     public int getFeedbackCount() {
         return feedbackService.getUnreadFeedbackCount();
     }
 
     @ResponseBody
-    @RequestMapping(value = "/feedback/ajax/getTop5Feedback.do", produces = "application/json", method = RequestMethod.POST)
+    @RequestMapping(value = "/feedback/ajax/getTop5Feedback.do", produces = "application/json")
     public java.util.List<Feedback> getTop5Feedback() {
         return feedbackService.getTop5Feedback();
     }
 
     @ResponseBody
-    @RequestMapping(value = "/feedback/ajax/deleteFeedback.do", produces = "application/json", method = RequestMethod.POST)
+    @RequestMapping(value = "/feedback/ajax/deleteFeedback.do", produces = "application/json")
     public String deleteFeedback(@RequestParam(value = "id") int id) {
         Feedback feedback = feedbackService.selectByPrimaryKey(id);
         if (feedback != null) {
@@ -72,7 +72,7 @@ public class FeedbackController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/feedback/ajax/subscribe.do", produces = "application/json", method = RequestMethod.POST)
+    @RequestMapping(value = "/feedback/ajax/subscribe.do", produces = "application/json")
     public String subscribe(@ModelAttribute("subscribe") Subscribe subscribe) {
         try {
             subscribeService.insert(subscribe);
@@ -84,7 +84,7 @@ public class FeedbackController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/feedback/ajax/allFeedback.do", produces = "application/json", method = RequestMethod.POST)
+    @RequestMapping(value = "/feedback/ajax/allFeedback.do", produces = "application/json")
     public DataTablesResponse allFeedback(@RequestParam int iDisplayStart, @RequestParam int iDisplayLength, @RequestParam int iSortCol_0, @RequestParam String sSortDir_0, HttpServletRequest request) {
         DataTablesResponse<Feedback> dt = new DataTablesResponse();
 

@@ -205,7 +205,7 @@ public class ProfileController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/profile/ajax/checkUsername.do", produces = "application/json", method = RequestMethod.POST)
+    @RequestMapping(value = "/profile/ajax/checkUsername.do", produces = "application/json")
     public String checkUsername(@RequestParam("username") String username, Locale locale) {
         if (accountService.checkUsername(username)) {
             return messageSource.getMessage("message.error.already.exists", null, locale);
@@ -214,7 +214,7 @@ public class ProfileController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/profile/ajax/checkEmail.do", produces = "application/json", method = RequestMethod.POST)
+    @RequestMapping(value = "/profile/ajax/checkEmail.do", produces = "application/json")
     public String checkEmail(@RequestParam("email") String email, HttpServletRequest request, Locale locale) {
         AccountSecurity currentAccountSecurity =
                 (AccountSecurity) request.getSession().getAttribute("currentAccountSecurity");
