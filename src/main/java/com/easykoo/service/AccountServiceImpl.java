@@ -139,7 +139,7 @@ public class AccountServiceImpl implements IAccountService {
 
     @Override
     public boolean checkPassword(Integer accountId, String password) {
-        Map<String, Object> params = new HashMap<>();
+        Map<String, Object> params = new HashMap<String, Object>();
         params.put("accountId", accountId);
         params.put("password", EncryptUtils.MD5(password));
         return accountSecurityMapper.checkPassword(params);

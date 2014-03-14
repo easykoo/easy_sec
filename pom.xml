@@ -9,7 +9,7 @@
     <url>http://www.easykoo.com</url>
     <properties>
         <dao.target.dir>src/main/java</dao.target.dir>
-        <compiler.version>1.7</compiler.version>
+        <compiler.version>1.6</compiler.version>
         <spring.version>3.2.4.RELEASE</spring.version>
         <mysql.version>5.1.26</mysql.version>
         <mybatis.version>3.2.2</mybatis.version>
