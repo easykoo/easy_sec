@@ -11,7 +11,8 @@
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
         <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
         <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
-        <association property="category" column="category_id" javaType="com.easykoo.mybatis.model.Category" select="com.easykoo.mybatis.dao.CategoryMapper.selectByPrimaryKey">
+        <association property="category" column="category_id" javaType="com.easykoo.mybatis.model.Category"
+                     select="com.easykoo.mybatis.dao.CategoryMapper.selectByPrimaryKey">
         </association>
     </resultMap>
     <sql id="Base_Column_List">

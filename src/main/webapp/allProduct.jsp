@@ -21,7 +21,7 @@
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/font-awesome.css" rel="stylesheet">
-    <%--<link href="font-awesome/css/font-awesome.css" rel="stylesheet">--%>
+    <link rel="stylesheet" href="css/lightbox.css" media="screen"/>
 
     <!-- Page-Level Plugin CSS - Tables -->
     <link href="css/dataTables.bootstrap.css" rel="stylesheet">
@@ -53,8 +53,10 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <a class="btn btn-success" href="/product/publishProduct.do"><i class="fa fa-edit fa-fw"></i><spring:message code="label.publish" /></a>
-                    <a class="btn btn-danger" id="delete"><i class="fa fa-trash-o fa-fw"></i><spring:message code="label.delete" /></a>
+                    <a class="btn btn-success" href="/product/publishProduct.do"><i
+                            class="fa fa-edit fa-fw"></i><spring:message code="label.publish"/></a>
+                    <a class="btn btn-danger" id="delete"><i class="fa fa-trash-o fa-fw"></i><spring:message
+                            code="label.delete"/></a>
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -90,6 +92,7 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/bootbox.min.js"></script>
 <script src="js/jquery.metisMenu.js"></script>
+<script src="js/lightbox-2.6.min.js"></script>
 
 <!-- Page-Level Plugin Scripts - Tables -->
 <script src="js/jquery.dataTables.js"></script>
@@ -121,7 +124,7 @@ var deleteProduct = function (id) {
                             dataType: 'json',
                             type: "POST",
                             data: {
-                                id: id
+                                productId: id
                             },
                             success: function (data) {
                                 if (!data.success) {
@@ -156,10 +159,11 @@ var editProduct = function (id) {
                                 url: 'product/ajax/editProduct.do',
                                 data: {id: id},
                                 success: function (data) {
-                                    if (data == 'true') {
-                                        productTable.fnClearTable(0);
-                                        productTable.fnDraw();
+                                    if (!data.success) {
+                                        bootbox.alert(data.message, null);
                                     }
+                                    productTable.fnClearTable(0);
+                                    productTable.fnDraw();
                                 }
                             });
                         }
@@ -183,6 +187,21 @@ var selectProduct = function (obj, productId) {
                 productArray.splice(key, key)
             });
         }
+    }
+}
+
+var selectAll = function (obj) {
+//        $('input[type=checkbox]').prop('checked', $(obj).prop('checked'));
+    if (obj.checked) {
+        $("input[name='selectFlag']:checkbox").each(function () {
+            $(this).click();
+            $(this).attr("checked", true);
+        })
+    } else {
+        $("input[name='selectFlag']:checkbox").each(function () {
+            $(this).click();
+            $(this).attr("checked", false);
+        })
     }
 }
 
@@ -231,11 +250,11 @@ var getAllProduct = function () {
         ],
         "fnRowCallback": function (nRow, aData, iDisplayIndex) {
             $('td:eq(0)', nRow).html('<input type="checkbox" name="selectFlag" onchange="selectProduct(this,' + aData.productId + ')"/>');
-            $('td:eq(2)', nRow).html('<img src="' + aData.img + '" class="img-responsive" alt="Responsive image"/> ');
+            $('td:eq(2)', nRow).html('<a href="' + aData.img + '" data-lightbox="image-2" title="'+aData.name+'"><img src="' + aData.img + '" class="img-responsive" alt="Responsive image"/></a> ');
             $('td:eq(4)', nRow).text(aData.category.description);
             var createDate = timeStamp2String(aData.createDate);
             $('td:eq(6)', nRow).text(createDate);
-            var html = '<div class="btn-group "><a class="btn btn-primary" href="javascript:"><i class="fa fa-user fa-fw"></i></a>' +
+            var html = '<div class="btn-group "><a class="btn btn-primary" href="javascript:"><i class="fa fa-gavel fa-fw"></i></a>' +
                     '<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:"><span class="fa fa-caret-down"></span></a>' +
                     '<ul class="dropdown-menu">' +
                     '<li><a href="javascript:deleteProduct(' + aData.productId + ')"><i class="fa fa-trash-o fa-fw"></i>'
@@ -246,14 +265,12 @@ var getAllProduct = function () {
 
             $('td:eq(0)', nRow).width(20);
             $('td:eq(1)', nRow).width(40);
-            $('td:eq(2)', nRow).width(300);
+            $('td:eq(2)', nRow).width(100);
             $('td:eq(3)', nRow).width(80);
             $('td:eq(4)', nRow).width(40);
             $('td:eq(6)', nRow).width(150);
             $('td:eq(7)', nRow).width(80);
-            $(nRow).on('click', function () {
-                clickRow(nRow);
-            });
+
             return nRow;
         },
         "oLanguage": {
@@ -274,30 +291,22 @@ $(document).ready(function () {
     setCheckSession();
 
     $('#delete').click(function () {
-        alert(productArray);
-//        productTable.fnDeleteRow(anSelected[0]);
+        $.ajax({
+            dataType: "json",
+            type: "POST",
+            url: 'product/ajax/deleteProducts.do',
+            data: {products: productArray},
+            traditional: true,
+            success: function (data) {
+                if (!data.success) {
+                    bootbox.alert(data.message, null);
+                }
+                productTable.fnClearTable(0);
+                productTable.fnDraw();
+            }
+        });
     });
 });
-
-
-var clickRow = function (obj) {
-    $(obj).child('input').click();
-}
-
-var selectAll = function (obj) {
-//        $('input[type=checkbox]').prop('checked', $(obj).prop('checked'));
-    if (obj.checked) {
-        $("input[name='selectFlag']:checkbox").each(function () {
-            $(this).click();
-            $(this).attr("checked", true);
-        })
-    } else {
-        $("input[name='selectFlag']:checkbox").each(function () {
-            $(this).click();
-            $(this).attr("checked", false);
-        })
-    }
-}
 
 </script>
 

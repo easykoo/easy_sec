@@ -355,7 +355,7 @@ var getAllAccounts = function () {
             var createDate = timeStamp2String(aData.createDate);
             $('td:eq(5)', nRow).text(createDate);
 
-            var html = '<div class="btn-group "><a class="btn btn-primary" href="javascript:"><i class="fa fa-user fa-fw"></i></a>' +
+            var html = '<div class="btn-group "><a class="btn btn-primary" href="javascript:"><i class="fa fa-gavel fa-fw"></i></a>' +
                     '<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:"><span class="fa fa-caret-down"></span></a>' +
                     '<ul class="dropdown-menu">' +
                     '<li><a href="javascript:deleteAccount(' + aData.accountId + ')"><i class="fa fa-trash-o fa-fw"></i>'

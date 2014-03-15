@@ -127,6 +127,32 @@ public class ProductController implements ServletContextAware {
         Product dbProduct = productService.selectByPrimaryKey(productId);
         if (dbProduct != null) {
             productService.deleteByPrimaryKey(productId);
+            String path = servletContext.getRealPath(dbProduct.getImg());
+            File file = new File(path);
+            if (file.exists()) {
+                file.delete();
+            }
+            return new ResponseMessage(true);
+        }
+        return new ResponseMessage(false, messageSource.getMessage("message.error.can.not.find.record", null, locale));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/product/ajax/deleteProducts.do", produces = "application/json")
+    public ResponseMessage deleteProducts(Integer[] products, Locale locale) {
+        if (products.length > 1) {
+//            productService.deleteProducts(products);
+            for (int i = 0; i < products.length; i++) {
+                Product dbProduct = productService.selectByPrimaryKey(products[i]);
+                productService.deleteByPrimaryKey(products[i]);
+                if (dbProduct != null) {
+                    String path = servletContext.getRealPath(dbProduct.getImg());
+                    File file = new File(path);
+                    if (file.exists()) {
+                        file.delete();
+                    }
+                }
+            }
             return new ResponseMessage(true);
         }
         return new ResponseMessage(false, messageSource.getMessage("message.error.can.not.find.record", null, locale));

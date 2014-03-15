@@ -8,7 +8,6 @@ import java.util.Properties;
 
 
 /**
- *
  * @author Jesse
  * @version 03/12/2014
  */
@@ -44,20 +43,23 @@ public class ConfigUtils {
         return properties.getProperty(key);
     }
 
-    public String[] getNoNeedFilterUrl(){
+    public String[] getNoNeedFilterUrl() {
         String arrayStr = properties.getProperty("no.need.filter");
         String[] array = arrayStr.split(",");
         return array;
     }
 
-    public String[] getNoNeedLoginUrl(){
+    public String[] getNoNeedLoginUrl() {
         String arrayStr = properties.getProperty("no.need.login");
         String[] array = arrayStr.split(",");
         return array;
     }
 
-    public String getProductDirectory(){
+    public String getProductDirectory() {
         return properties.getProperty("product.directory");
     }
 
+    public String getPictureSizeLimit() {
+        return properties.getProperty("picture.limit.size");
+    }
 }

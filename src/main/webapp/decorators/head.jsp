@@ -159,7 +159,7 @@
                                     url: 'feedback/ajax/readFeedback.do',
                                     data: {id: id},
                                     success: function (data) {
-                                        if (data == 'true') {
+                                        if (data.success) {
                                             if (fnCallback1 != null)fnCallback1();
                                             if (fnCallback2 != null)fnCallback2();
                                         }
