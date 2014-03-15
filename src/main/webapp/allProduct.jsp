@@ -1,4 +1,5 @@
 <%@ page import="org.springframework.web.servlet.support.RequestContextUtils" %>
+<%@ page import="com.easykoo.util.ConfigUtils" %>
 <!DOCTYPE html>
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=utf-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -250,7 +251,9 @@ var getAllProduct = function () {
         ],
         "fnRowCallback": function (nRow, aData, iDisplayIndex) {
             $('td:eq(0)', nRow).html('<input type="checkbox" name="selectFlag" onchange="selectProduct(this,' + aData.productId + ')"/>');
-            $('td:eq(2)', nRow).html('<a href="' + aData.img + '" data-lightbox="image-2" title="'+aData.name+'"><img src="' + aData.img + '" class="img-responsive" alt="Responsive image"/></a> ');
+            $('td:eq(2)', nRow).html('<a href="' + aData.img + '" data-lightbox="image-2" title="' + aData.name
+                    + '"><img src="' + aData.img.replace('<%=ConfigUtils.getInstance().getProductDirectory()%>', '<%=ConfigUtils.getInstance().getProductPreviewDirectory()%>')
+                    + '" class="img-responsive" alt="Responsive image"/></a> ');
             $('td:eq(4)', nRow).text(aData.category.description);
             var createDate = timeStamp2String(aData.createDate);
             $('td:eq(6)', nRow).text(createDate);

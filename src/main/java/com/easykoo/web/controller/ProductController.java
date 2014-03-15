@@ -17,9 +17,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -59,7 +64,10 @@ public class ProductController implements ServletContextAware {
     @RequestMapping(value = "/product/publishProduct.do", method = RequestMethod.POST)
     public String handleFormUpload(@RequestParam("categoryId") String categoryId, @RequestParam("name") String name, @RequestParam("description") String description,
                                    @RequestParam("image") CommonsMultipartFile mFile, Locale locale, ModelMap model) {
+
+        final int previewPicWidth = ConfigUtils.getInstance().getPreviewPictureWidth();
         File file = null;
+        File previewFile = null;
         if (!mFile.isEmpty()) {
             try {
                 Product product = new Product();
@@ -68,13 +76,47 @@ public class ProductController implements ServletContextAware {
                 product.setDescription(description);
 
                 String productDirectory = ConfigUtils.getInstance().getProductDirectory();
-                String path = this.servletContext.getRealPath(productDirectory);
+                String path = servletContext.getRealPath(productDirectory);
                 File directory = new File(path);
                 if (!directory.exists()) {
                     directory.mkdir();
                 }
+
+                String productPreviewDirectory = ConfigUtils.getInstance().getProductDirectory();
+                String previewPath = servletContext.getRealPath(productPreviewDirectory);
+                File previewDirectory = new File(previewPath);
+                if (!previewDirectory.exists()) {
+                    previewDirectory.mkdir();
+                }
+
                 file = new File(directory.getPath() + "/" + new Date().getTime() + ".jpg");
                 mFile.transferTo(file);
+
+                previewFile = new File(file.getPath().replaceFirst("products", "products/preview"));
+
+                if (!previewFile.exists()) {
+                    previewFile.createNewFile();
+                }
+                AffineTransform transform = new AffineTransform();
+                BufferedImage bis = ImageIO.read(file);
+
+                int w = bis.getWidth();
+                int h = bis.getHeight();
+                double scale = (double) w / h;
+                int nw = previewPicWidth;
+                int nh = (nw * h) / w;
+                if (nh > previewPicWidth) {
+                    nh = previewPicWidth;
+                    nw = (nh * w) / h;
+                }
+                double sx = (double) nw / w;
+                double sy = (double) nh / h;
+                transform.setToScale(sx, sy);
+                AffineTransformOp ato = new AffineTransformOp(transform, null);
+                BufferedImage bid = new BufferedImage(nw, nh, BufferedImage.TYPE_3BYTE_BGR);
+                ato.filter(bis, bid);
+                ImageIO.write(bid, "jpg", previewFile);
+
                 product.setImg(productDirectory + "/" + file.getName());
                 productService.insert(product);
                 model.addAttribute("message", new ResponseMessage(true, messageSource.getMessage("message.publish.success", null, locale)));
@@ -82,9 +124,18 @@ public class ProductController implements ServletContextAware {
                 if (file.exists()) {
                     file.delete();
                 }
+                if (previewFile.exists()) {
+                    previewFile.delete();
+                }
                 logger.error(e);
                 model.addAttribute("message", new ResponseMessage(false, messageSource.getMessage("message.error.publish.failed", null, locale)));
             } catch (Exception e) {
+                if (file != null && file.exists()) {
+                    file.delete();
+                }
+                if (previewFile != null && previewFile.exists()) {
+                    previewFile.delete();
+                }
                 logger.error(e);
                 model.addAttribute("message", new ResponseMessage(false, messageSource.getMessage("message.error.publish.failed", null, locale)));
             }
@@ -132,6 +183,11 @@ public class ProductController implements ServletContextAware {
             if (file.exists()) {
                 file.delete();
             }
+            String previewPath = servletContext.getRealPath(dbProduct.getImg().replace(ConfigUtils.getInstance().getProductDirectory(), ConfigUtils.getInstance().getProductPreviewDirectory()));
+            File previewFile = new File(previewPath);
+            if (previewFile.exists()) {
+                previewFile.delete();
+            }
             return new ResponseMessage(true);
         }
         return new ResponseMessage(false, messageSource.getMessage("message.error.can.not.find.record", null, locale));
@@ -141,7 +197,6 @@ public class ProductController implements ServletContextAware {
     @RequestMapping(value = "/product/ajax/deleteProducts.do", produces = "application/json")
     public ResponseMessage deleteProducts(Integer[] products, Locale locale) {
         if (products.length > 1) {
-//            productService.deleteProducts(products);
             for (int i = 0; i < products.length; i++) {
                 Product dbProduct = productService.selectByPrimaryKey(products[i]);
                 productService.deleteByPrimaryKey(products[i]);
@@ -150,6 +205,11 @@ public class ProductController implements ServletContextAware {
                     File file = new File(path);
                     if (file.exists()) {
                         file.delete();
+                    }
+                    String previewPath = servletContext.getRealPath(dbProduct.getImg().replace(ConfigUtils.getInstance().getProductDirectory(), ConfigUtils.getInstance().getProductPreviewDirectory()));
+                    File previewFile = new File(previewPath);
+                    if (previewFile.exists()) {
+                        previewFile.delete();
                     }
                 }
             }

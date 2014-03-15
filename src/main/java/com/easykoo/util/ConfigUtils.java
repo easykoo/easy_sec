@@ -59,7 +59,15 @@ public class ConfigUtils {
         return properties.getProperty("product.directory");
     }
 
+    public String getProductPreviewDirectory() {
+        return properties.getProperty("product.preview.directory");
+    }
+
     public String getPictureSizeLimit() {
         return properties.getProperty("picture.limit.size");
+    }
+
+    public Integer getPreviewPictureWidth() {
+        return Integer.parseInt(properties.getProperty("preview.picture.width"));
     }
 }
