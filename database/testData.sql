@@ -16,14 +16,28 @@ VALUES (3,'user','C4CA4238A0B923820DCC509A6F75849B',now(),'SYSTEM',now(),'SYSTEM
 
 delete from category;
 insert into category (category_id,  description, parent_category, create_user, create_date, update_user, update_date)
-values ('101', 'C101', null, 'SYSTEM', now(), 'SYSTEM', now());
+values ('101', 'Bamboo Crafts', null, 'SYSTEM', now(), 'SYSTEM', now());
 insert into category (category_id, description, parent_category, create_user, create_date, update_user, update_date)
-values ('102', 'C102', null, 'SYSTEM', now(), 'SYSTEM', now());
+values ('102', 'Christmas Tree', null, 'SYSTEM', now(), 'SYSTEM', now());
 insert into category (category_id, description, parent_category, create_user, create_date, update_user, update_date)
-values ('101001', 'C101001', '101', 'SYSTEM', now(), 'SYSTEM', now());
+values ('103', 'Crystal Crafts', null, 'SYSTEM', now(), 'SYSTEM', now());
 insert into category (category_id, description, parent_category, create_user, create_date, update_user, update_date)
-values ('101002', 'C101002', '101', 'SYSTEM', now(), 'SYSTEM', now());
+values ('104', 'Glass Crafts', null, 'SYSTEM', now(), 'SYSTEM', now());
 insert into category (category_id, description, parent_category, create_user, create_date, update_user, update_date)
-values ('101001001', 'C101001001', '101001', 'SYSTEM', now(), 'SYSTEM', now());
+values ('105', 'Porcelain Crafts', null, 'SYSTEM', now(), 'SYSTEM', now());
 insert into category (category_id, description, parent_category, create_user, create_date, update_user, update_date)
-values ('101002001', 'C101002001', '101002', 'SYSTEM', now(), 'SYSTEM', now());
+values ('106', 'Power Bank Gifts', null, 'SYSTEM', now(), 'SYSTEM', now());
+insert into category (category_id, description, parent_category, create_user, create_date, update_user, update_date)
+values ('107', 'Promotional Porcelain', null, 'SYSTEM', now(), 'SYSTEM', now());
+insert into category (category_id, description, parent_category, create_user, create_date, update_user, update_date)
+values ('108', 'Resin Crafts', null, 'SYSTEM', now(), 'SYSTEM', now());
+insert into category (category_id, description, parent_category, create_user, create_date, update_user, update_date)
+values ('102001', 'Fiber optic Christmas tree', '102', 'SYSTEM', now(), 'SYSTEM', now());
+insert into category (category_id, description, parent_category, create_user, create_date, update_user, update_date)
+values ('102002', 'Ordinary Christmas tree', '102', 'SYSTEM', now(), 'SYSTEM', now());
+insert into category (category_id, description, parent_category, create_user, create_date, update_user, update_date)
+values ('104001', 'Blown Glass Ornaments', '104', 'SYSTEM', now(), 'SYSTEM', now());
+insert into category (category_id, description, parent_category, create_user, create_date, update_user, update_date)
+values ('104002', 'Glass Candle Holder', '104', 'SYSTEM', now(), 'SYSTEM', now());
+insert into category (category_id, description, parent_category, create_user, create_date, update_user, update_date)
+values ('104003', 'Glass Crafts', '104', 'SYSTEM', now(), 'SYSTEM', now());
