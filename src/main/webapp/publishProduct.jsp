@@ -187,7 +187,7 @@
                 image: {
                     required: true,
                     fileType:["jpg","jpeg","png","gif"],
-                    fileSize:100 //KB
+                    fileSize:200 //KB
                 },
                 description: "required"
             },

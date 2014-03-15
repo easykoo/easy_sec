@@ -53,7 +53,7 @@
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                     <div class="table-responsive">
-                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <table class="table table-striped table-bordered table-hover" id="dataTable">
                             <thead>
                             <tr>
                                 <th><spring:message code="label.id"/></th>
@@ -105,8 +105,7 @@ function deleteAccount(accountID) {
             main: {
                 label: "Cancel",
                 className: "btn-default",
-                callback: function () {
-                }
+                callback: null
             },
             danger: {
                 label: "Yes",
@@ -142,8 +141,7 @@ function banAccount(accountID) {
             main: {
                 label: "Cancel",
                 className: "btn-default",
-                callback: function () {
-                }
+                callback: null
             },
             danger: {
                 label: "Yes",
@@ -179,8 +177,7 @@ function unbanAccount(accountID) {
             main: {
                 label: "Cancel",
                 className: "btn-default",
-                callback: function () {
-                }
+                callback: null
             },
             danger: {
                 label: "Yes",
@@ -216,8 +213,7 @@ function makeAdmin(accountID) {
             main: {
                 label: "Cancel",
                 className: "btn-default",
-                callback: function () {
-                }
+                callback: null
             },
             danger: {
                 label: "Yes",
@@ -253,8 +249,7 @@ function hire(accountID) {
             main: {
                 label: "Cancel",
                 className: "btn-default",
-                callback: function () {
-                }
+                callback: null
             },
             danger: {
                 label: "Yes",
@@ -290,8 +285,7 @@ function fire(accountID) {
             main: {
                 label: "Cancel",
                 className: "btn-default",
-                callback: function () {
-                }
+                callback: null
             },
             danger: {
                 label: "Yes",
@@ -320,7 +314,7 @@ function fire(accountID) {
 }
 
 var getAllAccounts = function () {
-    accountTable = $('#dataTables-example').dataTable({
+    accountTable = $('#dataTable').dataTable({
         bPaginate: true,
         bProcessing: true,
         bServerSide: true,
@@ -342,9 +336,6 @@ var getAllAccounts = function () {
             });
         },
         "aoColumns": [
-            { "sTitle": "<spring:message code="label.id"/>",
-                "mData": "account_id",
-                "mDataProp": "account_id"},
             { "sTitle": "<spring:message code="label.username"/>",
                 "mData": "username"},
             { "sTitle": "<spring:message code="label.qq"/>",
@@ -355,45 +346,49 @@ var getAllAccounts = function () {
                 "mData": "email"},
             { "sTitle": "<spring:message code="label.address"/>",
                 "mData": "address"},
+            { "sTitle": "<spring:message code="label.create.date"/>",
+                "mData": "create_date"},
             { "sTitle": "<spring:message code="label.actions"/>",
                 "mData": "locked"}
         ],
         "fnRowCallback": function (nRow, aData, iDisplayIndex) {
-            /* Append the grade to the default row class name */
+            var createDate = timeStamp2String(aData.createDate);
+            $('td:eq(5)', nRow).text(createDate);
+
             var html = '<div class="btn-group "><a class="btn btn-primary" href="javascript:"><i class="fa fa-user fa-fw"></i></a>' +
                     '<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:"><span class="fa fa-caret-down"></span></a>' +
                     '<ul class="dropdown-menu">' +
-                    '<li><a href="javascript:deleteAccount(' + aData.account_id + ')"><i class="fa fa-trash-o fa-fw"></i>'
+                    '<li><a href="javascript:deleteAccount(' + aData.accountId + ')"><i class="fa fa-trash-o fa-fw"></i>'
                     + '<strong> <spring:message code="label.delete"/></strong>'
                     + '</a></li>';
             if (!aData.locked) {
-                html += '<li><a href="javascript:banAccount(' + aData.account_id + ')"><i class="fa fa-ban fa-fw"></i>'
+                html += '<li><a href="javascript:banAccount(' + aData.accountId + ')"><i class="fa fa-ban fa-fw"></i>'
                         + '<strong> <spring:message code="label.ban"/></strong>'
                         + '</a></li>';
             } else {
-                html += '<li><a href="javascript:unbanAccount(' + aData.account_id + ')"><i class="fa fa-ban fa-fw"></i>'
+                html += '<li><a href="javascript:unbanAccount(' + aData.accountId + ')"><i class="fa fa-ban fa-fw"></i>'
                         + '<strong> <spring:message code="label.unban"/></strong>'
                         + '</a></li>';
             }
             if (aData.roleId != 1) {
-                html += '<li class="divider"></li><li><a href="javascript:makeAdmin(' + aData.account_id + ')"><i class="i"></i>'
+                html += '<li class="divider"></li><li><a href="javascript:makeAdmin(' + aData.accountId + ')"><i class="i"></i>'
                         + '<strong> <spring:message code="label.make.admin"/></strong>'
                         + '</a></li>';
             }
             if (aData.roleId == 3) {
-                html += '<li class="divider"></li><li><a href="javascript:hire(' + aData.account_id + ')"><i class="i"></i>'
+                html += '<li class="divider"></li><li><a href="javascript:hire(' + aData.accountId + ')"><i class="i"></i>'
                         + '<strong> <spring:message code="label.hire"/></strong>'
                         + '</a></li>';
             } else {
-                html += '<li class="divider"></li><li><a href="javascript:fire(' + aData.account_id + ')"><i class="i"></i>'
+                html += '<li class="divider"></li><li><a href="javascript:fire(' + aData.accountId + ')"><i class="i"></i>'
                         + '<strong> <spring:message code="label.fire"/></strong>'
                         + '</a></li>';
             }
             html += '</ul></div>';
             $('td:eq(6)', nRow).html(html);
+
             if (aData.locked) {
                 $(nRow).css({"color": "#BBBBBB"})
-
             }
             return nRow;
         },

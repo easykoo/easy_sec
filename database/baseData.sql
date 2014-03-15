@@ -50,6 +50,7 @@ insert into sec_function ( function_id, description, uri, module_id)values (61,'
 insert into sec_function ( function_id, description, uri, module_id)values (70,'View products','/product/allProduct.do',7);
 insert into sec_function ( function_id, description, uri, module_id)values (71,'View categories','/product/allCategory.do',7);
 insert into sec_function ( function_id, description, uri, module_id)values (72,'Publish product','/product/publishProduct.do',7);
+insert into sec_function ( function_id, description, uri, module_id)values (73,'View products','/product/ajax/allProduct.do',7);
 
 insert into sec_privilege ( external_id, type,role_id,department_id) values (1,2,1,1);
 insert into sec_privilege ( external_id, type,role_id,department_id) values (2,2,1,1);

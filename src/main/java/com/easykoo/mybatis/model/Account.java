@@ -7,7 +7,6 @@ import java.util.Date;
 
 public class Account extends Page {
 
-    @JsonProperty(value = "account_id")
     private Integer accountId;
 
     private String username;
@@ -30,8 +29,10 @@ public class Account extends Page {
 
     private String email;
 
+    @JsonProperty(value = "role_id")
     private Integer roleId;
 
+    @JsonProperty(value = "department_id")
     private Integer departmentId;
 
     private String permission;
@@ -42,6 +43,7 @@ public class Account extends Page {
 
     private String createUser;
 
+    @JsonProperty(value = "create_date")
     private Date createDate;
 
     private String updateUser;

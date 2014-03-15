@@ -1,6 +1,7 @@
 package com.easykoo.web.controller;
 
 import com.easykoo.model.DataTablesResponse;
+import com.easykoo.model.ResponseMessage;
 import com.easykoo.mybatis.model.Feedback;
 import com.easykoo.mybatis.model.Subscribe;
 import com.easykoo.service.IFeedbackService;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
 
 /**
  * Feb 22, 2014    Steven
@@ -34,18 +36,18 @@ public class FeedbackController {
 
     @ResponseBody
     @RequestMapping(value = "/feedback/ajax/addFeedback.do", produces = "application/json")
-    public String addFeedback(@ModelAttribute("feedback") Feedback feedback) {
+    public ResponseMessage addFeedback(@ModelAttribute("feedback") Feedback feedback) {
         feedbackService.insert(feedback);
-        return "true";
+        return new ResponseMessage(true);
     }
 
     @ResponseBody
     @RequestMapping(value = "/feedback/ajax/readFeedback.do", produces = "application/json")
-    public String readFeedback(@RequestParam(value = "id") int id) {
+    public ResponseMessage readFeedback(@RequestParam(value = "id") int id) {
         Feedback feedback = feedbackService.selectByPrimaryKey(id);
         feedback.setViewed(true);
         feedbackService.updateByPrimaryKey(feedback);
-        return "true";
+        return new ResponseMessage(true);
     }
 
     @ResponseBody
@@ -62,25 +64,25 @@ public class FeedbackController {
 
     @ResponseBody
     @RequestMapping(value = "/feedback/ajax/deleteFeedback.do", produces = "application/json")
-    public String deleteFeedback(@RequestParam(value = "id") int id) {
+    public ResponseMessage deleteFeedback(@RequestParam(value = "id") int id, Locale locale) {
         Feedback feedback = feedbackService.selectByPrimaryKey(id);
         if (feedback != null) {
             feedbackService.deleteByPrimaryKey(id);
-            return "true";
+            return new ResponseMessage(true);
         }
-        return "{\"error\":\"Feedback doesn't exist!\"}";
+        return new ResponseMessage(false, messageSource.getMessage("message.error.can.not.find.record", null, locale));
     }
 
     @ResponseBody
     @RequestMapping(value = "/feedback/ajax/subscribe.do", produces = "application/json")
-    public String subscribe(@ModelAttribute("subscribe") Subscribe subscribe) {
+    public ResponseMessage subscribe(@ModelAttribute("subscribe") Subscribe subscribe, Locale locale) {
         try {
             subscribeService.insert(subscribe);
         } catch (DuplicateKeyException e) {
             logger.error(e);
-            return "{\"error\":\"Already\"}";
+            return new ResponseMessage(false, messageSource.getMessage("message.already.subscribed", null, locale));
         }
-        return "true";
+        return new ResponseMessage(true);
     }
 
     @ResponseBody

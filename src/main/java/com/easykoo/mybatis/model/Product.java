@@ -6,6 +6,9 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import java.util.Date;
 
 public class Product extends Page {
+
+    private Category category;
+
     @JsonProperty("product_id")
     private Integer productId;
 
@@ -13,17 +16,27 @@ public class Product extends Page {
 
     private String description;
 
+    @JsonProperty("category_id")
     private String categoryId;
 
     private String img;
 
     private String createUser;
 
+    @JsonProperty("create_date")
     private Date createDate;
 
     private String updateUser;
 
     private Date updateDate;
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
     public Integer getProductId() {
         return productId;

@@ -511,14 +511,11 @@
                         alert("Connection error");
                     },
                     success: function (data) {
-                        if (data == 'true') {
+                        if (data.success) {
                             alert('<spring:message code="message.subscribe.success"/>');
                             $("#subscribeForm input[type=email]").val('');
                         } else {
-                            var obj = $.parseJSON(data);
-                            if (obj.error == 'Already') {
-                                alert('<spring:message code="message.already.subscribed"/>');
-                            }
+                            alert('<spring:message code="message.already.subscribed"/>');
                             $("#subscribeForm input[type=email]").val('');
                         }
                     }

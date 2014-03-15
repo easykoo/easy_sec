@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.easykoo.mybatis.dao.CategoryMapper">
-    <resultMap id="BaseResultMap" type="com.easykoo.mybatis.model.Category">
+    <resultMap id="CategoryResultMap" type="com.easykoo.mybatis.model.Category">
         <id column="category_id" property="categoryId" jdbcType="VARCHAR"/>
         <result column="description" property="description" jdbcType="VARCHAR"/>
         <result column="parent_category" property="parentCategory" jdbcType="VARCHAR"/>
@@ -12,13 +12,13 @@
         <collection property="children" column="category_id" javaType="ArrayList" ofType="Category"
                     select="getChildrenCategory"/>
     </resultMap>
-    <sql id="Base_Column_List">
+    <sql id="Category_Column_List">
     category_id, description, parent_category, create_user, create_date,
     update_user, update_date
   </sql>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    <select id="selectByPrimaryKey" resultMap="CategoryResultMap" parameterType="java.lang.Integer">
         select
-        <include refid="Base_Column_List"/>
+        <include refid="Category_Column_List"/>
         from category
         where category_id = #{categoryId,jdbcType=VARCHAR}
     </select>
@@ -117,19 +117,19 @@
       update_date = #{updateDate,jdbcType=TIMESTAMP}
     where category_id = #{categoryId,jdbcType=INTEGER}
   </update>
-    <select id="getAllCategory" resultMap="BaseResultMap">
+    <select id="getAllCategory" resultMap="CategoryResultMap">
         select
-        <include refid="Base_Column_List"/>
+        <include refid="Category_Column_List"/>
         from category
     </select>
-    <select id="getTopLevelCategory" resultMap="BaseResultMap">
+    <select id="getTopLevelCategory" resultMap="CategoryResultMap">
         select
-        <include refid="Base_Column_List"/>
+        <include refid="Category_Column_List"/>
         from category where parent_category is null
     </select>
-    <select id="getChildrenCategory" resultMap="BaseResultMap" parameterType="java.lang.String">
+    <select id="getChildrenCategory" resultMap="CategoryResultMap" parameterType="java.lang.String">
         select
-        <include refid="Base_Column_List"/>
+        <include refid="Category_Column_List"/>
         from category
         where parent_category = #{parentCategory,jdbcType=VARCHAR}
     </select>

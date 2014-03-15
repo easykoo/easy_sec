@@ -16,14 +16,14 @@ VALUES (3,'user','C4CA4238A0B923820DCC509A6F75849B',now(),'SYSTEM',now(),'SYSTEM
 
 delete from category;
 insert into category (category_id,  description, parent_category, create_user, create_date, update_user, update_date)
-values ('101', '101', null, 'SYSTEM', now(), 'SYSTEM', now());
+values ('101', 'C101', null, 'SYSTEM', now(), 'SYSTEM', now());
 insert into category (category_id, description, parent_category, create_user, create_date, update_user, update_date)
-values ('102', '102', null, 'SYSTEM', now(), 'SYSTEM', now());
+values ('102', 'C102', null, 'SYSTEM', now(), 'SYSTEM', now());
 insert into category (category_id, description, parent_category, create_user, create_date, update_user, update_date)
-values ('101001', '101001', '101', 'SYSTEM', now(), 'SYSTEM', now());
+values ('101001', 'C101001', '101', 'SYSTEM', now(), 'SYSTEM', now());
 insert into category (category_id, description, parent_category, create_user, create_date, update_user, update_date)
-values ('101002', '101002', '101', 'SYSTEM', now(), 'SYSTEM', now());
+values ('101002', 'C101002', '101', 'SYSTEM', now(), 'SYSTEM', now());
 insert into category (category_id, description, parent_category, create_user, create_date, update_user, update_date)
-values ('101001001', '101001001', '101001', 'SYSTEM', now(), 'SYSTEM', now());
+values ('101001001', 'C101001001', '101001', 'SYSTEM', now(), 'SYSTEM', now());
 insert into category (category_id, description, parent_category, create_user, create_date, update_user, update_date)
-values ('101002001', '101002001', '101002', 'SYSTEM', now(), 'SYSTEM', now());
+values ('101002001', 'C101002001', '101002', 'SYSTEM', now(), 'SYSTEM', now());

@@ -34,12 +34,12 @@
                             code="label.dashboard"/></a>
                 </li>
             </au:check>
-            <au:check test="/admin/settings.do">
+            <%--<au:check test="/admin/settings.do">
                 <li id="settings">
                     <a href="admin/settings.do"><i class="fa fa-gear fa-fw"></i> <spring:message
                             code="label.settings"/></a>
                 </li>
-            </au:check>
+            </au:check>--%>
             <au:check test="/account/allAccount.do">
                 <li id="account">
                     <a href="account/allAccount.do"><i class="fa fa-users fa-fw"></i> <spring:message
@@ -52,7 +52,7 @@
                             code="label.all.feedback"/></a>
                 </li>
             </au:check>
-            <au:check test="/notice/allNotice.do">
+            <%--<au:check test="/notice/allNotice.do">
                 <li id="notice">
                     <a href="javascript:"><i class="fa fa-volume-up fa-fw"></i> <spring:message
                             code="label.notice"/><span class="fa arrow"></span></a>
@@ -72,7 +72,7 @@
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
-            </au:check>
+            </au:check>--%>
             <au:check test="/product/allProduct.do">
                 <li id="product">
                     <a href="javascript:"><i class="fa fa-lightbulb-o fa-fw"></i> <spring:message
@@ -90,12 +90,12 @@
                                         code="label.publish.product"/></a>
                             </li>
                         </au:check>
-                        <au:check test="/product/allCategory.do">
+                        <%--<au:check test="/product/allCategory.do">
                             <li id="category">
                                 <a href="/product/allCategory.do"><spring:message
                                         code="label.category"/></a>
                             </li>
-                        </au:check>
+                        </au:check>--%>
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
@@ -109,10 +109,10 @@
                             <a href="profile/profile.do"><spring:message
                                     code="label.change.profile"/></a>
                         </li>
-                        <li id="preferences">
+                        <%--<li id="preferences">
                             <a href="profile/preferences.do"><spring:message
                                     code="label.preferences"/></a>
-                        </li>
+                        </li>--%>
                         <li id="password">
                             <a href="/profile/password.do"><spring:message
                                     code="label.change.password"/></a>

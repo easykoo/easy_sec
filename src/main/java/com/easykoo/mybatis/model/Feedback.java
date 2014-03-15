@@ -6,7 +6,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import java.util.Date;
 
 public class Feedback extends Page {
-    @JsonProperty(value = "feedback_id")
+    
     private Integer feedbackId;
 
     private String email;
