@@ -82,7 +82,7 @@ public class ProductController implements ServletContextAware {
                     directory.mkdir();
                 }
 
-                String productPreviewDirectory = ConfigUtils.getInstance().getProductDirectory();
+                String productPreviewDirectory = ConfigUtils.getInstance().getProductPreviewDirectory();
                 String previewPath = servletContext.getRealPath(productPreviewDirectory);
                 File previewDirectory = new File(previewPath);
                 if (!previewDirectory.exists()) {
