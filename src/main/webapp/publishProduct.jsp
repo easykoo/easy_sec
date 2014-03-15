@@ -1,3 +1,4 @@
+<%@ page import="com.easykoo.util.ConfigUtils" %>
 <!DOCTYPE html>
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=utf-8" isELIgnored="false" %>
 
@@ -59,7 +60,7 @@
                     <div class="col-sm-6">
                         <input id="categoryId" name="categoryId" hidden/>
                         <select id="categoryIdd" class="form-control" name="categoryIdd">
-                            <option><spring:message code="label.please.select"/></option>
+                            <option value="0"><spring:message code="label.please.select"/></option>
                         </select>
                     </div>
                     <div class="col-sm-4 control-label"></div>
@@ -78,7 +79,7 @@
                             code="label.image"/></label>
 
                     <div class="col-sm-6">
-                        <input type="file" id="image" class="form-control" name="image">
+                        <input type="file" id="image" class="form-control" name="image" onchange="generateName()">
                     </div>
                     <div class="col-sm-4 control-label"></div>
                 </div>
@@ -116,15 +117,23 @@
 
 <script type="text/javascript">
 
+    var generateName = function () {
+        var path = $('#image').val()
+        var name = path.substring(path.lastIndexOf('\\') + 1, path.lastIndexOf('.'));
+        if (name != '') {
+            $('#name').val(name);
+            $('#description').val(name);
+        }
+    }
+
 
     var checkOption = function (obj, data) {
-
         if (obj.val() != null && obj.val() != '') {
             $('#categoryId').val(obj.val());
         }
         if (data.children.length != 0) {
             var select = $('<select class="form-control"></select>');
-            var option1 = $('<option>' + '<spring:message code="label.please.select"/>' + '</option>');
+            var option1 = $('<option value="0">' + '<spring:message code="label.please.select"/>' + '</option>');
             select.append(option1);
             $.each(data.children, function (i, category) {
                 var option = $('<option value="' + category.categoryId + '">' + category.description + '</option>')
@@ -134,15 +143,19 @@
                 select.append(option);
             });
             select.on('change', function () {
-                changeSelect(select);
+                changeSelect(select, data);
             });
             $(obj).parent().nextAll().remove();
             $(obj).parent().parent().append(select);
         }
     }
 
-    var changeSelect = function (select) {
+    var changeSelect = function (select, data) {
+        if (select.val() == 0) {
+            $('#categoryId').val(data.categoryId);
+        }
         var option = select.children('option:selected');
+        select.nextAll().remove();
         $(option).click();
     };
 
@@ -175,6 +188,9 @@
         });
 
         $('#categoryIdd').on('change', function () {
+            if ($(this).val() == 0) {
+                $('#categoryId').val("");
+            }
             var option = $(this).children('option:selected');
             $(this).nextAll().remove();
             $(option).click();
@@ -182,12 +198,14 @@
 
         $("#productForm").validate({
             rules: {
-                categoryIdd: "required",
+                categoryIdd: {
+                    min: 1
+                },
                 name: "required",
                 image: {
                     required: true,
-                    fileType:["jpg","jpeg","png","gif"],
-                    fileSize:200 //KB
+                    fileType: ["jpg", "jpeg", "png", "gif"],
+                    fileSize:<%=ConfigUtils.getInstance().getPictureSizeLimit()%> //KB
                 },
                 description: "required"
             },
@@ -208,10 +226,7 @@
                 error.appendTo(element.parent("div").next("div"));
             },
             highlight: function (element, errorClass) {
-                if ($(element).attr("name") == "category") {
-                    $("#category").parent("div").parent("div").addClass("has-error").removeClass("has-success");
-                } else
-                    $(element).parent("div").parent("div").addClass("has-error").removeClass("has-success");
+                $(element).parent("div").parent("div").addClass("has-error").removeClass("has-success");
             },
             success: function (label) {
                 label.parent("div").parent("div").removeClass("has-error").addClass("has-success");
