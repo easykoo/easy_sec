@@ -119,7 +119,7 @@
 
     var checkOption = function (obj, data) {
 
-        if (obj.val() != null && obj.val() != ''){
+        if (obj.val() != null && obj.val() != '') {
             $('#categoryId').val(obj.val());
         }
         if (data.children.length != 0) {
@@ -184,13 +184,21 @@
             rules: {
                 categoryIdd: "required",
                 name: "required",
-                image: "required",
+                image: {
+                    required: true,
+                    fileType:["jpg","jpeg","png","gif"],
+                    fileSize:100 //KB
+                },
                 description: "required"
             },
             messages: {
                 categoryIdd: '<spring:message code="message.error.required"/>',
                 name: '<spring:message code="message.error.required"/>',
-                image: '<spring:message code="message.error.required"/>',
+                image: {
+                    required: '<spring:message code="message.error.required"/>',
+                    fileType: '<spring:message code="message.error.invalid.picture.type"/>',
+                    fileSize: '<spring:message code="message.error.picture.size.exceeded.limit"/>'
+                },
                 description: '<spring:message code="message.error.required"/>'
             },
             focusInvalid: true,
@@ -209,7 +217,6 @@
                 label.parent("div").parent("div").removeClass("has-error").addClass("has-success");
             },
             submitHandler: function (form) {
-                alert($('#categoryId').val())
                 form.submit();
                 return false;
             }

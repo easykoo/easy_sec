@@ -5,6 +5,13 @@ jQuery.validator.addMethod("username", function (value, element) {
 jQuery.validator.addMethod("password", function (value, element) {
     return this.optional(element) || value.length >= 6 && value.length <= 20 && /\d/.test(value) && /[a-z]/i.test(value);
 }, "6-20, contain at least one number and one letter.");
+jQuery.validator.addMethod("fileType", function (value, element, param) {
+    var fileType = value.substring(value.lastIndexOf(".") + 1).toLowerCase();
+    return this.optional(element) || $.inArray(fileType, param) != -1;
+}, $.validator.format("Invalid picture type."));
+jQuery.validator.addMethod("fileSize", function (value, element, param) {
+    return this.optional(element) || element.files[0].size <= param * 1024;
+}, $.validator.format("File size is great then {0}."));
 // 字符验证
 jQuery.validator.addMethod("stringCheck", function (value, element) {
     return this.optional(element) || /^[\u0391-\uFFE5\w]+$/.test(value);
