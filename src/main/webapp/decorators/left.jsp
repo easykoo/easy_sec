@@ -90,12 +90,16 @@
                                         code="label.publish.product"/></a>
                             </li>
                         </au:check>
-                        <%--<au:check test="/product/allCategory.do">
-                            <li id="category">
-                                <a href="/product/allCategory.do"><spring:message
-                                        code="label.category"/></a>
+                        <au:check test="/product/createCategory.do">
+                            <li id="editCategory">
+                                <a href="/product/editCategory.do"><spring:message
+                                        code="label.manage.category"/></a>
                             </li>
-                        </au:check>--%>
+                            <li id="createCategory">
+                                <a href="/product/createCategory.do"><spring:message
+                                        code="label.create.category"/></a>
+                            </li>
+                        </au:check>
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>

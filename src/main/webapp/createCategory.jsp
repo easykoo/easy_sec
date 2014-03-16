@@ -17,7 +17,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title><spring:message code="label.publish.product"/></title>
+    <title><spring:message code="label.create.category"/></title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link href="css/admin.css" rel="stylesheet">
@@ -32,14 +32,14 @@
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header"><spring:message code="label.publish.product"/></h1>
+            <h1 class="page-header"><spring:message code="label.create.category"/></h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
     <div class="row">
         <div class="col-lg-8">
             <form id="productForm" role="form" class="form-horizontal" enctype="multipart/form-data" method="post"
-                  action="product/publishProduct.do">
+                  action="product/createCategory.do">
                 <c:if test="${not empty message}">
                     <div class="form-group alert
                         <c:if test="${!message.success}">alert-danger</c:if>
@@ -51,42 +51,14 @@
                     </div>
                 </c:if>
                 <div class="form-group">
-                    <label for="categoryIdd" class="col-sm-2 control-label"><span style="color: red">*</span>
-                        <spring:message
-                                code="label.category"/></label>
+                    <label for="parentCategoryIdd" class="col-sm-2 control-label">
+                        <spring:message code="label.parent.category"/></label>
 
                     <div class="col-sm-6">
-                        <input id="categoryId" name="categoryId" hidden/>
-                        <select id="categoryIdd" class="form-control" name="categoryIdd">
+                        <input id="parentCategoryId" name="parentCategoryId" hidden/>
+                        <select id="parentCategoryIdd" class="form-control" name="parentCategoryIdd">
                             <option value="0"><spring:message code="label.please.select"/></option>
                         </select>
-                    </div>
-                    <div class="col-sm-4 control-label"></div>
-                </div>
-                <div class="form-group">
-                    <label for="name" class="col-sm-2 control-label"><span style="color: red">*</span> <spring:message
-                            code="label.en.name"/></label>
-
-                    <div class="col-sm-6">
-                        <input type="text" id="name" class="form-control" name="name">
-                    </div>
-                    <div class="col-sm-4 control-label"></div>
-                </div>
-                <div class="form-group">
-                    <label for="cnName" class="col-sm-2 control-label"><span style="color: red">*</span> <spring:message
-                            code="label.cn.name"/></label>
-
-                    <div class="col-sm-6">
-                        <input type="text" id="cnName" class="form-control" name="cnName">
-                    </div>
-                    <div class="col-sm-4 control-label"></div>
-                </div>
-                <div class="form-group">
-                    <label for="image" class="col-sm-2 control-label"><span style="color: red">*</span> <spring:message
-                            code="label.image"/></label>
-
-                    <div class="col-sm-6">
-                        <input type="file" id="image" class="form-control" name="image" onchange="generateName()">
                     </div>
                     <div class="col-sm-4 control-label"></div>
                 </div>
@@ -96,7 +68,7 @@
                                 code="label.en.description"/></label>
 
                     <div class="col-sm-6">
-                        <textarea id="description" name="description" rows="6" class="form-control"/></textarea>
+                        <input id="description" name="description" class="form-control"/></textarea>
                     </div>
                     <div class="col-sm-4 control-label"></div>
                 </div>
@@ -106,14 +78,14 @@
                                 code="label.cn.description"/></label>
 
                     <div class="col-sm-6">
-                        <textarea id="cnDescription" name="cnDescription" rows="6" class="form-control"/></textarea>
+                        <input id="cnDescription" name="cnDescription" class="form-control"/></textarea>
                     </div>
                     <div class="col-sm-4 control-label"></div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-6">
                         <button type="submit" class="btn btn-success btn-block"><spring:message
-                                code="label.publish"/></button>
+                                code="label.create"/></button>
                     </div>
                 </div>
             </form>
@@ -135,21 +107,9 @@
 
 <script type="text/javascript">
 
-    var generateName = function () {
-        var path = $('#image').val()
-        var name = path.substring(path.lastIndexOf('\\') + 1, path.lastIndexOf('.'));
-        if (name != '') {
-            $('#name').val(name);
-            $('#description').val(name);
-            $('#cnName').val(name);
-            $('#cnDescription').val(name);
-        }
-    }
-
-
     var checkOption = function (obj, data) {
         if (obj.val() != null && obj.val() != '') {
-            $('#categoryId').val(obj.val());
+            $('#parentCategoryId').val(obj.val());
         }
         if (data.children.length != 0) {
             var select = $('<select class="form-control"></select>');
@@ -172,7 +132,7 @@
 
     var changeSelect = function (select, data) {
         if (select.val() == 0) {
-            $('#categoryId').val(data.categoryId);
+            $('#parentCategoryId').val(data.categoryId);
         }
         var option = select.children('option:selected');
         select.nextAll().remove();
@@ -181,7 +141,7 @@
 
     $(document).ready(function () {
         $('#product').toggleClass('active').children('ul').collapse('toggle');
-        $('#publishProduct').css({"background": "#DDDDDD"});
+        $('#createCategory').css({"background": "#DDDDDD"});
         var categories = null;
         $.ajax({
             cache: true,
@@ -197,7 +157,7 @@
                     if (categories.length != 0) {
                         $.each(categories, function (i, category) {
                             var option = $('<option value="' + category.categoryId + '">' + category.description + '</option>');
-                            $("#categoryIdd").append(option);
+                            $("#parentCategoryIdd").append(option);
                             $(option).on('click', function () {
                                 checkOption(option, category);
                             });
@@ -207,9 +167,9 @@
             }
         });
 
-        $('#categoryIdd').on('change', function () {
+        $('#parentCategoryIdd').on('change', function () {
             if ($(this).val() == 0) {
-                $('#categoryId').val("");
+                $('#parentCategoryId').val("");
             }
             var option = $(this).children('option:selected');
             $(this).nextAll().remove();
@@ -218,9 +178,6 @@
 
         $("#productForm").validate({
             rules: {
-                categoryIdd: {
-                    min: 1
-                },
                 name: "required",
                 cnName: "required",
                 image: {
@@ -232,7 +189,6 @@
                 cnDescription: "required"
             },
             messages: {
-                categoryIdd: '<spring:message code="message.error.required"/>',
                 name: '<spring:message code="message.error.required"/>',
                 cnName: '<spring:message code="message.error.required"/>',
                 image: {

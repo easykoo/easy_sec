@@ -53,6 +53,9 @@ insert into sec_function ( function_id, description, uri, module_id)values (72,'
 insert into sec_function ( function_id, description, uri, module_id)values (73,'View products','/product/ajax/allProduct.do',7);
 insert into sec_function ( function_id, description, uri, module_id)values (74,'Delete product','/product/ajax/deleteProduct.do',7);
 insert into sec_function ( function_id, description, uri, module_id)values (75,'Delete products','/product/ajax/deleteProducts.do',7);
+insert into sec_function ( function_id, description, uri, module_id)values (76,'Create category','/product/createCategory.do',7);
+insert into sec_function ( function_id, description, uri, module_id)values (77,'Edit category','/product/editCategory.do',7);
+insert into sec_function ( function_id, description, uri, module_id)values (78,'Delete category','/product/ajax/deleteCategory.do',7);
 
 insert into sec_privilege ( external_id, type,role_id,department_id) values (1,2,1,1);
 insert into sec_privilege ( external_id, type,role_id,department_id) values (2,2,1,1);

@@ -18,4 +18,6 @@ public interface ProductMapper {
     int updateByPrimaryKey(Product record);
 
     List<Product> findProductWithPage(Product record);
+
+    List<Product> selectByCategory(String categoryId);
 }

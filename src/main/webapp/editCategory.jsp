@@ -17,7 +17,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title><spring:message code="label.publish.product"/></title>
+    <title><spring:message code="label.manage.category"/></title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link href="css/admin.css" rel="stylesheet">
@@ -32,14 +32,14 @@
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header"><spring:message code="label.publish.product"/></h1>
+            <h1 class="page-header"><spring:message code="label.manage.category"/></h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
     <div class="row">
         <div class="col-lg-8">
             <form id="productForm" role="form" class="form-horizontal" enctype="multipart/form-data" method="post"
-                  action="product/publishProduct.do">
+                  action="product/editCategory.do">
                 <c:if test="${not empty message}">
                     <div class="form-group alert
                         <c:if test="${!message.success}">alert-danger</c:if>
@@ -51,9 +51,8 @@
                     </div>
                 </c:if>
                 <div class="form-group">
-                    <label for="categoryIdd" class="col-sm-2 control-label"><span style="color: red">*</span>
-                        <spring:message
-                                code="label.category"/></label>
+                    <label for="categoryIdd" class="col-sm-2 control-label">
+                        <spring:message code="label.category"/></label>
 
                     <div class="col-sm-6">
                         <input id="categoryId" name="categoryId" hidden/>
@@ -64,56 +63,31 @@
                     <div class="col-sm-4 control-label"></div>
                 </div>
                 <div class="form-group">
-                    <label for="name" class="col-sm-2 control-label"><span style="color: red">*</span> <spring:message
-                            code="label.en.name"/></label>
+                    <label for="description" class="col-sm-2 control-label"><spring:message
+                            code="label.en.description"/></label>
 
                     <div class="col-sm-6">
-                        <input type="text" id="name" class="form-control" name="name">
+                        <input id="description" name="description" class="form-control"/></textarea>
                     </div>
                     <div class="col-sm-4 control-label"></div>
                 </div>
                 <div class="form-group">
-                    <label for="cnName" class="col-sm-2 control-label"><span style="color: red">*</span> <spring:message
-                            code="label.cn.name"/></label>
+                    <label for="cnDescription" class="col-sm-2 control-label"><spring:message
+                            code="label.cn.description"/></label>
 
                     <div class="col-sm-6">
-                        <input type="text" id="cnName" class="form-control" name="cnName">
-                    </div>
-                    <div class="col-sm-4 control-label"></div>
-                </div>
-                <div class="form-group">
-                    <label for="image" class="col-sm-2 control-label"><span style="color: red">*</span> <spring:message
-                            code="label.image"/></label>
-
-                    <div class="col-sm-6">
-                        <input type="file" id="image" class="form-control" name="image" onchange="generateName()">
-                    </div>
-                    <div class="col-sm-4 control-label"></div>
-                </div>
-                <div class="form-group">
-                    <label for="description" class="col-sm-2 control-label"><span style="color: red">*</span>
-                        <spring:message
-                                code="label.en.description"/></label>
-
-                    <div class="col-sm-6">
-                        <textarea id="description" name="description" rows="6" class="form-control"/></textarea>
-                    </div>
-                    <div class="col-sm-4 control-label"></div>
-                </div>
-                <div class="form-group">
-                    <label for="cnDescription" class="col-sm-2 control-label"><span style="color: red">*</span>
-                        <spring:message
-                                code="label.cn.description"/></label>
-
-                    <div class="col-sm-6">
-                        <textarea id="cnDescription" name="cnDescription" rows="6" class="form-control"/></textarea>
+                        <input id="cnDescription" name="cnDescription" class="form-control"/></textarea>
                     </div>
                     <div class="col-sm-4 control-label"></div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-6">
-                        <button type="submit" class="btn btn-success btn-block"><spring:message
-                                code="label.publish"/></button>
+                        <div class="btn-group">
+                            <button id="change" type="submit" class="btn btn-success"><spring:message
+                                    code="label.change"/></button>
+                            <button id="delete" type="button" class="btn btn-danger"><spring:message
+                                    code="label.delete"/></button>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -135,21 +109,11 @@
 
 <script type="text/javascript">
 
-    var generateName = function () {
-        var path = $('#image').val()
-        var name = path.substring(path.lastIndexOf('\\') + 1, path.lastIndexOf('.'));
-        if (name != '') {
-            $('#name').val(name);
-            $('#description').val(name);
-            $('#cnName').val(name);
-            $('#cnDescription').val(name);
-        }
-    }
-
-
     var checkOption = function (obj, data) {
         if (obj.val() != null && obj.val() != '') {
             $('#categoryId').val(obj.val());
+            $('#description').val(data.description);
+            $('#cnDescription').val(data.cnDescription);
         }
         if (data.children.length != 0) {
             var select = $('<select class="form-control"></select>');
@@ -173,6 +137,8 @@
     var changeSelect = function (select, data) {
         if (select.val() == 0) {
             $('#categoryId').val(data.categoryId);
+            $('#description').val(data.description);
+            $('#cnDescription').val(data.cnDescription);
         }
         var option = select.children('option:selected');
         select.nextAll().remove();
@@ -181,7 +147,7 @@
 
     $(document).ready(function () {
         $('#product').toggleClass('active').children('ul').collapse('toggle');
-        $('#publishProduct').css({"background": "#DDDDDD"});
+        $('#editCategory').css({"background": "#DDDDDD"});
         var categories = null;
         $.ajax({
             cache: true,
@@ -207,9 +173,41 @@
             }
         });
 
+        $('#delete').on('click', function () {
+            if ($('#categoryId').val() == '') {
+                if ($('#categoryIdd').parent("div").parent("div").attr('class').indexOf('has-error') < 0) {
+                    var error = $('<label for="categoryIdd" class="error">This field is required.</label>');
+                    error.appendTo($('#categoryIdd').parent("div").next("div"));
+                    $('#categoryIdd').parent("div").parent("div").addClass("has-error").removeClass("has-success");
+                }
+                return;
+            }
+            $.ajax({
+                cache: true,
+                type: "POST",
+                dataType: 'json',
+                data: {
+                    categoryId: $('#categoryId').val()
+                },
+                url: "product/ajax/deleteCategory.do",
+                error: function (request) {
+                    alert("Connection error");
+                },
+                success: function (data) {
+                    if (data.success) {
+                        window.location.reload();
+                    } else {
+                        alert(data.message);
+                    }
+                }
+            });
+        });
+
         $('#categoryIdd').on('change', function () {
             if ($(this).val() == 0) {
                 $('#categoryId').val("");
+                $('#description').val("");
+                $('#cnDescription').val("");
             }
             var option = $(this).children('option:selected');
             $(this).nextAll().remove();

@@ -2,6 +2,7 @@ package com.easykoo.web.controller;
 
 import com.easykoo.model.DataTablesResponse;
 import com.easykoo.model.ResponseMessage;
+import com.easykoo.mybatis.model.Account;
 import com.easykoo.mybatis.model.Category;
 import com.easykoo.mybatis.model.Product;
 import com.easykoo.service.IProductService;
@@ -51,20 +52,25 @@ public class ProductController implements ServletContextAware {
         return "publishProduct";
     }
 
-    @RequestMapping(value = "/product/allCategory.do", method = RequestMethod.GET)
-    public String allCategory() {
-        return "allCategory";
+    @RequestMapping(value = "/product/createCategory.do", method = RequestMethod.GET)
+    public String createCategoryView() {
+        return "createCategory";
     }
 
-    @RequestMapping(value = "/product/changeProductView.do", method = RequestMethod.GET)
+    @RequestMapping(value = "/product/editCategory.do", method = RequestMethod.GET)
+    public String editCategoryView() {
+        return "editCategory";
+    }
+
+    @RequestMapping(value = "/product/changeProduct.do", method = RequestMethod.GET)
     public String changeProductView() {
         return "changeProduct";
     }
 
     @RequestMapping(value = "/product/publishProduct.do", method = RequestMethod.POST)
-    public String handleFormUpload(@RequestParam("categoryId") String categoryId, @RequestParam("name") String name, @RequestParam("description") String description,
-                                   @RequestParam("cnName") String cnName, @RequestParam("cnDescription") String cnDescription,
-                                   @RequestParam("image") CommonsMultipartFile mFile, Locale locale, ModelMap model) {
+    public String publishProduct(@RequestParam("categoryId") String categoryId, @RequestParam("name") String name, @RequestParam("description") String description,
+                                 @RequestParam("cnName") String cnName, @RequestParam("cnDescription") String cnDescription,
+                                 @RequestParam("image") CommonsMultipartFile mFile, HttpServletRequest request, Locale locale, ModelMap model) {
 
         final int previewPicWidth = ConfigUtils.getInstance().getPreviewPictureWidth();
         File file = null;
@@ -77,7 +83,9 @@ public class ProductController implements ServletContextAware {
                 product.setDescription(description);
                 product.setCnName(cnName);
                 product.setCnDescription(cnDescription);
-
+                Account currUser = (Account) request.getSession().getAttribute("currentAccountSecurity");
+                product.setCreateUser(currUser.getUsername());
+                product.setUpdateUser(currUser.getUsername());
                 String productDirectory = ConfigUtils.getInstance().getProductDirectory();
                 String path = servletContext.getRealPath(productDirectory);
                 File directory = new File(path);
@@ -230,6 +238,63 @@ public class ProductController implements ServletContextAware {
         ResponseMessage message = new ResponseMessage(true);
         message.setObj(categoryList);
         return message;
+    }
+
+    @RequestMapping(value = "/product/createCategory.do", method = RequestMethod.POST)
+    public String createCategory(@RequestParam("parentCategoryId") String parentCategoryId, @RequestParam("description") String description,
+                                 @RequestParam("cnDescription") String cnDescription, Locale locale, ModelMap model) {
+        try {
+            Category category = new Category();
+            category.setParentCategory(parentCategoryId);
+            category.setDescription(description);
+            category.setCnDescription(cnDescription);
+            productService.insert(category);
+            model.addAttribute("message", new ResponseMessage(true, messageSource.getMessage("message.create.success", null, locale)));
+        } catch (DuplicateKeyException e) {
+            logger.error(e);
+            model.addAttribute("message", new ResponseMessage(false, messageSource.getMessage("message.error.publish.failed", null, locale)));
+        } catch (Exception e) {
+            logger.error(e);
+            model.addAttribute("message", new ResponseMessage(false, messageSource.getMessage("message.error.publish.failed", null, locale)));
+        }
+        return "createCategory";
+    }
+
+    @RequestMapping(value = "/product/editCategory.do", method = RequestMethod.POST)
+    public String editCategory(@RequestParam("categoryId") String categoryId, @RequestParam("description") String description,
+                               @RequestParam("cnDescription") String cnDescription, Locale locale, ModelMap model) {
+        try {
+            Category category = new Category();
+            category.setCategoryId(categoryId);
+            category.setDescription(description);
+            category.setCnDescription(cnDescription);
+            productService.updateByPrimaryKeySelective(category);
+            model.addAttribute("message", new ResponseMessage(true, messageSource.getMessage("message.change.success", null, locale)));
+        } catch (Exception e) {
+            logger.error(e);
+            model.addAttribute("message", new ResponseMessage(false, messageSource.getMessage("message.error.change.failed", null, locale)));
+        }
+        return "editCategory";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/product/ajax/deleteCategory.do", produces = "application/json", method = RequestMethod.POST)
+    public ResponseMessage editCategory(@RequestParam("categoryId") String categoryId, Locale locale, ModelMap model) {
+        try {
+            List<Category> children = productService.getChildrenCategory(categoryId);
+            if (children != null && children.size() > 0) {
+                throw new Exception();
+            }
+            List<Product> productList = productService.getProductsByCategory(categoryId);
+            if (productList != null && productList.size() > 0) {
+                throw new Exception();
+            }
+            productService.deleteByPrimaryKey(categoryId);
+            return new ResponseMessage(true, messageSource.getMessage("message.delete.success", null, locale));
+        } catch (Exception e) {
+            logger.error(e);
+            return new ResponseMessage(false, messageSource.getMessage("message.error.delete.failed", null, locale));
+        }
     }
 
     @Override

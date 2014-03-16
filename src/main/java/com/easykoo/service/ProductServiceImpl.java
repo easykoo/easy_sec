@@ -4,10 +4,14 @@ import com.easykoo.mybatis.dao.CategoryMapper;
 import com.easykoo.mybatis.dao.ProductMapper;
 import com.easykoo.mybatis.model.Category;
 import com.easykoo.mybatis.model.Product;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.naming.ServiceUnavailableException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by easykooc on 14-2-25.
@@ -41,6 +45,11 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
+    public int deleteByPrimaryKey(String categoryId) {
+        return categoryMapper.deleteByPrimaryKey(categoryId);
+    }
+
+    @Override
     public int insert(Product record) {
         return productMapper.insert(record);
     }
@@ -56,8 +65,18 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
+    public Category selectByPrimaryKey(String categoryId) {
+        return categoryMapper.selectByPrimaryKey(categoryId);
+    }
+
+    @Override
     public int updateByPrimaryKeySelective(Product record) {
         return productMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public int updateByPrimaryKeySelective(Category record) {
+        return categoryMapper.updateByPrimaryKeySelective(record);
     }
 
     @Override
@@ -83,5 +102,30 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public List<Category> getChildrenCategory(String categoryId) {
         return categoryMapper.getChildrenCategory(categoryId);
+    }
+
+    @Override
+    public int insert(Category record) throws Exception {
+        String categoryId = generateCategoryId(record.getParentCategory());
+        if (StringUtils.isBlank(categoryId)){
+            throw new Exception();
+        }
+        record.setCategoryId(categoryId);
+        return categoryMapper.insert(record);
+    }
+
+    @Override
+    public String generateCategoryId(String parentCategory) {
+        Map<String, String> params = new HashMap<String, String>();
+        String genId = null;
+        params.put("parentCategory", parentCategory);
+        params.put("genId", genId);
+        categoryMapper.generateCategoryId(params);
+        return params.get("genId");
+    }
+
+    @Override
+    public List<Product> getProductsByCategory(String categoryId) {
+        return productMapper.selectByCategory(categoryId);
     }
 }

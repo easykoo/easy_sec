@@ -29,11 +29,9 @@
   </delete>
     <insert id="insert" parameterType="com.easykoo.mybatis.model.Category">
     insert into category (category_id, description, cn_description, parent_category, create_user,
-      create_date, update_user, update_date
-      )
+      create_date, update_user, update_date)
     values (#{categoryId,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{cnDescription,jdbcType=VARCHAR}, #{parentCategory,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR},
-      #{createDate,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}
-      )
+      #{createDate,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP})
   </insert>
     <insert id="insertSelective" parameterType="com.easykoo.mybatis.model.Category">
         insert into category
@@ -136,12 +134,15 @@
     <select id="getTopLevelCategory" resultMap="CategoryResultMap">
         select
         <include refid="Category_Column_List"/>
-        from category where parent_category is null
+        from category where parent_category is null or parent_category = ''
     </select>
     <select id="getChildrenCategory" resultMap="CategoryResultMap" parameterType="java.lang.String">
         select
         <include refid="Category_Column_List"/>
         from category
         where parent_category = #{parentCategory,jdbcType=VARCHAR}
+    </select>
+    <select id="generateCategoryId" statementType="CALLABLE" parameterType="java.lang.String">
+        {call generateCategoryId(#{parentCategory,mode=IN,jdbcType=VARCHAR}, #{genId,mode=OUT,jdbcType=VARCHAR})}
     </select>
 </mapper>

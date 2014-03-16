@@ -215,4 +215,10 @@
             update_date = #{updateDate,jdbcType=TIMESTAMP},
         </if>
     </select>
+    <select id="selectByCategory" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from product
+        where category_id = #{categoryId,jdbcType=VARCHAR}
+    </select>
 </mapper>

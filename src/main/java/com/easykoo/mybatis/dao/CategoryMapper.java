@@ -3,15 +3,16 @@ package com.easykoo.mybatis.dao;
 import com.easykoo.mybatis.model.Category;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CategoryMapper {
-    int deleteByPrimaryKey(Integer categoryId);
+    int deleteByPrimaryKey(String categoryId);
 
     int insert(Category record);
 
     int insertSelective(Category record);
 
-    Category selectByPrimaryKey(Integer categoryId);
+    Category selectByPrimaryKey(String categoryId);
 
     int updateByPrimaryKeySelective(Category record);
 
@@ -22,4 +23,6 @@ public interface CategoryMapper {
     List<Category> getTopLevelCategory();
 
     List<Category> getChildrenCategory(String parentCategory);
+
+    String generateCategoryId(Map<String, String> params);
 }
