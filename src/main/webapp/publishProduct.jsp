@@ -37,7 +37,7 @@
         <!-- /.col-lg-12 -->
     </div>
     <div class="row">
-        <div class="col-lg-5">
+        <div class="col-lg-8">
             <form id="productForm" role="form" class="form-horizontal" enctype="multipart/form-data" method="post"
                   action="product/publishProduct.do">
 

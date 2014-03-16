@@ -36,7 +36,7 @@
         <!-- /.col-lg-12 -->
     </div>
     <div class="row">
-        <div class="col-lg-5">
+        <div class="col-lg-8">
             <form id="profileForm" role="form" class="form-horizontal" method="post" action="profile/password.do">
 
                 <input type="text" name="accountId" value="${currentAccountSecurity.accountId}" hidden>
