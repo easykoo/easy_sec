@@ -421,6 +421,7 @@
 <script src="js/jquery-1.10.2.js"></script>
 <script src="js/jquery.validate.min.js"></script>
 <script src="js/jquery.validate.method.js"></script>
+<script src="js/easykoo.js"></script>
 
 <!-- JQUERY END -->
 <script src="js/p-controls.min.js"></script>

@@ -16,10 +16,17 @@ public class Product extends Page {
 
     private String description;
 
+    @JsonProperty("cn_name")
+    private String cnName;
+
+    private String cnDescription;
+
     @JsonProperty("category_id")
     private String categoryId;
 
-    private String img;
+    private String imgPath;
+
+    private String preImgPath;
 
     private String createUser;
 
@@ -29,6 +36,30 @@ public class Product extends Page {
     private String updateUser;
 
     private Date updateDate;
+
+    public String getCnName() {
+        return cnName;
+    }
+
+    public void setCnName(String cnName) {
+        this.cnName = cnName;
+    }
+
+    public String getCnDescription() {
+        return cnDescription;
+    }
+
+    public void setCnDescription(String cnDescription) {
+        this.cnDescription = cnDescription;
+    }
+
+    public String getPreImgPath() {
+        return preImgPath;
+    }
+
+    public void setPreImgPath(String preImgPath) {
+        this.preImgPath = preImgPath;
+    }
 
     public Category getCategory() {
         return category;
@@ -70,12 +101,12 @@ public class Product extends Page {
         this.categoryId = categoryId;
     }
 
-    public String getImg() {
-        return img;
+    public String getImgPath() {
+        return imgPath;
     }
 
-    public void setImg(String img) {
-        this.img = img;
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
     }
 
     public String getCreateUser() {

@@ -63,6 +63,7 @@ public class ProductController implements ServletContextAware {
 
     @RequestMapping(value = "/product/publishProduct.do", method = RequestMethod.POST)
     public String handleFormUpload(@RequestParam("categoryId") String categoryId, @RequestParam("name") String name, @RequestParam("description") String description,
+                                   @RequestParam("cnName") String cnName, @RequestParam("cnDescription") String cnDescription,
                                    @RequestParam("image") CommonsMultipartFile mFile, Locale locale, ModelMap model) {
 
         final int previewPicWidth = ConfigUtils.getInstance().getPreviewPictureWidth();
@@ -74,6 +75,8 @@ public class ProductController implements ServletContextAware {
                 product.setCategoryId(categoryId);
                 product.setName(name);
                 product.setDescription(description);
+                product.setCnName(cnName);
+                product.setCnDescription(cnDescription);
 
                 String productDirectory = ConfigUtils.getInstance().getProductDirectory();
                 String path = servletContext.getRealPath(productDirectory);
@@ -117,7 +120,8 @@ public class ProductController implements ServletContextAware {
                 ato.filter(bis, bid);
                 ImageIO.write(bid, "jpg", previewFile);
 
-                product.setImg(productDirectory + "/" + file.getName());
+                product.setImgPath(productDirectory + "/" + file.getName());
+                product.setPreImgPath(productPreviewDirectory + "/" + file.getName());
                 productService.insert(product);
                 model.addAttribute("message", new ResponseMessage(true, messageSource.getMessage("message.publish.success", null, locale)));
             } catch (DuplicateKeyException e) {
@@ -178,12 +182,12 @@ public class ProductController implements ServletContextAware {
         Product dbProduct = productService.selectByPrimaryKey(productId);
         if (dbProduct != null) {
             productService.deleteByPrimaryKey(productId);
-            String path = servletContext.getRealPath(dbProduct.getImg());
+            String path = servletContext.getRealPath(dbProduct.getImgPath());
             File file = new File(path);
             if (file.exists()) {
                 file.delete();
             }
-            String previewPath = servletContext.getRealPath(dbProduct.getImg().replace(ConfigUtils.getInstance().getProductDirectory(), ConfigUtils.getInstance().getProductPreviewDirectory()));
+            String previewPath = servletContext.getRealPath(dbProduct.getImgPath().replace(ConfigUtils.getInstance().getProductDirectory(), ConfigUtils.getInstance().getProductPreviewDirectory()));
             File previewFile = new File(previewPath);
             if (previewFile.exists()) {
                 previewFile.delete();
@@ -201,12 +205,12 @@ public class ProductController implements ServletContextAware {
                 Product dbProduct = productService.selectByPrimaryKey(products[i]);
                 productService.deleteByPrimaryKey(products[i]);
                 if (dbProduct != null) {
-                    String path = servletContext.getRealPath(dbProduct.getImg());
+                    String path = servletContext.getRealPath(dbProduct.getImgPath());
                     File file = new File(path);
                     if (file.exists()) {
                         file.delete();
                     }
-                    String previewPath = servletContext.getRealPath(dbProduct.getImg().replace(ConfigUtils.getInstance().getProductDirectory(), ConfigUtils.getInstance().getProductPreviewDirectory()));
+                    String previewPath = servletContext.getRealPath(dbProduct.getImgPath().replace(ConfigUtils.getInstance().getProductDirectory(), ConfigUtils.getInstance().getProductPreviewDirectory()));
                     File previewFile = new File(previewPath);
                     if (previewFile.exists()) {
                         previewFile.delete();

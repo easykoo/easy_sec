@@ -13,6 +13,10 @@ public class Notice extends Page {
 
     private String content;
 
+    private String cnTitle;
+
+    private String cnContent;
+
     private Integer priority;
 
     private String createUser;
@@ -22,6 +26,22 @@ public class Notice extends Page {
     private String updateUser;
 
     private Date updateDate;
+
+    public String getCnTitle() {
+        return cnTitle;
+    }
+
+    public void setCnTitle(String cnTitle) {
+        this.cnTitle = cnTitle;
+    }
+
+    public String getCnContent() {
+        return cnContent;
+    }
+
+    public void setCnContent(String cnContent) {
+        this.cnContent = cnContent;
+    }
 
     public Integer getNoticeId() {
         return noticeId;

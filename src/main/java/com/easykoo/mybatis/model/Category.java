@@ -12,6 +12,8 @@ public class Category extends Page {
 
     private String description;
 
+    private String cnDescription;
+
     private String parentCategory;
 
     private List<Category> children;
@@ -23,6 +25,14 @@ public class Category extends Page {
     private String updateUser;
 
     private Date updateDate;
+
+    public String getCnDescription() {
+        return cnDescription;
+    }
+
+    public void setCnDescription(String cnDescription) {
+        this.cnDescription = cnDescription;
+    }
 
     public List<Category> getChildren() {
         return children;

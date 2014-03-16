@@ -4,6 +4,7 @@
     <resultMap id="CategoryResultMap" type="com.easykoo.mybatis.model.Category">
         <id column="category_id" property="categoryId" jdbcType="VARCHAR"/>
         <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="cn_description" property="cnDescription" jdbcType="VARCHAR"/>
         <result column="parent_category" property="parentCategory" jdbcType="VARCHAR"/>
         <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
@@ -13,7 +14,7 @@
                     select="getChildrenCategory"/>
     </resultMap>
     <sql id="Category_Column_List">
-    category_id, description, parent_category, create_user, create_date,
+    category_id, description, cn_description, parent_category, create_user, create_date,
     update_user, update_date
   </sql>
     <select id="selectByPrimaryKey" resultMap="CategoryResultMap" parameterType="java.lang.Integer">
@@ -27,10 +28,10 @@
     where category_id = #{categoryId,jdbcType=VARCHAR}
   </delete>
     <insert id="insert" parameterType="com.easykoo.mybatis.model.Category">
-    insert into category (category_id, description, parent_category, create_user,
+    insert into category (category_id, description, cn_description, parent_category, create_user,
       create_date, update_user, update_date
       )
-    values (#{categoryId,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{parentCategory,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR},
+    values (#{categoryId,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{cnDescription,jdbcType=VARCHAR}, #{parentCategory,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR},
       #{createDate,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -42,6 +43,9 @@
             </if>
             <if test="description != null">
                 description,
+            </if>
+            <if test="cnDescription != null">
+                cn_description,
             </if>
             <if test="parentCategory != null">
                 parent_category,
@@ -66,6 +70,9 @@
             <if test="description != null">
                 #{description,jdbcType=VARCHAR},
             </if>
+            <if test="cnDescription != null">
+                #{cnDescription,jdbcType=VARCHAR},
+            </if>
             <if test="parentCategory != null">
                 #{parentCategory,jdbcType=VARCHAR},
             </if>
@@ -89,6 +96,9 @@
             <if test="description != null">
                 description = #{description,jdbcType=VARCHAR},
             </if>
+            <if test="cnDescription != null">
+                cn_description = #{cnDescription,jdbcType=VARCHAR},
+            </if>
             <if test="parentCategory != null">
                 parent_category = #{parentCategory,jdbcType=VARCHAR},
             </if>
@@ -110,6 +120,7 @@
     <update id="updateByPrimaryKey" parameterType="com.easykoo.mybatis.model.Category">
     update category
     set description = #{description,jdbcType=VARCHAR},
+      cn_description = #{cnDescription,jdbcType=VARCHAR},
       parent_category = #{parentCategory,jdbcType=VARCHAR},
       create_user = #{createUser,jdbcType=VARCHAR},
       create_date = #{createDate,jdbcType=TIMESTAMP},

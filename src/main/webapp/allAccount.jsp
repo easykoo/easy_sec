@@ -88,8 +88,9 @@
 <script src="js/jquery.dataTables.js"></script>
 <script src="js/dataTables.bootstrap.js"></script>
 
-<!-- SB Admin Scripts - Include with every page -->
+<!-- Custom Scripts - Include with every page -->
 <script src="js/admin.js"></script>
+<script src="js/easykoo.js"></script>
 
 
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->

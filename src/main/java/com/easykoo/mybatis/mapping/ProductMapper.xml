@@ -5,8 +5,11 @@
         <id column="product_id" property="productId" jdbcType="INTEGER"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="cn_name" property="cnName" jdbcType="VARCHAR"/>
+        <result column="cn_description" property="cnDescription" jdbcType="VARCHAR"/>
         <result column="category_id" property="categoryId" jdbcType="INTEGER"/>
-        <result column="img" property="img" jdbcType="VARCHAR"/>
+        <result column="img_path" property="imgPath" jdbcType="VARCHAR"/>
+        <result column="pre_img_path" property="preImgPath" jdbcType="VARCHAR"/>
         <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
         <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
@@ -16,7 +19,7 @@
         </association>
     </resultMap>
     <sql id="Base_Column_List">
-    product_id, name, description, category_id, img,
+    product_id, name, description, cn_name, cn_description, category_id, img_path, pre_img_path,
     create_user, create_date, update_user, update_date
   </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -30,10 +33,11 @@
     where product_id = #{productId,jdbcType=INTEGER}
   </delete>
     <insert id="insert" parameterType="com.easykoo.mybatis.model.Product">
-    insert into product ( name, description, category_id, img,
+    insert into product ( name, description,cn_name, cn_description, category_id, img_path, pre_img_path,
       create_user, create_date, update_user, update_date)
     values (#{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
-      #{categoryId,jdbcType=VARCHAR}, #{img,jdbcType=VARCHAR},
+      #{cnName,jdbcType=VARCHAR}, #{cnDescription,jdbcType=VARCHAR},
+      #{categoryId,jdbcType=VARCHAR}, #{imgPath,jdbcType=VARCHAR}, #{preImgPath,jdbcType=VARCHAR},
       #{createUser,jdbcType=VARCHAR}, now(), #{updateUser,jdbcType=VARCHAR}, now())
   </insert>
     <insert id="insertSelective" parameterType="com.easykoo.mybatis.model.Product">
@@ -48,11 +52,20 @@
             <if test="description != null">
                 description,
             </if>
+            <if test="cnName != null">
+                cn_name,
+            </if>
+            <if test="cnDescription != null">
+                cnDescription,
+            </if>
             <if test="categoryId != null">
                 category_id,
             </if>
-            <if test="img != null">
-                img,
+            <if test="imgPath != null">
+                img_path,
+            </if>
+            <if test="preImgPath != null">
+                pre_img_path,
             </if>
             <if test="createUser != null">
                 create_user,
@@ -77,11 +90,20 @@
             <if test="description != null">
                 #{description,jdbcType=VARCHAR},
             </if>
+            <if test="cnName != null">
+                #{cnName,jdbcType=VARCHAR},
+            </if>
+            <if test="cnDescription != null">
+                #{cnDescription,jdbcType=VARCHAR},
+            </if>
             <if test="categoryId != null">
                 #{categoryId,jdbcType=VARCHAR},
             </if>
-            <if test="img != null">
-                #{img,jdbcType=VARCHAR},
+            <if test="imgPath != null">
+                #{img_path,jdbcType=VARCHAR},
+            </if>
+            <if test="preImgPath != null">
+                #{pre_img_path,jdbcType=VARCHAR},
             </if>
             <if test="createUser != null">
                 #{createUser,jdbcType=VARCHAR},
@@ -106,11 +128,20 @@
             <if test="description != null">
                 description = #{description,jdbcType=VARCHAR},
             </if>
+            <if test="cnName != null">
+                cn_name = #{cnName,jdbcType=VARCHAR},
+            </if>
+            <if test="cnDescription != null">
+                cn_description = #{cnDescription,jdbcType=VARCHAR},
+            </if>
             <if test="categoryId != null">
                 category_id = #{categoryId,jdbcType=VARCHAR},
             </if>
-            <if test="img != null">
-                img = #{img,jdbcType=VARCHAR},
+            <if test="imgPath != null">
+                img_path = #{imgPath,jdbcType=VARCHAR},
+            </if>
+            <if test="preImgPath != null">
+                pre_img_path = #{preImgPath,jdbcType=VARCHAR},
             </if>
             <if test="createUser != null">
                 create_user = #{createUser,jdbcType=VARCHAR},
@@ -131,8 +162,11 @@
     update product
     set name = #{name,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
+      cn_name = #{cnName,jdbcType=VARCHAR},
+      cn_description = #{cnDescription,jdbcType=VARCHAR},
       category_id = #{categoryId,jdbcType=VARCHAR},
-      img = #{img,jdbcType=VARCHAR},
+      img_path = #{imgPath,jdbcType=VARCHAR},
+      pre_img_path = #{preImgPath,jdbcType=VARCHAR},
       create_user = #{createUser,jdbcType=VARCHAR},
       create_date = #{createDate,jdbcType=TIMESTAMP},
       update_user = #{updateUser,jdbcType=VARCHAR},
@@ -153,11 +187,20 @@
         <if test="description != null">
             description = #{description,jdbcType=VARCHAR},
         </if>
+        <if test="cnName != null">
+            cn_name = #{cnName,jdbcType=VARCHAR},
+        </if>
+        <if test="cnDescription != null">
+            cn_description = #{cnDescription,jdbcType=VARCHAR},
+        </if>
         <if test="categoryId != null">
             category_id = #{categoryId,jdbcType=VARCHAR},
         </if>
-        <if test="img != null">
-            img = #{img,jdbcType=VARCHAR},
+        <if test="imgPath != null">
+            img_path = #{imgPath,jdbcType=VARCHAR},
+        </if>
+        <if test="preImgPath != null">
+            pre_img_path = #{preImgPath,jdbcType=VARCHAR},
         </if>
         <if test="createUser != null">
             create_user = #{createUser,jdbcType=VARCHAR},

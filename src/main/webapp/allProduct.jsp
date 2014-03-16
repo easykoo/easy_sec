@@ -22,7 +22,7 @@
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/font-awesome.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/lightbox.css" media="screen"/>
+    <link href="css/lightbox.css" rel="stylesheet"/>
 
     <!-- Page-Level Plugin CSS - Tables -->
     <link href="css/dataTables.bootstrap.css" rel="stylesheet">
@@ -33,11 +33,6 @@
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
     <![endif]-->
-    <style>
-        .row_selected {
-            background-color: red
-        }
-    </style>
 </head>
 
 <body>
@@ -67,7 +62,7 @@
                             <tr>
                                 <th><input type="checkbox" id="selectAll"/></th>
                                 <th><spring:message code="label.id"/></th>
-                                <th><spring:message code="label.image"/></th>
+                                <th><spring:message code="label.preview"/></th>
                                 <th><spring:message code="label.name"/></th>
                                 <th><spring:message code="label.category"/></th>
                                 <th><spring:message code="label.description"/></th>
@@ -99,8 +94,9 @@
 <script src="js/jquery.dataTables.js"></script>
 <script src="js/dataTables.bootstrap.js"></script>
 
-<!-- SB Admin Scripts - Include with every page -->
+<!-- Custom Scripts - Include with every page -->
 <script src="js/admin.js"></script>
+<script src="js/easykoo.js"></script>
 
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->
 <script type="text/javascript" charset="utf-8">
@@ -236,12 +232,12 @@ var getAllProduct = function () {
                 "mData": "product_id"},
             { "sTitle": "<spring:message code="label.id"/>",
                 "mData": "product_id"},
-            { "sTitle": "<spring:message code="label.image"/>",
-                "mData": "img"},
-            { "sTitle": "<spring:message code="label.name"/>",
-                "mData": "name"},
+            { "sTitle": "<spring:message code="label.preview"/>",
+                "mData": "imgPath"},
             { "sTitle": "<spring:message code="label.category"/>",
                 "mData": "category_id"},
+            { "sTitle": "<spring:message code="label.name"/>",
+                "mData": "name"},
             { "sTitle": "<spring:message code="label.description"/>",
                 "mData": "description"},
             { "sTitle": "<spring:message code="label.create.date"/>",
@@ -251,12 +247,10 @@ var getAllProduct = function () {
         ],
         "fnRowCallback": function (nRow, aData, iDisplayIndex) {
             $('td:eq(0)', nRow).html('<input type="checkbox" name="selectFlag" onchange="selectProduct(this,' + aData.productId + ')"/>');
-            $('td:eq(2)', nRow).html('<a href="' + aData.img + '" data-lightbox="image-2" title="' + aData.name
-                    + '"><img src="' + aData.img.replace('<%=ConfigUtils.getInstance().getProductDirectory()%>', '<%=ConfigUtils.getInstance().getProductPreviewDirectory()%>')
-                    + '" class="img-responsive" alt="Responsive image"/></a> ');
-            $('td:eq(4)', nRow).text(aData.category.description);
             var createDate = timeStamp2String(aData.createDate);
             $('td:eq(6)', nRow).text(createDate);
+            $('td:eq(2)', nRow).html('<a href="' + aData.imgPath + '" data-lightbox="image-1" title="' + aData.name
+                    + '"><img src="' + aData.preImgPath + '" class="img-responsive" alt="Responsive image"/></a> ');
             var html = '<div class="btn-group "><a class="btn btn-primary" href="javascript:"><i class="fa fa-gavel fa-fw"></i></a>' +
                     '<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:"><span class="fa fa-caret-down"></span></a>' +
                     '<ul class="dropdown-menu">' +
@@ -265,6 +259,13 @@ var getAllProduct = function () {
                     + '</a></li>'
                     + '</ul></div>';
             $('td:eq(7)', nRow).html(html);
+            if ('zh_CN' == '<spring:message code="language"/>') {
+                $('td:eq(3)', nRow).text(aData.category.cnDescription);
+                $('td:eq(4)', nRow).text(aData.cnName);
+            } else {
+                $('td:eq(3)', nRow).text(aData.category.description);
+                $('td:eq(4)', nRow).text(aData.name);
+            }
 
             $('td:eq(0)', nRow).width(20);
             $('td:eq(1)', nRow).width(40);
@@ -282,6 +283,7 @@ var getAllProduct = function () {
         "aoColumnDefs": [
             { "bSortable": false, "aTargets": [ 0 ] },
             { "bSortable": false, "aTargets": [ 1 ] },
+            { "bSortable": false, "aTargets": [ 5 ] },
             { "bSortable": false, "aTargets": [ 6 ] }
         ]
     });

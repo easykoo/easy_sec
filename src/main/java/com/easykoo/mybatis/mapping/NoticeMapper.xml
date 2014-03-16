@@ -5,6 +5,8 @@
         <id column="notice_id" property="noticeId" jdbcType="INTEGER"/>
         <result column="title" property="title" jdbcType="VARCHAR"/>
         <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="cn_title" property="cnTitle" jdbcType="VARCHAR"/>
+        <result column="cn_content" property="cnContent" jdbcType="VARCHAR"/>
         <result column="priority" property="priority" jdbcType="INTEGER"/>
         <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
@@ -12,7 +14,7 @@
         <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
     </resultMap>
     <sql id="Base_Column_List">
-    notice_id, title, content, priority, create_user, create_date, update_user, update_date
+    notice_id, title, content, cn_title, cn_content, priority, create_user, create_date, update_user, update_date
   </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
@@ -25,10 +27,10 @@
     where notice_id = #{noticeId,jdbcType=INTEGER}
   </delete>
     <insert id="insert" parameterType="com.easykoo.mybatis.model.Notice">
-    insert into notice (notice_id, title, content, 
+    insert into notice (notice_id, title, content, cn_title, cn_content,
       priority, create_user, create_date, 
       update_user, update_date)
-    values (#{noticeId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+    values (#{noticeId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{cnTitle,jdbcType=VARCHAR}, #{cnContent,jdbcType=VARCHAR},
       #{priority,jdbcType=INTEGER}, #{createUser,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
       #{updateUser,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP})
   </insert>
@@ -43,6 +45,12 @@
             </if>
             <if test="content != null">
                 content,
+            </if>
+            <if test="cnTitle != null">
+                cn_title,
+            </if>
+            <if test="cnContent != null">
+                cn_content,
             </if>
             <if test="priority != null">
                 priority,
@@ -70,6 +78,12 @@
             <if test="content != null">
                 #{content,jdbcType=VARCHAR},
             </if>
+            <if test="cnTitle != null">
+                #{cnTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="cnContent != null">
+                #{cnContent,jdbcType=VARCHAR},
+            </if>
             <if test="priority != null">
                 #{priority,jdbcType=INTEGER},
             </if>
@@ -96,6 +110,12 @@
             <if test="content != null">
                 content = #{content,jdbcType=VARCHAR},
             </if>
+            <if test="cnTitle != null">
+                cn_title = #{cnTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="cnContent != null">
+                cn_content = #{cnContent,jdbcType=VARCHAR},
+            </if>
             <if test="priority != null">
                 priority = #{priority,jdbcType=INTEGER},
             </if>
@@ -118,6 +138,8 @@
     update notice
     set title = #{title,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
+      cn_title = #{cnTitle,jdbcType=VARCHAR},
+      cn_content = #{cnContent,jdbcType=VARCHAR},
       priority = #{priority,jdbcType=INTEGER},
       create_user = #{createUser,jdbcType=VARCHAR},
       create_date = #{createDate,jdbcType=TIMESTAMP},
@@ -138,6 +160,12 @@
         </if>
         <if test="content != null">
             content = #{content,jdbcType=VARCHAR},
+        </if>
+        <if test="cnTitle != null">
+            cn_title = #{cnTitle,jdbcType=VARCHAR},
+        </if>
+        <if test="cnContent != null">
+            cn_content = #{cnContent,jdbcType=VARCHAR},
         </if>
         <if test="priority != null">
             priority = #{priority,jdbcType=INTEGER},

@@ -66,6 +66,7 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
     </bean>
 
     <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+        <property name="defaultLocale" value="en" />
     </bean>
 
     <mvc:interceptors>

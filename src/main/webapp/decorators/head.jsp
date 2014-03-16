@@ -29,6 +29,15 @@
         <!-- /.navbar-header -->
 
         <ul class="nav navbar-top-links navbar-right">
+            <li class="dropdown">
+                <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown"><spring:message
+                        code="label.language"/>
+                    <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="javascript:changeLanguage('zh_CN')">中文/简体</a></li>
+                    <li><a href="javascript:changeLanguage('en')">English</a></li>
+                </ul>
+            </li>
             <au:check test="/feedback/allFeedback.do">
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:">

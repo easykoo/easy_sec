@@ -99,6 +99,7 @@
 <script src="js/jquery.validate.method.js"></script>
 <script src="js/jquery.metisMenu.js"></script>
 <script src="js/admin.js"></script>
+<script src="js/easykoo.js"></script>
 
 
 <script type="text/javascript">

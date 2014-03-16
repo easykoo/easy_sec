@@ -17,7 +17,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title><spring:message code="label.profile"/></title>
+    <title><spring:message code="label.publish.product"/></title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link href="css/admin.css" rel="stylesheet">
@@ -67,10 +67,19 @@
                 </div>
                 <div class="form-group">
                     <label for="name" class="col-sm-2 control-label"><span style="color: red">*</span> <spring:message
-                            code="label.product.name"/></label>
+                            code="label.en.name"/></label>
 
                     <div class="col-sm-6">
                         <input type="text" id="name" class="form-control" name="name">
+                    </div>
+                    <div class="col-sm-4 control-label"></div>
+                </div>
+                <div class="form-group">
+                    <label for="cnName" class="col-sm-2 control-label"><span style="color: red">*</span> <spring:message
+                            code="label.cn.name"/></label>
+
+                    <div class="col-sm-6">
+                        <input type="text" id="cnName" class="form-control" name="cnName">
                     </div>
                     <div class="col-sm-4 control-label"></div>
                 </div>
@@ -94,6 +103,16 @@
                     <div class="col-sm-4 control-label"></div>
                 </div>
                 <div class="form-group">
+                    <label for="cnDescription" class="col-sm-2 control-label"><span style="color: red">*</span>
+                        <spring:message
+                                code="label.cn.description"/></label>
+
+                    <div class="col-sm-6">
+                        <textarea id="cnDescription" name="cnDescription" rows="6" class="form-control"/></textarea>
+                    </div>
+                    <div class="col-sm-4 control-label"></div>
+                </div>
+                <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-6">
                         <button type="submit" class="btn btn-success btn-block"><spring:message
                                 code="label.publish"/></button>
@@ -113,6 +132,7 @@
 <script src="js/jquery.validate.method.js"></script>
 <script src="js/jquery.metisMenu.js"></script>
 <script src="js/admin.js"></script>
+<script src="js/easykoo.js"></script>
 
 
 <script type="text/javascript">
@@ -123,6 +143,8 @@
         if (name != '') {
             $('#name').val(name);
             $('#description').val(name);
+            $('#cnName').val(name);
+            $('#cnDescription').val(name);
         }
     }
 
@@ -202,22 +224,26 @@
                     min: 1
                 },
                 name: "required",
+                cnName: "required",
                 image: {
                     required: true,
                     fileType: ["jpg", "jpeg", "png", "gif"],
                     fileSize:<%=ConfigUtils.getInstance().getPictureSizeLimit()%> //KB
                 },
-                description: "required"
+                description: "required",
+                cnDescription: "required"
             },
             messages: {
                 categoryIdd: '<spring:message code="message.error.required"/>',
                 name: '<spring:message code="message.error.required"/>',
+                cnName: '<spring:message code="message.error.required"/>',
                 image: {
                     required: '<spring:message code="message.error.required"/>',
                     fileType: '<spring:message code="message.error.invalid.picture.type"/>',
                     fileSize: '<spring:message code="message.error.picture.size.exceeded.limit"/>'
                 },
-                description: '<spring:message code="message.error.required"/>'
+                description: '<spring:message code="message.error.required"/>',
+                cnDescription: '<spring:message code="message.error.required"/>'
             },
             focusInvalid: true,
             onkeyup: false,
