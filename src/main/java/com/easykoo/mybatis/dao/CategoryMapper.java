@@ -3,7 +3,6 @@ package com.easykoo.mybatis.dao;
 import com.easykoo.mybatis.model.Category;
 
 import java.util.List;
-import java.util.Map;
 
 public interface CategoryMapper {
     int deleteByPrimaryKey(String categoryId);
