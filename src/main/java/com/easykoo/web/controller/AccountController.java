@@ -125,6 +125,18 @@ public class AccountController {
         return new ResponseMessage(false, messageSource.getMessage("message.error.can.not.find.record", null, locale));
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/account/ajax/deleteAccounts.do", produces = "application/json")
+    public ResponseMessage deleteAccounts(Integer[] accounts, Locale locale) {
+        if (accounts.length > 1) {
+            for (int i = 0; i < accounts.length; i++) {
+                accountService.deleteByPrimaryKey(accounts[i]);
+            }
+            return new ResponseMessage(true);
+        }
+        return new ResponseMessage(false, messageSource.getMessage("message.error.can.not.find.record", null, locale));
+    }
+
     public MessageSource getMessageSource() {
         return messageSource;
     }

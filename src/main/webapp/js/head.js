@@ -2,7 +2,7 @@
  * Created by easykooc on 14-3-2.
  */
 
-var feedbacks = null;
+var feedbackArray = null;
 
 var getTop5Feedback = function () {
     $.ajax({
@@ -14,7 +14,7 @@ var getTop5Feedback = function () {
             $('#feedback_notification').empty();
             var html = '';
             if (data != null) {
-                feedbacks = data;
+                feedbackArray = data;
                 $.each(data, function (index, feedback) {
                     html += '<li>'
                         + '<a href="javascript:readFeedbackWithCallback(' + feedback.feedbackId + ',getTop5Feedback, getFeedbackCount)">'
@@ -60,7 +60,7 @@ var getFeedbackCount = function () {
 };
 
 var readFeedbackWithCallback = function (id, fnCallback1, fnCallback2) {
-    $.each(feedbacks, function (index, feedback) {
+    $.each(feedbackArray, function (index, feedback) {
         if (feedback.feedbackId == id) {
             bootbox.dialog({
                 message: feedback.content,

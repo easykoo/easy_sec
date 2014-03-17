@@ -104,16 +104,16 @@ var productTable;
 
 var deleteProduct = function (id) {
     bootbox.dialog({
-        message: "Are you sure to delete this product?",
-        title: "Delete Product",
+        message: '<spring:message code="message.sure.delete.product" />',
+        title: '<spring:message code="title.delete.product" />',
         buttons: {
             main: {
-                label: "Cancel",
+                label: '<spring:message code="label.cancel" />',
                 className: "btn-default",
                 callback: null
             },
             danger: {
-                label: "Yes",
+                label: '<spring:message code="label.yes" />',
                 className: "btn-danger",
                 callback: function (result) {
                     if (result) {
@@ -147,7 +147,7 @@ var editProduct = function (id) {
                 title: product.name,
                 buttons: {
                     success: {
-                        label: "OK",
+                        label: '<spring:message code="label.ok" />',
                         className: "btn-success",
                         callback: function () {
                             $.ajax({
@@ -188,7 +188,6 @@ var selectProduct = function (obj, productId) {
 }
 
 var selectAll = function (obj) {
-//        $('input[type=checkbox]').prop('checked', $(obj).prop('checked'));
     if (obj.checked) {
         $("input[name='selectFlag']:checkbox").each(function () {
             $(this).click();
@@ -200,6 +199,12 @@ var selectAll = function (obj) {
             $(this).attr("checked", false);
         })
     }
+}
+
+var unSelectAll = function () {
+    $("input:checkbox").each(function () {
+        $(this).attr("checked", false);
+    })
 }
 
 var getAllProduct = function () {
@@ -296,18 +301,43 @@ $(document).ready(function () {
     setCheckSession();
 
     $('#delete').click(function () {
-        $.ajax({
-            dataType: "json",
-            type: "POST",
-            url: 'product/ajax/deleteProducts.do',
-            data: {products: productArray},
-            traditional: true,
-            success: function (data) {
-                if (!data.success) {
-                    bootbox.alert(data.message, null);
+        if (productArray.length <= 1) {
+            bootbox.alert('<spring:message code="message.error.please.select" />', null);
+            return;
+        }
+        bootbox.dialog({
+            message: '<spring:message code="message.sure.delete.products" />',
+            title: '<spring:message code="title.batch.delete.products" />',
+            buttons: {
+                main: {
+                    label: '<spring:message code="label.cancel" />',
+                    className: "btn-default",
+                    callback: null
+                },
+                danger: {
+                    label: '<spring:message code="label.yes" />',
+                    className: "btn-danger",
+                    callback: function (result) {
+                        if (result) {
+                            $.ajax({
+                                dataType: "json",
+                                type: "POST",
+                                url: 'product/ajax/deleteProducts.do',
+                                data: {products: productArray},
+                                traditional: true,
+                                success: function (data) {
+                                    if (!data.success) {
+                                        bootbox.alert(data.message, null);
+                                    }
+                                    unSelectAll();
+                                    productArray = [0];
+                                    productTable.fnClearTable(0);
+                                    productTable.fnDraw();
+                                }
+                            });
+                        }
+                    }
                 }
-                productTable.fnClearTable(0);
-                productTable.fnDraw();
             }
         });
     });

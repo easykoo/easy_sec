@@ -83,7 +83,7 @@
 <%--<script src="js/head.js" type="text/javascript"></script>--%>
 <script type="text/javascript">
 
-    var feedbacks = null;
+    var feedbackList = null;
 
     var getTop5Feedback = function () {
         $.ajax({
@@ -95,7 +95,7 @@
                 $('#feedback_notification').empty();
                 var html = '';
                 if (data != null) {
-                    feedbacks = data;
+                    feedbackList = data;
                     $.each(data, function (index, feedback) {
                         html += '<li>'
                                 + '<a href="javascript:readFeedbackWithCallback(' + feedback.feedbackId + ',getTop5Feedback, getFeedbackCount)">'
@@ -152,14 +152,14 @@
     };
 
     var readFeedbackWithCallback = function (id, fnCallback1, fnCallback2) {
-        $.each(feedbacks, function (index, feedback) {
+        $.each(feedbackList, function (index, feedback) {
             if (feedback.feedbackId == id) {
                 bootbox.dialog({
                     message: feedback.content,
                     title: feedback.name,
                     buttons: {
                         success: {
-                            label: "OK",
+                            label: '<spring:message code="label.ok" />',
                             className: "btn-success",
                             callback: function () {
                                 $.ajax({

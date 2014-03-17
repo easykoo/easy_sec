@@ -48,7 +48,7 @@
             </au:check>
             <au:check test="/feedback/allFeedback.do">
                 <li id="feedback">
-                    <a href="/feedback/allFeedback.do"><i class="fa fa-edit fa-fw"></i><spring:message
+                    <a href="/feedback/allFeedback.do"><i class="fa fa-edit fa-fw"></i> <spring:message
                             code="label.all.feedback"/></a>
                 </li>
             </au:check>
@@ -59,13 +59,13 @@
                     <ul class="nav nav-second-level collapse">
                         <au:check test="/notice/allNotice.do">
                             <li id="allAnnouncement">
-                                <a href="notice/allNotice.do"><spring:message
+                                <a href="notice/allNotice.do"> <spring:message
                                         code="label.all.notice"/></a>
                             </li>
                         </au:check>
                         <au:check test="/notice/publishNotice.do">
                             <li id="announce">
-                                <a href="/notice/publishNotice.do"><spring:message
+                                <a href="/notice/publishNotice.do"> <spring:message
                                         code="label.publish.notice"/></a>
                             </li>
                         </au:check>
@@ -80,23 +80,23 @@
                     <ul class="nav nav-second-level collapse">
                         <au:check test="/product/allProduct.do">
                             <li id="allProduct">
-                                <a href="product/allProduct.do"><spring:message
+                                <a href="product/allProduct.do"> <spring:message
                                         code="label.all.product"/></a>
                             </li>
                         </au:check>
                         <au:check test="/product/publishProduct.do">
                             <li id="publishProduct">
-                                <a href="/product/publishProduct.do"><spring:message
+                                <a href="/product/publishProduct.do"> <spring:message
                                         code="label.publish.product"/></a>
                             </li>
                         </au:check>
                         <au:check test="/product/createCategory.do">
                             <li id="editCategory">
-                                <a href="/product/editCategory.do"><spring:message
+                                <a href="/product/editCategory.do"> <spring:message
                                         code="label.manage.category"/></a>
                             </li>
                             <li id="createCategory">
-                                <a href="/product/createCategory.do"><spring:message
+                                <a href="/product/createCategory.do"> <spring:message
                                         code="label.create.category"/></a>
                             </li>
                         </au:check>
@@ -110,15 +110,15 @@
                             code="label.profile"/><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <li id="changeProfile">
-                            <a href="profile/profile.do"><spring:message
+                            <a href="profile/profile.do"> <spring:message
                                     code="label.change.profile"/></a>
                         </li>
                         <%--<li id="preferences">
-                            <a href="profile/preferences.do"><spring:message
+                            <a href="profile/preferences.do"> <spring:message
                                     code="label.preferences"/></a>
                         </li>--%>
                         <li id="password">
-                            <a href="/profile/password.do"><spring:message
+                            <a href="/profile/password.do"> <spring:message
                                     code="label.change.password"/></a>
                         </li>
                             <%--<li>

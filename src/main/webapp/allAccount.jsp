@@ -48,7 +48,8 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    DataTables Advanced Tables
+                    <a class="btn btn-danger" id="delete"><i class="fa fa-trash-o fa-fw"></i><spring:message
+                            code="label.delete"/></a>
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -56,6 +57,7 @@
                         <table class="table table-striped table-bordered table-hover" id="dataTable">
                             <thead>
                             <tr>
+                                <th><input type="checkbox" id="selectAll"/></th>
                                 <th><spring:message code="label.id"/></th>
                                 <th><spring:message code="label.username"/></th>
                                 <th><spring:message code="label.qq"/></th>
@@ -104,12 +106,12 @@ function deleteAccount(accountID) {
         title: "Delete Account",
         buttons: {
             main: {
-                label: "Cancel",
+                label: '<spring:message code="label.cancel" />',
                 className: "btn-default",
                 callback: null
             },
             danger: {
-                label: "Yes",
+                label: '<spring:message code="label.yes" />',
                 className: "btn-danger",
                 callback: function (result) {
                     if (result) {
@@ -140,12 +142,12 @@ function banAccount(accountID) {
         title: "Ban Account",
         buttons: {
             main: {
-                label: "Cancel",
+                label: '<spring:message code="label.cancel" />',
                 className: "btn-default",
                 callback: null
             },
             danger: {
-                label: "Yes",
+                label: '<spring:message code="label.yes" />',
                 className: "btn-danger",
                 callback: function (result) {
                     if (result) {
@@ -176,12 +178,12 @@ function unbanAccount(accountID) {
         title: "Unban Account",
         buttons: {
             main: {
-                label: "Cancel",
+                label: '<spring:message code="label.cancel" />',
                 className: "btn-default",
                 callback: null
             },
             danger: {
-                label: "Yes",
+                label: '<spring:message code="label.yes" />',
                 className: "btn-success",
                 callback: function (result) {
                     if (result) {
@@ -212,12 +214,12 @@ function makeAdmin(accountID) {
         title: "Make Admin",
         buttons: {
             main: {
-                label: "Cancel",
+                label: '<spring:message code="label.cancel" />',
                 className: "btn-default",
                 callback: null
             },
             danger: {
-                label: "Yes",
+                label: '<spring:message code="label.yes" />',
                 className: "btn-danger",
                 callback: function (result) {
                     if (result) {
@@ -248,12 +250,12 @@ function hire(accountID) {
         title: "Hire",
         buttons: {
             main: {
-                label: "Cancel",
+                label: '<spring:message code="label.cancel" />',
                 className: "btn-default",
                 callback: null
             },
             danger: {
-                label: "Yes",
+                label: '<spring:message code="label.yes" />',
                 className: "btn-danger",
                 callback: function (result) {
                     if (result) {
@@ -284,12 +286,12 @@ function fire(accountID) {
         title: "Fire Employee",
         buttons: {
             main: {
-                label: "Cancel",
+                label: '<spring:message code="label.cancel" />',
                 className: "btn-default",
                 callback: null
             },
             danger: {
-                label: "Yes",
+                label: '<spring:message code="label.yes" />',
                 className: "btn-danger",
                 callback: function (result) {
                     if (result) {
@@ -312,6 +314,42 @@ function fire(accountID) {
             }
         }
     });
+}
+
+var accountArray = [0];
+
+var selectAccount = function (obj, accountId) {
+    if ($(obj).prop("checked")) {
+        if ($.inArray(accountId, accountArray) < 0) {
+            accountArray.push(accountId);
+        }
+    } else {
+        if ($.inArray(accountId, accountArray) >= 0) {
+            $.each(accountArray, function (key, value) {
+                accountArray.splice(key, key)
+            });
+        }
+    }
+}
+
+var selectAll = function (obj) {
+    if (obj.checked) {
+        $("input[name='selectFlag']:checkbox").each(function () {
+            $(this).click();
+            $(this).attr("checked", true);
+        })
+    } else {
+        $("input[name='selectFlag']:checkbox").each(function () {
+            $(this).click();
+            $(this).attr("checked", false);
+        })
+    }
+}
+
+var unSelectAll = function () {
+    $("input:checkbox").each(function () {
+        $(this).attr("checked", false);
+    })
 }
 
 var getAllAccounts = function () {
@@ -337,6 +375,8 @@ var getAllAccounts = function () {
             });
         },
         "aoColumns": [
+            { "sTitle": "<input id='selectAll' onchange='selectAll(this)' type='checkbox'/>",
+                "mData": "username"},
             { "sTitle": "<spring:message code="label.username"/>",
                 "mData": "username"},
             { "sTitle": "<spring:message code="label.qq"/>",
@@ -353,8 +393,9 @@ var getAllAccounts = function () {
                 "mData": "locked"}
         ],
         "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+            $('td:eq(0)', nRow).html('<input type="checkbox" name="selectFlag" onchange="selectAccount(this,' + aData.accountId + ')"/>');
             var createDate = timeStamp2String(aData.createDate);
-            $('td:eq(5)', nRow).text(createDate);
+            $('td:eq(6)', nRow).text(createDate);
 
             var html = '<div class="btn-group "><a class="btn btn-primary" href="javascript:"><i class="fa fa-gavel fa-fw"></i></a>' +
                     '<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:"><span class="fa fa-caret-down"></span></a>' +
@@ -386,7 +427,7 @@ var getAllAccounts = function () {
                         + '</a></li>';
             }
             html += '</ul></div>';
-            $('td:eq(6)', nRow).html(html);
+            $('td:eq(7)', nRow).html(html);
 
             if (aData.locked) {
                 $(nRow).css({"color": "#BBBBBB"})
@@ -397,7 +438,8 @@ var getAllAccounts = function () {
             sUrl: [ "css/<spring:message code="language"/>.txt"]
         },
         "aoColumnDefs": [
-            { "bSortable": false, "aTargets": [ 6 ] }
+            { "bSortable": false, "aTargets": [ 0 ] },
+            { "bSortable": false, "aTargets": [ 7 ] }
         ]
     });
 }
@@ -406,6 +448,50 @@ $(document).ready(function () {
     $('#account').css({"background": "#DDDDDD"});
     getAllAccounts();
     setCheckSession();
+
+    $('#delete').click(function () {
+        if (accountArray.length <= 1) {
+            bootbox.alert('<spring:message code="message.error.please.select" />', null);
+            return;
+        }
+        bootbox.dialog({
+            message: "Are you sure to delete these accounts?",
+            title: "Batch delete Accounts",
+            message: '<spring:message code="message.sure.delete.accounts" />',
+            title: '<spring:message code="title.batch.delete.accounts" />',
+            buttons: {
+                main: {
+                    label: '<spring:message code="label.cancel" />',
+                    className: "btn-default",
+                    callback: null
+                },
+                danger: {
+                    label: '<spring:message code="label.yes" />',
+                    className: "btn-danger",
+                    callback: function (result) {
+                        if (result) {
+                            $.ajax({
+                                dataType: "json",
+                                type: "POST",
+                                url: 'account/ajax/deleteAccounts.do',
+                                data: {accounts: accountArray},
+                                traditional: true,
+                                success: function (data) {
+                                    if (!data.success) {
+                                        bootbox.alert(data.message, null);
+                                    }
+                                    unSelectAll();
+                                    accountArray = [0];
+                                    accountTable.fnClearTable(0);
+                                    accountTable.fnDraw();
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+        });
+    });
 });
 
 </script>

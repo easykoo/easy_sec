@@ -3,9 +3,11 @@ package com.easykoo.web.controller;
 import com.easykoo.model.DataTablesResponse;
 import com.easykoo.model.ResponseMessage;
 import com.easykoo.mybatis.model.Feedback;
+import com.easykoo.mybatis.model.Product;
 import com.easykoo.mybatis.model.Subscribe;
 import com.easykoo.service.IFeedbackService;
 import com.easykoo.service.ISubscribeService;
+import com.easykoo.util.ConfigUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.util.Locale;
 
 /**
@@ -102,6 +105,18 @@ public class FeedbackController {
         dt.setTotalDisplayRecords(feedback.getTotalRecord());
         dt.setTotalRecords(feedback.getTotalRecord());
         return dt;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/feedback/ajax/deleteFeedbackArray.do", produces = "application/json")
+    public ResponseMessage deleteFeedbackArray(Integer[] feedbackArray, Locale locale) {
+        if (feedbackArray.length > 1) {
+            for (int i = 0; i < feedbackArray.length; i++) {
+                feedbackService.deleteByPrimaryKey(feedbackArray[i]);
+            }
+            return new ResponseMessage(true);
+        }
+        return new ResponseMessage(false, messageSource.getMessage("message.error.can.not.find.record", null, locale));
     }
 
     public IFeedbackService getFeedbackService() {

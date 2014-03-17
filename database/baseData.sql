@@ -16,46 +16,48 @@ insert into sec_module(module_id, description) values (5,'Feedback');
 insert into sec_module(module_id, description) values (6,'Notice');
 insert into sec_module(module_id, description) values (7,'Product');
 
-insert into sec_function ( function_id, description, uri, module_id)values (10,'View dashboard','/admin/dashboard.do',1);
+insert into sec_function ( function_id, description, uri, module_id)values (101,'View dashboard','/admin/dashboard.do',1);
 
-insert into sec_function ( function_id, description, uri, module_id)values (20,'View setting','/admin/settings.do',2);
+insert into sec_function ( function_id, description, uri, module_id)values (201,'View setting','/admin/settings.do',2);
 
-insert into sec_function ( function_id, description, uri, module_id)values (30,'View profile','/profile/profile.do',3);
-insert into sec_function ( function_id, description, uri, module_id)values (31,'View preferences','/profile/preferences.do',3);
-insert into sec_function ( function_id, description, uri, module_id)values (32,'Change password','/profile/password.do',3);
-insert into sec_function ( function_id, description, uri, module_id)values (33,'Change profile','/profile/changeProfile.do',3);
-insert into sec_function ( function_id, description, uri, module_id)values (34,'Change email','/profile/changeEmail.do',3);
-insert into sec_function ( function_id, description, uri, module_id)values (35,'Change preferences','/profile/changePreferences.do',3);
+insert into sec_function ( function_id, description, uri, module_id)values (301,'View profile','/profile/profile.do',3);
+insert into sec_function ( function_id, description, uri, module_id)values (302,'View preferences','/profile/preferences.do',3);
+insert into sec_function ( function_id, description, uri, module_id)values (303,'Change password','/profile/password.do',3);
+insert into sec_function ( function_id, description, uri, module_id)values (304,'Change profile','/profile/changeProfile.do',3);
+insert into sec_function ( function_id, description, uri, module_id)values (305,'Change email','/profile/changeEmail.do',3);
+insert into sec_function ( function_id, description, uri, module_id)values (306,'Change preferences','/profile/changePreferences.do',3);
 
-insert into sec_function ( function_id, description, uri, module_id)values (40,'View accounts','/account/allAccount.do',4);
-insert into sec_function ( function_id, description, uri, module_id)values (41,'Get all account by ajax','/account/ajax/allAccount.do',4);
-insert into sec_function ( function_id, description, uri, module_id)values (42,'Delete account by ajax','/account/ajax/deleteAccount.do',4);
-insert into sec_function ( function_id, description, uri, module_id)values (43,'Ban account by ajax','/account/ajax/banAccount.do',4);
-insert into sec_function ( function_id, description, uri, module_id)values (44,'Unban account by ajax','/account/ajax/unbanAccount.do',4);
-insert into sec_function ( function_id, description, uri, module_id)values (45,'Update account by ajax','/account/ajax/updateAccount.do',4);
-insert into sec_function ( function_id, description, uri, module_id)values (46,'Make account admin by ajax','/account/ajax/makeAdmin.do',4);
-insert into sec_function ( function_id, description, uri, module_id)values (47,'Make account admin by ajax','/account/ajax/hire.do',4);
-insert into sec_function ( function_id, description, uri, module_id)values (48,'Make account admin by ajax','/account/ajax/fire.do',4);
+insert into sec_function ( function_id, description, uri, module_id)values (401,'View accounts','/account/allAccount.do',4);
+insert into sec_function ( function_id, description, uri, module_id)values (402,'Get all account by ajax','/account/ajax/allAccount.do',4);
+insert into sec_function ( function_id, description, uri, module_id)values (403,'Delete account by ajax','/account/ajax/deleteAccount.do',4);
+insert into sec_function ( function_id, description, uri, module_id)values (404,'Ban account by ajax','/account/ajax/banAccount.do',4);
+insert into sec_function ( function_id, description, uri, module_id)values (405,'Unban account by ajax','/account/ajax/unbanAccount.do',4);
+insert into sec_function ( function_id, description, uri, module_id)values (406,'Update account by ajax','/account/ajax/updateAccount.do',4);
+insert into sec_function ( function_id, description, uri, module_id)values (407,'Make account admin by ajax','/account/ajax/makeAdmin.do',4);
+insert into sec_function ( function_id, description, uri, module_id)values (408,'Make account admin by ajax','/account/ajax/hire.do',4);
+insert into sec_function ( function_id, description, uri, module_id)values (409,'Make account admin by ajax','/account/ajax/fire.do',4);
+insert into sec_function ( function_id, description, uri, module_id)values (410,'Delete accounts','/account/ajax/deleteAccounts.do',4);
 
-insert into sec_function ( function_id, description, uri, module_id)values (50,'View feedback','/feedback/allFeedback.do',5);
-insert into sec_function ( function_id, description, uri, module_id)values (51,'Get top 5 feedback by ajax','/feedback/ajax/getTop5Feedback.do',5);
-insert into sec_function ( function_id, description, uri, module_id)values (52,'Read feedback by ajax','/feedback/ajax/readFeedback.do',5);
-insert into sec_function ( function_id, description, uri, module_id)values (53,'Get feedback count by ajax','/feedback/ajax/getFeedbackCount.do',5);
-insert into sec_function ( function_id, description, uri, module_id)values (54,'Get all feedback by ajax','/feedback/ajax/allFeedback.do',5);
-insert into sec_function ( function_id, description, uri, module_id)values (55,'Delete feedback by ajax','/feedback/ajax/deleteFeedback.do',5);
+insert into sec_function ( function_id, description, uri, module_id)values (501,'View feedback','/feedback/allFeedback.do',5);
+insert into sec_function ( function_id, description, uri, module_id)values (502,'Get top 5 feedback by ajax','/feedback/ajax/getTop5Feedback.do',5);
+insert into sec_function ( function_id, description, uri, module_id)values (503,'Read feedback by ajax','/feedback/ajax/readFeedback.do',5);
+insert into sec_function ( function_id, description, uri, module_id)values (504,'Get feedback count by ajax','/feedback/ajax/getFeedbackCount.do',5);
+insert into sec_function ( function_id, description, uri, module_id)values (505,'Get all feedback by ajax','/feedback/ajax/allFeedback.do',5);
+insert into sec_function ( function_id, description, uri, module_id)values (506,'Delete feedback by ajax','/feedback/ajax/deleteFeedback.do',5);
+insert into sec_function ( function_id, description, uri, module_id)values (507,'Delete feedback array','/feedback/ajax/deleteFeedbackArray.do',5);
 
-insert into sec_function ( function_id, description, uri, module_id)values (60,'View notices','/notice/allNotice.do',6);
-insert into sec_function ( function_id, description, uri, module_id)values (61,'Publish notice','/notice/publishNotice.do',6);
+insert into sec_function ( function_id, description, uri, module_id)values (601,'View notices','/notice/allNotice.do',6);
+insert into sec_function ( function_id, description, uri, module_id)values (602,'Publish notice','/notice/publishNotice.do',6);
 
-insert into sec_function ( function_id, description, uri, module_id)values (70,'View products','/product/allProduct.do',7);
-insert into sec_function ( function_id, description, uri, module_id)values (71,'View categories','/product/allCategory.do',7);
-insert into sec_function ( function_id, description, uri, module_id)values (72,'Publish product','/product/publishProduct.do',7);
-insert into sec_function ( function_id, description, uri, module_id)values (73,'View products','/product/ajax/allProduct.do',7);
-insert into sec_function ( function_id, description, uri, module_id)values (74,'Delete product','/product/ajax/deleteProduct.do',7);
-insert into sec_function ( function_id, description, uri, module_id)values (75,'Delete products','/product/ajax/deleteProducts.do',7);
-insert into sec_function ( function_id, description, uri, module_id)values (76,'Create category','/product/createCategory.do',7);
-insert into sec_function ( function_id, description, uri, module_id)values (77,'Edit category','/product/editCategory.do',7);
-insert into sec_function ( function_id, description, uri, module_id)values (78,'Delete category','/product/ajax/deleteCategory.do',7);
+insert into sec_function ( function_id, description, uri, module_id)values (701,'View products','/product/allProduct.do',7);
+insert into sec_function ( function_id, description, uri, module_id)values (702,'View categories','/product/allCategory.do',7);
+insert into sec_function ( function_id, description, uri, module_id)values (703,'Publish product','/product/publishProduct.do',7);
+insert into sec_function ( function_id, description, uri, module_id)values (704,'View products','/product/ajax/allProduct.do',7);
+insert into sec_function ( function_id, description, uri, module_id)values (705,'Delete product','/product/ajax/deleteProduct.do',7);
+insert into sec_function ( function_id, description, uri, module_id)values (706,'Delete products','/product/ajax/deleteProducts.do',7);
+insert into sec_function ( function_id, description, uri, module_id)values (707,'Create category','/product/createCategory.do',7);
+insert into sec_function ( function_id, description, uri, module_id)values (708,'Edit category','/product/editCategory.do',7);
+insert into sec_function ( function_id, description, uri, module_id)values (709,'Delete category','/product/ajax/deleteCategory.do',7);
 
 insert into sec_privilege ( external_id, type,role_id,department_id) values (1,2,1,1);
 insert into sec_privilege ( external_id, type,role_id,department_id) values (2,2,1,1);
