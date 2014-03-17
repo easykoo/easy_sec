@@ -54,6 +54,12 @@ public class PrivilegeFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }*/
+
+        if (path.endsWith("index.jsp") || path.endsWith("index.html")) {
+            response.sendRedirect(request.getContextPath() + "/index.do");
+            return;
+        }
+
         boolean checkAuthorize = true;
         for (String s : noNeedFilter) {
             if (path.endsWith(s)) {
