@@ -2,11 +2,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.easykoo</groupId>
-    <artifactId>easy_sec</artifactId>
+    <artifactId>northen</artifactId>
     <packaging>war</packaging>
     <version>1.0</version>
-    <name>easy_sec</name>
-    <url>http://www.easykoo.com</url>
+    <name>northen</name>
+    <url>http://www.anhuinorthen.com</url>
     <properties>
         <dao.target.dir>src/main/java</dao.target.dir>
         <compiler.version>1.6</compiler.version>
@@ -177,9 +177,9 @@
             </activation>
         </profile>
         <profile>
-            <id>wei</id>
+            <id>prd</id>
             <properties>
-                <env>wei</env>
+                <env>prd</env>
             </properties>
         </profile>
     </profiles>

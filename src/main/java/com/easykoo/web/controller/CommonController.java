@@ -39,6 +39,11 @@ public class CommonController {
         return "index";
     }
 
+    @RequestMapping(value = "/contacts.do")
+    public String contacts() {
+        return "contacts";
+    }
+
     @RequestMapping(value = "/common/getVerifyCodeImage.do")
     public void getVerifyCodeImage(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String verifyCode = VerifyCodeUtil.generateTextCode(VerifyCodeUtil.TYPE_NUM_ONLY, 4, null);

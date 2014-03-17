@@ -1,6 +1,6 @@
-drop schema if exists easy_sec;
-CREATE SCHEMA easy_sec DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-use easy_sec;
+drop schema if exists northen;
+CREATE SCHEMA northen DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+use northen;
 
 drop table if exists sec_group;
 CREATE TABLE sec_group (
