@@ -70,8 +70,8 @@
                 <img src="img/slider1_image_3.jpg" class="header_image" color="#3f0731" alt="" link="#link3"/>
             </div>
             <div class="header_controls">
-                <a href="#" id="header_controls_left">Previous</a>
-                <a href="#" id="header_controls_right">Next</a></div>
+                <a href="javascript:" id="header_controls_left">Previous</a>
+                <a href="javascript:" id="header_controls_right">Next</a></div>
             <div id="overlay_bg"></div>
         </div>
     </div>
