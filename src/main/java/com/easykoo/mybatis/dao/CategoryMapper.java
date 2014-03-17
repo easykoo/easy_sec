@@ -24,5 +24,5 @@ public interface CategoryMapper {
 
     List<Category> getChildrenCategory(String parentCategory);
 
-    String generateCategoryId(Map<String, String> params);
+    String generateCategoryId(String parentId);
 }

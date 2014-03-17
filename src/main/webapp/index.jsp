@@ -81,10 +81,10 @@
                                         <spring:message
                                                 code="label.dashboard"/></a></li>
                                 </au:check>
-                                <au:check test="/admin/settings.do">
+                                <%--<au:check test="/admin/settings.do">
                                     <li><a href="admin/settings.do"><i class="fa fa-gear fa-fw"></i> <spring:message
                                             code="label.settings"/></a></li>
-                                </au:check>
+                                </au:check>--%>
                                 <au:check test="/profile/profile.do">
                                     <li><a href="profile/profile.do"><i class="fa fa-user fa-fw"></i> <spring:message
                                             code="label.profile"/></a></li>

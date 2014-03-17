@@ -142,7 +142,7 @@
         from category
         where parent_category = #{parentCategory,jdbcType=VARCHAR}
     </select>
-    <select id="generateCategoryId" statementType="CALLABLE" parameterType="java.lang.String">
-        {call generateCategoryId(#{parentCategory,mode=IN,jdbcType=VARCHAR}, #{genId,mode=OUT,jdbcType=VARCHAR})}
+    <select id="generateCategoryId" statementType="CALLABLE" resultType="java.lang.String" parameterType="java.lang.String">
+        select generateCategoryId(#{parentId,jdbcType=VARCHAR})
     </select>
 </mapper>

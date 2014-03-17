@@ -115,13 +115,8 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public String generateCategoryId(String parentCategory) {
-        Map<String, String> params = new HashMap<String, String>();
-        String genId = null;
-        params.put("parentCategory", parentCategory);
-        params.put("genId", genId);
-        categoryMapper.generateCategoryId(params);
-        return params.get("genId");
+    public String generateCategoryId(String parentID) {
+        return categoryMapper.generateCategoryId(parentID);
     }
 
     @Override
