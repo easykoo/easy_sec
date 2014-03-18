@@ -8,7 +8,7 @@
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
-<base href=" <%=basePath%>">
+<base href="<%=basePath%>">
 <head>
     <title><spring:message code="main.title"/> - <sitemesh:write property="title"/></title>
     <link rel="shortcut icon" href="img/favicon.ico">

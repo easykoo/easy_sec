@@ -8,7 +8,7 @@
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
-<base href=" <%=basePath%>">
+<base href="<%=basePath%>">
 <head>
     <title><sitemesh:write property="title"/></title>
     <sitemesh:write property="head"/>
