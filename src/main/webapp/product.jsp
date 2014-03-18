@@ -10,8 +10,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <link rel="shortcut icon" href="img/favicon.ico">
-    <title><spring:message code="main.title"/> - <spring:message code="label.contact.us"/></title>
+    <title><spring:message code="main.title"/> - <spring:message code="label.product"/></title>
 
     <link href="css/styles.css" media="screen" rel="stylesheet" type="text/css"/>
 
@@ -28,13 +27,6 @@
     <script src="js/jquery.prettyPhoto.js" type="text/javascript"></script>
 
     <script type="text/javascript" language="javascript" src="js/general.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.4.custom.css"/>
-    <link rel="stylesheet" type="text/css" href="css/ui.selectmenu.css"/>
-    <script type="text/javascript" language="javascript" src="js/jquery-ui-1.8.4.custom.min.js"></script>
-    <script type="text/javascript" language="javascript" src="js/ui.selectmenu.js"></script>
-    <script type="text/javascript" language="javascript" src="js/styled.selectmenu.js"></script>
-    <script type="text/javascript" src="js/custom.js"></script>
     <script type="text/javascript" src="js/easykoo.js"></script>
 
 </head>
@@ -46,19 +38,20 @@
     <div class="topnav">
         <div class="container_12">
 
-            <div class="logo"><a href="index.jsp"><img src="img/logo.png" alt="<spring:message code="main.title"/>"
-                                                       width="157" height="36"
-                                                       border="0"/></a></div>
+            <div class="logo"><a href="index.do"><img src="img/logo.png" alt="<spring:message code="main.title"/>"
+                                                      width="157" height="36"
+                                                      border="0"/></a></div>
 
             <!-- topmenu -->
             <div class="menu-header">
 
                 <ul class="topmenu">
                     <li class="first"><a href="index.do"><span><spring:message code="label.home"/></span></a></li>
-                    <li><a href="product.do"><span><spring:message code="label.product"/></span></a></li>
+                    <li class="current-menu-item"><a href="javascript:"><span><spring:message
+                            code="label.product"/></span></a></li>
                     <li><a href="about.do"><span><spring:message code="label.about.us"/></span></a></li>
-                    <li class="last current-menu-item"><a href="contacts.do"><span><spring:message
-                            code="label.contact.us"/></span></a></li>
+                    <li class="last"><a href="contacts.do"><span><spring:message code="label.contact.us"/></span></a>
+                    </li>
                     <li>
                         <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown"><span><spring:message
                                 code="label.language"/></span>
@@ -111,14 +104,13 @@
 <div class="welcome_bar">
     <!-- bar -->
     <div class="container_12 bar">
-        <div class="bar-icon"><img src="img/icon_contact.png" width="64" height="63" alt=""/></div>
+        <div class="bar-icon"><img src="img/icon_portfolio.png" width="70" height="64" alt=""/></div>
         <div class="bar-title">
-            <h1><spring:message code="label.get.in.touch"/></h1>
+            <h1><spring:message code="label.our.products"/></h1>
 
             <div class="breadcrumbs"><a href="index.do"><spring:message code="label.home"/></a> <spring:message
-                    code="label.contact.us"/></div>
+                    code="label.product"/></div>
         </div>
-
         <div class="clear"></div>
     </div>
     <!--/ bar -->
@@ -131,92 +123,51 @@
         <div class="wrapper">
             <div class="content">
 
-                <div class="text">
-                    <p><img src="img/<spring:message code="language" />_contact_map.jpg" width="600" height="380"
-                            alt=""/></p>
+                <!-- gallery list, 1 col -->
+                <div class="gallery-list gl_col_2">
+                    <c:forEach items="${productList}" var="product">
 
-
-                    <div class="contact-form">
-                        <h2><spring:message code="label.please.fill.form"/>:</h2>
-
-                        <form action="" method="post" class="ajax_form" name="contactForm"
-                              enctype="multipart/form-data">
-
-                            <div class="row field_text alignleft">
-                                <label><spring:message code="label.your.name"/>:</label>
-                                <input name="name" value="" id="name" class="inputtext input_middle required"
-                                       size="40" type="text"/>
+                        <div class="gallery-item">
+                            <div class="gallery-image"><img src="${product.preImgPath}" alt="" width="285"
+                                                            height="157" border="0" class="borderImg"/> <a
+                                    href="${product.imgPath}" class="gallery-zoom" rel="prettyPhoto"
+                                    title="${product.name}"><img src="img/icon_zoom.png" alt="" width="42" height="42"
+                                                                 border="0"/></a> <span class="ribbon-new">NEW</span>
                             </div>
-
-                            <div class="row field_text alignleft">
-                                <label><spring:message code="label.your.email"/>:</label>
-                                <input name="email" value="" id="email" class="inputtext input_middle required"
-                                       size="40" type="text"/>
+                            <div class="gallery-text">
+                                <div class="gallery-item-name"><h2><a href="#">${product.name}</a></h2></div>
+                                <div class="gallery-description"><p>${product.description}</p></div>
+                                <div class="gallery-more"><a href="javascript:"><span>View Detail</span></a></div>
                             </div>
                             <div class="clear"></div>
+                        </div>
+                    </c:forEach>
 
-                            <div class="row field_textarea">
-                                <label><spring:message code="label.content"/>:</label>
-                                <textarea id="content" name="content" class="textarea textarea_middle required"
-                                          cols="40" rows="10"></textarea>
-                            </div>
-
-                            <div class="clear"></div>
-
-                            <div class="row field_submit">
-                                <span class="reset-link"><a href="#"
-                                                            onclick="document.contactForm.reset();return false"><spring:message
-                                        code="label.reset.form"/></a></span>
-                                <input value="<spring:message code="label.send" />" title="send"
-                                       class="contact-submit submit" id="send"
-                                       type="submit"/>
-                            </div>
-
-
-                        </form>
-                    </div>
-
+                    <div class="clear"></div>
                 </div>
 
+                <!--/ gallery list, 1 col -->
+
+                <div align="center" class="clearpagination"><span class="pagination"><span class="inner"><a
+                        class="page_prev" href="#">&nbsp;</a><a href="#">1</a><a class="page_current" href="#">2</a><a
+                        href="#">3</a><a href="#">4</a><a class="page_next" href="#">&nbsp;</a></span></span></div>
+
+                <div class="clear"></div>
             </div>
         </div>
 
         <div class="sidebar">
             <div class="inner">
 
-                <!-- widget contacts -->
-                <div class="widget-container widget_contact">
-                    <h3><spring:message code="label.contact.us"/>:</h3>
 
-                    <div class="contact-address">
-                        <div class="address"><spring:message code="label.northen.address" />
-                        </div>
-                        <br>
-                        <div class="phone"><spring:message code="label.phone" />: +86 (551) 6511 4065</div>
-                        <div class="fax"><spring:message code="label.fax" />: +86 (551) 6511 4066</div>
-                    </div>
-
-                    <div class="contact-maillist">
-                        <div class="contact-mail"><a href="mailto:sales@anhuinorthen.com">sales@anhuinorthen.com</a>
-                        </div>
-                        <div class="contact-mail"><a href="mailto:support@anhuinorthen.com">support@anhuinorthen.com</a>
-                        </div>
-                    </div>
-
-                    <br/>
-
-                    <div class="social-box">
-                        <div class="row social-mail"><a href="mailto:helpdesk@anhuinorthen.com">helpdesk@anhuinorthen.com</a></div>
-                        <div class="row social-twitter"><a href="http://twitter.com/ahnorthen">twitter.com/ahnorthen</a></div>
-                        <div class="row social-skype"><a href="javascript:">linghappy915</a></div>
-                        <div class="row social-facebook"><a href="http://facebook.com/ahnorthen">facebook.com/ahnorthen</a></div>
-
-                    </div>
-
+                <div class="widget-container widget_categories">
+                    <h3>Categories:</h3>
+                    <ul>
+                        <c:forEach items="${categoryList}" var="category">
+                            <li><a href="#">${category.description}</a></li>
+                        </c:forEach>
+                    </ul>
                 </div>
-                <!--/ widget contacts -->
-
-
             </div>
         </div>
 
@@ -229,6 +180,58 @@
     <div class="footer_bg">
         <div class="container_12">
 
+            <div class="col_1_4 col">
+                <div class="inner">
+                    <h3>What we do</h3>
+                    <ul>
+                        <li><a href="#">Interactive Technology</a></li>
+                        <li><a href="#">Online Marketing</a></li>
+                        <li><a href="#">Website Design</a></li>
+                        <li><a href="#">Strategy &amp; Analysis</a></li>
+                        <li><a href="#">E-Learning</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col_1_4 col">
+                <div class="inner">
+                    <h3>Who We Are</h3>
+                    <ul>
+                        <li><a href="#">About us</a></li>
+                        <li><a href="#">Our History</a></li>
+                        <li><a href="#">Vision that drives us</a></li>
+                        <li><a href="#">The Mission</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col_1_4 col">
+                <div class="inner">
+                    <h3>Featured work</h3>
+                    <ul>
+                        <li><a href="#">Silicon App</a></li>
+                        <li><a href="#">Art Gallery</a></li>
+                        <li><a href="#">Bon Apetit </a></li>
+                        <li><a href="#">Exquisite Works</a></li>
+                        <li><a href="#">Clean Classy Corp</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col_1_4 col">
+                <div class="inner">
+                    <h3>From our Blog</h3>
+                    <ul>
+                        <li><a href="#">Just released WS 2.3</a></li>
+                        <li><a href="#">Not going to support IE6...</a></li>
+                        <li><a href="#">Great feedback from...</a></li>
+                        <li><a href="#">Don’t ask when!</a></li>
+                        <li><a href="#">Best tutorial on jQuery</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="divider_space"></div>
+
             <div class="col_2_3 col">
                 <div class="inner">
                     <a href="#" class="link-twitter" title="Twitter">Twitter</a>
@@ -240,13 +243,17 @@
 
             <div class="col_1_3 col">
                 <div class="inner">
-                    <p class="copyright">&copy; 2014 <a href="http://easykoo.com/" target="_blank">easykoo.com</a>. All
-                        rights reserved!</p>
+                    <p class="copyright">&copy; 2013 <a href="http://phpjz.cn/" target="_blank">phpjz.cn</a>. Please
+                        don’t steal!</p>
                 </div>
             </div>
             <div class="clear"></div>
         </div>
     </div>
+</div>
+
+<div style="display:none">
+    <script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script>
 </div>
 </body>
 </html>

@@ -187,6 +187,7 @@ CREATE TABLE product (
   category_id VARCHAR(20) NOT NULL,
   img_path VARCHAR(60) NULL,
   pre_img_path VARCHAR(60) NULL,
+  priority INT(1) NULL DEFAULT 5,
   create_user VARCHAR(20) NULL,
   create_date DATETIME NULL,
   update_user varchar(20) DEFAULT NULL,

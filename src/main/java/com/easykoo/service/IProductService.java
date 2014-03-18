@@ -37,4 +37,6 @@ public interface IProductService {
     String generateCategoryId(String parentCategory);
 
     List<Product> getProductsByCategory(String categoryId);
+
+    List<Product> getTopPriorityProducts();
 }

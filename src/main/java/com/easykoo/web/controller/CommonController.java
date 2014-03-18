@@ -39,6 +39,11 @@ public class CommonController {
         return "index";
     }
 
+    @RequestMapping(value = "/about.do")
+    public String about() {
+        return "about";
+    }
+
     @RequestMapping(value = "/contacts.do")
     public String contacts() {
         return "contacts";

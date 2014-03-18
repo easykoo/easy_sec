@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<%@ page import="com.easykoo.util.ConfigUtils" %>
+<%@ page import="org.springframework.web.servlet.support.RequestContextUtils" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=utf-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -10,8 +12,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <link rel="shortcut icon" href="img/favicon.ico">
-    <title><spring:message code="main.title"/> - <spring:message code="label.contact.us"/></title>
+    <title><spring:message code="main.title"/> - <spring:message code="label.about.us"/></title>
 
     <link href="css/styles.css" media="screen" rel="stylesheet" type="text/css"/>
 
@@ -28,13 +29,6 @@
     <script src="js/jquery.prettyPhoto.js" type="text/javascript"></script>
 
     <script type="text/javascript" language="javascript" src="js/general.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.4.custom.css"/>
-    <link rel="stylesheet" type="text/css" href="css/ui.selectmenu.css"/>
-    <script type="text/javascript" language="javascript" src="js/jquery-ui-1.8.4.custom.min.js"></script>
-    <script type="text/javascript" language="javascript" src="js/ui.selectmenu.js"></script>
-    <script type="text/javascript" language="javascript" src="js/styled.selectmenu.js"></script>
-    <script type="text/javascript" src="js/custom.js"></script>
     <script type="text/javascript" src="js/easykoo.js"></script>
 
 </head>
@@ -46,9 +40,9 @@
     <div class="topnav">
         <div class="container_12">
 
-            <div class="logo"><a href="index.jsp"><img src="img/logo.png" alt="<spring:message code="main.title"/>"
-                                                       width="157" height="36"
-                                                       border="0"/></a></div>
+            <div class="logo"><a href="index.do"><img src="img/logo.png" alt="<spring:message code="main.title"/>"
+                                                      width="157" height="36"
+                                                      border="0"/></a></div>
 
             <!-- topmenu -->
             <div class="menu-header">
@@ -56,9 +50,11 @@
                 <ul class="topmenu">
                     <li class="first"><a href="index.do"><span><spring:message code="label.home"/></span></a></li>
                     <li><a href="product.do"><span><spring:message code="label.product"/></span></a></li>
-                    <li><a href="about.do"><span><spring:message code="label.about.us"/></span></a></li>
-                    <li class="last current-menu-item"><a href="contacts.do"><span><spring:message
-                            code="label.contact.us"/></span></a></li>
+                    <li class="current-menu-item"><a href="javascript:"><span><spring:message
+                            code="label.about.us"/></span></a>
+                    </li>
+                    <li class="last"><a href="contacts.do"><span><spring:message code="label.contact.us"/></span></a>
+                    </li>
                     <li>
                         <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown"><span><spring:message
                                 code="label.language"/></span>
@@ -111,14 +107,13 @@
 <div class="welcome_bar">
     <!-- bar -->
     <div class="container_12 bar">
-        <div class="bar-icon"><img src="img/icon_contact.png" width="64" height="63" alt=""/></div>
+        <div class="bar-icon"><img src="img/icon_typography.png" width="64" height="64" alt=""/></div>
         <div class="bar-title">
-            <h1><spring:message code="label.get.in.touch"/></h1>
+            <h1><spring:message code="label.something.about.us"/></h1>
 
             <div class="breadcrumbs"><a href="index.do"><spring:message code="label.home"/></a> <spring:message
-                    code="label.contact.us"/></div>
+                    code="label.about.us"/></div>
         </div>
-
         <div class="clear"></div>
     </div>
     <!--/ bar -->
@@ -130,91 +125,37 @@
 
         <div class="wrapper">
             <div class="content">
-
-                <div class="text">
-                    <p><img src="img/<spring:message code="language" />_contact_map.jpg" width="600" height="380"
-                            alt=""/></p>
-
-
-                    <div class="contact-form">
-                        <h2><spring:message code="label.please.fill.form"/>:</h2>
-
-                        <form action="" method="post" class="ajax_form" name="contactForm"
-                              enctype="multipart/form-data">
-
-                            <div class="row field_text alignleft">
-                                <label><spring:message code="label.your.name"/>:</label>
-                                <input name="name" value="" id="name" class="inputtext input_middle required"
-                                       size="40" type="text"/>
-                            </div>
-
-                            <div class="row field_text alignleft">
-                                <label><spring:message code="label.your.email"/>:</label>
-                                <input name="email" value="" id="email" class="inputtext input_middle required"
-                                       size="40" type="text"/>
-                            </div>
-                            <div class="clear"></div>
-
-                            <div class="row field_textarea">
-                                <label><spring:message code="label.content"/>:</label>
-                                <textarea id="content" name="content" class="textarea textarea_middle required"
-                                          cols="40" rows="10"></textarea>
-                            </div>
-
-                            <div class="clear"></div>
-
-                            <div class="row field_submit">
-                                <span class="reset-link"><a href="#"
-                                                            onclick="document.contactForm.reset();return false"><spring:message
-                                        code="label.reset.form"/></a></span>
-                                <input value="<spring:message code="label.send" />" title="send"
-                                       class="contact-submit submit" id="send"
-                                       type="submit"/>
-                            </div>
-
-
-                        </form>
-                    </div>
-
-                </div>
-
+                <% if ("zh".equals(RequestContextUtils.getLocaleResolver(request).resolveLocale(request).getLanguage())) {%>
+                <jsp:include page='zh_CN_about.jsp'/>
+                <% } else { %>
+                <jsp:include page='en_about.jsp'/>
+                <% } %>
             </div>
         </div>
 
         <div class="sidebar">
             <div class="inner">
 
-                <!-- widget contacts -->
-                <div class="widget-container widget_contact">
-                    <h3><spring:message code="label.contact.us"/>:</h3>
 
-                    <div class="contact-address">
-                        <div class="address"><spring:message code="label.northen.address" />
-                        </div>
-                        <br>
-                        <div class="phone"><spring:message code="label.phone" />: +86 (551) 6511 4065</div>
-                        <div class="fax"><spring:message code="label.fax" />: +86 (551) 6511 4066</div>
-                    </div>
-
-                    <div class="contact-maillist">
-                        <div class="contact-mail"><a href="mailto:sales@anhuinorthen.com">sales@anhuinorthen.com</a>
-                        </div>
-                        <div class="contact-mail"><a href="mailto:support@anhuinorthen.com">support@anhuinorthen.com</a>
-                        </div>
-                    </div>
-
-                    <br/>
-
-                    <div class="social-box">
-                        <div class="row social-mail"><a href="mailto:helpdesk@anhuinorthen.com">helpdesk@anhuinorthen.com</a></div>
-                        <div class="row social-twitter"><a href="http://twitter.com/ahnorthen">twitter.com/ahnorthen</a></div>
-                        <div class="row social-skype"><a href="javascript:">linghappy915</a></div>
-                        <div class="row social-facebook"><a href="http://facebook.com/ahnorthen">facebook.com/ahnorthen</a></div>
-
-                    </div>
-
+                <div class="widget-container widget_categories">
+                    <%--<h3>Styles:</h3>
+                    <ul>
+                        <li><a href="styles-typography.html">Typography</a></li>
+                        <li><a href="styles-shortcodes.html">HTML Shortcodes</a></li>
+                        <li><a href="styles-columns.html">Column Layouts</a></li>
+                        <li><a href="styles-colors.html">Colors</a>
+                            <ul>
+                                <li><a href="#">Blue</a></li>
+                                <li><a href="#">Orange</a></li>
+                                <li><a href="#">Green</a></li>
+                            </ul>
+                        </li>
+                    </ul>--%>
                 </div>
-                <!--/ widget contacts -->
+
+
+                <a href="contacts.do" class="button_link large_button"><span><spring:message
+                        code="label.contact.us.for.quote"/></span></a>
 
 
             </div>

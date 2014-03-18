@@ -6,13 +6,13 @@
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
-<base href=" <%=basePath%>">
+<base href="<%=basePath%>">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"/>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="shortcut icon" href="img/favicon.ico">
-    <title><spring:message code="main.title"/> - <spring:message code="label.home" /></title>
+    <title><spring:message code="main.title"/> - <spring:message code="label.home"/></title>
 
     <link href="css/styles.css" media="screen" rel="stylesheet" type="text/css"/>
 
@@ -33,6 +33,7 @@
 
     <link rel="stylesheet" type="text/css" href="css/home.css"/>
     <script type="text/javascript" language="javascript" src="js/home.js"></script>
+    <script type="text/javascript" src="js/easykoo.js"></script>
 </head>
 
 <body onload="load_animations()">
@@ -41,17 +42,61 @@
     <div class="topnav">
         <div class="container_12">
 
-            <div class="logo"><a href="index.do"><img src="img/logo.png" alt="<spring:message code="main.title"/>" width="157" height="36"
-                                                        border="0"/></a></div>
+            <div class="logo"><a href="index.do"><img src="img/logo.png" alt="<spring:message code="main.title"/>"
+                                                      width="157" height="36"
+                                                      border="0"/></a></div>
 
             <!-- topmenu -->
             <div class="menu-header">
 
                 <ul class="topmenu">
-                    <li class="first current-menu-item"><a href="#"><span><spring:message code="label.home"/></span></a></li>
-                    <li><a href="javascript:"><span><spring:message code="label.product" /></span></a></li>
-                    <li><a href="javascript:"><span><spring:message code="label.about.us" /></span></a></li>
-                    <li class="last"><a href="contacts.do"><span><spring:message code="label.contact.us" /></span></a></li>
+                    <li class="first current-menu-item"><a href="#"><span><spring:message code="label.home"/></span></a>
+                    </li>
+                    <li><a href="product.do"><span><spring:message code="label.product"/></span></a></li>
+                    <li><a href="about.do"><span><spring:message code="label.about.us"/></span></a></li>
+                    <li class="last"><a href="contacts.do"><span><spring:message code="label.contact.us"/></span></a>
+                    </li>
+                    <li>
+                        <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown"><span><spring:message
+                                code="label.language"/></span>
+                            <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="javascript:changeLanguage('zh_CN')"><span>中文/简体</span></a></li>
+                            <li><a href="javascript:changeLanguage('en')"><span>English</span></a></li>
+                        </ul>
+                    </li>
+                    <c:choose>
+                        <c:when test="${not empty currentAccountSecurity.nickname}">
+                            <li class="parent">
+                                <a href="javascript:" class="dropdown-toggle"
+                                   data-toggle="dropdown"><span>${currentAccountSecurity.nickname}</span>
+                                    <b class="caret"></b></a>
+                                <ul class="sub-menu">
+                                    <au:check test="/admin/dashboard.do">
+                                        <li><a href="admin/dashboard.do"><span><i class="fa fa-dashboard fa-fw"></i>
+                                        <spring:message
+                                                code="label.dashboard"/></span></a></li>
+                                    </au:check>
+                                        <%--<au:check test="/admin/settings.do">
+                                            <li><a href="admin/settings.do"><i class="fa fa-gear fa-fw"></i> <spring:message
+                                                    code="label.settings"/></a></li>
+                                        </au:check>--%>
+                                    <au:check test="/profile/profile.do">
+                                        <li><a href="profile/profile.do"><span><i
+                                                class="fa fa-user fa-fw"></i> <spring:message
+                                                code="label.profile"/></span></a></li>
+                                    </au:check>
+                                    <li><a href="logout.do"><span><i class="fa fa-sign-out fa-fw"></i> <spring:message
+                                            code="label.logout"/></span></a></li>
+                                </ul>
+                            </li>
+                        </c:when>
+                        <c:otherwise>
+                            <li><a href="login.do?url=<%=request.getRequestURL()%>"><span><spring:message
+                                    code="label.sign.in"/></span></a></li>
+                            <li><a href="register.do"><span><spring:message code="label.sign.up"/></span></a></li>
+                        </c:otherwise>
+                    </c:choose>
                 </ul>
             </div>
             <!--/ topmenu -->
@@ -65,9 +110,10 @@
         <div class="slider">
 
             <div id="header_images">
-                <img src="img/slider1_image_1.jpg" class="header_image" color="#17191e" alt="" link="#link1"/>
-                <img src="img/slider1_image_2.jpg" class="header_image" color="#054065" alt="" link="#link2"/>
-                <img src="img/slider1_image_3.jpg" class="header_image" color="#3f0731" alt="" link="#link3"/>
+                <img src="img/slider1_image_1.jpg" class="header_image" color="#040203" alt="" link="#link1"/>
+                <img src="img/slider1_image_2.jpg" class="header_image" color="#2A0413" alt="" link="#link2"/>
+                <img src="img/slider1_image_3.jpg" class="header_image" color="#163570" alt="" link="#link3"/>
+                <img src="img/slider1_image_4.jpg" class="header_image" color="#000000" alt="" link="#link4"/>
             </div>
             <div class="header_controls">
                 <a href="javascript:" id="header_controls_left">Previous</a>
@@ -112,7 +158,7 @@
                                                                                   class="alignright"/> name it! We’ve
                     got it! But the best part is that they can be easily modified to fit your company’s look &amp; feel.
                 </p>
-                <a href="#" class="link-more">more details</a></div>
+                <a href="javascript:" class="link-more">more details</a></div>
         </div>
 
         <div class="col col_1_3">
@@ -122,7 +168,7 @@
                 <p>These three icons below the text paragraphs<img src="img/temp_img_2.png" alt="" width="93"
                                                                    height="76" class="alignright"/> are custom created
                     for the Envision theme &amp; the included PSD files contain all the layers needed to edit them. </p>
-                <a href="#" class="link-more">more details</a></div>
+                <a href="javascript:" class="link-more">more details</a></div>
         </div>
         <div class="col col_1_3">
             <div class="inner">
@@ -132,7 +178,7 @@
                                                                  class="alignright" alt=""/>response time on our
                     dedicated support forums. That’s “best in class” support offer, it just can’t get better &amp;
                     faster than this!</p>
-                <a href="#" class="link-more">more details</a></div>
+                <a href="javascript:" class="link-more">more details</a></div>
         </div>
         <div class="divider_space"></div>
 
@@ -296,59 +342,6 @@
     <div class="footer_bg">
         <div class="container_12">
 
-            <div class="col_1_4 col">
-                <div class="inner">
-                    <h3>What we do</h3>
-                    <ul>
-                        <li><a href="#">Interactive Technology</a></li>
-                        <li><a href="#">Online Marketing</a></li>
-                        <li><a href="#">Website Design</a></li>
-                        <li><a href="#">Strategy &amp; Analysis</a></li>
-                        <li><a href="#">E-Learning</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="col_1_4 col">
-                <div class="inner">
-                    <h3>Who We Are</h3>
-                    <ul>
-                        <li><a href="#">About us</a></li>
-                        <li><a href="#">Our History</a></li>
-                        <li><a href="#">Vision that drives us</a></li>
-                        <li><a href="#">The Mission</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="col_1_4 col">
-                <div class="inner">
-                    <h3>Featured work</h3>
-                    <ul>
-                        <li><a href="#">Silicon App</a></li>
-                        <li><a href="#">Art Gallery</a></li>
-                        <li><a href="#">Bon Apetit </a></li>
-                        <li><a href="#">Exquisite Works</a></li>
-                        <li><a href="#">Clean Classy Corp</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="col_1_4 col">
-                <div class="inner">
-                    <h3>From our Blog</h3>
-                    <ul>
-                        <li><a href="#">Just released WS 2.3</a></li>
-                        <li><a href="#">Not going to support IE6...</a></li>
-                        <li><a href="#">Great feedback from...</a></li>
-                        <li><a href="#">Don’t ask when!</a></li>
-                        <li><a href="#">Best tutorial on jQuery</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="divider_space"></div>
-
             <div class="col_2_3 col">
                 <div class="inner">
                     <a href="#" class="link-twitter" title="Twitter">Twitter</a>
@@ -360,7 +353,8 @@
 
             <div class="col_1_3 col">
                 <div class="inner">
-                    <p class="copyright">&copy; 2014 <a href="http://easykoo.com/" target="_blank">easykoo.com</a>. All rights reserved!</p>
+                    <p class="copyright">&copy; 2014 <a href="http://easykoo.com/" target="_blank">easykoo.com</a>. All
+                        rights reserved!</p>
                 </div>
             </div>
             <div class="clear"></div>
