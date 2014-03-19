@@ -241,8 +241,7 @@
 
             <div class="col_1_3 col">
                 <div class="inner">
-                    <p class="copyright">&copy; 2014 <a href="http://easykoo.com/" target="_blank">easykoo.com</a>. All
-                        rights reserved!</p>
+                    <p class="copyright">&copy; 2014 Anhui Northen. All rights reserved!</p>
                 </div>
             </div>
             <div class="clear"></div>
