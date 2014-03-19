@@ -7,7 +7,7 @@
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
-<%--<base href=" <%=basePath%>">--%>
+<base href="<%=basePath%>">
 <html>
 <html lang="en">
 <head>
@@ -56,11 +56,11 @@
                             code="label.language"/>
                         <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="login.do?url=http://localhost/&locale=zh_CN">中文/简体</a></li>
-                        <li><a href="login.do?url=http://localhost/&locale=en">English</a></li>
+                        <li><a href="login.do?locale=zh_CN">中文/简体</a></li>
+                        <li><a href="login.do?locale=en">English</a></li>
                     </ul>
                 </li>
-                <li><a href="register.do"><spring:message code="label.sign.up"/></a></li>
+                <%--<li><a href="register.do"><spring:message code="label.sign.up"/></a></li>--%>
             </ul>
         </div>
     </div>

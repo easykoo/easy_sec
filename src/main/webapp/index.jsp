@@ -92,9 +92,9 @@
                             </li>
                         </c:when>
                         <c:otherwise>
-                            <li><a href="login.do?url=<%=request.getRequestURL()%>"><span><spring:message
+                            <li><a href="login.do?url=<%=request.getHeader("Referer")%><span><spring:message
                                     code="label.sign.in"/></span></a></li>
-                            <li><a href="register.do"><span><spring:message code="label.sign.up"/></span></a></li>
+                            <%--<li><a href="register.do"><span><spring:message code="label.sign.up"/></span></a></li>--%>
                         </c:otherwise>
                     </c:choose>
                 </ul>
