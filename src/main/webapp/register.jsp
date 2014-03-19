@@ -42,16 +42,17 @@
         </div>
         <div id="nav-collapse" class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li class=""><a title="Home page" class="scroll brand-1" href="#home"><spring:message
-                        code="label.home"/></a></li>
-                <li class=""><a title="Check out our awesome services" href="#features"
-                                class=" scroll brand-4"><spring:message code="label.features"/></a></li>
-                <li class=""><a title="Themes assets" href="#assets" class="scroll brand-3"><spring:message
-                        code="label.assets"/></a></li>
-                <li class=""><a title="Who we are" href="#about" class="scroll fadeto brand-4"><spring:message
-                        code="label.about.us"/></a></li>
-                <li class=""><a title="Get in touch!" href="#contact" class="scroll brand-2"><spring:message
-                        code="label.contact.us"/></a></li>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class=""><a class="scroll brand-1" href="index.do"><spring:message
+                            code="label.home"/></a></li>
+                    <li class=""><a href="about.do" class="scroll brand-3"><spring:message
+                            code="label.about.us"/></a></li>
+                    <li class=""><a href="product.do" class="scroll fadeto brand-4"><spring:message
+                            code="label.product"/></a></li>
+                    <li class=""><a href="join.do" class="scroll brand-2"><spring:message
+                            code="label.join.us"/></a></li>
+                    <li class=""><a href="contacts.do" class="scroll brand-2"><spring:message
+                            code="label.contact.us"/></a></li>
 
                 <li class="dropdown">
                     <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown"><spring:message

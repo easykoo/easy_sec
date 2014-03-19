@@ -30,64 +30,13 @@
         </div>
     </blockquote>
 
-    <p>The overall objective of NORTHEN’s corporate culture construction is: adhering to the core values
-        of “innovation and progress, harmony and win-win”. The corporate management values and codes of
-        conduct is “people-oriented, pragmatic, united and cooperative, innovative, honest and
-        trustworthy, creating value”. The company forms common ideals, beliefs and goals among all
+    <p>The overall objective of NORTHEN's corporate culture construction is: adhering to the core values
+        of "innovation and progress, harmony and win-win". The corporate management values and codes of
+        conduct is "people-oriented, pragmatic, united and cooperative, innovative, honest and
+        trustworthy, creating value". The company forms common ideals, beliefs and goals among all
         employees, innovates content and form corporate culture, fosters a corporate culture with the
-        current time and ability to innovate, and enhances the company’s cohesion to provide a strong
+        current time and ability to innovate, and enhances the company's cohesion to provide a strong
         impetus for transformation and upgrade, quality enhancement and efficient improvement.</p>
 
-    <blockquote>
-        <div class="inner">
-            <h2>Human Resources</h2>
-        </div>
-    </blockquote>
-
-    <h4>Foreign Trade Supervisor</h4>
-
-
-    <ol>
-        <li>Over five-year work experience in foreign trading, and over two-year experience in relevant
-            management. Have plenty of sources of foreign customers in crafts gifts.
-        </li>
-        <li>Overall supervise the jobs of foreign trading department, organize and fulfill the demand of
-            overseas market., Develop dynamic collection and analysis. Organize and take part in various
-            foreign trade fairs and seek opportunities of cooperation with foreign clients.
-        </li>
-        <li>In charge of working out and adjusting the foreign sales, responsible for the plan and
-            organization and practice of overseas agent network and agency.
-        </li>
-        <li>Responsible for the decomposition and implement of annual sales plan. Supervise the fulfillment
-            of sales plan and contract signing. Follow up production schedule and quality. Familiar with
-            documents, shipping and settlement of exchange.
-        </li>
-        <li>Work out management system, work program and aims of the department, assess and supervise
-            staffs of the department
-        </li>
-    </ol>
-
-    <h4>Foreign Trade Salesman</h4>
-
-    <ol>
-        <li>Over two-year experience in foreign trading. Have plenty of sources of foreign customers in
-            textile and fabric field.
-        </li>
-        <li>Hard-working and tolerant of hardship, team player, pronounce standard mandarin, fluent in
-            listening, spoken and written English.
-        </li>
-        <li>This position is not applicable to this year' s graduates.</li>
-    </ol>
-
-    <h4>Sales Assistant</h4>
-
-    <ol>
-        <li>Summarize and arrange work report of sales department. assist salesman to handle routine and
-            make out contracts.
-        </li>
-        <li>Good command of reading and written English, work experience in textile and fabric field is
-            preferable.
-        </li>
-    </ol>
 
 </div>

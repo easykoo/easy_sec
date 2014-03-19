@@ -54,6 +54,7 @@
                     </li>
                     <li><a href="about.do"><span><spring:message code="label.about.us"/></span></a></li>
                     <li><a href="product.do"><span><spring:message code="label.product"/></span></a></li>
+                    <li><a href="join.do"><span><spring:message code="label.join.us"/></span></a></li>
                     <li class="last"><a href="contacts.do"><span><spring:message code="label.contact.us"/></span></a>
                     </li>
                     <li>
@@ -92,7 +93,7 @@
                             </li>
                         </c:when>
                         <c:otherwise>
-                            <li><a href="login.do?url=<%=request.getHeader("Referer")%><span><spring:message
+                            <li><a href="login.do?url=<%=request.getHeader("Referer")%>"><span><spring:message
                                     code="label.sign.in"/></span></a></li>
                             <%--<li><a href="register.do"><span><spring:message code="label.sign.up"/></span></a></li>--%>
                         </c:otherwise>

@@ -45,6 +45,7 @@
                     <li><a href="about.do"><span><spring:message code="label.about.us"/></span></a></li>
                     <li class="current-menu-item"><a href="javascript:"><span><spring:message
                             code="label.product"/></span></a></li>
+                    <li><a href="join.do"><span><spring:message code="label.join.us"/></span></a></li>
                     <li class="last"><a href="contacts.do"><span><spring:message code="label.contact.us"/></span></a>
                     </li>
                     <li>
@@ -127,11 +128,11 @@
                                 <img src="${product.viewImgPath}" alt="" width="285" height="190" border="0" class="borderImg"/>
 
                                 <% if ("zh".equals(RequestContextUtils.getLocaleResolver(request).resolveLocale(request).getLanguage())) {%>
-                                    <a href="${product.imgPath}" class="gallery-zoom" rel="prettyPhoto" title="${product.cnName}">
+                                    <a href="${product.imgPath}" class="gallery-zoom" rel="prettyPhoto" title="${product.cnDescription}">
                                         <img src="img/icon_zoom.png" alt="" width="42" height="42" border="0"/>
                                     </a>
                                 <% } else { %>
-                                    <a href="${product.imgPath}" class="gallery-zoom" rel="prettyPhoto" title="${product.name}">
+                                    <a href="${product.imgPath}" class="gallery-zoom" rel="prettyPhoto" title="${product.description}">
                                         <img src="img/icon_zoom.png" alt="" width="42" height="42" border="0"/>
                                     </a>
                                 <% } %>

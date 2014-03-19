@@ -13,7 +13,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="shortcut icon" href="img/favicon.ico">
-    <title><spring:message code="main.title"/> - <spring:message code="label.about.us"/></title>
+    <title><spring:message code="main.title"/> - <spring:message code="label.join.us"/></title>
 
     <link href="css/styles.css" media="screen" rel="stylesheet" type="text/css"/>
 
@@ -50,11 +50,10 @@
 
                 <ul class="topmenu">
                     <li class="first"><a href="index.do"><span><spring:message code="label.home"/></span></a></li>
-                    <li class="current-menu-item"><a href="javascript:"><span><spring:message
-                            code="label.about.us"/></span></a>
-                    </li>
+                    <li><a href="javascript:"><span><spring:message code="label.about.us"/></span></a></li>
                     <li><a href="product.do"><span><spring:message code="label.product"/></span></a></li>
-                    <li><a href="join.do"><span><spring:message code="label.join.us"/></span></a></li>
+                    <li class="current-menu-item"><a href="join.do"><span><spring:message code="label.join.us"/></span></a>
+                    </li>
                     <li class="last"><a href="contacts.do"><span><spring:message code="label.contact.us"/></span></a>
                     </li>
                     <li>
@@ -111,10 +110,10 @@
     <div class="container_12 bar">
         <div class="bar-icon"><img src="img/icon_typography.png" width="64" height="64" alt=""/></div>
         <div class="bar-title">
-            <h1><spring:message code="label.something.about.us"/></h1>
+            <h1><span><spring:message code="label.join.us"/></span></h1>
 
             <div class="breadcrumbs"><a href="index.do"><spring:message code="label.home"/></a> <spring:message
-                    code="label.about.us"/></div>
+                    code="label.join.us"/></div>
         </div>
         <div class="clear"></div>
     </div>
@@ -128,9 +127,9 @@
         <div class="wrapper">
             <div class="content">
                 <% if ("zh".equals(RequestContextUtils.getLocaleResolver(request).resolveLocale(request).getLanguage())) {%>
-                <jsp:include page='zh_CN_about.jsp'/>
+                <jsp:include page='zh_CN_join.jsp'/>
                 <% } else { %>
-                <jsp:include page='en_about.jsp'/>
+                <jsp:include page='en_join.jsp'/>
                 <% } %>
             </div>
         </div>
@@ -163,18 +162,17 @@
                 <div class="inner">
                     <a href="http://twitter.com/ahnorthen" class="link-twitter" title="Twitter">Twitter</a>
                     <a href="http://facebook.com/ahnorthen" class="link-fb" title="Facebook">Facebook</a>
-                </div>
-
-                <div class="col_1_3 col">
-                    <div class="inner">
-                        <p class="copyright">&copy; 2014 <a href="http://easykoo.com/" target="_blank">easykoo.com</a>.
-                            All
-                            rights reserved!</p>
-                    </div>
-                </div>
-                <div class="clear"></div>
             </div>
+
+            <div class="col_1_3 col">
+                <div class="inner">
+                    <p class="copyright">&copy; 2014 <a href="http://easykoo.com/" target="_blank">easykoo.com</a>. All
+                        rights reserved!</p>
+                </div>
+            </div>
+            <div class="clear"></div>
         </div>
     </div>
+</div>
 </body>
 </html>
