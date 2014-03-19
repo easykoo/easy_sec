@@ -88,7 +88,7 @@
                             </li>
                         </c:when>
                         <c:otherwise>
-                            <li><a href="login.do?url=<%=request.getRequestURL()%>"><span><spring:message
+                            <li><a href="login.do?url=<%=request.getHeader("Referer")%>"><span><spring:message
                                     code="label.sign.in"/></span></a></li>
                             <li><a href="register.do"><span><spring:message code="label.sign.up"/></span></a></li>
                         </c:otherwise>
@@ -136,7 +136,6 @@
                             </div>
                             <div class="gallery-text">
                                 <div class="gallery-item-name"><h2><a href="#">${product.name}</a></h2></div>
-                                <div class="gallery-description"><p>${product.description}</p></div>
                                 <div class="gallery-more"><a href="javascript:"><span>View Detail</span></a></div>
                             </div>
                             <div class="clear"></div>
@@ -148,9 +147,17 @@
 
                 <!--/ gallery list, 1 col -->
 
-                <div align="center" class="clearpagination"><span class="pagination"><span class="inner"><a
-                        class="page_prev" href="#">&nbsp;</a><a href="#">1</a><a class="page_current" href="#">2</a><a
-                        href="#">3</a><a href="#">4</a><a class="page_next" href="#">&nbsp;</a></span></span></div>
+                <div align="center" class="clearpagination">
+                    <span class="pagination">
+                        <span class="inner">
+                            <a class="page_prev" href="javascript:previousPage()">&nbsp;</a>
+                            <c:forEach begin="1" step="1" end="${page.totalPage}" var="pageNo">
+                                <a <c:if test="${pageNo == page.pageNo}">class="page_current"</c:if> href="javascript:goPage(${pageNo})">${pageNo}</a>
+                            </c:forEach>
+                            <a class="page_next" href="javascript:nextPage()">&nbsp;</a>
+                        </span>
+                    </span>
+                </div>
 
                 <div class="clear"></div>
             </div>
@@ -200,4 +207,30 @@
     </div>
 </div>
 </body>
+<script type="text/javascript">
+    var categoryId = '${page.categoryId}';
+    var pageNo = '${page.pageNo}';
+    var pageSize = '${page.pageSize}';
+
+    var previousPage = function(){
+        var url = 'product.do?categoryId='+categoryId +'&pageNo='+(parseInt(pageNo)-1)+'&pageSize='+pageSize;
+        window.location.href = url;
+    }
+
+    var refresh = function(){
+        var url = 'product.do?categoryId='+categoryId +'&pageNo='+parseInt(pageNo)+'&pageSize='+pageSize;
+        window.location.href = url;
+    }
+
+    var nextPage = function(){
+        var url = 'product.do?categoryId='+categoryId +'&pageNo='+(parseInt(pageNo)+1)+'&pageSize='+pageSize;
+        window.location.href = url;
+    }
+
+    var goPage = function(pageNo){
+        var url = 'product.do?categoryId='+categoryId +'&pageNo='+pageNo+'&pageSize='+pageSize;
+        window.location.href = url;
+    }
+
+</script>
 </html>

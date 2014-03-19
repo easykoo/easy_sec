@@ -44,10 +44,16 @@ public class ProductController implements ServletContextAware {
 
     @RequestMapping(value = "/product.do")
     public String product(HttpServletRequest request, ModelMap model) {
+        Product product = new Product();
+        product.setPageActived(true);
+        product.setCategoryId(request.getParameter("categoryId"));
+        product.setPageNo(request.getParameter("pageNo"));
+        product.setPageSize(request.getParameter("pageSize"));
         List<Category> categoryList = productService.getTopLevelCategory();
-        List<Product> productList = productService.getTopPriorityProducts();
+        List<Product> productList = productService.findProductWithPage(product);
         model.addAttribute("categoryList", categoryList);
         model.addAttribute("productList", productList);
+        model.addAttribute("page", product);
         return "product";
     }
 

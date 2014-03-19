@@ -205,7 +205,7 @@
         <if test="cnDescription != null">
             cn_description = #{cnDescription,jdbcType=VARCHAR},
         </if>
-        <if test="categoryId != null">
+        <if test="categoryId != null and categoryId!=''">
             category_id = #{categoryId,jdbcType=VARCHAR},
         </if>
         <if test="imgPath != null">

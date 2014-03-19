@@ -54,12 +54,30 @@ public class Page<T> {
         this.pageNo = pageNo;
     }
 
+    public void setPageNo(String pageNo) {
+        try{
+            int pageNum = Integer.parseInt(pageNo);
+            setPageNo(pageNum);
+        } catch (NumberFormatException e){
+            setPageNo(1);
+        }
+    }
+
     public int getPageSize() {
         return pageSize;
     }
 
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
+    }
+
+    public void setPageSize(String pageSize) {
+        try{
+            int pageSizeNum = Integer.parseInt(pageSize);
+            setPageSize(pageSizeNum);
+        } catch (NumberFormatException e){
+            setPageSize(10);
+        }
     }
 
     public List<SortProperty> getSortPropertyList() {
