@@ -79,11 +79,6 @@ public class ProductController implements ServletContextAware {
         return "editCategory";
     }
 
-    @RequestMapping(value = "/product/changeProduct.do", method = RequestMethod.GET)
-    public String changeProductView() {
-        return "changeProduct";
-    }
-
     @RequestMapping(value = "/product/publishProduct.do", method = RequestMethod.POST)
     public String publishProduct(@RequestParam("categoryId") String categoryId, @RequestParam("priority") Integer priority, @RequestParam("name") String name, @RequestParam("description") String description,
                                  @RequestParam("cnName") String cnName, @RequestParam("cnDescription") String cnDescription,
@@ -159,7 +154,7 @@ public class ProductController implements ServletContextAware {
         return "publishProduct";
     }
 
-    private File createTransferImage(File srcImg, Integer destWidth, String destPath) throws IOException{
+    private File createTransferImage(File srcImg, Integer destWidth, String destPath) throws IOException {
         File destDirectory = new File(servletContext.getRealPath(destPath));
         if (!destDirectory.exists()) {
             destDirectory.mkdir();
@@ -189,12 +184,12 @@ public class ProductController implements ServletContextAware {
         return destImg;
     }
 
-    @RequestMapping(value = "/product/changeProduct.do", method = RequestMethod.POST)
-    public String changeProfile(@ModelAttribute("product") Product product, Locale locale, ModelMap model) {
+    @ResponseBody
+    @RequestMapping(value = "/product/ajax/changeProduct.do", method = RequestMethod.POST)
+    public ResponseMessage changeProduct(@ModelAttribute("product") Product product, Locale locale) {
         productService.updateByPrimaryKeySelective(product);
         logger.debug("Product updated successfully!");
-        model.addAttribute("message", new ResponseMessage(true, messageSource.getMessage("message.change.success", null, locale)));
-        return "changeProduct";
+        return new ResponseMessage(true, messageSource.getMessage("message.change.success", null, locale));
     }
 
     @ResponseBody

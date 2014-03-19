@@ -141,8 +141,8 @@
                                 </c:if>
                             </div>
                             <div class="gallery-text">
-                                <div class="gallery-item-name"><h2><a href="#">${product.name}</a></h2></div>
-                                <div class="gallery-more"><a href="javascript:"><span><spring:message code="label.view.detail" /></span></a></div>
+                                <div class="gallery-item-name"><h2><span>${product.name}</span></h2></div>
+                                <%--<div class="gallery-more"><a href="javascript:"><span><spring:message code="label.view.detail" /></span></a></div>--%>
                             </div>
                             <div class="clear"></div>
                         </div>
