@@ -42,6 +42,21 @@ public class ProductController implements ServletContextAware {
     private ServletContext servletContext;
 
 
+    @RequestMapping(value = "/product.do")
+    public String product(HttpServletRequest request, ModelMap model) {
+        Product product = new Product();
+        product.setPageActived(true);
+        product.setCategoryId(request.getParameter("categoryId"));
+        product.setPageNo(request.getParameter("pageNo"));
+        product.setPageSize(request.getParameter("pageSize"));
+        List<Category> categoryList = productService.getTopLevelCategory();
+        List<Product> productList = productService.findProductWithPage(product);
+        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("productList", productList);
+        model.addAttribute("page", product);
+        return "product";
+    }
+
     @RequestMapping(value = "/product/allProduct.do", method = RequestMethod.GET)
     public String allProduct() {
         return "allProduct";
@@ -68,7 +83,7 @@ public class ProductController implements ServletContextAware {
     }
 
     @RequestMapping(value = "/product/publishProduct.do", method = RequestMethod.POST)
-    public String publishProduct(@RequestParam("categoryId") String categoryId, @RequestParam("name") String name, @RequestParam("description") String description,
+    public String publishProduct(@RequestParam("categoryId") String categoryId, @RequestParam("priority") Integer priority, @RequestParam("name") String name, @RequestParam("description") String description,
                                  @RequestParam("cnName") String cnName, @RequestParam("cnDescription") String cnDescription,
                                  @RequestParam("image") CommonsMultipartFile mFile, HttpServletRequest request, Locale locale, ModelMap model) {
 
@@ -79,6 +94,7 @@ public class ProductController implements ServletContextAware {
             try {
                 Product product = new Product();
                 product.setCategoryId(categoryId);
+                product.setPriority(priority);
                 product.setName(name);
                 product.setDescription(description);
                 product.setCnName(cnName);

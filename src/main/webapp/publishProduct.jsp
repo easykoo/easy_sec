@@ -64,6 +64,21 @@
                     <div class="col-sm-4 control-label"></div>
                 </div>
                 <div class="form-group">
+                    <label for="priority" class="col-sm-2 control-label"><span style="color: red">*</span> <spring:message
+                            code="label.priority"/></label>
+
+                    <div class="col-sm-6">
+                        <select id="priority" class="form-control" name="priority">
+                            <option value="5">5</option>
+                            <option value="4">4</option>
+                            <option value="3">3</option>
+                            <option value="2">2</option>
+                            <option value="1">1</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 control-label"></div>
+                </div>
+                <div class="form-group">
                     <label for="name" class="col-sm-2 control-label"><span style="color: red">*</span> <spring:message
                             code="label.en.name"/></label>
 
@@ -223,6 +238,7 @@
                 },
                 name: "required",
                 cnName: "required",
+                priority: "required",
                 image: {
                     required: true,
                     fileType: ["jpg", "jpeg", "png", "gif"],
@@ -235,6 +251,7 @@
                 categoryIdd: '<spring:message code="message.error.required"/>',
                 name: '<spring:message code="message.error.required"/>',
                 cnName: '<spring:message code="message.error.required"/>',
+                priority: '<spring:message code="message.error.required"/>',
                 image: {
                     required: '<spring:message code="message.error.required"/>',
                     fileType: '<spring:message code="message.error.invalid.picture.type"/>',

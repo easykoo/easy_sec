@@ -123,4 +123,9 @@ public class ProductServiceImpl implements IProductService {
     public List<Product> getProductsByCategory(String categoryId) {
         return productMapper.selectByCategory(categoryId);
     }
+
+    @Override
+    public List<Product> getTopPriorityProducts() {
+        return productMapper.getTopPriorityProducts();
+    }
 }

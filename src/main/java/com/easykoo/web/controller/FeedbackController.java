@@ -31,7 +31,6 @@ public class FeedbackController {
     private ISubscribeService subscribeService;
     private MessageSource messageSource;
 
-
     @RequestMapping(value = "/feedback/allFeedback.do", method = RequestMethod.GET)
     public String allFeedback() {
         return "allFeedback";
@@ -39,9 +38,9 @@ public class FeedbackController {
 
     @ResponseBody
     @RequestMapping(value = "/feedback/ajax/addFeedback.do", produces = "application/json")
-    public ResponseMessage addFeedback(@ModelAttribute("feedback") Feedback feedback) {
+    public ResponseMessage addFeedback(@ModelAttribute("feedback") Feedback feedback, Locale locale) {
         feedbackService.insert(feedback);
-        return new ResponseMessage(true);
+        return new ResponseMessage(true, messageSource.getMessage("message.send.success", null, locale));
     }
 
     @ResponseBody

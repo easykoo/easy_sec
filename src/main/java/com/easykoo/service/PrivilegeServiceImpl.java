@@ -84,30 +84,35 @@ public class PrivilegeServiceImpl implements IPrivilegeService {
     @Override
     public boolean isAuthorized(String test, Account account) {
         //todo check ban
-        try {
-            //check module privilege with moduleId
-            Integer moduleId = Integer.parseInt(test);
-            checkModulePrivilege(account.getRoleId(), account.getDepartmentId(), moduleId);
-            if (checkFunctionPrivilege(account.getRoleId(), account.getDepartmentId(), test)) {
-                logger.debug("Authorized in function!");
-                return true;
-            }
-        } catch (NumberFormatException e) {
-            //check function privilege
-            if (checkFunctionPrivilege(account.getRoleId(), account.getDepartmentId(), test)) {
-                logger.debug("Authorized in function!");
-                return true;
-            }
-            logger.debug("Not authorized in function!");
+        if (account != null) {
+            try {
+                //check module privilege with moduleId
+                Integer moduleId = Integer.parseInt(test);
+                checkModulePrivilege(account.getRoleId(), account.getDepartmentId(), moduleId);
+                if (checkFunctionPrivilege(account.getRoleId(), account.getDepartmentId(), test)) {
+                    logger.debug("Authorized in function!");
+                    return true;
+                }
+            } catch (NumberFormatException e) {
+                //check function privilege
+                if (checkFunctionPrivilege(account.getRoleId(), account.getDepartmentId(), test)) {
+                    logger.debug("Authorized in function!");
+                    return true;
+                }
+                logger.debug("Not authorized in function!");
 
-            //check module privilege
-            if (checkModulePrivilege(account.getRoleId(), account.getDepartmentId(), test)) {
-                logger.debug("Authorized in module!");
-                return true;
+                //check module privilege
+                if (checkModulePrivilege(account.getRoleId(), account.getDepartmentId(), test)) {
+                    logger.debug("Authorized in module!");
+                    return true;
+                }
             }
+            logger.debug("Not authorized in module!");
+            return false;
+        } else {
+            logger.debug("No account in session!");
+            return false;
         }
-        logger.debug("Not authorized in module!");
-        return false;
     }
 
     private boolean checkModulePrivilege(Integer roleId, Integer departmentId, Integer moduleId) {

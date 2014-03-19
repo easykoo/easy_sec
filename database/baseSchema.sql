@@ -1,6 +1,6 @@
-drop schema if exists easy_sec;
-CREATE SCHEMA easy_sec DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-use easy_sec;
+drop schema if exists northen;
+CREATE SCHEMA northen DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+use northen;
 
 drop table if exists sec_group;
 CREATE TABLE sec_group (
@@ -182,11 +182,12 @@ CREATE TABLE product (
   product_id INT(11) NOT NULL AUTO_INCREMENT,
   name VARCHAR(60) NOT NULL,
   cn_name VARCHAR(60) NOT NULL,
-  description VARCHAR(200) NOT NULL,
-  cn_description VARCHAR(200) NOT NULL,
+  description VARCHAR(500) NOT NULL,
+  cn_description VARCHAR(500) NOT NULL,
   category_id VARCHAR(20) NOT NULL,
   img_path VARCHAR(60) NULL,
   pre_img_path VARCHAR(60) NULL,
+  priority INT(1) NULL DEFAULT 5,
   create_user VARCHAR(20) NULL,
   create_date DATETIME NULL,
   update_user varchar(20) DEFAULT NULL,

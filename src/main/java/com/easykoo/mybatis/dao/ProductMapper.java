@@ -20,4 +20,6 @@ public interface ProductMapper {
     List<Product> findProductWithPage(Product record);
 
     List<Product> selectByCategory(String categoryId);
+
+    List<Product> getTopPriorityProducts();
 }
