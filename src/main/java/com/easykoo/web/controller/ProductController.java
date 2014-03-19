@@ -49,6 +49,8 @@ public class ProductController implements ServletContextAware {
         product.setCategoryId(request.getParameter("categoryId"));
         product.setPageNo(request.getParameter("pageNo"));
         product.setPageSize(request.getParameter("pageSize"));
+        product.addSortProperties("priority", "asc");
+        product.addSortProperties("create_date", "desc");
         List<Category> categoryList = productService.getTopLevelCategory();
         List<Product> productList = productService.findProductWithPage(product);
         model.addAttribute("categoryList", categoryList);
@@ -87,8 +89,15 @@ public class ProductController implements ServletContextAware {
                                  @RequestParam("cnName") String cnName, @RequestParam("cnDescription") String cnDescription,
                                  @RequestParam("image") CommonsMultipartFile mFile, HttpServletRequest request, Locale locale, ModelMap model) {
 
+        String productDirectory = ConfigUtils.getInstance().getProductDirectory();
+        String productViewDirectory = ConfigUtils.getInstance().getProductViewDirectory();
+        String productPreviewDirectory = ConfigUtils.getInstance().getProductPreviewDirectory();
+
+        final int viewPicWidth = ConfigUtils.getInstance().getViewPictureWidth();
         final int previewPicWidth = ConfigUtils.getInstance().getPreviewPictureWidth();
+
         File file = null;
+        File viewFile = null;
         File previewFile = null;
         if (!mFile.isEmpty()) {
             try {
@@ -102,55 +111,29 @@ public class ProductController implements ServletContextAware {
                 Account currUser = (Account) request.getSession().getAttribute("currentAccountSecurity");
                 product.setCreateUser(currUser.getUsername());
                 product.setUpdateUser(currUser.getUsername());
-                String productDirectory = ConfigUtils.getInstance().getProductDirectory();
                 String path = servletContext.getRealPath(productDirectory);
                 File directory = new File(path);
                 if (!directory.exists()) {
                     directory.mkdir();
                 }
 
-                String productPreviewDirectory = ConfigUtils.getInstance().getProductPreviewDirectory();
-                String previewPath = servletContext.getRealPath(productPreviewDirectory);
-                File previewDirectory = new File(previewPath);
-                if (!previewDirectory.exists()) {
-                    previewDirectory.mkdir();
-                }
-
                 file = new File(directory.getPath() + "/" + new Date().getTime() + ".jpg");
                 mFile.transferTo(file);
 
-                previewFile = new File(file.getPath().replaceFirst("products", "products/preview"));
+                viewFile = createTransferImage(file, viewPicWidth, productViewDirectory);
+                previewFile = createTransferImage(file, previewPicWidth, productPreviewDirectory);
 
-                if (!previewFile.exists()) {
-                    previewFile.createNewFile();
-                }
-                AffineTransform transform = new AffineTransform();
-                BufferedImage bis = ImageIO.read(file);
-
-                int w = bis.getWidth();
-                int h = bis.getHeight();
-                double scale = (double) w / h;
-                int nw = previewPicWidth;
-                int nh = (nw * h) / w;
-                if (nh > previewPicWidth) {
-                    nh = previewPicWidth;
-                    nw = (nh * w) / h;
-                }
-                double sx = (double) nw / w;
-                double sy = (double) nh / h;
-                transform.setToScale(sx, sy);
-                AffineTransformOp ato = new AffineTransformOp(transform, null);
-                BufferedImage bid = new BufferedImage(nw, nh, BufferedImage.TYPE_3BYTE_BGR);
-                ato.filter(bis, bid);
-                ImageIO.write(bid, "jpg", previewFile);
-
-                product.setImgPath(productDirectory + "/" + file.getName());
-                product.setPreImgPath(productPreviewDirectory + "/" + file.getName());
+                product.setImgPath(productDirectory + file.getName());
+                product.setViewImgPath(productViewDirectory + file.getName());
+                product.setPreImgPath(productPreviewDirectory + file.getName());
                 productService.insert(product);
                 model.addAttribute("message", new ResponseMessage(true, messageSource.getMessage("message.publish.success", null, locale)));
             } catch (DuplicateKeyException e) {
                 if (file.exists()) {
                     file.delete();
+                }
+                if (viewFile.exists()) {
+                    viewFile.delete();
                 }
                 if (previewFile.exists()) {
                     previewFile.delete();
@@ -160,6 +143,9 @@ public class ProductController implements ServletContextAware {
             } catch (Exception e) {
                 if (file != null && file.exists()) {
                     file.delete();
+                }
+                if (viewFile != null && viewFile.exists()) {
+                    viewFile.delete();
                 }
                 if (previewFile != null && previewFile.exists()) {
                     previewFile.delete();
@@ -171,6 +157,36 @@ public class ProductController implements ServletContextAware {
             model.addAttribute("message", new ResponseMessage(false, messageSource.getMessage("message.error.file.not.exists", null, locale)));
         }
         return "publishProduct";
+    }
+
+    private File createTransferImage(File srcImg, Integer destWidth, String destPath) throws IOException{
+        File destDirectory = new File(servletContext.getRealPath(destPath));
+        if (!destDirectory.exists()) {
+            destDirectory.mkdir();
+        }
+        File destImg = new File(destDirectory.getPath() + "/" + srcImg.getName());
+
+        if (!destImg.exists()) {
+            destImg.createNewFile();
+        }
+        AffineTransform transform = new AffineTransform();
+        BufferedImage bis = ImageIO.read(srcImg);
+
+        int width = bis.getWidth();
+        int height = bis.getHeight();
+        int destHeight = (destWidth * height) / width;
+        if (destHeight > destWidth) {
+            destHeight = destWidth;
+            destWidth = (destHeight * width) / height;
+        }
+        double sx = (double) destWidth / width;
+        double sy = (double) destHeight / height;
+        transform.setToScale(sx, sy);
+        AffineTransformOp ato = new AffineTransformOp(transform, null);
+        BufferedImage bid = new BufferedImage(destWidth, destHeight, BufferedImage.TYPE_3BYTE_BGR);
+        ato.filter(bis, bid);
+        ImageIO.write(bid, "jpg", destImg);
+        return destImg;
     }
 
     @RequestMapping(value = "/product/changeProduct.do", method = RequestMethod.POST)

@@ -186,6 +186,7 @@ CREATE TABLE product (
   cn_description VARCHAR(500) NOT NULL,
   category_id VARCHAR(20) NOT NULL,
   img_path VARCHAR(60) NULL,
+  view_img_path VARCHAR(60) NULL,
   pre_img_path VARCHAR(60) NULL,
   priority INT(1) NULL DEFAULT 5,
   create_user VARCHAR(20) NULL,

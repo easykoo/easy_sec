@@ -12,6 +12,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="shortcut icon" href="img/favicon.ico">
     <title><spring:message code="main.title"/> - <spring:message code="label.about.us"/></title>
 
     <link href="css/styles.css" media="screen" rel="stylesheet" type="text/css"/>
@@ -49,10 +50,10 @@
 
                 <ul class="topmenu">
                     <li class="first"><a href="index.do"><span><spring:message code="label.home"/></span></a></li>
-                    <li><a href="product.do"><span><spring:message code="label.product"/></span></a></li>
                     <li class="current-menu-item"><a href="javascript:"><span><spring:message
                             code="label.about.us"/></span></a>
                     </li>
+                    <li><a href="product.do"><span><spring:message code="label.product"/></span></a></li>
                     <li class="last"><a href="contacts.do"><span><spring:message code="label.contact.us"/></span></a>
                     </li>
                     <li>
@@ -172,11 +173,8 @@
 
             <div class="col_2_3 col">
                 <div class="inner">
-                    <a href="#" class="link-twitter" title="Twitter">Twitter</a>
-                    <a href="#" class="link-fb" title="Facebook">Facebook</a>
-                    <a href="#" class="link-flickr" title="Flickr">Flickr</a>
-                    <a href="#" class="link-da" title="deviantART">deviantART</a>
-                    <a href="#" class="link-rss" title="RSS Feed">RSS Feed</a></div>
+                    <a href="http://twitter.com/ahnorthen" class="link-twitter" title="Twitter">Twitter</a>
+                    <a href="http://facebook.com/ahnorthen" class="link-fb" title="Facebook">Facebook</a>
             </div>
 
             <div class="col_1_3 col">

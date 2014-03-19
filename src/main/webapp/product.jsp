@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<%@ page import="org.springframework.web.servlet.support.RequestContextUtils" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=utf-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -10,6 +11,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="shortcut icon" href="img/favicon.ico">
     <title><spring:message code="main.title"/> - <spring:message code="label.product"/></title>
 
     <link href="css/styles.css" media="screen" rel="stylesheet" type="text/css"/>
@@ -20,14 +22,7 @@
 
     <link href="css/gray.css" media="screen" rel="stylesheet" type="text/css"/>
 
-    <script type="text/javascript" language="javascript" src="js/jquery-1.4.2.min.js"></script>
-    <script type="text/javascript" language="javascript" src="js/jquery.tools.min.js"></script>
-
     <link rel="stylesheet" href="css/prettyPhoto.css" type="text/css" media="screen"/>
-    <script src="js/jquery.prettyPhoto.js" type="text/javascript"></script>
-
-    <script type="text/javascript" language="javascript" src="js/general.js"></script>
-    <script type="text/javascript" src="js/easykoo.js"></script>
 
 </head>
 
@@ -47,9 +42,9 @@
 
                 <ul class="topmenu">
                     <li class="first"><a href="index.do"><span><spring:message code="label.home"/></span></a></li>
+                    <li><a href="about.do"><span><spring:message code="label.about.us"/></span></a></li>
                     <li class="current-menu-item"><a href="javascript:"><span><spring:message
                             code="label.product"/></span></a></li>
-                    <li><a href="about.do"><span><spring:message code="label.about.us"/></span></a></li>
                     <li class="last"><a href="contacts.do"><span><spring:message code="label.contact.us"/></span></a>
                     </li>
                     <li>
@@ -124,19 +119,29 @@
             <div class="content">
 
                 <!-- gallery list, 1 col -->
-                <div class="gallery-list gl_col_2">
+                <c:if test="${not empty productList}">
+                    <div class="gallery-list gl_col_2">
                     <c:forEach items="${productList}" var="product">
-
                         <div class="gallery-item">
-                            <div class="gallery-image"><img src="${product.preImgPath}" alt="" width="285"
-                                                            height="157" border="0" class="borderImg"/> <a
-                                    href="${product.imgPath}" class="gallery-zoom" rel="prettyPhoto"
-                                    title="${product.name}"><img src="img/icon_zoom.png" alt="" width="42" height="42"
-                                                                 border="0"/></a> <span class="ribbon-new">NEW</span>
+                            <div class="gallery-image">
+                                <img src="${product.viewImgPath}" alt="" width="285" height="190" border="0" class="borderImg"/>
+
+                                <% if ("zh".equals(RequestContextUtils.getLocaleResolver(request).resolveLocale(request).getLanguage())) {%>
+                                    <a href="${product.imgPath}" class="gallery-zoom" rel="prettyPhoto" title="${product.cnName}">
+                                        <img src="img/icon_zoom.png" alt="" width="42" height="42" border="0"/>
+                                    </a>
+                                <% } else { %>
+                                    <a href="${product.imgPath}" class="gallery-zoom" rel="prettyPhoto" title="${product.name}">
+                                        <img src="img/icon_zoom.png" alt="" width="42" height="42" border="0"/>
+                                    </a>
+                                <% } %>
+                                <c:if test="${product.newArrival}">
+                                    <span class="ribbon-new">NEW</span>
+                                </c:if>
                             </div>
                             <div class="gallery-text">
                                 <div class="gallery-item-name"><h2><a href="#">${product.name}</a></h2></div>
-                                <div class="gallery-more"><a href="javascript:"><span>View Detail</span></a></div>
+                                <div class="gallery-more"><a href="javascript:"><span><spring:message code="label.view.detail" /></span></a></div>
                             </div>
                             <div class="clear"></div>
                         </div>
@@ -144,21 +149,26 @@
 
                     <div class="clear"></div>
                 </div>
+                </c:if>
+
+                <c:if test="${empty productList}">
+                    <spring:message code="message.error.no.record"/>
+                </c:if>
 
                 <!--/ gallery list, 1 col -->
-
-                <div align="center" class="clearpagination">
-                    <span class="pagination">
-                        <span class="inner">
-                            <a class="page_prev" href="javascript:previousPage()">&nbsp;</a>
-                            <c:forEach begin="1" step="1" end="${page.totalPage}" var="pageNo">
-                                <a <c:if test="${pageNo == page.pageNo}">class="page_current"</c:if> href="javascript:goPage(${pageNo})">${pageNo}</a>
-                            </c:forEach>
-                            <a class="page_next" href="javascript:nextPage()">&nbsp;</a>
+                <c:if test="${page.totalPage > 0}">
+                    <div align="center" class="clearpagination">
+                        <span class="pagination">
+                            <span class="inner">
+                                <a class="page_prev" href="javascript:previousPage()">&nbsp;</a>
+                                <c:forEach begin="1" step="1" end="${page.totalPage}" var="pageNo">
+                                    <a <c:if test="${pageNo == page.pageNo}">class="page_current"</c:if> href="javascript:goPage(${pageNo})">${pageNo}</a>
+                                </c:forEach>
+                                <a class="page_next" href="javascript:nextPage()">&nbsp;</a>
+                            </span>
                         </span>
-                    </span>
-                </div>
-
+                    </div>
+                </c:if>
                 <div class="clear"></div>
             </div>
         </div>
@@ -170,9 +180,44 @@
                 <div class="widget-container widget_categories">
                     <h3>Categories:</h3>
                     <ul>
-                        <c:forEach items="${categoryList}" var="category">
-                            <li><a href="#">${category.description}</a></li>
-                        </c:forEach>
+                        <li><a href="product.do"><spring:message code="label.all" /></a></li>
+                        <% if ("zh".equals(RequestContextUtils.getLocaleResolver(request).resolveLocale(request).getLanguage())) {%>
+                            <c:forEach items="${categoryList}" var="category">
+                                <li><a href="product.do?categoryId=${category.categoryId}">${category.cnDescription}</a></li>
+                                <c:if test="${not empty category.children}">
+                                    <ul>
+                                        <c:forEach items="${category.children}" var="child">
+                                            <li><a href="product.do?categoryId=${child.categoryId}">${child.cnDescription}</a></li>
+                                            <c:if test="${not empty child.children}">
+                                                <ul>
+                                                    <c:forEach items="${child.children}" var="child1">
+                                                        <li><a href="product.do?categoryId=${child1.categoryId}">${child1.cnDescription}</a></li>
+                                                    </c:forEach>
+                                                </ul>
+                                            </c:if>
+                                        </c:forEach>
+                                    </ul>
+                                </c:if>
+                            </c:forEach>
+                        <% } else { %>
+                            <c:forEach items="${categoryList}" var="category">
+                                <li><a href="product.do?categoryId=${category.categoryId}">${category.description}</a></li>
+                                <c:if test="${not empty category.children}">
+                                    <ul>
+                                        <c:forEach items="${category.children}" var="child">
+                                            <li><a href="product.do?categoryId=${child.categoryId}">${child.description}</a></li>
+                                            <c:if test="${not empty child.children}">
+                                                <ul>
+                                                    <c:forEach items="${child.children}" var="child1">
+                                                        <li><a href="product.do?categoryId=${child1.categoryId}">${child1.description}</a></li>
+                                                    </c:forEach>
+                                                </ul>
+                                            </c:if>
+                                        </c:forEach>
+                                    </ul>
+                                </c:if>
+                            </c:forEach>
+                        <% } %>
                     </ul>
                 </div>
             </div>
@@ -189,11 +234,8 @@
 
             <div class="col_2_3 col">
                 <div class="inner">
-                    <a href="#" class="link-twitter" title="Twitter">Twitter</a>
-                    <a href="#" class="link-fb" title="Facebook">Facebook</a>
-                    <a href="#" class="link-flickr" title="Flickr">Flickr</a>
-                    <a href="#" class="link-da" title="deviantART">deviantART</a>
-                    <a href="#" class="link-rss" title="RSS Feed">RSS Feed</a></div>
+                    <a href="http://twitter.com/ahnorthen" class="link-twitter" title="Twitter">Twitter</a>
+                    <a href="http://facebook.com/ahnorthen" class="link-fb" title="Facebook">Facebook</a>
             </div>
 
             <div class="col_1_3 col">
@@ -207,6 +249,14 @@
     </div>
 </div>
 </body>
+
+<script type="text/javascript" language="javascript" src="js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" language="javascript" src="js/jquery.tools.min.js"></script>
+<script src="js/jquery.prettyPhoto.js" type="text/javascript"></script>
+
+<script type="text/javascript" language="javascript" src="js/general.js"></script>
+<script type="text/javascript" src="js/easykoo.js"></script>
+
 <script type="text/javascript">
     var categoryId = '${page.categoryId}';
     var pageNo = '${page.pageNo}';

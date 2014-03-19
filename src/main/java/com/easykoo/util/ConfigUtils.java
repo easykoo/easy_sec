@@ -59,12 +59,20 @@ public class ConfigUtils {
         return properties.getProperty("product.directory");
     }
 
+    public String getProductViewDirectory() {
+        return properties.getProperty("product.view.directory");
+    }
+
     public String getProductPreviewDirectory() {
         return properties.getProperty("product.preview.directory");
     }
 
     public String getPictureSizeLimit() {
         return properties.getProperty("picture.limit.size");
+    }
+
+    public int getViewPictureWidth() {
+        return Integer.parseInt(properties.getProperty("view.picture.width"));
     }
 
     public Integer getPreviewPictureWidth() {

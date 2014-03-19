@@ -52,8 +52,8 @@
                 <ul class="topmenu">
                     <li class="first current-menu-item"><a href="#"><span><spring:message code="label.home"/></span></a>
                     </li>
-                    <li><a href="product.do"><span><spring:message code="label.product"/></span></a></li>
                     <li><a href="about.do"><span><spring:message code="label.about.us"/></span></a></li>
+                    <li><a href="product.do"><span><spring:message code="label.product"/></span></a></li>
                     <li class="last"><a href="contacts.do"><span><spring:message code="label.contact.us"/></span></a>
                     </li>
                     <li>
@@ -131,14 +131,14 @@
     <div class="container_12 bar">
         <div class="bar-icon"><img src="img/icon_rss.png" width="80" height="80" alt=""/></div>
         <div class="bar-title">
-            <h1>Welcome to <span>Envision</span>, the interactive agency!</h1>
+            <h1>Welcome to <span>Northen</span>, the interactive agency!</h1>
 
             <div class="sub-text">We have a passion for pixel perfect design. But don’t take our word for it, look for
                 yourself:
             </div>
         </div>
         <div class="bar-right">
-            <a href="javascript:void(0);" class="button_link large_button"><span>View Portfolio</span></a></div>
+            <a href="product.do" class="button_link large_button"><span><spring:message code="label.view.product" /></span></a></div>
         <div class="clear"></div>
     </div>
     <!--/ bar -->
@@ -344,11 +344,8 @@
 
             <div class="col_2_3 col">
                 <div class="inner">
-                    <a href="#" class="link-twitter" title="Twitter">Twitter</a>
-                    <a href="#" class="link-fb" title="Facebook">Facebook</a>
-                    <a href="#" class="link-flickr" title="Flickr">Flickr</a>
-                    <a href="#" class="link-da" title="deviantART">deviantART</a>
-                    <a href="#" class="link-rss" title="RSS Feed">RSS Feed</a></div>
+                    <a href="http://twitter.com/ahnorthen" class="link-twitter" title="Twitter">Twitter</a>
+                    <a href="http://facebook.com/ahnorthen" class="link-fb" title="Facebook">Facebook</a>
             </div>
 
             <div class="col_1_3 col">
