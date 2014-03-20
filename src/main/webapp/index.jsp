@@ -93,8 +93,9 @@
                             </li>
                         </c:when>
                         <c:otherwise>
-                            <li><a href="login.do?url=<%=request.getHeader("Referer")%>"><span><spring:message
-                                    code="label.sign.in"/></span></a></li>
+                            <li>
+                                <a href="login.do?url=<%=(request.getHeader("referer") == null? "":request.getHeader("referer"))%>"><span><spring:message
+                                        code="label.sign.in"/></span></a></li>
                             <%--<li><a href="register.do"><span><spring:message code="label.sign.up"/></span></a></li>--%>
                         </c:otherwise>
                     </c:choose>
@@ -156,10 +157,10 @@
                 <h2>Export &amp; Import Trade</h2>
 
                 <p>We have own factories and cooperated <img src="img/temp_img_1.png" width="93" height="76"
-                                                              class="alignright"/>supplier to export different high
+                                                             class="alignright"/>supplier to export different high
                     quality products with competitive prices. engaged in the export of all kinds of arts & craft gifts..
                 </p>
-                <a href="about.do" class="link-more"><spring:message code="label.more.details" /></a></div>
+                <a href="about.do" class="link-more"><spring:message code="label.more.details"/></a></div>
         </div>
 
         <div class="col col_1_3">
@@ -167,10 +168,10 @@
                 <h2>Trade Agent &amp; Purchase Agent</h2>
 
                 <p>We help clients to fix sales or purchases at<img src="img/temp_img_2.png" alt="" width="93"
-                                                                        height="76" class="alignright"/> most
+                                                                    height="76" class="alignright"/> most
                     competitive prices. Our skills help clients in particular ways; taken together to add
                     value to the work by saving time, effort and money.</p>
-                <a href="about.do" class="link-more"><spring:message code="label.more.details" /></a></div>
+                <a href="about.do" class="link-more"><spring:message code="label.more.details"/></a></div>
         </div>
         <div class="col col_1_3">
             <div class="inner">
@@ -180,7 +181,7 @@
                                                                   class="alignright" alt=""/> warehouse till loading on
                     board the ship tracking every details through the process to make sure that our clients can receive
                     the right material as booked.</p>
-                <a href="about.do" class="link-more"><spring:message code="label.more.details" /></a></div>
+                <a href="about.do" class="link-more"><spring:message code="label.more.details"/></a></div>
         </div>
         <div class="divider_space"></div>
 
