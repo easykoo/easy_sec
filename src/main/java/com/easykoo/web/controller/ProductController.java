@@ -7,6 +7,7 @@ import com.easykoo.mybatis.model.Category;
 import com.easykoo.mybatis.model.Product;
 import com.easykoo.service.IProductService;
 import com.easykoo.util.ConfigUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,10 @@ public class ProductController implements ServletContextAware {
     public String product(HttpServletRequest request, ModelMap model) {
         Product product = new Product();
         product.setPageActived(true);
+        String productIdStr = request.getParameter("productId");
+        if (StringUtils.isNotBlank(productIdStr)){
+            product.setProductId(Integer.parseInt(productIdStr));
+        }
         product.setCategoryId(request.getParameter("categoryId"));
         product.setPageNo(request.getParameter("pageNo"));
         product.setPageSize(request.getParameter("pageSize"));

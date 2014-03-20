@@ -53,7 +53,7 @@
                     <li class="first current-menu-item"><a href="#"><span><spring:message code="label.home"/></span></a>
                     </li>
                     <li><a href="about.do"><span><spring:message code="label.about.us"/></span></a></li>
-                    <li><a href="product.do"><span><spring:message code="label.product"/></span></a></li>
+                    <li><a href="product.do"><span><spring:message code="label.product.display"/></span></a></li>
                     <li><a href="join.do"><span><spring:message code="label.join.us"/></span></a></li>
                     <li class="last"><a href="contacts.do"><span><spring:message code="label.contact.us"/></span></a>
                     </li>
@@ -132,14 +132,15 @@
     <div class="container_12 bar">
         <div class="bar-icon"><img src="img/icon_rss.png" width="80" height="80" alt=""/></div>
         <div class="bar-title">
-            <h1>Welcome to <span>Northen</span>, the interactive agency!</h1>
+            <h1>Welcome to <span>Northen</span>, best parter in business.</h1>
 
-            <div class="sub-text">We have a passion for pixel perfect design. But don’t take our word for it, look for
-                yourself:
+            <div class="sub-text">We have our own factories to supply high quality products, and professional teams to
+                supply good service.
             </div>
         </div>
         <div class="bar-right">
-            <a href="product.do" class="button_link large_button"><span><spring:message code="label.view.product" /></span></a></div>
+            <a href="product.do" class="button_link large_button"><span><spring:message
+                    code="label.view.product"/></span></a></div>
         <div class="clear"></div>
     </div>
     <!--/ bar -->
@@ -152,34 +153,34 @@
 
         <div class="col col_1_3">
             <div class="inner">
-                <h2>Multiple Colors &amp; Slider options</h2>
+                <h2>Export &amp; Import Trade</h2>
 
-                <p> Sliders in all forms &amp; colors: Javascript, Flash, you<img src="img/temp_img_1.png" alt=""
-                                                                                  width="93" height="76"
-                                                                                  class="alignright"/> name it! We’ve
-                    got it! But the best part is that they can be easily modified to fit your company’s look &amp; feel.
+                <p>We have own factories and cooperated <img src="img/temp_img_1.png" width="93" height="76"
+                                                              class="alignright"/>supplier to export different high
+                    quality products with competitive prices. engaged in the export of all kinds of arts & craft gifts..
                 </p>
-                <a href="javascript:" class="link-more">more details</a></div>
+                <a href="about.do" class="link-more"><spring:message code="label.more.details" /></a></div>
         </div>
 
         <div class="col col_1_3">
             <div class="inner">
-                <h2>Award winning design &amp; coding</h2>
+                <h2>Trade Agent &amp; Purchase Agent</h2>
 
-                <p>These three icons below the text paragraphs<img src="img/temp_img_2.png" alt="" width="93"
-                                                                   height="76" class="alignright"/> are custom created
-                    for the Envision theme &amp; the included PSD files contain all the layers needed to edit them. </p>
-                <a href="javascript:" class="link-more">more details</a></div>
+                <p>We help clients to fix sales or purchases at<img src="img/temp_img_2.png" alt="" width="93"
+                                                                        height="76" class="alignright"/> most
+                    competitive prices. Our skills help clients in particular ways; taken together to add
+                    value to the work by saving time, effort and money.</p>
+                <a href="about.do" class="link-more"><spring:message code="label.more.details" /></a></div>
         </div>
         <div class="col col_1_3">
             <div class="inner">
-                <h2>Great support in just 24 hours</h2>
+                <h2>Quality Inspection &amp; Crisis management</h2>
 
-                <p> If you buy this theme we offer 24 hours <img src="img/temp_img_3.png" width="80" height="76"
-                                                                 class="alignright" alt=""/>response time on our
-                    dedicated support forums. That’s “best in class” support offer, it just can’t get better &amp;
-                    faster than this!</p>
-                <a href="javascript:" class="link-more">more details</a></div>
+                <p>Our job starts from the production line or<img src="img/temp_img_3.png" width="80" height="76"
+                                                                  class="alignright" alt=""/> warehouse till loading on
+                    board the ship tracking every details through the process to make sure that our clients can receive
+                    the right material as booked.</p>
+                <a href="about.do" class="link-more"><spring:message code="label.more.details" /></a></div>
         </div>
         <div class="divider_space"></div>
 
@@ -189,11 +190,11 @@
                 <div class="inner">
                     <div class="quoteBox-big">
                         <div class="quote-title"><strong>WHAT OTHERS SAY ABOUT US:</strong></div>
-                        <div class="quote-text">Over the last eighteen months our sales have increased three-fold since
-                            the launch of our new web site. We have to say it has made us delighted we chose Envision.
+                        <div class="quote-text">Over the last eighteen months, Northen help us save much time and money.
+                            Northen make our work in China much easier. We have to say it has made us delighted we chose
+                            Northen.
                         </div>
-                        <div class="quote-author"><span class="violet">George Mansion,</span> founder Silicon App Inc
-                        </div>
+                        <div class="quote-author">Client from UK</div>
                     </div>
                 </div>
             </div>
@@ -207,12 +208,12 @@
                             <div class="ribbon"></div>
                             <h2>Stay in touch with us!</h2>
 
-                            <div class="before-text">Sign up for our weekly newsletter to receive updates, news, and
+                            <div class="before-text">Subscribe for our newsletter to receive updates, news, and
                                 interesting tidbits.
                             </div>
-                            <form action="" method="post">
-                                <input type="text" value="" name="" class="inputField"/>
-                                <input type="submit" value="" name="" class="btn-submit"/>
+                            <form id="subscribeForm" action="feedback/ajax/subscribe.do" method="post">
+                                <input type="text" id="email" name="email" class="inputField"/>
+                                <input onclick="subscribe()" type="button" value="" class="btn-submit"/>
 
                                 <div class="clear"></div>
                             </form>
@@ -243,10 +244,10 @@
                         <div class="inner">
                             <img src="img/temp_img_1.jpg" alt="" width="230" height="143" class="alignleft"/>
 
-                            <h3>Creative webdesign</h3>
+                            <h3>Creative Design</h3>
 
-                            <p>The point of using Lorem Ipsum is that it has a near “more-or-less” normal and
-                                distribution of letters.</p>
+                            <p>Our design department can supply you what you need. Nice craft gift for home decoration,
+                                business gifts and promotion gifts.</p>
 
                             <div class="clear"></div>
                         </div>
@@ -255,10 +256,10 @@
                         <div class="inner">
                             <img src="img/temp_img_2.jpg" alt="" width="230" height="143" class="alignleft"/>
 
-                            <h3>Apps for Mobile phones</h3>
+                            <h3>Quality Product</h3>
 
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod . <a
-                                    href="#tabcontent1">Jump to first tab.</a></p>
+                            <p>The cores of our company’s product are high quality, competitive price and good
+                                service.</p>
 
                             <div class="clear"></div>
                         </div>
@@ -267,10 +268,9 @@
                         <div class="inner">
                             <img src="img/temp_img_3.jpg" alt="" width="230" height="143" class="alignright"/>
 
-                            <h3>Statistics</h3>
+                            <h3>Full Service</h3>
 
-                            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                                commodo consequat. </p>
+                            <p>Purchase, production, quality inspection, export and shipping tracking. </p>
 
                             <div class="clear"></div>
                         </div>
@@ -285,7 +285,7 @@
 
                 <!-- tab box -->
                 <div class="tabBox">
-                    <div class="tabTitle"><h3>Solutions:</h3></div>
+                    <div class="tabTitle"><h3>Advantage:</h3></div>
                     <ul class="tabs">
                         <li><a href="#tabcontent1"><img src="img/icon_5.png" width="51" height="42" alt=""/></a></li>
                         <li><a href="#tabcontent2"><img src="img/icon_4.png" width="51" height="42" alt=""/></a></li>
@@ -296,23 +296,20 @@
                         <div class="inner">
                             <img src="img/temp_img_3.jpg" alt="" width="230" height="143" class="alignleft"/>
 
-                            <h3>Apps for Mobile phones</h3>
+                            <h3>Full Service</h3>
 
-                            <p>The point of using Lorem Ipsum is that it has a near “more-or-less” normal and
-                                distribution of letters.</p>
+                            <p>Make clients’work easy in china and help client expand business in local market with full
+                                service.</p>
 
                             <div class="clear"></div>
                         </div>
                     </div>
                     <div class="tabcontent">
                         <div class="inner">
-                            <h3>Everything for your need!</h3>
+                            <h3>Wide range product</h3>
 
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. </p>
-
-                            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                                commodo consequat. </p>
+                            <p>Have our own factory and cooperated supplier, which make the price more competitive and
+                                easy to control the quality.</p>
 
                             <div class="clear"></div>
                         </div>
@@ -321,10 +318,9 @@
                         <div class="inner">
                             <img src="img/temp_img_2.jpg" alt="" width="230" height="143" class="alignleft"/>
 
-                            <h3>Weather</h3>
+                            <h3>Product from own factories</h3>
 
-                            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                                commodo consequat. </p>
+                            <p>Help client purchase different product with professional service and quick reaction.</p>
 
                             <div class="clear"></div>
                         </div>
@@ -347,16 +343,51 @@
                 <div class="inner">
                     <a href="http://twitter.com/ahnorthen" class="link-twitter" title="Twitter">Twitter</a>
                     <a href="http://facebook.com/ahnorthen" class="link-fb" title="Facebook">Facebook</a>
-            </div>
-
-            <div class="col_1_3 col">
-                <div class="inner">
-                    <p class="copyright">&copy; 2014 Anhui Northen. All rights reserved!</p>
                 </div>
+
+                <div class="col_1_3 col">
+                    <div class="inner">
+                        <p class="copyright">&copy; 2014 Anhui Northen. All rights reserved!</p>
+                    </div>
+                </div>
+                <div class="clear"></div>
             </div>
-            <div class="clear"></div>
         </div>
     </div>
 </div>
 </body>
+<script>
+    var subscribe = function () {
+        if ($('#email').val() == '') {
+            alert('<spring:message code="message.error.email.is.required" />');
+        } else if (!isEmail($('#email').val())) {
+            alert('<spring:message code="message.error.wrong.email.format" />');
+        } else {
+            $.ajax({
+                cache: true,
+                type: "POST",
+                dataType: 'json',
+                url: "feedback/ajax/subscribe.do",
+                data: {
+                    email: $('#email').val()
+                },
+                async: false,
+                error: function (request) {
+                    alert("Connection error");
+                },
+                success: function (data) {
+                    if (data.success) {
+                        alert('<spring:message code="message.subscribe.success"/>');
+                    } else {
+                        alert('<spring:message code="message.already.subscribed"/>');
+                    }
+                    $('#email').val('');
+                }
+            });
+        }
+    }
+    var isEmail = function (t) {
+        return /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/.test(t);
+    }
+</script>
 </html>

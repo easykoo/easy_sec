@@ -48,7 +48,7 @@
                     <li class=""><a href="about.do" class="scroll brand-3"><spring:message
                             code="label.about.us"/></a></li>
                     <li class=""><a href="product.do" class="scroll fadeto brand-4"><spring:message
-                            code="label.product"/></a></li>
+                            code="label.product.display"/></a></li>
                     <li class=""><a href="join.do" class="scroll brand-2"><spring:message
                             code="label.join.us"/></a></li>
                     <li class=""><a href="contacts.do" class="scroll brand-2"><spring:message
