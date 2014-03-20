@@ -187,9 +187,28 @@
                             <span class="inner">
                                 <a class="page_prev" href="javascript:previousPage()">&nbsp;</a>
                                 <c:forEach begin="1" step="1" end="${page.totalPage}" var="pageNo">
-                                    <a
-                                            <c:if test="${pageNo == page.pageNo}">class="page_current"</c:if>
-                                            href="javascript:goPage(${pageNo})">${pageNo}</a>
+                                    <c:if test="${pageNo == page.pageNo}">${pageNo}</c:if>
+                                    <c:if test="${pageNo != page.pageNo}">
+                                        <c:choose>
+                                            <c:when test="${pageNo < page.pageNo - 5}">
+                                                <c:choose>
+                                                    <c:when test="${pageNo == page.pageNo - 6}">...</c:when>
+                                                    <c:when test="${pageNo == 1}"><a
+                                                            href="javascript:goPage(${pageNo})">${pageNo}</a></c:when>
+                                                </c:choose>
+                                            </c:when>
+                                            <c:when test="${pageNo > page.pageNo + 5}">
+                                                <c:choose>
+                                                    <c:when test="${pageNo == page.pageNo + 6}">...</c:when>
+                                                    <c:when test="${pageNo == page.totalPage}"><a
+                                                            href="javascript:goPage(${pageNo})">${pageNo}</a></c:when>
+                                                </c:choose>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a href="javascript:goPage(${pageNo})">${pageNo}</a>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:if>
                                 </c:forEach>
                                 <a class="page_next" href="javascript:nextPage()">&nbsp;</a>
                             </span>
