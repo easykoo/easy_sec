@@ -162,6 +162,7 @@
                 <div class="inner">
                     <a href="http://twitter.com/ahnorthen" class="link-twitter" title="Twitter">Twitter</a>
                     <a href="http://facebook.com/ahnorthen" class="link-fb" title="Facebook">Facebook</a>
+                </div>
             </div>
 
             <div class="col_1_3 col">

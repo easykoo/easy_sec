@@ -164,15 +164,15 @@
                     <a href="http://twitter.com/ahnorthen" class="link-twitter" title="Twitter">Twitter</a>
                     <a href="http://facebook.com/ahnorthen" class="link-fb" title="Facebook">Facebook</a>
                 </div>
-
-                <div class="col_1_3 col">
-                    <div class="inner">
-                        <p class="copyright">&copy; 2014 Anhui Northen. All rights reserved!</p>
-                    </div>
-                </div>
-                <div class="clear"></div>
             </div>
+            <div class="col_1_3 col">
+                <div class="inner">
+                    <p class="copyright">&copy; 2014 Anhui Northen. All rights reserved!</p>
+                </div>
+            </div>
+            <div class="clear"></div>
         </div>
     </div>
+</div>
 </body>
 </html>

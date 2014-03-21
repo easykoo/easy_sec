@@ -1511,11 +1511,11 @@ a.nivo-nextNav:hover {
 	font-size:13px;
 	position:relative}
 
-.footer_bg {
-	background:url(../img/footer_top.gif) top repeat-x}
+/*.footer_bg {*/
+	/*background:url(../img/footer_top.gif) top repeat-x}*/
 
 .footer .container_12 {
-	min-height:250px;
+	min-height:20px;
 	padding:21px 0 20px 0;
 	background:url(../img/footer_highlight.png) 0 0 no-repeat}
 

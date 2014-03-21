@@ -190,11 +190,12 @@
                     <h3><spring:message code="label.contact.us"/>:</h3>
 
                     <div class="contact-address">
-                        <div class="address"><spring:message code="label.northen.address" />
+                        <div class="address"><spring:message code="label.northen.address"/>
                         </div>
                         <br>
-                        <div class="phone"><spring:message code="label.phone" />: +86 (551) 6511 4065</div>
-                        <div class="fax"><spring:message code="label.fax" />: +86 (551) 6511 4066</div>
+
+                        <div class="phone"><spring:message code="label.phone"/>: +86 (551) 6511 4065</div>
+                        <div class="fax"><spring:message code="label.fax"/>: +86 (551) 6511 4066</div>
                     </div>
 
                     <div class="contact-maillist">
@@ -207,10 +208,13 @@
                     <br/>
 
                     <div class="social-box">
-                        <div class="row social-mail"><a href="mailto:helpdesk@anhuinorthen.com">helpdesk@anhuinorthen.com</a></div>
-                        <div class="row social-twitter"><a href="http://twitter.com/ahnorthen">twitter.com/ahnorthen</a></div>
+                        <div class="row social-mail"><a href="mailto:helpdesk@anhuinorthen.com">helpdesk@anhuinorthen.com</a>
+                        </div>
+                        <div class="row social-twitter"><a href="http://twitter.com/ahnorthen">twitter.com/ahnorthen</a>
+                        </div>
                         <div class="row social-skype"><a href="callto://linghappy915">linghappy915</a></div>
-                        <div class="row social-facebook"><a href="http://facebook.com/ahnorthen">facebook.com/ahnorthen</a></div>
+                        <div class="row social-facebook"><a
+                                href="http://facebook.com/ahnorthen">facebook.com/ahnorthen</a></div>
 
                     </div>
 
@@ -234,6 +238,7 @@
                 <div class="inner">
                     <a href="http://twitter.com/ahnorthen" class="link-twitter" title="Twitter">Twitter</a>
                     <a href="http://facebook.com/ahnorthen" class="link-fb" title="Facebook">Facebook</a>
+                </div>
             </div>
 
             <div class="col_1_3 col">
