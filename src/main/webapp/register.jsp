@@ -38,7 +38,7 @@
                 <span class="sr-only">Toggle navigation</span>
                 <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand" href="#">Easy Security</a>
+            <a class="navbar-brand" href="index.do"><spring:message code="main.title"/></a>
         </div>
         <div id="nav-collapse" class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav navbar-right">
