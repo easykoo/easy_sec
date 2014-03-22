@@ -3,11 +3,12 @@ package com.easykoo.mybatis.model;
 import com.easykoo.model.Page;
 import org.codehaus.jackson.annotate.JsonProperty;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Notice extends Page {
-    @JsonProperty("notice_id")
-    private Integer noticeId;
+public class News extends Page {
+    @JsonProperty("news_id")
+    private Integer newsId;
 
     private String title;
 
@@ -15,12 +16,11 @@ public class Notice extends Page {
 
     private String lang;
 
-    private String cnContent;
-
     private Integer priority;
 
     private String createUser;
 
+    @JsonProperty("create_date")
     private Date createDate;
 
     private String updateUser;
@@ -35,20 +35,12 @@ public class Notice extends Page {
         this.lang = lang;
     }
 
-    public String getCnContent() {
-        return cnContent;
+    public Integer getNewsId() {
+        return newsId;
     }
 
-    public void setCnContent(String cnContent) {
-        this.cnContent = cnContent;
-    }
-
-    public Integer getNoticeId() {
-        return noticeId;
-    }
-
-    public void setNoticeId(Integer noticeId) {
-        this.noticeId = noticeId;
+    public void setNewsId(Integer newsId) {
+        this.newsId = newsId;
     }
 
     public String getTitle() {
@@ -61,6 +53,10 @@ public class Notice extends Page {
 
     public String getContent() {
         return content;
+    }
+
+    public String getContentAsHtml() {
+        return content.replaceAll("\r\n", "<br/>").replaceAll(" ", "&nbsp;");
     }
 
     public void setContent(String content) {
@@ -77,6 +73,11 @@ public class Notice extends Page {
 
     public Date getCreateDate() {
         return createDate;
+    }
+
+    public String getCreateDateStr() {
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        return sdf.format(createDate);
     }
 
     public void setCreateDate(Date createDate) {

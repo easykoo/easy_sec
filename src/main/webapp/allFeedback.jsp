@@ -99,8 +99,8 @@ var feedbackTable;
 
 var deleteFeedback = function (id) {
     bootbox.dialog({
-        message: '<spring:message code="message.sure.delete.feedback" />',
-        title: '<spring:message code="label.delete.feedback" />',
+        message: '<spring:message code="message.sure.delete.record" />',
+        title: '<spring:message code="title.delete.record" />',
         buttons: {
             main: {
                 label: '<spring:message code="label.cancel" />',

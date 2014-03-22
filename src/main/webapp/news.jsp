@@ -13,7 +13,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="shortcut icon" href="img/favicon.ico">
-    <title><spring:message code="main.title"/> - <spring:message code="label.product"/></title>
+    <title><spring:message code="main.title"/> - <spring:message code="label.news"/></title>
 
     <link href="css/styles.css" media="screen" rel="stylesheet" type="text/css"/>
 
@@ -23,7 +23,14 @@
 
     <link href="css/gray.css" media="screen" rel="stylesheet" type="text/css"/>
 
+    <script type="text/javascript" language="javascript" src="js/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" language="javascript" src="js/jquery.tools.min.js"></script>
+
     <link rel="stylesheet" href="css/prettyPhoto.css" type="text/css" media="screen"/>
+    <script src="js/jquery.prettyPhoto.js" type="text/javascript"></script>
+
+    <script type="text/javascript" language="javascript" src="js/general.js"></script>
+    <script type="text/javascript" src="js/easykoo.js"></script>
 
 </head>
 
@@ -44,9 +51,9 @@
                 <ul class="topmenu">
                     <li class="first"><a href="index.do"><span><spring:message code="label.home"/></span></a></li>
                     <li><a href="about.do"><span><spring:message code="label.about.us"/></span></a></li>
-                    <li><a href="news.do"><span><spring:message code="label.news.center"/></span></a></li>
-                    <li class="current-menu-item"><a href="javascript:"><span><spring:message
-                            code="label.product.display"/></span></a></li>
+                    <li class="current-menu-item"><a href="news.do"><span><spring:message
+                            code="label.news.center"/></span></a></li>
+                    <li><a href="product.do"><span><spring:message code="label.product.display"/></span></a></li>
                     <li><a href="join.do"><span><spring:message code="label.join.us"/></span></a></li>
                     <li class="last"><a href="contacts.do"><span><spring:message code="label.contact.us"/></span></a>
                     </li>
@@ -102,28 +109,12 @@
 <div class="welcome_bar">
     <!-- bar -->
     <div class="container_12 bar">
-        <div class="bar-icon"><img src="img/icon_portfolio.png" width="70" height="64" alt=""/></div>
+        <div class="bar-icon"><img src="img/icon_typography.png" width="64" height="64" alt=""/></div>
         <div class="bar-title">
-            <h1><spring:message code="label.our.products"/></h1>
+            <h1><span><spring:message code="label.news"/></span></h1>
 
             <div class="breadcrumbs"><a href="index.do"><spring:message code="label.home"/></a> <spring:message
-                    code="label.product.display"/></div>
-        </div>
-        <div class="bar-right">
-
-            <div id="search-2" class="widget-container widget_search">
-                <form method="get" id="searchform" action="">
-                    <div>
-                        <label class="screen-reader-text" for="s">Search for:</label>
-                        <input type="text" name="productId" id="s" value="Search"
-                               onfocus="if (this.value == 'Search') {this.value = '';}"
-                               onblur="if (this.value == '') {this.value = 'Search';}"/>
-                        <input type="submit" onclick="search()" id="searchsubmit" value="Search"
-                               onfocus="if (this.value == 'Search') {this.value = '';}"
-                               onblur="if (this.value == '') {this.value = 'Search';}"/>
-                    </div>
-                </form>
-            </div>
+                    code="label.news.center"/></div>
         </div>
         <div class="clear"></div>
     </div>
@@ -136,49 +127,17 @@
 
         <div class="wrapper">
             <div class="content">
-
-                <!-- gallery list, 1 col -->
-                <c:if test="${not empty productList}">
-                    <div class="gallery-list gl_col_2">
-                        <c:forEach items="${productList}" var="product">
-                            <div class="gallery-item">
-                                <div class="gallery-image">
-                                    <img src="${product.viewImgPath}" alt="" width="285" height="190" border="0"
-                                         class="borderImg"/>
-
-                                    <% if ("zh".equals(RequestContextUtils.getLocaleResolver(request).resolveLocale(request).getLanguage())) {%>
-                                    <a href="${product.imgPath}" class="gallery-zoom" rel="prettyPhoto"
-                                       title="${product.cnDescription}">
-                                        <img src="img/icon_zoom.png" alt="" width="42" height="42" border="0"/>
-                                    </a>
-                                    <% } else { %>
-                                    <a href="${product.imgPath}" class="gallery-zoom" rel="prettyPhoto"
-                                       title="${product.description}">
-                                        <img src="img/icon_zoom.png" alt="" width="42" height="42" border="0"/>
-                                    </a>
-                                    <% } %>
-                                    <c:if test="${product.newArrival}">
-                                        <span class="ribbon-new">NEW</span>
-                                    </c:if>
-                                </div>
-                                <div class="gallery-text">
-                                    <div class="gallery-more"><spring:message code="label.id"/>:
-                                        <span>${product.productId}</span></div>
-                                    <% if ("zh".equals(RequestContextUtils.getLocaleResolver(request).resolveLocale(request).getLanguage())) {%>
-                                    <div class="gallery-item-name"><h2><span>${product.cnName}</span></h2></div>
-                                    <% } else { %>
-                                    <div class="gallery-item-name"><h2><span>${product.name}</span></h2></div>
-                                    <% } %>
-                                </div>
-                                <div class="clear"></div>
-                            </div>
-                        </c:forEach>
-
-                        <div class="clear"></div>
-                    </div>
+                <c:if test="${not empty newsList}">
+                    <ul>
+                    <c:forEach items="${newsList}" var="news">
+                        <li style="list-style:none;background-image: url('img/lineH.gif');  background-position: 50% bottom;  background-repeat: repeat-x;  background-repeat-x: repeat;   background-repeat-y: no-repeat;">
+                            <div style="padding-bottom: 5px"><a href="news/showNews.do?id=${news.newsId}">${news.title}</a> <span style="color:#7e8496;font-size: 8; float: right;">${news.createDateStr}</span></div>
+                        </li>
+                    </c:forEach>
+                    </ul>
                 </c:if>
 
-                <c:if test="${empty productList}">
+                <c:if test="${empty newsList}">
                     <spring:message code="message.error.no.record"/>
                 </c:if>
 
@@ -224,56 +183,10 @@
         <div class="sidebar">
             <div class="inner">
 
-
                 <div class="widget-container widget_categories">
-                    <h3>Categories:</h3>
                     <ul>
-                        <li><a href="product.do"><spring:message code="label.all"/></a></li>
-                        <% if ("zh".equals(RequestContextUtils.getLocaleResolver(request).resolveLocale(request).getLanguage())) {%>
-                        <c:forEach items="${categoryList}" var="category">
-                            <li><a href="product.do?categoryId=${category.categoryId}">${category.cnDescription}</a>
-                            </li>
-                            <c:if test="${not empty category.children}">
-                                <ul>
-                                    <c:forEach items="${category.children}" var="child">
-                                        <li>
-                                            <a href="product.do?categoryId=${child.categoryId}">${child.cnDescription}</a>
-                                        </li>
-                                        <c:if test="${not empty child.children}">
-                                            <ul>
-                                                <c:forEach items="${child.children}" var="child1">
-                                                    <li>
-                                                        <a href="product.do?categoryId=${child1.categoryId}">${child1.cnDescription}</a>
-                                                    </li>
-                                                </c:forEach>
-                                            </ul>
-                                        </c:if>
-                                    </c:forEach>
-                                </ul>
-                            </c:if>
-                        </c:forEach>
-                        <% } else { %>
-                        <c:forEach items="${categoryList}" var="category">
-                            <li><a href="product.do?categoryId=${category.categoryId}">${category.description}</a></li>
-                            <c:if test="${not empty category.children}">
-                                <ul>
-                                    <c:forEach items="${category.children}" var="child">
-                                        <li><a href="product.do?categoryId=${child.categoryId}">${child.description}</a>
-                                        </li>
-                                        <c:if test="${not empty child.children}">
-                                            <ul>
-                                                <c:forEach items="${child.children}" var="child1">
-                                                    <li>
-                                                        <a href="product.do?categoryId=${child1.categoryId}">${child1.description}</a>
-                                                    </li>
-                                                </c:forEach>
-                                            </ul>
-                                        </c:if>
-                                    </c:forEach>
-                                </ul>
-                            </c:if>
-                        </c:forEach>
-                        <% } %>
+                        <li><a href="news.do"><spring:message code="label.all"/></a></li>
+                        <%--<li><a href="news.do?categoryId=${child.categoryId}">${child.cnDescription}</a></li>--%>
                     </ul>
                 </div>
             </div>
@@ -294,7 +207,6 @@
                     <a href="http://facebook.com/ahnorthen" class="link-fb" title="Facebook">Facebook</a>
                 </div>
             </div>
-
             <div class="col_1_3 col">
                 <div class="inner">
                     <p class="copyright">&copy; 2014 Anhui Northen. All rights reserved!</p>
@@ -305,45 +217,28 @@
     </div>
 </div>
 </body>
-
-<script type="text/javascript" language="javascript" src="js/jquery-1.4.2.min.js"></script>
-<script type="text/javascript" language="javascript" src="js/jquery.tools.min.js"></script>
-<script src="js/jquery.prettyPhoto.js" type="text/javascript"></script>
-
-<script type="text/javascript" language="javascript" src="js/general.js"></script>
-<script type="text/javascript" src="js/easykoo.js"></script>
-
 <script type="text/javascript">
-    var categoryId = '${page.categoryId}';
     var pageNo = '${page.pageNo}';
     var pageSize = '${page.pageSize}';
 
     var previousPage = function () {
-        var url = 'product.do?categoryId=' + categoryId + '&pageNo=' + (parseInt(pageNo) - 1) + '&pageSize=' + pageSize;
+        var url = 'news.do?pageNo=' + (parseInt(pageNo) - 1) + '&pageSize=' + pageSize;
         window.location.href = url;
     }
 
     var refresh = function () {
-        var url = 'product.do?categoryId=' + categoryId + '&pageNo=' + parseInt(pageNo) + '&pageSize=' + pageSize;
+        var url = 'news.do?pageNo=' + parseInt(pageNo) + '&pageSize=' + pageSize;
         window.location.href = url;
     }
 
     var nextPage = function () {
-        var url = 'product.do?categoryId=' + categoryId + '&pageNo=' + (parseInt(pageNo) + 1) + '&pageSize=' + pageSize;
+        var url = 'news.do?pageNo=' + (parseInt(pageNo) + 1) + '&pageSize=' + pageSize;
         window.location.href = url;
     }
 
     var goPage = function (pageNo) {
-        var url = 'product.do?categoryId=' + categoryId + '&pageNo=' + pageNo + '&pageSize=' + pageSize;
+        var url = 'news.do?pageNo=' + pageNo + '&pageSize=' + pageSize;
         window.location.href = url;
-    }
-
-    var search = function () {
-        if (!/^\d*$/.test($('#s').val())) {
-            alert('<spring:message code="message.error.please.input.correct.product.id" />');
-            $('#s').val('Search');
-            event.preventDefault();
-        }
     }
 
 </script>

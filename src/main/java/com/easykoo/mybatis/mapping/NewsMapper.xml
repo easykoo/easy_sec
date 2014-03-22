@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.easykoo.mybatis.dao.NoticeMapper">
-    <resultMap id="BaseResultMap" type="com.easykoo.mybatis.model.Notice">
-        <id column="notice_id" property="noticeId" jdbcType="INTEGER"/>
+<mapper namespace="com.easykoo.mybatis.dao.NewsMapper">
+    <resultMap id="BaseResultMap" type="com.easykoo.mybatis.model.News">
+        <id column="news_id" property="newsId" jdbcType="INTEGER"/>
         <result column="title" property="title" jdbcType="VARCHAR"/>
         <result column="content" property="content" jdbcType="VARCHAR"/>
         <result column="lang" property="lang" jdbcType="VARCHAR"/>
@@ -13,31 +13,31 @@
         <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
     </resultMap>
     <sql id="Base_Column_List">
-    notice_id, title, content, lang, priority, create_user, create_date, update_user, update_date
+    news_id, title, content, lang, priority, create_user, create_date, update_user, update_date
   </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
-        from notice
-        where notice_id = #{noticeId,jdbcType=INTEGER}
+        from news
+        where news_id = #{newsId,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from notice
-    where notice_id = #{noticeId,jdbcType=INTEGER}
+    delete from news
+    where news_id = #{newsId,jdbcType=INTEGER}
   </delete>
-    <insert id="insert" parameterType="com.easykoo.mybatis.model.Notice">
-    insert into notice (notice_id, title, content, lang
+    <insert id="insert" parameterType="com.easykoo.mybatis.model.News">
+    insert into news (news_id, title, content, lang,
       priority, create_user, create_date, 
       update_user, update_date)
-    values (#{noticeId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{lang,jdbcType=VARCHAR}
-      #{priority,jdbcType=INTEGER}, #{createUser,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
-      #{updateUser,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP})
+    values (#{newsId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{lang,jdbcType=VARCHAR},
+      #{priority,jdbcType=INTEGER}, #{createUser,jdbcType=VARCHAR}, NOW(),
+      #{updateUser,jdbcType=VARCHAR}, NOW())
   </insert>
-    <insert id="insertSelective" parameterType="com.easykoo.mybatis.model.Notice">
-        insert into notice
+    <insert id="insertSelective" parameterType="com.easykoo.mybatis.model.News">
+        insert into news
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="noticeId != null">
-                notice_id,
+            <if test="newsId != null">
+                news_id,
             </if>
             <if test="title != null">
                 title,
@@ -65,8 +65,8 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="noticeId != null">
-                #{noticeId,jdbcType=INTEGER},
+            <if test="newsId != null">
+                #{newsId,jdbcType=INTEGER},
             </if>
             <if test="title != null">
                 #{title,jdbcType=VARCHAR},
@@ -94,8 +94,8 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.easykoo.mybatis.model.Notice">
-        update notice
+    <update id="updateByPrimaryKeySelective" parameterType="com.easykoo.mybatis.model.News">
+        update news
         <set>
             <if test="title != null">
                 title = #{title,jdbcType=VARCHAR},
@@ -122,10 +122,10 @@
                 update_date = #{updateDate,jdbcType=TIMESTAMP},
             </if>
         </set>
-        where notice_id = #{noticeId,jdbcType=INTEGER}
+        where news_id = #{newsId,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.easykoo.mybatis.model.Notice">
-    update notice
+    <update id="updateByPrimaryKey" parameterType="com.easykoo.mybatis.model.News">
+    update news
     set title = #{title,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
       lang = #{lang,jdbcType=VARCHAR},
@@ -134,15 +134,15 @@
       create_date = #{createDate,jdbcType=TIMESTAMP},
       update_user = #{updateUser,jdbcType=VARCHAR},
       update_date = #{updateDate,jdbcType=TIMESTAMP}
-    where notice_id = #{noticeId,jdbcType=INTEGER}
+    where news_id = #{newsId,jdbcType=INTEGER}
   </update>
-    <select id="findNoticeWithPage" resultMap="BaseResultMap" parameterType="com.easykoo.mybatis.model.Notice">
+    <select id="findNewsWithPage" resultMap="BaseResultMap" parameterType="com.easykoo.mybatis.model.News">
         select
         <include refid="Base_Column_List"/>
-        from notice
+        from news
         where 1=1
-        <if test="noticeId != null">
-            and notice_id = #{noticeId,jdbcType=INTEGER}
+        <if test="newsId != null">
+            and news_id = #{newsId,jdbcType=INTEGER}
         </if>
         <if test="title != null">
             and title = #{title,jdbcType=VARCHAR}

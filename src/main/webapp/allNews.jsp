@@ -17,7 +17,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title><spring:message code="label.product"/></title>
+    <title><spring:message code="label.news"/></title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -40,7 +40,7 @@
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header"><spring:message code="label.all.product"/></h1>
+            <h1 class="page-header"><spring:message code="label.all.news"/></h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -49,7 +49,7 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <a class="btn btn-success" href="/product/publishProduct.do"><i
+                    <a class="btn btn-success" href="/news/publishNews.do"><i
                             class="fa fa-edit fa-fw"></i><spring:message code="label.publish"/></a>
                     <a class="btn btn-danger" id="delete"><i class="fa fa-trash-o fa-fw"></i><spring:message
                             code="label.delete"/></a>
@@ -62,11 +62,10 @@
                             <tr>
                                 <th><input type="checkbox" id="selectAll"/></th>
                                 <th><spring:message code="label.id"/></th>
-                                <th><spring:message code="label.preview"/></th>
-                                <th><spring:message code="label.name"/></th>
-                                <th><spring:message code="label.category"/></th>
+                                <th><spring:message code="label.language"/></th>
                                 <th><spring:message code="label.priority"/></th>
-                                <th><spring:message code="label.description"/></th>
+                                <th><spring:message code="label.title"/></th>
+                                <th><spring:message code="label.content"/></th>
                                 <th><spring:message code="label.create.date"/></th>
                                 <th><spring:message code="label.actions"/></th>
                             </tr>
@@ -101,9 +100,9 @@
 
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->
 <script type="text/javascript" charset="utf-8">
-var productTable;
+var newsTable;
 
-var deleteProduct = function (id) {
+var deleteNews = function (id) {
     bootbox.dialog({
         message: '<spring:message code="message.sure.delete.record" />',
         title: '<spring:message code="title.delete.record" />',
@@ -118,18 +117,18 @@ var deleteProduct = function (id) {
                 className: "btn-danger",
                 callback: function (result) {
                     if (result) {
-                        $.ajax('product/ajax/deleteProduct.do', {
+                        $.ajax('news/ajax/deleteNews.do', {
                             dataType: 'json',
                             type: "POST",
                             data: {
-                                productId: id
+                                newsId: id
                             },
                             success: function (data) {
                                 if (!data.success) {
                                     bootbox.alert(data.message, null);
                                 }
-                                productTable.fnClearTable(0);
-                                productTable.fnDraw();
+                                newsTable.fnClearTable(0);
+                                newsTable.fnDraw();
                             }
                         });
                     }
@@ -139,18 +138,38 @@ var deleteProduct = function (id) {
     });
 }
 
-var editProduct = function (id) {
-    var productList = productTable.fnGetData();
-    $.each(productList, function (index, product) {
-        if (product.productId == id) {
-            var html = '<div class=\"row\"><div class=\"col-lg-15\"><form id=\"productForm\" role=\"form\" class=\"form-horizontal\" enctype=\"multipart/form-data\" method=\"post\" action=\"product/publishProduct.do\">'
+var editNews = function (id) {
+    var newsList = newsTable.fnGetData();
+    $.each(newsList, function (index, news) {
+        if (news.newsId == id) {
+            var html = '<div class=\"row\"><div class=\"col-lg-15\"><form id=\"newsForm\" role=\"form\" class=\"form-horizontal\" enctype=\"multipart/form-data\" method=\"post\" action=\"news/publishNews.do\">'
                     + '<div class=\"form-group\">'
-                    + '<label for=\"priority\" class=\"col-sm-4 control-label\"><span style=\"color: red\">*</span> <spring:message code="label.priority"/></label>'
+                    + '<label for=\"lang\" class=\"col-sm-3 control-label\"><span style=\"color: red\">*</span> <spring:message code="label.language"/></label>'
+                    + '<div class=\"col-sm-6\">'
+                    + '<select id=\"lang\" class=\"form-control\" name=\"lang\">'
+                    + '<option ';
+            if (news.lang == 'en') {
+                html += 'selected';
+            }
+            html += ' value=\"en\">English</option>';
+            html += '<option ';
+            if (news.lang == 'zh_CN') {
+                html += 'selected';
+            }
+            html += ' value=\"zh_CN\">中文</option>'
+                    + '</select>'
+                    + '</div>'
+                    + '<div class=\"col-sm-4 control-label\"></div>'
+                    + '</div>'
+                    + '<div class=\"form-group\">'
+                    + '<label for=\"priority\" class=\"col-sm-3 control-label\"><span style=\"color: red\">*</span> <spring:message code="label.priority"/></label>'
                     + '<div class=\"col-sm-6\">'
                     + '<select id=\"priority\" class=\"form-control\" name=\"priority\">';
+
+
             for (i = 5; i > 0; i--) {
                 html += '<option ';
-                if (product.priority == i) {
+                if (news.priority == i) {
                     html += 'selected';
                 }
                 html += ' value=\"' + i + '\">' + i + '</option>';
@@ -160,77 +179,58 @@ var editProduct = function (id) {
                     + '<div class=\"col-sm-4 control-label\"></div>'
                     + '</div>'
                     + '<div class=\"form-group\">'
-                    + '<label for=\"name\" class=\"col-sm-4 control-label\"><span style=\"color: red\">*</span> <spring:message code="label.en.name"/></label>'
+                    + '<label for=\"title\" class=\"col-sm-3 control-label\"><span style=\"color: red\">*</span> <spring:message code="label.title"/></label>'
                     + '<div class=\"col-sm-6\">'
-                    + '<input type=\"text\" id=\"name\" class=\"form-control\" name=\"name\" value=\"' + product.name + '\">'
+                    + '<input type=\"text\" id=\"title\" class=\"form-control\" name=\"title\" value=\"' + news.title + '\">'
                     + '</div>'
                     + '<div class=\"col-sm-4 control-label\"></div>'
                     + '</div>'
                     + '<div class=\"form-group\">'
-                    + '<label for=\"cnName\" class=\"col-sm-4 control-label\"><span style=\"color: red\">*</span> <spring:message code="label.cn.name"/></label>'
+                    + '<label for=\"content\" class=\"col-sm-3 control-label\"><span style=\"color: red\">*</span>'
+                    + '<spring:message code="label.content"/></label>'
                     + '<div class=\"col-sm-6\">'
-                    + '<input type=\"text\" id=\"cnName\" class=\"form-control\" name=\"cnName\" value=\"' + product.cnName + '\">'
+                    + '<textarea id=\"content\" name=\"content\" rows=\"10\" class=\"form-control\"/></textarea>'
                     + '</div>'
                     + '<div class=\"col-sm-4 control-label\"></div>'
                     + '</div>'
                     + '<div class=\"form-group\">'
-                    + '<label for=\"description\" class=\"col-sm-4 control-label\"><span style=\"color: red\">*</span>'
-                    + '<spring:message code="label.en.description"/></label>'
-                    + '<div class=\"col-sm-6\">'
-                    + '<textarea id=\"description\" name=\"description\" rows=\"6\" class=\"form-control\"/></textarea>'
-                    + '</div>'
-                    + '<div class=\"col-sm-4 control-label\"></div>'
-                    + '</div>'
-                    + '<div class=\"form-group\">'
-                    + '<label for=\"cnDescription\" class=\"col-sm-4 control-label\"><span style=\"color: red\">*</span>'
-                    + '<spring:message code="label.cn.description"/></label>'
-                    + '<div class=\"col-sm-6\">'
-                    + '<textarea id=\"cnDescription\" name=\"cnDescription\" rows=\"6\" class=\"form-control\"/></textarea>'
-                    + '</div>'
-                    + '<div class=\"col-sm-4 control-label\"></div>'
-                    + '</div>'
-                    + '<div class=\"form-group\">'
-                    + '<div class=\"col-sm-offset-4 col-sm-6\">'
+                    + '<div class=\"col-sm-offset-2 col-sm-6\">'
                     + '<div class=\"btn-group\">'
-                    + '<button id=\"change\" onclick=\"checkCommit(' + product.productId + ')\" type=\"button\" class=\"btn btn-danger\"><spring:message code="label.change"/></button>'
+                    + '<button id=\"change\" onclick=\"checkCommit(' + news.newsId + ')\" type=\"button\" class=\"btn btn-danger\"><spring:message code="label.change"/></button>'
                     + '<button id=\"cancel\" onclick=\"$(\'.bootbox-close-button\').click()\" type=\"button\" class=\"btn btn-default\"><spring:message code="label.cancel"/></button>'
                     + '</div>'
                     + '</div></div>'
                     + '</form></div></div>';
 
             box = bootbox.dialog({
-                title: '<spring:message code="label.change.product" />',
+                title: '<spring:message code="label.change.news" />',
                 message: html,
                 buttons: null
             });
-            $('#description').val(product.description);
-            $('#cnDescription').val(product.cnDescription);
+            $('#content').val(news.content);
         }
     });
 };
 
 var box = null;
 
-var checkCommit = function (productId) {
-    var productList = productTable.fnGetData();
-    $.each(productList, function (index, product) {
-        if (product.productId == productId) {
-            var check1 = checkFiled($('#name'))
-            var check2 = checkFiled($('#cnName'))
-            var check3 = checkFiled($('#description'))
-            var check4 = checkFiled($('#cnDescription'))
-            if (check1 && check2 && check3 && check4) {
+var checkCommit = function (newsId) {
+    var newsList = newsTable.fnGetData();
+    $.each(newsList, function (index, news) {
+        if (news.newsId == newsId) {
+            var check1 = checkFiled($('#title'))
+            var check2 = checkFiled($('#content'))
+            if (check1 && check2) {
                 $.ajax({
                     dataType: "json",
                     type: "POST",
-                    url: 'product/ajax/changeProduct.do',
+                    url: 'news/ajax/changeNews.do',
                     data: {
-                        productId: product.productId,
+                        newsId: news.newsId,
+                        lang: $('#lang').val(),
                         priority: $('#priority').val(),
-                        name: $('#name').val(),
-                        cnName: $('#cnName').val(),
-                        description: $('#description').val(),
-                        cnDescription: $('#cnDescription').val()
+                        title: $('#title').val(),
+                        content: $('#content').val()
                     },
                     success: function (data) {
                         if (!data.success) {
@@ -238,8 +238,8 @@ var checkCommit = function (productId) {
                         } else {
                             $(".bootbox-close-button").click();
                         }
-                        productTable.fnClearTable(0);
-                        productTable.fnDraw();
+                        newsTable.fnClearTable(0);
+                        newsTable.fnDraw();
                     }
                 });
             } else {
@@ -262,17 +262,17 @@ var checkFiled = function (obj) {
     }
 }
 
-var productArray = [0];
+var newsArray = [0];
 
-var selectProduct = function (obj, productId) {
+var selectNews = function (obj, newsId) {
     if ($(obj).prop("checked")) {
-        if ($.inArray(productId, productArray) < 0) {
-            productArray.push(productId);
+        if ($.inArray(newsId, newsArray) < 0) {
+            newsArray.push(newsId);
         }
     } else {
-        if ($.inArray(productId, productArray) >= 0) {
-            $.each(productArray, function (key, value) {
-                productArray.splice(key, key)
+        if ($.inArray(newsId, newsArray) >= 0) {
+            $.each(newsArray, function (key, value) {
+                newsArray.splice(key, key)
             });
         }
     }
@@ -298,8 +298,8 @@ var unSelectAll = function () {
     })
 }
 
-var getAllProduct = function () {
-    productTable = $('#dataTable').dataTable({
+var getAllNews = function () {
+    newsTable = $('#dataTable').dataTable({
         bPaginate: true,
         bProcessing: true,
         bServerSide: true,
@@ -310,7 +310,7 @@ var getAllProduct = function () {
         iDisplayLength: 10,
         bLengthChange: true,
         sPaginationType: 'full_numbers',
-        sAjaxSource: 'product/ajax/allProduct.do',
+        sAjaxSource: 'news/ajax/allNews.do',
         aaSorting: [
             [1, 'asc']
         ],
@@ -325,57 +325,45 @@ var getAllProduct = function () {
         },
         "aoColumns": [
             { "sTitle": "<input id='selectAll' onchange='selectAll(this)' type='checkbox'/>",
-                "mData": "product_id"},
+                "mData": "news_id"},
             { "sTitle": "<spring:message code="label.id"/>",
-                "mData": "product_id"},
-            { "sTitle": "<spring:message code="label.preview"/>",
-                "mData": "imgPath"},
-            { "sTitle": "<spring:message code="label.category"/>",
-                "mData": "category_id"},
+                "mData": "news_id"},
+            { "sTitle": "<spring:message code="label.language"/>",
+                "mData": "lang"},
             { "sTitle": "<spring:message code="label.priority"/>",
                 "mData": "priority"},
-            { "sTitle": "<spring:message code="label.name"/>",
-                "mData": "name"},
-            { "sTitle": "<spring:message code="label.description"/>",
-                "mData": "description"},
+            { "sTitle": "<spring:message code="label.title"/>",
+                "mData": "title"},
+            { "sTitle": "<spring:message code="label.content"/>",
+                "mData": "content"},
             { "sTitle": "<spring:message code="label.create.date"/>",
                 "mData": "create_date"},
             { "sTitle": "<spring:message code="label.actions"/>",
-                "mData": "product_id"}
+                "mData": "news_id"}
         ],
         "fnRowCallback": function (nRow, aData, iDisplayIndex) {
-            $('td:eq(0)', nRow).html('<input type="checkbox" name="selectFlag" onchange="selectProduct(this,' + aData.productId + ')"/>');
+            $('td:eq(0)', nRow).html('<input type="checkbox" name="selectFlag" onchange="selectNews(this,' + aData.newsId + ')"/>');
             var createDate = timeStamp2String(aData.createDate);
-            $('td:eq(7)', nRow).text(createDate);
-            $('td:eq(2)', nRow).html('<a href="' + aData.imgPath + '" data-lightbox="image-1" title="' + aData.name
-                    + '"><img src="' + aData.preImgPath + '" class="img-responsive" alt="Responsive image"/></a> ');
+            $('td:eq(2)', nRow).text(aData.lang == 'en' ? 'English' : '中文');
+            $('td:eq(6)', nRow).text(createDate);
             var html = '<div class="btn-group "><a class="btn btn-primary" href="javascript:"><i class="fa fa-gavel fa-fw"></i></a>' +
                     '<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:"><span class="fa fa-caret-down"></span></a>' +
                     '<ul class="dropdown-menu">'
-                    + '<li><a href="javascript:editProduct(' + aData.productId + ')"><i class="fa fa-edit fa-fw"></i>'
+                    + '<li><a href="javascript:editNews(' + aData.newsId + ')"><i class="fa fa-edit fa-fw"></i>'
                     + '<strong> <spring:message code="label.edit"/></strong>'
                     + '</a></li>'
-                    + '<li><a href="javascript:deleteProduct(' + aData.productId + ')"><i class="fa fa-trash-o fa-fw"></i>'
+                    + '<li><a href="javascript:deleteNews(' + aData.newsId + ')"><i class="fa fa-trash-o fa-fw"></i>'
                     + '<strong> <spring:message code="label.delete"/></strong>'
                     + '</a></li>'
                     + '</ul></div>';
-            $('td:eq(8)', nRow).html(html);
-            if ('zh_CN' == '<spring:message code="language"/>') {
-                $('td:eq(3)', nRow).text(aData.category.cnDescription);
-                $('td:eq(5)', nRow).text(aData.cnName);
-            } else {
-                $('td:eq(3)', nRow).text(aData.category.description);
-                $('td:eq(5)', nRow).text(aData.name);
-            }
+            $('td:eq(7)', nRow).html(html);
 
             $('td:eq(0)', nRow).width(20);
             $('td:eq(1)', nRow).width(30);
-            $('td:eq(2)', nRow).width(100);
-            $('td:eq(3)', nRow).width(100);
-            $('td:eq(4)', nRow).width(60);
-            $('td:eq(5)', nRow).width(120);
-            $('td:eq(7)', nRow).width(150);
-            $('td:eq(8)', nRow).width(80);
+            $('td:eq(2)', nRow).width(90);
+            $('td:eq(3)', nRow).width(70);
+            $('td:eq(6)', nRow).width(150);
+            $('td:eq(7)', nRow).width(80);
 
             return nRow;
         },
@@ -384,21 +372,21 @@ var getAllProduct = function () {
         },
         "aoColumnDefs": [
             { "bSortable": false, "aTargets": [ 0 ] },
-            { "bSortable": false, "aTargets": [ 1 ] },
-            { "bSortable": false, "aTargets": [ 6 ] },
+            { "bSortable": false, "aTargets": [ 4 ] },
+            { "bSortable": false, "aTargets": [ 5 ] },
             { "bSortable": false, "aTargets": [ 7 ] }
         ]
     });
 }
 
 $(document).ready(function () {
-    $('#product').toggleClass('active').children('ul').collapse('toggle');
-    $('#allProduct').css({"background": "#DDDDDD"});
-    getAllProduct();
+    $('#news').toggleClass('active').children('ul').collapse('toggle');
+    $('#allNews').css({"background": "#DDDDDD"});
+    getAllNews();
     setCheckSession();
 
     $('#delete').click(function () {
-        if (productArray.length <= 1) {
+        if (newsArray.length <= 1) {
             bootbox.alert('<spring:message code="message.error.please.select" />', null);
             return;
         }
@@ -419,17 +407,17 @@ $(document).ready(function () {
                             $.ajax({
                                 dataType: "json",
                                 type: "POST",
-                                url: 'product/ajax/deleteProducts.do',
-                                data: {products: productArray},
+                                url: 'news/ajax/deleteNewsArray.do',
+                                data: {newsArray: newsArray},
                                 traditional: true,
                                 success: function (data) {
                                     if (!data.success) {
                                         bootbox.alert(data.message, null);
                                     }
                                     unSelectAll();
-                                    productArray = [0];
-                                    productTable.fnClearTable(0);
-                                    productTable.fnDraw();
+                                    newsArray = [0];
+                                    newsTable.fnClearTable(0);
+                                    newsTable.fnDraw();
                                 }
                             });
                         }

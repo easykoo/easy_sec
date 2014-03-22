@@ -104,6 +104,37 @@
                     <!-- /.nav-second-level -->
                 </li>
             </au:check>
+            <au:check test="/news/allNews.do">
+                <li id="news">
+                    <a href="javascript:"><i class="fa fa-lightbulb-o fa-fw"></i> <spring:message
+                            code="label.news"/><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <au:check test="/news/allNews.do">
+                            <li id="allNews">
+                                <a href="news/allNews.do"> <spring:message
+                                        code="label.all.news"/></a>
+                            </li>
+                        </au:check>
+                        <au:check test="/news/publishNews.do">
+                            <li id="publishNews">
+                                <a href="/news/publishNews.do"> <spring:message
+                                        code="label.publish.news"/></a>
+                            </li>
+                        </au:check>
+                        <%--<au:check test="/news/allNotice.do">
+                            <li id="allNotice">
+                                <a href="/news/allNotice.do"> <spring:message
+                                        code="label.all.notice"/></a>
+                            </li>
+                            <li id="publishNotice">
+                                <a href="/news/publishNotice.do"> <spring:message
+                                        code="label.publish.notice"/></a>
+                            </li>
+                        </au:check>--%>
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
+            </au:check>
             <au:check test="/profile/profile.do">
                 <li id="profile">
                     <a href="javascript:"><i class="fa fa-wrench fa-fw"></i> <spring:message

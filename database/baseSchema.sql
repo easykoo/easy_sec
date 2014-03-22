@@ -152,11 +152,10 @@ CREATE TABLE subscribe (
 drop table if exists notice;
 CREATE TABLE notice (
   notice_id INT(11) NOT NULL AUTO_INCREMENT,
+  language VARCHAR (4) NOT NULL,
   title VARCHAR(60) NOT NULL,
-  cn_title VARCHAR(80) NOT NULL,
   content VARCHAR(600) NOT NULL,
-  cn_content VARCHAR(600) NOT NULL,
-  priority INT(2) NULL,
+  priority INT(1) NULL DEFAULT 5,
   create_user VARCHAR(20) NULL,
   create_date DATETIME NULL,
   update_user varchar(20) DEFAULT NULL,
@@ -196,3 +195,16 @@ CREATE TABLE product (
   PRIMARY KEY (product_id)
 );
 
+drop table if exists news;
+CREATE TABLE news (
+  news_id INT(11) NOT NULL AUTO_INCREMENT,
+  title VARCHAR(60) NOT NULL,
+  content VARCHAR(2000) NOT NULL,
+  lang VARCHAR (5) NOT NULL,
+  priority INT(1) NULL DEFAULT 5,
+  create_user VARCHAR(20) NULL,
+  create_date DATETIME NULL,
+  update_user varchar(20) DEFAULT NULL,
+  update_date datetime DEFAULT NULL,
+  PRIMARY KEY (news_id)
+);

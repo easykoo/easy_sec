@@ -81,8 +81,19 @@ insert into sec_function ( function_id, description, uri, module_id)values (505,
 insert into sec_function ( function_id, description, uri, module_id)values (506,'Delete feedback by ajax','/feedback/ajax/deleteFeedback.do',5);
 insert into sec_function ( function_id, description, uri, module_id)values (507,'Delete feedback array','/feedback/ajax/deleteFeedbackArray.do',5);
 
-insert into sec_function ( function_id, description, uri, module_id)values (601,'View notices','/notice/allNotice.do',6);
-insert into sec_function ( function_id, description, uri, module_id)values (602,'Publish notice','/notice/publishNotice.do',6);
+insert into sec_function ( function_id, description, uri, module_id)values (601,'View news','/news/allNews.do',6);
+insert into sec_function ( function_id, description, uri, module_id)values (602,'View products','/news/ajax/allNews.do',6);
+insert into sec_function ( function_id, description, uri, module_id)values (603,'Publish news','/news/publishNews.do',6);
+insert into sec_function ( function_id, description, uri, module_id)values (604,'Delete news','/news/ajax/deleteNews.do',6);
+insert into sec_function ( function_id, description, uri, module_id)values (605,'Delete news array','/news/ajax/deleteNewsArray.do',6);
+insert into sec_function ( function_id, description, uri, module_id)values (606,'Change news','/news/ajax/changeNews.do',6);
+insert into sec_function ( function_id, description, uri, module_id)values (607,'Show news','/news/showNews.do',6);
+insert into sec_function ( function_id, description, uri, module_id)values (608,'Publish notice','/news/publishNotice.do',6);
+insert into sec_function ( function_id, description, uri, module_id)values (609,'View notices','/news/allNotice.do',6);
+insert into sec_function ( function_id, description, uri, module_id)values (610,'View notices','/news/ajax/allNotice.do',6);
+insert into sec_function ( function_id, description, uri, module_id)values (611,'Delete notice','/news/ajax/deleteNotice.do',6);
+insert into sec_function ( function_id, description, uri, module_id)values (612,'Delete notices','/news/ajax/deleteNotices.do',6);
+insert into sec_function ( function_id, description, uri, module_id)values (614,'Change notices','/news/ajax/changeNotices.do',6);
 
 insert into sec_function ( function_id, description, uri, module_id)values (701,'View products','/product/allProduct.do',7);
 insert into sec_function ( function_id, description, uri, module_id)values (702,'View categories','/product/allCategory.do',7);

@@ -50,7 +50,8 @@
 
                 <ul class="topmenu">
                     <li class="first"><a href="index.do"><span><spring:message code="label.home"/></span></a></li>
-                    <li><a href="javascript:"><span><spring:message code="label.about.us"/></span></a></li>
+                    <li><a href="about.do"><span><spring:message code="label.about.us"/></span></a></li>
+                    <li><a href="news.do"><span><spring:message code="label.news.center"/></span></a></li>
                     <li><a href="product.do"><span><spring:message code="label.product.display"/></span></a></li>
                     <li class="current-menu-item"><a href="join.do"><span><spring:message code="label.join.us"/></span></a>
                     </li>
