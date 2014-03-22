@@ -51,7 +51,7 @@
             <div class="menu-header">
 
                 <ul class="topmenu">
-                    <li class="first current-menu-item"><a href="#"><span><spring:message code="label.home"/></span></a>
+                    <li class="first current-menu-item"><a href="javascript:"><span><spring:message code="label.home"/></span></a>
                     </li>
                     <li><a href="about.do"><span><spring:message code="label.about.us"/></span></a></li>
                     <li><a href="news.do"><span><spring:message code="label.news.center"/></span></a></li>
