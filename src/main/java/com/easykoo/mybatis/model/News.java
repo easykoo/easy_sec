@@ -56,7 +56,7 @@ public class News extends Page {
     }
 
     public String getContentAsHtml() {
-        return content.replaceAll("\r\n", "<br/>").replaceAll(" ", "&nbsp;");
+        return content.replaceAll("\n", "<br/>").replaceAll(" ", "&nbsp;");
     }
 
     public void setContent(String content) {
