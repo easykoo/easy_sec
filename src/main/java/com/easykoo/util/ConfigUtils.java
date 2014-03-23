@@ -44,18 +44,6 @@ public class ConfigUtils {
         return properties.getProperty(key);
     }
 
-    public void setValue(String key, String value) {
-        try {
-            OutputStream fos = new FileOutputStream(new File(_configPath));
-            properties.setProperty(key, value);
-            properties.store(fos, "Update '" + key + "' to '" + value + "'");
-            logger.debug("Update '" + key + "' to '" + value + "' successfully!");
-            fos.close();
-        } catch (IOException e) {
-            logger.error("Update '" + key + "' to '" + value + "' failed!");
-        }
-    }
-
     public String[] getNoNeedFilterUrl() {
         String arrayStr = properties.getProperty("no.need.filter");
         String[] array = arrayStr.split(",");
