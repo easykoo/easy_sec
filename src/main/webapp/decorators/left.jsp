@@ -34,12 +34,6 @@
                             code="label.dashboard"/></a>
                 </li>
             </au:check>
-            <%--<au:check test="/admin/settings.do">
-                <li id="settings">
-                    <a href="admin/settings.do"><i class="fa fa-gear fa-fw"></i> <spring:message
-                            code="label.settings"/></a>
-                </li>
-            </au:check>--%>
             <au:check test="/account/allAccount.do">
                 <li id="account">
                     <a href="account/allAccount.do"><i class="fa fa-users fa-fw"></i> <spring:message
@@ -166,6 +160,12 @@
                             </li>--%>
                     </ul>
                     <!-- /.nav-second-level -->
+                </li>
+            </au:check>
+            <au:check test="/settings/settings.do">
+                <li id="settings">
+                    <a href="settings/settings.do"><i class="fa fa-gear fa-fw"></i> <spring:message
+                            code="label.settings"/></a>
                 </li>
             </au:check>
         </ul>

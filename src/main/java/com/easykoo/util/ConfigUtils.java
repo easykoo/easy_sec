@@ -3,7 +3,7 @@ package com.easykoo.util;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import java.io.InputStream;
+import java.io.*;
 import java.util.Properties;
 
 
@@ -14,17 +14,18 @@ import java.util.Properties;
 public class ConfigUtils {
     private Log logger = LogFactory.getLog(getClass());
 
+    private static String _configPath = "config.properties";
     private static ConfigUtils _instance = null;
     private Properties properties = new Properties();
 
     private ConfigUtils() {
         try {
-            InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("config.properties");
+            InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(_configPath);
             properties.load(inputStream);
             if (inputStream != null)
                 inputStream.close();
         } catch (Exception e) {
-            logger.error("config.properties not found or wrong format");
+            logger.error(_configPath + " not found or wrong format!");
         }
     }
 
@@ -41,6 +42,18 @@ public class ConfigUtils {
 
     public String getConfig(String key) {
         return properties.getProperty(key);
+    }
+
+    public void setValue(String key, String value) {
+        try {
+            OutputStream fos = new FileOutputStream(new File(_configPath));
+            properties.setProperty(key, value);
+            properties.store(fos, "Update '" + key + "' to '" + value + "'");
+            logger.debug("Update '" + key + "' to '" + value + "' successfully!");
+            fos.close();
+        } catch (IOException e) {
+            logger.error("Update '" + key + "' to '" + value + "' failed!");
+        }
     }
 
     public String[] getNoNeedFilterUrl() {

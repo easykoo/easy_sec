@@ -55,8 +55,8 @@
                     ${currentAccountSecurity.username} <i class="fa fa-user fa-fw"></i><i class="fa fa-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-user">
-                    <%--<au:check test="/admin/settings.do">
-                        <li><a href="admin/settings.do"><i class="fa fa-gear fa-fw"></i><spring:message
+                    <%--<au:check test="/settings/settings.do">
+                        <li><a href="settings/settings.do"><i class="fa fa-gear fa-fw"></i><spring:message
                                 code="label.settings"/></a>
                         </li>
                     </au:check>--%>

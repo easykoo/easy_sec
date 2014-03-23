@@ -17,6 +17,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title><spring:message code="main.title"/> - <spring:message code="label.sign.up"/></title>
+    <meta name="keywords" content="${sessionScope.settings.keywords}" />
+    <meta name="description" content="${sessionScope.settings.description}" />
     <link rel="shortcut icon" href="img/favicon.ico">
     <link rel="stylesheet" href="css/the-story.min.css">
     <link rel="stylesheet" href="css/p-controls.min.css">

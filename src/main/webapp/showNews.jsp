@@ -14,6 +14,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="shortcut icon" href="img/favicon.ico">
     <title><spring:message code="main.title"/> - <spring:message code="label.news"/></title>
+    <meta name="keywords" content="${sessionScope.settings.keywords}" />
+    <meta name="description" content="${sessionScope.settings.description}" />
 
     <link href="css/styles.css" media="screen" rel="stylesheet" type="text/css"/>
 
@@ -78,8 +80,8 @@
                                         <spring:message
                                                 code="label.dashboard"/></span></a></li>
                                     </au:check>
-                                        <%--<au:check test="/admin/settings.do">
-                                            <li><a href="admin/settings.do"><i class="fa fa-gear fa-fw"></i> <spring:message
+                                        <%--<au:check test="/settings/settings.do">
+                                            <li><a href="settings/settings.do"><i class="fa fa-gear fa-fw"></i> <spring:message
                                                     code="label.settings"/></a></li>
                                         </au:check>--%>
                                     <au:check test="/profile/profile.do">

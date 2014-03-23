@@ -53,7 +53,8 @@ insert into sec_module(module_id, description) values (7,'Product');
 
 insert into sec_function ( function_id, description, uri, module_id)values (101,'View dashboard','/admin/dashboard.do',1);
 
-insert into sec_function ( function_id, description, uri, module_id)values (201,'View setting','/admin/settings.do',2);
+insert into sec_function ( function_id, description, uri, module_id)values (201,'View setting','/settings/settings.do',2);
+insert into sec_function ( function_id, description, uri, module_id)values (202,'Change setting','/settings/changeSettings.do',2);
 
 insert into sec_function ( function_id, description, uri, module_id)values (301,'View profile','/profile/profile.do',3);
 insert into sec_function ( function_id, description, uri, module_id)values (302,'View preferences','/profile/preferences.do',3);
@@ -119,4 +120,5 @@ insert into sec_privilege ( external_id, type,role_id,department_id) values (6,2
 insert into sec_privilege ( external_id, type,role_id,department_id) values (6,2,2,1);
 insert into sec_privilege ( external_id, type,role_id,department_id) values (7,2,1,1);
 insert into sec_privilege ( external_id, type,role_id,department_id) values (7,2,2,1);
+
 

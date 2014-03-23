@@ -11,6 +11,11 @@
         <decorator>/decorators/head.jsp</decorator>
     </mapping>
     <mapping>
+        <path>/settings/*</path>
+        <decorator>/decorators/left.jsp</decorator>
+        <decorator>/decorators/head.jsp</decorator>
+    </mapping>
+    <mapping>
         <path>/profile/*</path>
         <decorator>/decorators/left.jsp</decorator>
         <decorator>/decorators/head.jsp</decorator>

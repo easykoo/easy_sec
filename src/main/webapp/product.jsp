@@ -14,6 +14,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="shortcut icon" href="img/favicon.ico">
     <title><spring:message code="main.title"/> - <spring:message code="label.product"/></title>
+    <meta name="keywords" content="${sessionScope.settings.keywords}" />
+    <meta name="description" content="${sessionScope.settings.description}" />
 
     <link href="css/styles.css" media="screen" rel="stylesheet" type="text/css"/>
 
@@ -44,9 +46,9 @@
                 <ul class="topmenu">
                     <li class="first"><a href="index.do"><span><spring:message code="label.home"/></span></a></li>
                     <li><a href="about.do"><span><spring:message code="label.about.us"/></span></a></li>
-                    <li><a href="news.do"><span><spring:message code="label.news.center"/></span></a></li>
                     <li class="current-menu-item"><a href="javascript:"><span><spring:message
                             code="label.product.display"/></span></a></li>
+                    <li><a href="news.do"><span><spring:message code="label.news.center"/></span></a></li>
                     <li><a href="join.do"><span><spring:message code="label.join.us"/></span></a></li>
                     <li class="last"><a href="contacts.do"><span><spring:message code="label.contact.us"/></span></a>
                     </li>
@@ -71,8 +73,8 @@
                                         <spring:message
                                                 code="label.dashboard"/></span></a></li>
                                     </au:check>
-                                        <%--<au:check test="/admin/settings.do">
-                                            <li><a href="admin/settings.do"><i class="fa fa-gear fa-fw"></i> <spring:message
+                                        <%--<au:check test="/settings/settings.do">
+                                            <li><a href="settings/settings.do"><i class="fa fa-gear fa-fw"></i> <spring:message
                                                     code="label.settings"/></a></li>
                                         </au:check>--%>
                                     <au:check test="/profile/profile.do">
