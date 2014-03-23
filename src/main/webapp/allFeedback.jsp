@@ -271,6 +271,12 @@ var getAllFeedback = function () {
             html += '</ul></div>';
             $('td:eq(6)', nRow).html(html);
 
+            $('td:eq(0)', nRow).width(20);
+            $('td:eq(1)', nRow).width(100);
+            $('td:eq(2)', nRow).width(200);
+            $('td:eq(4)', nRow).width(60);
+            $('td:eq(5)', nRow).width(150);
+            $('td:eq(6)', nRow).width(80);
             return nRow;
         },
         "oLanguage": {

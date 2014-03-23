@@ -49,7 +49,7 @@
         <div class="col-lg-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Recent Visit
+                    <spring:message code="label.recent.visit" />
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -59,12 +59,12 @@
                             <tr>
                                 <th>#</th>
                                 <th>IP</th>
-                                <th>Visit Time</th>
+                                <th><spring:message code="label.visit.time" /></th>
                             </tr>
                             </thead>
                             <tbody>
                             <c:forEach items="${sessionLogList}" var="sessionLog" varStatus="status">
-                                <tr class="success">
+                                <tr>
                                     <td>${status.index+1}</td>
                                     <td>${sessionLog.ip}</td>
                                     <td>${sessionLog.createDateStr}</td>
@@ -83,7 +83,7 @@
         <div class="col-lg-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Statistics
+                    <spring:message code="label.statistics" />
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -92,14 +92,14 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Total Count</th>
-                                <th>Month Count</th>
-                                <th>Day Count</th>
+                                <th><spring:message code="label.total.count" /></th>
+                                <th><spring:message code="label.month.count" /></th>
+                                <th><spring:message code="label.day.count" /></th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
-                                <td>1</td>
+                                <td>#</td>
                                 <td>${statistics.totalCount}</td>
                                 <td>${statistics.monthCount}</td>
                                 <td>${statistics.dayCount}</td>
