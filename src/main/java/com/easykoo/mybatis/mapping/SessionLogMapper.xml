@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.easykoo.mybatis.dao.SessionLogMapper">
+    <resultMap id="BaseResultMap" type="com.easykoo.mybatis.model.SessionLog">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="session_id" property="sessionId" jdbcType="VARCHAR"/>
+        <result column="ip" property="ip" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, session_id, ip, create_date
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from session_log
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from session_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.easykoo.mybatis.model.SessionLog">
+    insert into session_log (session_id, ip, create_date) values (#{sessionId,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, NOW())
+  </insert>
+    <insert id="insertSelective" parameterType="com.easykoo.mybatis.model.SessionLog">
+        insert into session_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sessionId != null">
+                session_id,
+            </if>
+            <if test="ip != null">
+                ip,
+            </if>
+            create_date
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="sessionId != null">
+                #{sessionId,jdbcType=VARCHAR},
+            </if>
+            <if test="ip != null">
+                #{ip,jdbcType=VARCHAR},
+            </if>
+            NOW()
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.easykoo.mybatis.model.SessionLog">
+        update session_log
+        <set>
+            <if test="sessionId != null">
+                session_id = #{sessionId,jdbcType=VARCHAR},
+            </if>
+            <if test="ip != null">
+                ip = #{ip,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.easykoo.mybatis.model.SessionLog">
+    update session_log
+    set session_id = #{sessionId,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="findSessionLogWithPage" resultMap="BaseResultMap" parameterType="com.easykoo.mybatis.model.SessionLog">
+        select
+        <include refid="Base_Column_List"/>
+        from session_log
+        where 1=1
+        <if test="id != null">
+            and id = #{id,jdbcType=INTEGER}
+        </if>
+        <if test="sessionId != null">
+            and session_id = #{sessionId,jdbcType=VARCHAR}
+        </if>
+        <if test="ip != null">
+            and ip = #{ip,jdbcType=VARCHAR}
+        </if>
+        <if test="createDate != null">
+            and create_date = #{createDate,jdbcType=TIMESTAMP}
+        </if>
+    </select>
+    <select id="getAllSessionLog" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from session_log
+    </select>
+    <select id="getTotalCount" resultType="java.lang.Long">
+        select count(*) from session_log
+    </select>
+
+    <select id="getMonthCount" resultType="java.lang.Long">
+        select count(*) from session_log where date_format(create_date,'%Y-%m')=date_format(now(),'%Y-%m')
+    </select>
+
+    <select id="getDayCount" resultType="java.lang.Long">
+        select count(*) from session_log where datediff(create_date,NOW()) = 0
+    </select>
+</mapper>

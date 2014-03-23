@@ -208,3 +208,12 @@ CREATE TABLE news (
   update_date datetime DEFAULT NULL,
   PRIMARY KEY (news_id)
 );
+
+drop table if exists session_log;
+CREATE TABLE session_log (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  session_id varchar(60) NOT NULL,
+  ip varchar(30) NOT NULL,
+  create_date datetime NOT NULL,
+  PRIMARY KEY (id)
+);
