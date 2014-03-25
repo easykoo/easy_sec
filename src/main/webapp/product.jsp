@@ -140,9 +140,9 @@
             <div class="content">
 
                 <!-- gallery list, 1 col -->
-                <c:if test="${not empty productList}">
+                <c:if test="${not empty page.results}">
                     <div class="gallery-list gl_col_2">
-                        <c:forEach items="${productList}" var="product">
+                        <c:forEach items="${page.results}" var="product">
                             <div class="gallery-item">
                                 <div class="gallery-image">
                                     <img src="${product.viewImgPath}" alt="" width="285" height="190" border="0"
@@ -180,7 +180,7 @@
                     </div>
                 </c:if>
 
-                <c:if test="${empty productList}">
+                <c:if test="${empty page.results}">
                     <spring:message code="message.error.no.record"/>
                 </c:if>
 
@@ -196,16 +196,16 @@
                                         <c:choose>
                                             <c:when test="${pageNo < page.pageNo - 5}">
                                                 <c:choose>
-                                                    <c:when test="${pageNo == page.pageNo - 6}">...</c:when>
                                                     <c:when test="${pageNo == 1}"><a
                                                             href="javascript:goPage(${pageNo})">${pageNo}</a></c:when>
+                                                    <c:when test="${pageNo == page.pageNo - 6}">...</c:when>
                                                 </c:choose>
                                             </c:when>
                                             <c:when test="${pageNo > page.pageNo + 5}">
                                                 <c:choose>
-                                                    <c:when test="${pageNo == page.pageNo + 6}">...</c:when>
                                                     <c:when test="${pageNo == page.totalPage}"><a
                                                             href="javascript:goPage(${pageNo})">${pageNo}</a></c:when>
+                                                    <c:when test="${pageNo == page.pageNo + 6}">...</c:when>
                                                 </c:choose>
                                             </c:when>
                                             <c:otherwise>

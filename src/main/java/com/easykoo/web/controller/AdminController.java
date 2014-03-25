@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -29,17 +30,18 @@ public class AdminController {
     private IStatisticsService statisticsService;
 
     @RequestMapping(value = "/admin/dashboard.do", method = RequestMethod.GET)
-    public String dashboard(ModelMap model) {
+    public String dashboard(HttpServletRequest request, ModelMap model) {
         Statistics statistics = statisticsService.getStatistics();
         model.addAttribute("statistics", statistics);
 
         SessionLog sessionLog = new SessionLog();
         sessionLog.setPageActived(true);
-        sessionLog.setPageNo(1);
-        sessionLog.setPageSize(10);
+        sessionLog.setPageNo(request.getParameter("pageNo"));
+        sessionLog.setPageSize(request.getParameter("pageSize"));
         sessionLog.addSortProperties("create_date", "desc");
         List<SessionLog> sessionLogList = sessionLogService.findSessionLogWithPage(sessionLog);
-        model.addAttribute("sessionLogList", sessionLogList);
+        sessionLog.setResults(sessionLogList);
+        model.addAttribute("page", sessionLog);
         return "dashboard";
     }
 

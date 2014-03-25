@@ -59,7 +59,7 @@ public class ProductController implements ServletContextAware {
         List<Category> categoryList = productService.getTopLevelCategory();
         List<Product> productList = productService.findProductWithPage(product);
         model.addAttribute("categoryList", categoryList);
-        model.addAttribute("productList", productList);
+        product.setResults(productList);
         model.addAttribute("page", product);
         return "product";
     }
