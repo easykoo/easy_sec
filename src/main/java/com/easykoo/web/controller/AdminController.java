@@ -53,9 +53,10 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/settings/changeSettings.do", method = RequestMethod.POST)
-    public String changeSettings(@ModelAttribute("settings") Settings settings, ModelMap model) {
+    public String changeSettings(@ModelAttribute("settings") Settings settings, HttpServletRequest request, ModelMap model) {
         settingsService.updateSettings(settings);
         model.addAttribute("settings", settings);
+        request.getSession().setAttribute("settings", settings);
         return "settings";
     }
 

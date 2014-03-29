@@ -51,12 +51,89 @@
                     </div>
                 </c:if>
                 <div class="form-group">
+                    <label for="tel" class="col-sm-2 control-label"> <spring:message
+                            code="label.telephone"/></label>
+
+                    <div class="col-sm-6">
+                        <input type="text" id="tel" rows="5" class="form-control" name="tel"
+                                  value="${settings.tel}"/>
+                    </div>
+                    <div class="col-sm-4 control-label"></div>
+                </div>
+                <div class="form-group">
+                    <label for="fax" class="col-sm-2 control-label"> <spring:message
+                            code="label.fax"/></label>
+
+                    <div class="col-sm-6">
+                        <input type="text" id="fax" rows="5" class="form-control" name="fax"
+                                  value="${settings.fax}"/>
+                    </div>
+                    <div class="col-sm-4 control-label"></div>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="col-sm-2 control-label"> <spring:message
+                            code="label.email"/></label>
+
+                    <div class="col-sm-6">
+                        <input type="text" id="email" rows="5" class="form-control" name="email"
+                                  value="${settings.email}"/>
+                    </div>
+                    <div class="col-sm-4 control-label"></div>
+                </div>
+                <div class="form-group">
+                    <label for="twitter" class="col-sm-2 control-label"> Twitter</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" id="twitter" rows="5" class="form-control" name="twitter"
+                                  value="${settings.twitter}"/>
+                    </div>
+                    <div class="col-sm-4 control-label"></div>
+                </div>
+                <div class="form-group">
+                    <label for="skype" class="col-sm-2 control-label"> Skype</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" id="skype" rows="5" class="form-control" name="skype"
+                                  value="${settings.skype}"/>
+                    </div>
+                    <div class="col-sm-4 control-label"></div>
+                </div>
+                <div class="form-group">
+                    <label for="facebook" class="col-sm-2 control-label"> Facebook</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" id="facebook" rows="5" class="form-control" name="facebook"
+                                  value="${settings.facebook}"/>
+                    </div>
+                    <div class="col-sm-4 control-label"></div>
+                </div>
+                <div class="form-group">
+                    <label for="address" class="col-sm-2 control-label"> <spring:message
+                            code="label.en.address"/></label>
+
+                    <div class="col-sm-6">
+                        <input type="text" id="address" rows="5" class="form-control" name="address"
+                                  value="${settings.address}"/>
+                    </div>
+                    <div class="col-sm-4 control-label"></div>
+                </div>
+                <div class="form-group">
+                    <label for="cnAddress" class="col-sm-2 control-label"> <spring:message
+                            code="label.cn.address"/></label>
+
+                    <div class="col-sm-6">
+                        <input type="text" id="cnAddress" rows="5" class="form-control" name="cnAddress"
+                                  value="${settings.cnAddress}"/>
+                    </div>
+                    <div class="col-sm-4 control-label"></div>
+                </div>
+                <div class="form-group">
                     <label for="keywords" class="col-sm-2 control-label"> <spring:message
                             code="label.keywords"/></label>
 
                     <div class="col-sm-6">
                         <textarea type="text" id="keywords" rows="5" class="form-control" name="keywords"
-                                  value="${sessionScope.settings.keywords}"></textarea>
+                                  value="${settings.keywords}"></textarea>
                     </div>
                     <div class="col-sm-4 control-label"></div>
                 </div>
@@ -66,7 +143,7 @@
 
                     <div class="col-sm-6">
                         <textarea type="text" id="description" rows="5" class="form-control" name="description"
-                                  value="${sessionScope.settings.description}"></textarea>
+                                  value="${settings.description}"></textarea>
                     </div>
                     <div class="col-sm-4 control-label"></div>
                 </div>

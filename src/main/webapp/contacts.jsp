@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<%@ page import="org.springframework.web.servlet.support.RequestContextUtils" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=utf-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -140,7 +141,6 @@
                     <p><img src="img/<spring:message code="language" />_contact_map.jpg" width="600" height="380"
                             alt=""/></p>
 
-
                     <div class="contact-form">
                         <h2><spring:message code="label.please.fill.form"/>:</h2>
 
@@ -194,31 +194,30 @@
                     <h3><spring:message code="label.contact.us"/>:</h3>
 
                     <div class="contact-address">
-                        <div class="address"><spring:message code="label.northen.address"/>
+                        <div class="address">
+
+                            <% if ("zh".equals(RequestContextUtils.getLocaleResolver(request).resolveLocale(request).getLanguage())) {%>
+                            ${sessionScope.settings.cnAddress}
+                            <% } else { %>
+                            ${sessionScope.settings.address}
+                            <% } %>
                         </div>
                         <br>
 
-                        <div class="phone"><spring:message code="label.phone"/>: +86 (551) 6511 4065</div>
-                        <div class="fax"><spring:message code="label.fax"/>: +86 (551) 6511 4066</div>
-                    </div>
-
-                    <div class="contact-maillist">
-                        <div class="contact-mail"><a href="mailto:sales@anhuinorthen.com">sales@anhuinorthen.com</a>
-                        </div>
-                        <div class="contact-mail"><a href="mailto:support@anhuinorthen.com">support@anhuinorthen.com</a>
-                        </div>
+                        <div class="phone"><spring:message code="label.tel"/>: ${sessionScope.settings.tel}</div>
+                        <div class="fax"><spring:message code="label.fax"/>: ${sessionScope.settings.fax}</div>
                     </div>
 
                     <br/>
 
                     <div class="social-box">
-                        <div class="row social-mail"><a href="mailto:helpdesk@anhuinorthen.com">helpdesk@anhuinorthen.com</a>
+                        <div class="row social-mail"><a href="mailto:${sessionScope.settings.email}">${sessionScope.settings.email}</a>
                         </div>
-                        <div class="row social-twitter"><a href="http://twitter.com/ahnorthen">twitter.com/ahnorthen</a>
+                        <div class="row social-twitter"><a href="http://${sessionScope.settings.twitter}">${sessionScope.settings.twitter}</a>
                         </div>
-                        <div class="row social-skype"><a href="callto://linghappy915">linghappy915</a></div>
+                        <div class="row social-skype"><a href="callto://${sessionScope.settings.skype}">${sessionScope.settings.skype}</a></div>
                         <div class="row social-facebook"><a
-                                href="http://facebook.com/ahnorthen">facebook.com/ahnorthen</a></div>
+                                href="http://${sessionScope.settings.facebook}">${sessionScope.settings.facebook}</a></div>
 
                     </div>
 
@@ -240,8 +239,8 @@
 
             <div class="col_2_3 col">
                 <div class="inner">
-                    <a href="http://twitter.com/ahnorthen" class="link-twitter" title="Twitter">Twitter</a>
-                    <a href="http://facebook.com/ahnorthen" class="link-fb" title="Facebook">Facebook</a>
+                    <a href="http://${sessionScope.settings.twitter}" class="link-twitter" title="Twitter">Twitter</a>
+                    <a href="http://${sessionScope.settings.facebook}" class="link-fb" title="Facebook">Facebook</a>
                 </div>
             </div>
 
