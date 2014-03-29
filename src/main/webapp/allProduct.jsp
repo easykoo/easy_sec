@@ -384,7 +384,6 @@ var getAllProduct = function () {
         },
         "aoColumnDefs": [
             { "bSortable": false, "aTargets": [ 0 ] },
-            { "bSortable": false, "aTargets": [ 1 ] },
             { "bSortable": false, "aTargets": [ 6 ] },
             { "bSortable": false, "aTargets": [ 7 ] }
         ]
