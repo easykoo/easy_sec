@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=utf-8" isELIgnored="false" %>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%
@@ -34,6 +33,30 @@
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
     <![endif]-->
+    <script type="text/javascript">
+        var pageNo = '${page.pageNo}';
+        var pageSize = '${page.pageSize}';
+
+        var previousPage = function () {
+            var url = '/admin/dashboard.do?pageNo=' + (parseInt(pageNo) - 1) + '&pageSize=' + pageSize;
+            window.location.href = url;
+        }
+
+        var refresh = function () {
+            var url = '/admin/dashboard.do?pageNo=' + parseInt(pageNo) + '&pageSize=' + pageSize;
+            window.location.href = url;
+        }
+
+        var nextPage = function () {
+            var url = '/admin/dashboard.do?pageNo=' + (parseInt(pageNo) + 1) + '&pageSize=' + pageSize;
+            window.location.href = url;
+        }
+
+        var goPage = function (pageNo) {
+            var url = '/admin/dashboard.do?pageNo=' + pageNo + '&pageSize=' + pageSize;
+            window.location.href = url;
+        }
+    </script>
 </head>
 
 <body>
@@ -177,29 +200,6 @@
         $('#dataTable').dataTable();
         setCheckSession();
     });
-
-    var pageNo = '${page.pageNo}';
-    var pageSize = '${page.pageSize}';
-
-    var previousPage = function () {
-        var url = 'admin/dashboard.do?pageNo=' + (parseInt(pageNo) - 1) + '&pageSize=' + pageSize;
-        window.location.href = url;
-    }
-
-    var refresh = function () {
-        var url = 'admin/dashboard.do?pageNo=' + parseInt(pageNo) + '&pageSize=' + pageSize;
-        window.location.href = url;
-    }
-
-    var nextPage = function () {
-        var url = 'admin/dashboard.do?pageNo=' + (parseInt(pageNo) + 1) + '&pageSize=' + pageSize;
-        window.location.href = url;
-    }
-
-    var goPage = function (pageNo) {
-        var url = 'admin/dashboard.do?pageNo=' + pageNo + '&pageSize=' + pageSize;
-        window.location.href = url;
-    }
 </script>
 </body>
 </html>
