@@ -100,7 +100,7 @@
             </au:check>
             <au:check test="/news/allNews.do">
                 <li id="news">
-                    <a href="javascript:"><i class="fa fa-lightbulb-o fa-fw"></i> <spring:message
+                    <a href="javascript:"><i class="fa fa-file-text-o fa-fw"></i> <spring:message
                             code="label.news"/><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <au:check test="/news/allNews.do">
