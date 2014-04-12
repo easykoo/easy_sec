@@ -48,13 +48,14 @@ public class ProductController implements ServletContextAware {
         Product product = new Product();
         product.setPageActived(true);
         String productIdStr = request.getParameter("productId");
-        if (StringUtils.isNotBlank(productIdStr)){
+        if (StringUtils.isNotBlank(productIdStr)) {
             product.setProductId(Integer.parseInt(productIdStr));
         }
         product.setCategoryId(request.getParameter("categoryId"));
         product.setPageNo(request.getParameter("pageNo"));
         product.setPageSize(request.getParameter("pageSize"));
-        product.addSortProperties("priority", "asc");
+        product.addSortProperties("ct.priority", "asc");
+        product.addSortProperties("pd.priority", "asc");
         product.addSortProperties("create_date", "desc");
         List<Category> categoryList = productService.getTopLevelCategory();
         List<Product> productList = productService.findProductWithPage(product);
@@ -273,11 +274,12 @@ public class ProductController implements ServletContextAware {
     }
 
     @RequestMapping(value = "/product/createCategory.do", method = RequestMethod.POST)
-    public String createCategory(@RequestParam("parentCategoryId") String parentCategoryId, @RequestParam("description") String description,
+    public String createCategory(@RequestParam("parentCategoryId") String parentCategoryId, @RequestParam("priority") int priority, @RequestParam("description") String description,
                                  @RequestParam("cnDescription") String cnDescription, Locale locale, ModelMap model) {
         try {
             Category category = new Category();
             category.setParentCategory(parentCategoryId);
+            category.setPriority(priority);
             category.setDescription(description);
             category.setCnDescription(cnDescription);
             productService.insert(category);
@@ -293,11 +295,12 @@ public class ProductController implements ServletContextAware {
     }
 
     @RequestMapping(value = "/product/editCategory.do", method = RequestMethod.POST)
-    public String editCategory(@RequestParam("categoryId") String categoryId, @RequestParam("description") String description,
+    public String editCategory(@RequestParam("categoryId") String categoryId, @RequestParam("priority") int priority, @RequestParam("description") String description,
                                @RequestParam("cnDescription") String cnDescription, Locale locale, ModelMap model) {
         try {
             Category category = new Category();
             category.setCategoryId(categoryId);
+            category.setPriority(priority);
             category.setDescription(description);
             category.setCnDescription(cnDescription);
             productService.updateByPrimaryKeySelective(category);

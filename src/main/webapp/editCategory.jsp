@@ -63,6 +63,21 @@
                     <div class="col-sm-4 control-label"></div>
                 </div>
                 <div class="form-group">
+                    <label for="priority" class="col-sm-2 control-label"><span style="color: red">*</span> <spring:message
+                            code="label.priority"/></label>
+
+                    <div class="col-sm-6">
+                        <select id="priority" class="form-control" name="priority">
+                            <option value="5">5</option>
+                            <option value="4">4</option>
+                            <option value="3">3</option>
+                            <option value="2">2</option>
+                            <option value="1">1</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 control-label"></div>
+                </div>
+                <div class="form-group">
                     <label for="description" class="col-sm-2 control-label"><spring:message
                             code="label.en.description"/></label>
 
@@ -112,6 +127,7 @@
     var checkOption = function (obj, data) {
         if (obj.val() != null && obj.val() != '') {
             $('#categoryId').val(obj.val());
+            $('#priority').val(data.priority);
             $('#description').val(data.description);
             $('#cnDescription').val(data.cnDescription);
         }
@@ -137,6 +153,7 @@
     var changeSelect = function (select, data) {
         if (select.val() == 0) {
             $('#categoryId').val(data.categoryId);
+            $('#priority').val(data.priority);
             $('#description').val(data.description);
             $('#cnDescription').val(data.cnDescription);
         }
@@ -206,6 +223,7 @@
         $('#categoryIdd').on('change', function () {
             if ($(this).val() == 0) {
                 $('#categoryId').val("");
+                $('#priority').val("5");
                 $('#description').val("");
                 $('#cnDescription').val("");
             }

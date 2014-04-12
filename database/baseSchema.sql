@@ -169,6 +169,7 @@ CREATE TABLE category (
   description VARCHAR(200) NOT NULL,
   cn_description VARCHAR(200) NOT NULL,
   parent_category VARCHAR(20) NULL,
+  priority INT(1) NULL DEFAULT 5,
   create_user VARCHAR(20) NULL,
   create_date DATETIME NULL,
   update_user varchar(20) DEFAULT NULL,

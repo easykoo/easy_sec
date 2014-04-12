@@ -18,6 +18,8 @@ public class Category extends Page {
 
     private List<Category> children;
 
+    private Integer priority;
+
     private String createUser;
 
     private Date createDate;
@@ -25,6 +27,14 @@ public class Category extends Page {
     private String updateUser;
 
     private Date updateDate;
+
+    public Integer getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Integer priority) {
+        this.priority = priority;
+    }
 
     public String getCnDescription() {
         return cnDescription;

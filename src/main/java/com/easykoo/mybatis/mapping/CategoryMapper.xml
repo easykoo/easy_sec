@@ -6,6 +6,7 @@
         <result column="description" property="description" jdbcType="VARCHAR"/>
         <result column="cn_description" property="cnDescription" jdbcType="VARCHAR"/>
         <result column="parent_category" property="parentCategory" jdbcType="VARCHAR"/>
+        <result column="priority" property="priority" jdbcType="INTEGER"/>
         <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
         <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
@@ -14,7 +15,7 @@
                     select="getChildrenCategory"/>
     </resultMap>
     <sql id="Category_Column_List">
-    category_id, description, cn_description, parent_category, create_user, create_date,
+    category_id, description, cn_description, parent_category, priority, create_user, create_date,
     update_user, update_date
   </sql>
     <select id="selectByPrimaryKey" resultMap="CategoryResultMap" parameterType="java.lang.Integer">
@@ -28,9 +29,10 @@
     where category_id = #{categoryId,jdbcType=VARCHAR}
   </delete>
     <insert id="insert" parameterType="com.easykoo.mybatis.model.Category">
-    insert into category (category_id, description, cn_description, parent_category, create_user,
+    insert into category (category_id, description, cn_description, parent_category, priority, create_user,
       create_date, update_user, update_date)
-    values (#{categoryId,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{cnDescription,jdbcType=VARCHAR}, #{parentCategory,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR},
+    values (#{categoryId,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{cnDescription,jdbcType=VARCHAR},
+     #{parentCategory,jdbcType=VARCHAR}, #{priority,jdbcType=INTEGER}, #{createUser,jdbcType=VARCHAR},
       #{createDate,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP})
   </insert>
     <insert id="insertSelective" parameterType="com.easykoo.mybatis.model.Category">
@@ -47,6 +49,9 @@
             </if>
             <if test="parentCategory != null">
                 parent_category,
+            </if>
+            <if test="priority != null">
+                priority,
             </if>
             <if test="createUser != null">
                 create_user,
@@ -74,6 +79,9 @@
             <if test="parentCategory != null">
                 #{parentCategory,jdbcType=VARCHAR},
             </if>
+            <if test="priority != null">
+                #{priority,jdbcType=INTEGER},
+            </if>
             <if test="createUser != null">
                 #{createUser,jdbcType=VARCHAR},
             </if>
@@ -100,6 +108,9 @@
             <if test="parentCategory != null">
                 parent_category = #{parentCategory,jdbcType=VARCHAR},
             </if>
+            <if test="priority != null">
+                priority = #{priority,jdbcType=INTEGER},
+            </if>
             <if test="createUser != null">
                 create_user = #{createUser,jdbcType=VARCHAR},
             </if>
@@ -120,6 +131,7 @@
     set description = #{description,jdbcType=VARCHAR},
       cn_description = #{cnDescription,jdbcType=VARCHAR},
       parent_category = #{parentCategory,jdbcType=VARCHAR},
+      priority = #{priority,jdbcType=INTEGER},
       create_user = #{createUser,jdbcType=VARCHAR},
       create_date = #{createDate,jdbcType=TIMESTAMP},
       update_user = #{updateUser,jdbcType=VARCHAR},
