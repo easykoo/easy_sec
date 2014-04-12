@@ -146,7 +146,7 @@
     <select id="getTopLevelCategory" resultMap="CategoryResultMap">
         select
         <include refid="Category_Column_List"/>
-        from category where parent_category is null or parent_category = ''
+        from category where parent_category is null or parent_category = '' order by priority asc
     </select>
     <select id="getChildrenCategory" resultMap="CategoryResultMap" parameterType="java.lang.String">
         select
