@@ -72,6 +72,11 @@
         <listener-class>com.easykoo.web.listener.SessionCounterListener</listener-class>
     </listener>
 
+    <listener>
+        <description>Driver Cleanup Listener</description>
+        <listener-class>com.easykoo.web.listener.JDBCDriverCleanupListener</listener-class>
+    </listener>
+
     <jsp-config>
         <taglib>
             <taglib-uri>authorize</taglib-uri>
