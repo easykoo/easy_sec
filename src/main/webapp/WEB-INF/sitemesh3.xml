@@ -11,6 +11,11 @@
         <decorator>/decorators/head.jsp</decorator>
     </mapping>
     <mapping>
+        <path>/settings/*</path>
+        <decorator>/decorators/left.jsp</decorator>
+        <decorator>/decorators/head.jsp</decorator>
+    </mapping>
+    <mapping>
         <path>/profile/*</path>
         <decorator>/decorators/left.jsp</decorator>
         <decorator>/decorators/head.jsp</decorator>
@@ -35,6 +40,11 @@
         <decorator>/decorators/left.jsp</decorator>
         <decorator>/decorators/head.jsp</decorator>
     </mapping>
+    <mapping>
+        <path>/news/*</path>
+        <decorator>/decorators/left.jsp</decorator>
+        <decorator>/decorators/head.jsp</decorator>
+    </mapping>
 
     <!-- 不被渲染的路径. -->
     <mapping path="/admin/ajax/*" exclue="true"/>
@@ -44,6 +54,8 @@
     <mapping path="/feedback/ajax/*" exclue="true"/>
     <mapping path="/notice/ajax/*" exclue="true"/>
     <mapping path="/product/ajax/*" exclue="true"/>
+    <mapping path="/news/ajax/*" exclue="true"/>
+    <mapping path="/news/showNews.do" exclue="true"/>
     <mapping path="/js/*" exclue="true"/>
     <mapping path="/css/*" exclue="true"/>
     <mapping path="/fonts/*" exclue="true"/>

@@ -105,8 +105,8 @@ var productTable;
 
 var deleteProduct = function (id) {
     bootbox.dialog({
-        message: '<spring:message code="message.sure.delete.product" />',
-        title: '<spring:message code="title.delete.product" />',
+        message: '<spring:message code="message.sure.delete.record" />',
+        title: '<spring:message code="title.delete.record" />',
         buttons: {
             main: {
                 label: '<spring:message code="label.cancel" />',
@@ -143,34 +143,124 @@ var editProduct = function (id) {
     var productList = productTable.fnGetData();
     $.each(productList, function (index, product) {
         if (product.productId == id) {
-            bootbox.dialog({
-                message: product.content,
-                title: product.name,
-                buttons: {
-                    success: {
-                        label: '<spring:message code="label.ok" />',
-                        className: "btn-success",
-                        callback: function () {
-                            $.ajax({
-                                dataType: "json",
-                                type: "POST",
-                                url: 'product/ajax/editProduct.do',
-                                data: {id: id},
-                                success: function (data) {
-                                    if (!data.success) {
-                                        bootbox.alert(data.message, null);
-                                    }
-                                    productTable.fnClearTable(0);
-                                    productTable.fnDraw();
-                                }
-                            });
-                        }
-                    }
+            var html = '<div class=\"row\"><div class=\"col-lg-15\"><form id=\"productForm\" role=\"form\" class=\"form-horizontal\" enctype=\"multipart/form-data\" method=\"post\" action=\"product/publishProduct.do\">'
+                    + '<div class=\"form-group\">'
+                    + '<label for=\"priority\" class=\"col-sm-4 control-label\"><span style=\"color: red\">*</span> <spring:message code="label.priority"/></label>'
+                    + '<div class=\"col-sm-6\">'
+                    + '<select id=\"priority\" class=\"form-control\" name=\"priority\">';
+            for (i = 5; i > 0; i--) {
+                html += '<option ';
+                if (product.priority == i) {
+                    html += 'selected';
                 }
+                html += ' value=\"' + i + '\">' + i + '</option>';
+            }
+            html += '</select>'
+                    + '</div>'
+                    + '<div class=\"col-sm-4 control-label\"></div>'
+                    + '</div>'
+                    + '<div class=\"form-group\">'
+                    + '<label for=\"name\" class=\"col-sm-4 control-label\"><span style=\"color: red\">*</span> <spring:message code="label.en.name"/></label>'
+                    + '<div class=\"col-sm-6\">'
+                    + '<input type=\"text\" id=\"name\" class=\"form-control\" name=\"name\" value=\"' + product.name + '\">'
+                    + '</div>'
+                    + '<div class=\"col-sm-4 control-label\"></div>'
+                    + '</div>'
+                    + '<div class=\"form-group\">'
+                    + '<label for=\"cnName\" class=\"col-sm-4 control-label\"><span style=\"color: red\">*</span> <spring:message code="label.cn.name"/></label>'
+                    + '<div class=\"col-sm-6\">'
+                    + '<input type=\"text\" id=\"cnName\" class=\"form-control\" name=\"cnName\" value=\"' + product.cnName + '\">'
+                    + '</div>'
+                    + '<div class=\"col-sm-4 control-label\"></div>'
+                    + '</div>'
+                    + '<div class=\"form-group\">'
+                    + '<label for=\"description\" class=\"col-sm-4 control-label\"><span style=\"color: red\">*</span>'
+                    + '<spring:message code="label.en.description"/></label>'
+                    + '<div class=\"col-sm-6\">'
+                    + '<textarea id=\"description\" name=\"description\" rows=\"6\" class=\"form-control\"/></textarea>'
+                    + '</div>'
+                    + '<div class=\"col-sm-4 control-label\"></div>'
+                    + '</div>'
+                    + '<div class=\"form-group\">'
+                    + '<label for=\"cnDescription\" class=\"col-sm-4 control-label\"><span style=\"color: red\">*</span>'
+                    + '<spring:message code="label.cn.description"/></label>'
+                    + '<div class=\"col-sm-6\">'
+                    + '<textarea id=\"cnDescription\" name=\"cnDescription\" rows=\"6\" class=\"form-control\"/></textarea>'
+                    + '</div>'
+                    + '<div class=\"col-sm-4 control-label\"></div>'
+                    + '</div>'
+                    + '<div class=\"form-group\">'
+                    + '<div class=\"col-sm-offset-4 col-sm-6\">'
+                    + '<div class=\"btn-group\">'
+                    + '<button id=\"change\" onclick=\"checkCommit(' + product.productId + ')\" type=\"button\" class=\"btn btn-danger\"><spring:message code="label.change"/></button>'
+                    + '<button id=\"cancel\" onclick=\"$(\'.bootbox-close-button\').click()\" type=\"button\" class=\"btn btn-default\"><spring:message code="label.cancel"/></button>'
+                    + '</div>'
+                    + '</div></div>'
+                    + '</form></div></div>';
+
+            box = bootbox.dialog({
+                title: '<spring:message code="label.change.product" />',
+                message: html,
+                buttons: null
             });
+            $('#description').val(product.description);
+            $('#cnDescription').val(product.cnDescription);
         }
     });
 };
+
+var box = null;
+
+var checkCommit = function (productId) {
+    var productList = productTable.fnGetData();
+    $.each(productList, function (index, product) {
+        if (product.productId == productId) {
+            var check1 = checkFiled($('#name'))
+            var check2 = checkFiled($('#cnName'))
+            var check3 = checkFiled($('#description'))
+            var check4 = checkFiled($('#cnDescription'))
+            if (check1 && check2 && check3 && check4) {
+                $.ajax({
+                    dataType: "json",
+                    type: "POST",
+                    url: 'product/ajax/changeProduct.do',
+                    data: {
+                        productId: product.productId,
+                        priority: $('#priority').val(),
+                        name: $('#name').val(),
+                        cnName: $('#cnName').val(),
+                        description: $('#description').val(),
+                        cnDescription: $('#cnDescription').val()
+                    },
+                    success: function (data) {
+                        if (!data.success) {
+                            bootbox.alert(data.message, null);
+                        } else {
+                            $(".bootbox-close-button").click();
+                        }
+                        productTable.fnClearTable(0);
+                        productTable.fnDraw();
+                    }
+                });
+            } else {
+            }
+        }
+    });
+}
+
+var checkFiled = function (obj) {
+    if (obj.val() == '') {
+        if (obj.parent("div").next("div").children('span').length == 0) {
+            $('<span><spring:message code="message.error.required"/></span>').appendTo(obj.parent("div").next("div"));
+        }
+        obj.parent("div").parent("div").addClass("has-error").removeClass("has-success");
+        return false;
+    } else {
+        obj.parent("div").next("div").children('span').remove()
+        obj.parent("div").parent("div").removeClass("has-error").addClass("has-success");
+        return true;
+    }
+}
 
 var productArray = [0];
 
@@ -261,8 +351,11 @@ var getAllProduct = function () {
                     + '"><img src="' + aData.preImgPath + '" class="img-responsive" alt="Responsive image"/></a> ');
             var html = '<div class="btn-group "><a class="btn btn-primary" href="javascript:"><i class="fa fa-gavel fa-fw"></i></a>' +
                     '<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:"><span class="fa fa-caret-down"></span></a>' +
-                    '<ul class="dropdown-menu">' +
-                    '<li><a href="javascript:deleteProduct(' + aData.productId + ')"><i class="fa fa-trash-o fa-fw"></i>'
+                    '<ul class="dropdown-menu">'
+                    + '<li><a href="javascript:editProduct(' + aData.productId + ')"><i class="fa fa-edit fa-fw"></i>'
+                    + '<strong> <spring:message code="label.edit"/></strong>'
+                    + '</a></li>'
+                    + '<li><a href="javascript:deleteProduct(' + aData.productId + ')"><i class="fa fa-trash-o fa-fw"></i>'
                     + '<strong> <spring:message code="label.delete"/></strong>'
                     + '</a></li>'
                     + '</ul></div>';
@@ -291,7 +384,6 @@ var getAllProduct = function () {
         },
         "aoColumnDefs": [
             { "bSortable": false, "aTargets": [ 0 ] },
-            { "bSortable": false, "aTargets": [ 1 ] },
             { "bSortable": false, "aTargets": [ 6 ] },
             { "bSortable": false, "aTargets": [ 7 ] }
         ]
@@ -310,8 +402,8 @@ $(document).ready(function () {
             return;
         }
         bootbox.dialog({
-            message: '<spring:message code="message.sure.delete.products" />',
-            title: '<spring:message code="title.batch.delete.products" />',
+            message: '<spring:message code="message.sure.batch.delete.records" />',
+            title: '<spring:message code="title.batch.delete.records" />',
             buttons: {
                 main: {
                     label: '<spring:message code="label.cancel" />',

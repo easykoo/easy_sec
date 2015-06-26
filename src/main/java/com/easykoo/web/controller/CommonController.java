@@ -44,6 +44,11 @@ public class CommonController {
         return "about";
     }
 
+    @RequestMapping(value = "/join.do")
+    public String join() {
+        return "join";
+    }
+
     @RequestMapping(value = "/contacts.do")
     public String contacts() {
         return "contacts";

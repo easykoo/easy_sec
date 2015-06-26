@@ -42,9 +42,6 @@ public class ProfileController {
                 (AccountSecurity) request.getSession().getAttribute("currentAccountSecurity");
         if (currentAccountSecurity != null && currentAccountSecurity.getUsername() != null) {
             logger.debug(currentAccountSecurity.getUsername() + " already signed in!");
-            if (StringUtils.isNotBlank(url)) {
-                return "redirect:" + url;
-            }
             return "index";
         }
         if (StringUtils.isNotBlank(url)) {

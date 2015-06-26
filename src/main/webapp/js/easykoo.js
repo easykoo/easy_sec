@@ -36,7 +36,6 @@ var timeStamp2String = function (time) {
     return hour + ":" + minute + ":" + second + " " + month + "/" + date + "/" + year;
 };
 
-
 var changeLanguage = function (lang) {
     var url = window.location.href;
     url = url.replace('&locale=en', '').replace('&locale=zh_CN', '');
@@ -45,4 +44,22 @@ var changeLanguage = function (lang) {
     }
     url += (url.indexOf('?') > 0 ? '&' : '?') + 'locale=' + lang;
     window.location.href = url;
+}
+
+var filterSqlStr = function (value) {
+    var sqlStr = sql_str().split(',');
+    var flag = false;
+
+    for (var i = 0; i < sqlStr.length; i++) {
+        if (value.toLowerCase().indexOf(sqlStr[i]) != -1) {
+            flag = true;
+            break;
+        }
+    }
+    return flag;
+}
+
+var sql_str = function () {
+    var str = "and,delete,or,exec,insert,select,union,update,count,*,',join,>,<";
+    return str;
 }

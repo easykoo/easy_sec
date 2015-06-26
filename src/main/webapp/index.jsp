@@ -1,530 +1,482 @@
-<!DOCTYPE html>
+<%@ page import="org.springframework.web.servlet.support.RequestContextUtils" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=utf-8" isELIgnored="false" %>
-
-<%@ taglib prefix="au" uri="authorize" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="au" uri="authorize-tag" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
 <base href="<%=basePath%>">
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title><spring:message code="main.title"/></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Easy Security">
-    <meta name="author" content="easykoo.com">
-
-    <%--<link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>--%>
-    <%--<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>--%>
-    <!-- Load The Story -->
-    <link id="the-story-css-file" rel="stylesheet" href="css/the-story.min.css" type="text/css">
-
-    <link rel="stylesheet" href="css/p-controls.min.css" type="text/css">
-    <%--<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">--%>
-    <!-- Favicon -->
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="shortcut icon" href="img/favicon.ico">
+    <title><spring:message code="main.title"/> - <spring:message code="label.home"/></title>
+    <meta name="keywords" content="${sessionScope.settings.keywords}" />
+    <meta name="description" content="${sessionScope.settings.description}" />
+    <link href="css/styles.css" media="screen" rel="stylesheet" type="text/css"/>
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="js/html5shiv.js"></script>
-    <script src="js/respond.min.js"></script>
+    <!--[if lte IE 7]>
+    <link rel="stylesheet" type="text/css" href="css/styles_ie.css"/>
     <![endif]-->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link href="css/gray.css" media="screen" rel="stylesheet" type="text/css"/>
+
+    <script type="text/javascript" language="javascript" src="js/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" language="javascript" src="js/jquery.tools.min.js"></script>
+    <script type="text/javascript" language="javascript" src="js/general.js"></script>
+    <script type="text/javascript" language="javascript" src="js/jquery.easing.1.3.js"></script>
+
+    <link rel="stylesheet" href="css/prettyPhoto.css" type="text/css" media="screen"/>
+    <script src="js/jquery.prettyPhoto.js" type="text/javascript"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="css/home.css"/>
+    <script type="text/javascript" language="javascript" src="js/home.js"></script>
+    <script type="text/javascript" src="js/easykoo.js"></script>
 </head>
 
-<!-- activate scrollspy -->
+<body onload="load_animations()">
+<div class="header_img" id="aside2">
 
-<body id="top" data-spy="scroll" data-target=".navbar" data-offset="50">
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="navbar-container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <i class="fa fa-bars"></i>
-            </button>
-            <a class="navbar-brand" href="#">Easy Security</a>
-        </div>
-        <div id="nav-collapse" class="collapse navbar-collapse navbar-ex1-collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li class=""><a title="Home page" class="scroll brand-1" href="#home"><spring:message
-                        code="label.home"/></a></li>
-                <li class=""><a title="Check out our awesome services" href="#features"
-                                class=" scroll brand-4"><spring:message code="label.features"/></a></li>
-                <li class=""><a title="Themes assets" href="#assets" class="scroll brand-3"><spring:message
-                        code="label.assets"/></a></li>
-                <li class=""><a title="Who we are" href="#about" class="scroll fadeto brand-4"><spring:message
-                        code="label.about.us"/></a></li>
-                <li class=""><a title="Get in touch!" href="#contact" class="scroll brand-2"><spring:message
-                        code="label.contact.us"/></a></li>
+    <div class="topnav">
+        <div class="container_12">
 
-                <li class="dropdown">
-                    <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown"><spring:message
-                            code="label.language"/>
-                        <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="index.do?locale=zh_CN">中文/简体</a></li>
-                        <li><a href="index.do?locale=en">English</a></li>
-                    </ul>
-                </li>
-                <c:choose>
-                    <c:when test="${not empty currentAccountSecurity.nickname}">
-                        <li class="dropdown">
-                            <a href="javascript:" class="dropdown-toggle"
-                               data-toggle="dropdown">${currentAccountSecurity.nickname}
-                                <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <au:check test="/admin/dashboard.do">
-                                    <li><a href="admin/dashboard.do"><i class="fa fa-dashboard fa-fw"></i>
+            <div class="logo"><a href="index.do"><img src="img/logo.png" alt="<spring:message code="main.title"/>"
+                                                      width="157" height="36"
+                                                      border="0"/></a></div>
+
+            <!-- topmenu -->
+            <div class="menu-header">
+
+                <ul class="topmenu">
+                    <li class="first current-menu-item"><a href="javascript:"><span><spring:message
+                            code="label.home"/></span></a>
+                    </li>
+                    <li><a href="about.do"><span><spring:message code="label.about.us"/></span></a></li>
+                    <li><a href="product.do"><span><spring:message code="label.product.display"/></span></a></li>
+                    <li><a href="news.do"><span><spring:message code="label.news.center"/></span></a></li>
+                    <li><a href="join.do"><span><spring:message code="label.join.us"/></span></a></li>
+                    <li class="last"><a href="contacts.do"><span><spring:message code="label.contact.us"/></span></a>
+                    </li>
+                    <li>
+                        <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown"><span><spring:message
+                                code="label.language"/></span>
+                            <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="javascript:changeLanguage('zh_CN')"><span>中文/简体</span></a></li>
+                            <li><a href="javascript:changeLanguage('en')"><span>English</span></a></li>
+                        </ul>
+                    </li>
+                    <c:choose>
+                        <c:when test="${not empty currentAccountSecurity.nickname}">
+                            <li class="parent">
+                                <a href="javascript:" class="dropdown-toggle"
+                                   data-toggle="dropdown"><span>${currentAccountSecurity.nickname}</span>
+                                    <b class="caret"></b></a>
+                                <ul class="sub-menu">
+                                    <au:check test="/admin/dashboard.do">
+                                        <li><a href="admin/dashboard.do"><span><i class="fa fa-dashboard fa-fw"></i>
                                         <spring:message
-                                                code="label.dashboard"/></a></li>
-                                </au:check>
-                                <%--<au:check test="/admin/settings.do">
-                                    <li><a href="admin/settings.do"><i class="fa fa-gear fa-fw"></i> <spring:message
-                                            code="label.settings"/></a></li>
-                                </au:check>--%>
-                                <au:check test="/profile/profile.do">
-                                    <li><a href="profile/profile.do"><i class="fa fa-user fa-fw"></i> <spring:message
-                                            code="label.profile"/></a></li>
-                                </au:check>
-                                <li class="divider"></li>
-                                <li><a href="logout.do"><i class="fa fa-sign-out fa-fw"></i> <spring:message
-                                        code="label.logout"/></a></li>
-                            </ul>
-                        </li>
-                    </c:when>
-                    <c:otherwise>
-                        <li><a href="login.do?url=<%=request.getRequestURL()%>"><spring:message
-                                code="label.sign.in"/></a></li>
-                        <li><a href="register.do"><spring:message code="label.sign.up"/></a></li>
-                    </c:otherwise>
-                </c:choose>
-            </ul>
-        </div>
-    </div>
-    <!-- /.navbar-container -->
-</nav>
-
-<!-- Home Page -->
-<div id="home" class="page color-1">
-    <div class="inner-page">
-        <h2 class="page-headline large">Tell your projects awesome story.</h2>
-    </div>
-    <div class="row inner-page">
-        <div class="col-md-8 col-md-push-4 lazy-container loaded">
-            <img class="lazy" alt="Looks great on every device" src="img/home.png" data-original="img/home.png"
-                 style="display: block;">
-        </div>
-        <div class="col-md-4 col-md-pull-8">
-            <ul class="big-list">
-                <li><i class="fa fa-check"></i> Flat design</li>
-                <li><i class="fa fa-tablet"></i> Responsive</li>
-                <li><i class="fa fa-cloud"></i> Bootstrap 3</li>
-                <li><i class="fa fa-cog"></i> Built with LESS</li>
-            </ul>
-            <br>
-            <a href="#features" title="Check out more freatures!"
-               class="scroll btn btn-primary btn-centered"><i class="fa fa-caret-down"></i> Learn more</a>
-        </div>
-    </div>
-</div>
-<!-- /#home -->
-
-<!-- Sign up -->
-<div class="sign-up color-2 visible-lg">
-    <div class="row inner-page">
-        <div class="col-md-12">
-            <h4 class="pull-left">They say visitors prefer scrolling rather than clicking. We combined both.</h4>
-            <a href="#features" class="scroll btn btn-primary pull-right" title="Check out more freatures!"><i
-                    class="fa fa-caret-down"></i> Scroll down</a>
-        </div>
-    </div>
-</div>
-<!-- /.sign-up -->
-
-<!-- Feature page-->
-<div id="features" class="page color-4">
-    <div class="inner-page">
-        <h2 class="page-headline">Why should you choose The Story</h2>
-    </div>
-
-    <div class="inner-page row">
-        <ul class="features list-inline">
-            <li>
-                <h3><i class="fa fa-cog"></i> Make it your own</h3>
-
-                <p>Easily change every color, by changing just few variables. Add or remove pages, and choose from 600+
-                    fonts.</p>
-            </li>
-            <li>
-                <h3><i class="fa fa-heart"></i> Page speed</h3>
-
-                <p>The theme is optimized to ensure fast loading time by lazy-loading of images and beeing minimal by
-                    design.</p>
-            </li>
-            <li>
-                <h3><i class="fa fa-tablet"></i> For every device.</h3>
-
-                <p>
-                    <strong>The Story</strong>is built to look great on every device. Custom menu for mobile devices, to
-                    ensure the best expierence.</p>
-            </li>
-        </ul>
-    </div>
-
-    <div class="row inner-page">
-        <div class="col-md-6 lazy-container loaded">
-            <img class="figurette lazy" src="img/two-phones.png" data-original="img/two-phones.png" alt="Zombie ipsum"
-                 style="display: block;">
-        </div>
-        <div class="col-md-6">
-            <h3>All artwork included</h3>
-
-            <p class="lead">Present your project properly. Create your own art from included templates</p>
-            <ul class="list-wide">
-                <li><i class="fa fa-check"></i> More than 300 awesome icons from <a
-                        href="http://fortawesome.github.io/Font-Awesome/" title="awesome font, awesome">Font-awesome</a>
-                </li>
-                <li><i class="fa fa-check"></i> Browser icons</li>
-                <li><i class="fa fa-check"></i> Phone, tablet, laptop, desktop vectors (SVG)</li>
-                <li><i class="fa fa-check"></i> 5 Layered PSD files.</li>
-            </ul>
-        </div>
-    </div>
-
-    <hr>
-
-    <!-- Video -->
-    <div class="row inner-page">
-        <div class="col-md-6 col-md-push-6">
-            <div class="btn-container figurette">
-                <img src="img/video.png" alt="Play video">
-                <a class="lightbox iframe btn-play" target="_blank" href="http://vimeo.com/61693087"><i
-                        class="fa fa-play"></i></a>
+                                                code="label.dashboard"/></span></a></li>
+                                    </au:check>
+                                        <%--<au:check test="/settings/settings.do">
+                                            <li><a href="settings/settings.do"><i class="fa fa-gear fa-fw"></i> <spring:message
+                                                    code="label.settings"/></a></li>
+                                        </au:check>--%>
+                                    <au:check test="/profile/profile.do">
+                                        <li><a href="profile/profile.do"><span><i
+                                                class="fa fa-user fa-fw"></i> <spring:message
+                                                code="label.profile"/></span></a></li>
+                                    </au:check>
+                                    <li><a href="logout.do"><span><i class="fa fa-sign-out fa-fw"></i> <spring:message
+                                            code="label.logout"/></span></a></li>
+                                </ul>
+                            </li>
+                        </c:when>
+                        <c:otherwise>
+                            <li>
+                                <a href="login.do?url=<%=(request.getHeader("referer") == null? "":request.getHeader("referer"))%>"><span><spring:message
+                                        code="label.sign.in"/></span></a></li>
+                            <%--<li><a href="register.do"><span><spring:message code="label.sign.up"/></span></a></li>--%>
+                        </c:otherwise>
+                    </c:choose>
+                </ul>
             </div>
-        </div>
-        <div class="col-md-6 col-md-pull-6">
-            <ul class="big-list">
-                <li><i class="fa fa-check"></i> Always latest bootstrap</li>
-                <li><i class="fa fa-play"></i> Responsive video</li>
-                <li><i class="fa fa-expand"></i> Adaptive, smart lightbox</li>
-                <li><i class="fa fa-desktop"></i> All modern browsers supported</li>
-            </ul>
-            <br>
-            <a href="#assets" class="scroll btn btn-primary btn-centered"><i class="fa fa-caret-down"></i> Even
-                more features</a>
+            <!--/ topmenu -->
         </div>
     </div>
+    <!--/ header -->
+
+    <!-- slider -->
+
+    <div class="container_12">
+        <div class="slider">
+
+            <div id="header_images">
+                <% if ("zh".equals(RequestContextUtils.getLocaleResolver(request).resolveLocale(request).getLanguage())) {%>
+                <img src="img/slider1_image_1_zh_CN.jpg" class="header_image" color="#040203" alt="" link="#link1"/>
+                <% } else { %>
+                <img src="img/slider1_image_1.jpg" class="header_image" color="#040203" alt="" link="#link1"/>
+                <% } %>
+                <img src="img/slider1_image_2.jpg" class="header_image" color="#2A0413" alt="" link="#link2"/>
+                <img src="img/slider1_image_3.jpg" class="header_image" color="#163570" alt="" link="#link3"/>
+                <img src="img/slider1_image_4.jpg" class="header_image" color="#000000" alt="" link="#link4"/>
+            </div>
+            <div class="header_controls">
+                <a href="javascript:" id="header_controls_left">Previous</a>
+                <a href="javascript:" id="header_controls_right">Next</a></div>
+            <div id="overlay_bg"></div>
+        </div>
+    </div>
+
+    <!--/ slider -->
 </div>
-<!-- /#features -->
 
-<!-- Assets page -->
-<div id="assets" class="page color-3">
-    <div class="inner-page">
-        <h2 class="page-headline">Page assets</h2>
-    </div>
 
-    <!-- Vectors -->
-    <div class="row inner-page">
-        <div class="col-md-6 lazy-container loaded">
-            <img class="figurette lazy" alt="Original vectors" src="img/responsive-vectors.png"
-                 data-original="img/responsive-vectors.png" style="display: block;">
+<div class="welcome_bar">
+    <!-- bar -->
+    <div class="container_12 bar">
+        <div class="bar-icon"><img src="img/icon_rss.png" width="80" height="80" alt=""/></div>
+        <div class="bar-title">
+            <% if ("zh".equals(RequestContextUtils.getLocaleResolver(request).resolveLocale(request).getLanguage())) {%>
+            <h1>欢迎来到<span>诺森</span>, 您最好的生意伙伴.</h1>
+
+            <div class="sub-text">我们有自己的供应商和团队, 能提供优质的产品和良好的服务.</div>
+            <%}else{%>
+            <h1>Welcome to <span>Northen</span>, best parter in business.</h1>
+
+            <div class="sub-text">We have our own factories to supply high quality products, and professional teams to
+                supply good service.
+            </div>
+            <%}%>
         </div>
-        <div class="col-md-6">
-            <h3>5 vectors included</h3>
-
-            <p class="lead">Zombie ipsum
-                <abbr title="HyperText Markup Language" class="initialism">HTML</abbr>reversus ab viral inferno, nam
-                rick grimes malum cerebro. De carne lumbering animata corpora quaeirtis.</p>
-
-            <p>The voodoo sacerdos flesh eater, suscitat mortuos comedere carnem virus. Zonbi tattered for solum oculi
-                eorum defunctis go lum cerebro..</p>
-        </div>
+        <div class="bar-right">
+            <a href="product.do" class="button_link large_button"><span><spring:message
+                    code="label.view.product"/></span></a></div>
+        <div class="clear"></div>
     </div>
-    <!-- /vectors -->
+    <!--/ bar -->
+</div>
 
-    <hr>
 
-    <!-- Big laptop -->
-    <div class="row inner-page">
-        <div class="col-md-offset-1 col-md-10">
-            <div class="lazy-container lazy-large btn-container loaded">
-                <div class="btn-container">
-                    <img class="figurette lazy " src="img/laptop-blue@2x.png" data-original="img/laptop-blue@2x.png"
-                         alt="view image in lightbox" style="display: inline;">
-                    <a href="img/superman.jpg" class="lightbox btn-play" target="_blank">
-                        <i class="fa fa-search-plus"></i>
-                    </a>
+<!-- middle body -->
+<div class="middle homepage">
+    <div class="container_12">
+
+        <div class="col col_1_3">
+            <div class="inner">
+                <% if ("zh".equals(RequestContextUtils.getLocaleResolver(request).resolveLocale(request).getLanguage())) {%>
+                <h2>进出口贸易</h2>
+
+                <p>长期以来与供应商保持良好的合作，为世界各<img src="img/export_trade.jpg" width="93" height="76"
+                                            class="alignright"/>地的买家提供优质的产品，同时代理国内出口业务。
+                </p>
+                <% } else { %>
+                <h2>Export &amp; Import Trade</h2>
+
+                <p>We have own factories and cooperated <img src="img/export_trade.jpg" width="93" height="76"
+                                                             class="alignright"/>supplier to export different high
+                    quality products with competitive prices. engaged in the export of all kinds of arts & craft gifts..
+                </p>
+                <% } %>
+                <a href="about.do" class="link-more"><spring:message code="label.more.details"/></a></div>
+        </div>
+
+        <div class="col col_1_3">
+            <div class="inner">
+                <% if ("zh".equals(RequestContextUtils.getLocaleResolver(request).resolveLocale(request).getLanguage())) {%>
+                <h2>采购代理</h2>
+
+                <p>帮助我们的客户以最有竞争力的价格采购他们<img src="img/trade_agent.jpg" alt="" width="93"
+                                            height="76" class="alignright"/>需要的货物，用我们的优势帮助客户以节省他们的时间和精力, 降低采购成本。
+                </p>
+                <% } else { %>
+                <h2>Trade Agent &amp; Purchase Agent</h2>
+
+                <p>We help clients to fix sales or purchases at<img src="img/trade_agent.jpg" alt="" width="93"
+                                                                    height="76" class="alignright"/> most
+                    competitive prices. Our skills help clients in particular ways; taken together to add
+                    value to the work by saving time, effort and money.</p>
+                <% } %>
+                <a href="about.do" class="link-more"><spring:message code="label.more.details"/></a></div>
+        </div>
+        <div class="col col_1_3">
+            <div class="inner">
+                <% if ("zh".equals(RequestContextUtils.getLocaleResolver(request).resolveLocale(request).getLanguage())) {%>
+                <h2>质量控制</h2>
+
+                <p>从生产到货物上船每一个细节我们都为客户严格<img src="img/qulity_inspection.jpg" alt="" width="93"
+                                             height="76" class="alignright"/>把关，以确保客户能按期按质按量收到他们需要的商品。
+                </p>
+                <% } else { %>
+                <h2>Quality Inspection &amp; Crisis management</h2>
+
+                <p>Our job starts from the production line or<img src="img/qulity_inspection.jpg" width="80" height="76"
+                                                                  class="alignright" alt=""/> warehouse till loading on
+                    board the ship tracking every details through the process to make sure that our clients can receive
+                    the right material as booked.</p>
+                <% } %>
+                <a href="about.do" class="link-more"><spring:message code="label.more.details"/></a></div>
+        </div>
+        <div class="divider_space"></div>
+
+        <div class="box box_white">
+
+            <div class="col col_2_3">
+                <div class="inner">
+                    <div class="quoteBox-big">
+                        <% if ("zh".equals(RequestContextUtils.getLocaleResolver(request).resolveLocale(request).getLanguage())) {%>
+                        <div class="quote-title"><strong>大家对我们的评价:</strong></div>
+                        <% } else { %>
+                        <div class="quote-title"><strong>WHAT OTHERS SAY ABOUT US:</strong></div>
+                        <% } %>
+                        <div class="quote-text">Over the last eighteen months, Northen help us save much time and money.
+                            Northen make our work in China much easier. We have to say it has made us delighted we chose
+                            Northen.
+                        </div>
+                        <% if ("zh".equals(RequestContextUtils.getLocaleResolver(request).resolveLocale(request).getLanguage())) {%>
+                        <div class="quote-author">英国客户</div>
+                        <% } else { %>
+                        <div class="quote-author">Client from UK</div>
+                        <% } %>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- Clients -->
-    <div class="clients color-1">
-        <div class="inner-page">
-            <h2 class="page-headline">Who's using stories.</h2>
+            <div class="col col_1_3">
+                <div class="inner">
+
+                    <!-- newsletter -->
+                    <div class="newsletterBox">
+                        <div class="bg">
+                            <div class="ribbon"></div>
+                            <h2><spring:message code="label.get.in.touch" /></h2>
+
+                            <% if ("zh".equals(RequestContextUtils.getLocaleResolver(request).resolveLocale(request).getLanguage())) {%>
+                            <div class="before-text">订阅资讯、产品更新
+                            </div>
+                            <% } else { %>
+                            <div class="before-text">Subscribe for our newsletter to receive updates, news, and
+                                interesting tidbits.
+                            </div>
+                            <% } %>
+                            <form id="subscribeForm" action="feedback/ajax/subscribe.do" method="post">
+                                <input type="text" id="email" name="email" class="inputField"/>
+                                <input onclick="subscribe()" type="button" value="" class="btn-submit"/>
+
+                                <div class="clear"></div>
+                            </form>
+                        </div>
+                    </div>
+                    <!--/ newsletter -->
+                </div>
+            </div>
+
+            <div class="clear"></div>
         </div>
-        <div class="inner-page row">
-            <ul class="clients list-inline">
-                <li><i class="fa fa-globe"></i> Earth</li>
-                <li><i class="fa fa-heart"></i> Love</li>
-                <li><i class="fa fa-leaf"></i> Leaves</li>
-                <li><i class="fa fa-cloud"></i> Clouds</li>
-            </ul>
+
+        <div class="divider_space"></div>
+
+        <div class="col col_1_2">
+            <div class="inner">
+
+                <!-- tab box -->
+                <div class="tabBox">
+                    <div class="tabTitle"><h3>Services:</h3></div>
+                    <ul class="tabs">
+                        <li><a href="#tabcontent1"><img src="img/icon_1.png" width="51" height="42" alt=""/></a></li>
+                        <li><a href="#tabcontent2"><img src="img/icon_2.png" width="51" height="42" alt=""/></a></li>
+                        <li><a href="#tabcontent3"><img src="img/icon_3.png" width="51" height="42" alt=""/></a></li>
+                    </ul>
+
+                    <div class="tabcontent">
+                        <div class="inner">
+                            <img src="img/temp_img_1.jpg" alt="" width="230" height="143" class="alignleft"/>
+
+                            <% if ("zh".equals(RequestContextUtils.getLocaleResolver(request).resolveLocale(request).getLanguage())) {%>
+                            <h3>创意的设计</h3>
+
+                            <p>我们的设计部门能提供你想要的设计, 将您的想法变成现实.</p>
+                            <%} else {%>
+                            <h3>Creative Design</h3>
+
+                            <p>Our design department can supply you what you need. Nice craft gift for home decoration,
+                                business gifts and promotion gifts.</p>
+                            <%}%>
+
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <div class="tabcontent">
+                        <div class="inner">
+                            <img src="img/temp_img_2.jpg" alt="" width="230" height="143" class="alignleft"/>
+
+                            <% if ("zh".equals(RequestContextUtils.getLocaleResolver(request).resolveLocale(request).getLanguage())) {%>
+                            <h3>优质的产品</h3>
+
+                            <p>我们公司的核心是提供优质的产品, 有竞争力的价格, 和良好的服务.</p>
+                            <%} else {%>
+                            <h3>Quality Product</h3>
+
+                            <p>The cores of our company’s product are high quality, competitive price and good
+                                service.</p>
+                            <%}%>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <div class="tabcontent">
+                        <div class="inner">
+                            <img src="img/temp_img_3.jpg" alt="" width="230" height="143" class="alignright"/>
+
+                            <% if ("zh".equals(RequestContextUtils.getLocaleResolver(request).resolveLocale(request).getLanguage())) {%>
+                            <h3>全面的服务</h3>
+
+                            <p>让客户在国内的工作变的简单, 帮助客户扩展当地市场..</p>
+                            <%} else {%>
+                            <h3>Full Service</h3>
+
+                            <p>Purchase, production, quality inspection, export and shipping tracking. </p>
+                            <%}%>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </div>
+                <!--/ tab box -->
+            </div>
+        </div>
+
+        <div class="col col_1_2">
+            <div class="inner">
+
+                <!-- tab box -->
+                <div class="tabBox">
+                    <div class="tabTitle"><h3>Advantage:</h3></div>
+                    <ul class="tabs">
+                        <li><a href="#tabcontent1"><img src="img/icon_5.png" width="51" height="42" alt=""/></a></li>
+                        <li><a href="#tabcontent2"><img src="img/icon_4.png" width="51" height="42" alt=""/></a></li>
+                        <li><a href="#tabcontent3"><img src="img/icon_6.png" width="51" height="42" alt=""/></a></li>
+                    </ul>
+
+                    <div class="tabcontent">
+                        <div class="inner">
+                            <img src="img/advantage_1.jpg" alt="" width="230" height="143" class="alignleft"/>
+
+                            <% if ("zh".equals(RequestContextUtils.getLocaleResolver(request).resolveLocale(request).getLanguage())) {%>
+                            <h3>全流程的服务</h3>
+
+                            <p>我们提供采购、生产、质量控制、出口以及装船运输全流程的服务.</p>
+                            <%} else {%>
+                            <h3>Full Service</h3>
+
+                            <p>Make clients’work easy in china and help client expand business in local market with full
+                                service.</p>
+                            <%}%>
+
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <div class="tabcontent">
+                        <div class="inner">
+                            <img src="img/advantage_2.jpg" alt="" width="230" height="143" class="alignleft"/>
+
+                            <% if ("zh".equals(RequestContextUtils.getLocaleResolver(request).resolveLocale(request).getLanguage())) {%>
+                            <h3>产品范围广</h3>
+
+                            <p>我们有自己的工厂, 同时有优质的供应商, 这让我们的价格更有竞争力, 更能很好的控制质量.</p>
+                            <%} else {%>
+                            <h3>Wide range product</h3>
+
+                            <p>Have our own factory and cooperated supplier, which make the price more competitive and
+                                easy to control the quality.</p>
+                            <%}%>
+
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <div class="tabcontent">
+                        <div class="inner">
+                            <img src="img/advantage_3.jpg" alt="" width="230" height="143" class="alignleft"/>
+
+                            <% if ("zh".equals(RequestContextUtils.getLocaleResolver(request).resolveLocale(request).getLanguage())) {%>
+                            <h3>反应更快</h3>
+
+                            <p>用更专业的服务和更快的反应速度帮助客户采购不同的产品, 处理各种问题.</p>
+                            <%} else {%>
+                            <h3>Product from own factories</h3>
+
+                            <p>Help client purchase different product with professional service and quick reaction.</p>
+                            <%}%>
+
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </div>
+                <!--/ tab box -->
+            </div>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+</div>
+<!--/ middle body -->
+
+<div class="footer">
+    <div class="footer_bg">
+        <div class="container_12">
+
+            <div class="col_2_3 col">
+                <div class="inner">
+                    <a href="http://${sessionScope.settings.twitter}" class="link-twitter" title="Twitter">Twitter</a>
+                    <a href="http://${sessionScope.settings.facebook}" class="link-fb" title="Facebook">Facebook</a>
+                </div>
+
+            </div>
+            <div class="col_1_3 col">
+                <div class="inner">
+                    <p class="copyright">&copy; 2014 Anhui Northen. All rights reserved.</p>
+                </div>
+            </div>
+            <div class="clear"></div>
         </div>
     </div>
 </div>
-<!-- /#assets -->
-
-<!-- About page -->
-<div id="about" class="page color-4">
-    <div class="inner-page">
-        <h2 class="page-headline">Who are we and how it all got started. Our story.</h2>
-    </div>
-    <div class="row inner-page">
-        <div class="col-md-6  lazy-container loaded">
-            <img class="figurette lazy" src="img/green-office.png" data-original="img/green-office.png"
-                 alt="Our workspace" style="display: block;">
-        </div>
-        <div class="col-md-6">
-            <h3>Zonbi tattered for solum.</h3>
-
-            <p class="lead">The voodoo sacerdos flesh eater, suscitat mortuos comedere carnem virus. Zonbi tattered for
-                solum oculi eorum defunctis go lum cerebro.</p>
-
-            <p>Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
-                quaeritis. Summus brains sit​​, morbo vel maleficia? De apocalypsi gorger omero undead survivor dictum
-                mauris. Hi mindless mortuis soulless creaturas, imo evil stalking monstra adventus resi dentevil vultus
-                comedat cerebella viventium.</p>
-        </div>
-    </div>
-
-    <hr>
-
-    <!-- Team -->
-    <div class="row inner-page team">
-        <div class="col-md-6">
-            <img class="pull-left" src="img/co1.png" alt="A cookie">
-            <h4>Steven Wang</h4>
-
-            <p>Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
-                quaeritis.</p>
-            <ul>
-                <li><i class="fa fa-home"></i> <a href="easykoo.com">http://easykoo.com</a>
-                </li>
-                <li><i class="fa fa-envelope-o"></i> <a href="easykooc@gmail.com">easykooc@gmail.com</a>
-                </li>
-                <li class="social">
-                    <a href="#about"><i class="fa fa-facebook-square"></i></a>
-                    <a href="#about"><i class="fa fa-twitter"></i></a>
-                    <a href="#about"><i class="fa fa-github-square"></i></a>
-                </li>
-            </ul>
-        </div>
-        <div class="col-md-6 team2">
-            <img class="pull-left" src="img/cookies.png" alt="A cookie">
-            <h4>John Doe</h4>
-
-            <p>Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora
-                quaeritis.</p>
-            <ul>
-                <li><i class="fa fa-home"></i> <a href="prettystrap.com">http://prettystrap.com</a>
-                </li>
-                <li><i class="fa fa-envelope-o"></i> <a href="info@email.com">info@email.com</a>
-                </li>
-                <li class="social">
-                    <a href="#about"><i class="fa fa-facebook-square"></i></a>
-                    <a href="#about"><i class="fa fa-twitter"></i></a>
-                    <a href="#about"><i class="fa fa-github-square"></i></a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
-<!-- /#about -->
-
-<!-- Contact page -->
-<div id="contact" class="page color-2">
-    <div class="inner-page">
-        <h2 class="page-headline"><spring:message code="label.touch.and.update"/></h2>
-    </div>
-    <div class="row inner-page contact">
-        <div class="col-md-6">
-            <h3><spring:message code="label.leave.message"/></h3>
-
-            <form role="form" id="contactForm" action="feedback/ajax/addFeedback.do" method="post">
-                <input id="name" name="name" type="text" class="form-control"
-                       placeholder="<spring:message code="label.name" />">
-                <input id="email" name="email" type="text" class="form-control"
-                       placeholder="<spring:message code="label.email.format" />">
-                <textarea id="content" name="content" rows="6" class="form-control"
-                          placeholder="<spring:message code="label.your.feedback" />"></textarea>
-                <button type="submit" id="feedback_btn" class="btn btn-primary btn-centered"><spring:message
-                        code="label.send"/></button>
-                <input type="reset" style="display:none;"/>
-            </form>
-        </div>
-        <div class="col-md-6">
-            <div class="btn-container centered lazy-container text-center loaded">
-                <img src="img/map.png" class="lazy figurette" alt="Open the map" data-original="img/map.png"
-                     style="display: block;">
-                <a class="lightbox iframe  btn-map" target="blank" title="Open google maps"
-                   href="https://maps.google.com/maps?q=Stationsplein,+1012+Centrum,+Amsterdam,+Noord-Holland,+The+Netherlands&hl=en"><i
-                        class="pull-left fa fa-map-marker"></i>
-
-                    <div>xxxxxxx, 1012 AB,<br>xxxxxx,<br> The Netherlands</div>
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- /#contact -->
-
-<!-- Newsletter -->
-<div class="newsletter color-1">
-    <div class="inner-page row">
-        <form role="form" id="subscribeForm" action="ajax/addSubscribe.do" method="post">
-            <div class="col-md-4">
-                <h4><spring:message code="label.subscribe.last.news"/></h4>
-            </div>
-            <div class="col-md-6">
-                <input id="subscribe_mail" type="email" placeholder="xxx@xxx.xxx" name="email" class="subscribe">
-            </div>
-            <div class="col-md-2">
-                <button id="subscribe_btn" type="submit" class="btn btn-primary pull-right btn-block"><spring:message
-                        code="label.subscribe"/></button>
-            </div>
-        </form>
-    </div>
-</div>
-<!-- /newsletter -->
-
-<!-- The footer, social media icons, and copyright -->
-<footer class="page color-5">
-    <div class="inner-page row">
-        <div class="col-md-6 social">
-            <a href="#contact"><i class="fa fa-twitter"></i></a>
-            <a href="#contact"><i class="fa fa-github-square"></i></a>
-            <a href="#contact"><i class="fa fa-facebook-square"></i></a>
-            <a href="#contact"><i class="fa fa-google-plus-square"></i></a>
-        </div>
-        <div class="col-md-6 text-right copyright">
-            © 2014 <a href="http://easykoo.com/" title="twitter bootstrap themes">easykoo.com</a> | all rights
-            reserved | <a href="#top" title="Got to top" class="scroll">To top <i
-                class="fa fa-caret-up"></i></a>
-        </div>
-    </div>
-</footer>
-<script src="js/jquery-1.10.2.js"></script>
-<script src="js/jquery.validate.min.js"></script>
-<script src="js/jquery.validate.method.js"></script>
-<script src="js/easykoo.js"></script>
-
-<!-- JQUERY END -->
-<script src="js/p-controls.min.js"></script>
-<!--Main js file. -->
-<script src="js/the-story.min.js"></script>
-
-<script type="text/javascript">
-
-    $(document).ready(function () {
-
-        $("#contactForm").validate({
-            rules: {
-                name: {
-                    required: true,
-                    minlength: 3
-                },
-                email: {
-                    required: true,
-                    email: true
-                },
-                content: {
-                    required: true,
-                    byteRangeLength: [5, 200]
-                }
-            },
-            messages: {
-                name: {
-                    required: '<spring:message code="message.error.name.is.required"/>',
-                    minlength: '<spring:message code="message.error.name.must.great.than.characters"/>'
-                },
-                email: {
-                    required: '<spring:message code="message.error.email.is.required"/>',
-                    email: '<spring:message code="message.error.wrong.email.format"/>'
-                },
-                content: {
-                    required: '<spring:message code="message.error.content.is.required"/>',
-                    byteRangeLength: '<spring:message code="message.error.content.length"/>'
-                }
-            },
-            focusInvalid: true,
-            onkeyup: false,
-            submitHandler: function (form) {
-                $.ajax({
-                    cache: true,
-                    type: "POST",
-                    url: "feedback/ajax/addFeedback.do",
-                    data: $('#contactForm').serialize(),
-                    dataType: "json",
-                    async: false,
-                    error: function (request) {
-                        alert("Connection error");
-                    },
-                    success: function (data) {
-                        if (data) {
-                            alert('<spring:message code="message.submit.success"/>');
-                            $("#contactForm input[type=reset]").trigger("click");
-                        }
-                    }
-                });
-                return false;
-            }
-        });
-
-        $("#subscribeForm").validate({
-            rules: {
-                email: {
-                    required: true,
-                    email: true
-                }
-            },
-            messages: {
-                email: {
-                    required: '<spring:message code="message.error.email.is.required"/>',
-                    email: '<spring:message code="message.error.wrong.email.format"/>'
-                }
-            },
-            focusInvalid: true,
-            onkeyup: false,
-            submitHandler: function (form) {
-                $.ajax({
-                    cache: true,
-                    type: "POST",
-                    dataType: 'json',
-                    url: "feedback/ajax/subscribe.do",
-                    data: $('#subscribeForm').serialize(),
-                    async: false,
-                    error: function (request) {
-                        alert("Connection error");
-                    },
-                    success: function (data) {
-                        if (data.success) {
-                            alert('<spring:message code="message.subscribe.success"/>');
-                            $("#subscribeForm input[type=email]").val('');
-                        } else {
-                            alert('<spring:message code="message.already.subscribed"/>');
-                            $("#subscribeForm input[type=email]").val('');
-                        }
-                    }
-                });
-                return false;
-            }
-        });
-    })
-</script>
 </body>
+<script>
+    var subscribe = function () {
+        if ($('#email').val() == '') {
+            alert('<spring:message code="message.error.email.is.required" />');
+        } else if (!isEmail($('#email').val())) {
+            alert('<spring:message code="message.error.wrong.email.format" />');
+        } else {
+            $.ajax({
+                cache: true,
+                type: "POST",
+                dataType: 'json',
+                url: "feedback/ajax/subscribe.do",
+                data: {
+                    email: $('#email').val()
+                },
+                async: false,
+                error: function (request) {
+                    alert("Connection error");
+                },
+                success: function (data) {
+                    if (data.success) {
+                        alert('<spring:message code="message.subscribe.success"/>');
+                    } else {
+                        alert('<spring:message code="message.already.subscribed"/>');
+                    }
+                    $('#email').val('');
+                }
+            });
+        }
+    }
+    var isEmail = function (t) {
+        return /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/.test(t);
+    }
+</script>
 </html>

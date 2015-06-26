@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.easykoo.mybatis.dao.NewsMapper">
+    <resultMap id="BaseResultMap" type="com.easykoo.mybatis.model.News">
+        <id column="news_id" property="newsId" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="lang" property="lang" jdbcType="VARCHAR"/>
+        <result column="priority" property="priority" jdbcType="INTEGER"/>
+        <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    news_id, title, content, lang, priority, create_user, create_date, update_user, update_date
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from news
+        where news_id = #{newsId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from news
+    where news_id = #{newsId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.easykoo.mybatis.model.News">
+    insert into news (news_id, title, content, lang,
+      priority, create_user, create_date, 
+      update_user, update_date)
+    values (#{newsId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{lang,jdbcType=VARCHAR},
+      #{priority,jdbcType=INTEGER}, #{createUser,jdbcType=VARCHAR}, NOW(),
+      #{updateUser,jdbcType=VARCHAR}, NOW())
+  </insert>
+    <insert id="insertSelective" parameterType="com.easykoo.mybatis.model.News">
+        insert into news
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="newsId != null">
+                news_id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="lang != null">
+                lang,
+            </if>
+            <if test="priority != null">
+                priority,
+            </if>
+            <if test="createUser != null">
+                create_user,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateUser != null">
+                update_user,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="newsId != null">
+                #{newsId,jdbcType=INTEGER},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="lang != null">
+                #{lang,jdbcType=VARCHAR},
+            </if>
+            <if test="priority != null">
+                #{priority,jdbcType=INTEGER},
+            </if>
+            <if test="createUser != null">
+                #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUser != null">
+                #{updateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.easykoo.mybatis.model.News">
+        update news
+        <set>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="lang != null">
+                lang = #{lang,jdbcType=VARCHAR},
+            </if>
+            <if test="priority != null">
+                priority = #{priority,jdbcType=INTEGER},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUser != null">
+                update_user = #{updateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where news_id = #{newsId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.easykoo.mybatis.model.News">
+    update news
+    set title = #{title,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      lang = #{lang,jdbcType=VARCHAR},
+      priority = #{priority,jdbcType=INTEGER},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_user = #{updateUser,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where news_id = #{newsId,jdbcType=INTEGER}
+  </update>
+    <select id="findNewsWithPage" resultMap="BaseResultMap" parameterType="com.easykoo.mybatis.model.News">
+        select
+        <include refid="Base_Column_List"/>
+        from news
+        where 1=1
+        <if test="newsId != null">
+            and news_id = #{newsId,jdbcType=INTEGER}
+        </if>
+        <if test="title != null">
+            and title = #{title,jdbcType=VARCHAR}
+        </if>
+        <if test="content != null">
+            and content = #{content,jdbcType=VARCHAR}
+        </if>
+        <if test="lang != null">
+            and lang = #{lang,jdbcType=VARCHAR}
+        </if>
+        <if test="priority != null">
+            and priority = #{priority,jdbcType=INTEGER}
+        </if>
+        <if test="createUser != null">
+            and create_user = #{createUser,jdbcType=VARCHAR}
+        </if>
+        <if test="createDate != null">
+            and create_date = #{createDate,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateUser != null">
+            and update_user = #{updateUser,jdbcType=VARCHAR}
+        </if>
+        <if test="updateDate != null">
+            and update_date = #{updateDate,jdbcType=TIMESTAMP}
+        </if>
+    </select>
+</mapper>

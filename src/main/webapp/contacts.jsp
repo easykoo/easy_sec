@@ -1,7 +1,9 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<%@ page import="org.springframework.web.servlet.support.RequestContextUtils" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=utf-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="au" uri="authorize-tag" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
@@ -12,6 +14,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="shortcut icon" href="img/favicon.ico">
     <title><spring:message code="main.title"/> - <spring:message code="label.contact.us"/></title>
+    <meta name="keywords" content="${sessionScope.settings.keywords}"/>
+    <meta name="description" content="${sessionScope.settings.description}"/>
 
     <link href="css/styles.css" media="screen" rel="stylesheet" type="text/css"/>
 
@@ -55,8 +59,10 @@
 
                 <ul class="topmenu">
                     <li class="first"><a href="index.do"><span><spring:message code="label.home"/></span></a></li>
-                    <li><a href="product.do"><span><spring:message code="label.product"/></span></a></li>
                     <li><a href="about.do"><span><spring:message code="label.about.us"/></span></a></li>
+                    <li><a href="product.do"><span><spring:message code="label.product.display"/></span></a></li>
+                    <li><a href="news.do"><span><spring:message code="label.news.center"/></span></a></li>
+                    <li><a href="join.do"><span><spring:message code="label.join.us"/></span></a></li>
                     <li class="last current-menu-item"><a href="contacts.do"><span><spring:message
                             code="label.contact.us"/></span></a></li>
                     <li>
@@ -80,8 +86,8 @@
                                         <spring:message
                                                 code="label.dashboard"/></span></a></li>
                                     </au:check>
-                                        <%--<au:check test="/admin/settings.do">
-                                            <li><a href="admin/settings.do"><i class="fa fa-gear fa-fw"></i> <spring:message
+                                        <%--<au:check test="/settings/settings.do">
+                                            <li><a href="settings/settings.do"><i class="fa fa-gear fa-fw"></i> <spring:message
                                                     code="label.settings"/></a></li>
                                         </au:check>--%>
                                     <au:check test="/profile/profile.do">
@@ -95,9 +101,9 @@
                             </li>
                         </c:when>
                         <c:otherwise>
-                            <li><a href="login.do?url=<%=request.getRequestURL()%>"><span><spring:message
+                            <li><a href="login.do?url=<%=request.getHeader("Referer")%>"><span><spring:message
                                     code="label.sign.in"/></span></a></li>
-                            <li><a href="register.do"><span><spring:message code="label.sign.up"/></span></a></li>
+                            <%--<li><a href="register.do"><span><spring:message code="label.sign.up"/></span></a></li>--%>
                         </c:otherwise>
                     </c:choose>
                 </ul>
@@ -134,7 +140,6 @@
                 <div class="text">
                     <p><img src="img/<spring:message code="language" />_contact_map.jpg" width="600" height="380"
                             alt=""/></p>
-
 
                     <div class="contact-form">
                         <h2><spring:message code="label.please.fill.form"/>:</h2>
@@ -189,27 +194,30 @@
                     <h3><spring:message code="label.contact.us"/>:</h3>
 
                     <div class="contact-address">
-                        <div class="address"><spring:message code="label.northen.address" />
+                        <div class="address">
+
+                            <% if ("zh".equals(RequestContextUtils.getLocaleResolver(request).resolveLocale(request).getLanguage())) {%>
+                            ${sessionScope.settings.cnAddress}
+                            <% } else { %>
+                            ${sessionScope.settings.address}
+                            <% } %>
                         </div>
                         <br>
-                        <div class="phone"><spring:message code="label.phone" />: +86 (551) 6511 4065</div>
-                        <div class="fax"><spring:message code="label.fax" />: +86 (551) 6511 4066</div>
-                    </div>
 
-                    <div class="contact-maillist">
-                        <div class="contact-mail"><a href="mailto:sales@anhuinorthen.com">sales@anhuinorthen.com</a>
-                        </div>
-                        <div class="contact-mail"><a href="mailto:support@anhuinorthen.com">support@anhuinorthen.com</a>
-                        </div>
+                        <div class="phone"><spring:message code="label.tel"/>: ${sessionScope.settings.tel}</div>
+                        <div class="fax"><spring:message code="label.fax"/>: ${sessionScope.settings.fax}</div>
                     </div>
 
                     <br/>
 
                     <div class="social-box">
-                        <div class="row social-mail"><a href="mailto:helpdesk@anhuinorthen.com">helpdesk@anhuinorthen.com</a></div>
-                        <div class="row social-twitter"><a href="http://twitter.com/ahnorthen">twitter.com/ahnorthen</a></div>
-                        <div class="row social-skype"><a href="javascript:">linghappy915</a></div>
-                        <div class="row social-facebook"><a href="http://facebook.com/ahnorthen">facebook.com/ahnorthen</a></div>
+                        <div class="row social-mail"><a href="mailto:${sessionScope.settings.email}">${sessionScope.settings.email}</a>
+                        </div>
+                        <div class="row social-twitter"><a href="http://${sessionScope.settings.twitter}">${sessionScope.settings.twitter}</a>
+                        </div>
+                        <div class="row social-skype"><a href="callto://${sessionScope.settings.skype}">${sessionScope.settings.skype}</a></div>
+                        <div class="row social-facebook"><a
+                                href="http://${sessionScope.settings.facebook}">${sessionScope.settings.facebook}</a></div>
 
                     </div>
 
@@ -231,17 +239,14 @@
 
             <div class="col_2_3 col">
                 <div class="inner">
-                    <a href="#" class="link-twitter" title="Twitter">Twitter</a>
-                    <a href="#" class="link-fb" title="Facebook">Facebook</a>
-                    <a href="#" class="link-flickr" title="Flickr">Flickr</a>
-                    <a href="#" class="link-da" title="deviantART">deviantART</a>
-                    <a href="#" class="link-rss" title="RSS Feed">RSS Feed</a></div>
+                    <a href="http://${sessionScope.settings.twitter}" class="link-twitter" title="Twitter">Twitter</a>
+                    <a href="http://${sessionScope.settings.facebook}" class="link-fb" title="Facebook">Facebook</a>
+                </div>
             </div>
 
             <div class="col_1_3 col">
                 <div class="inner">
-                    <p class="copyright">&copy; 2014 <a href="http://easykoo.com/" target="_blank">easykoo.com</a>. All
-                        rights reserved!</p>
+                    <p class="copyright">&copy; 2014 Anhui Northen. All rights reserved!</p>
                 </div>
             </div>
             <div class="clear"></div>
@@ -249,4 +254,101 @@
     </div>
 </div>
 </body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        tfuse_custom_form();
+    });
+
+    function tfuse_custom_form() {
+        var my_error;
+        var url = jQuery("input[name=temp_url]").attr('value');
+        jQuery("#send").bind("click", function () {
+
+            my_error = false;
+            jQuery(".ajax_form input, .ajax_form textarea, .ajax_form radio, .ajax_form select").each(function (i) {
+                var surrounding_element = jQuery(this);
+                var value = jQuery(this).attr("value");
+                var check_for = jQuery(this).attr("id");
+                var required = jQuery(this).hasClass("required");
+
+                if (check_for == "email") {
+                    surrounding_element.removeClass("error valid");
+                    baseclases = surrounding_element.attr("class");
+                    if (!value.match(/^\w[\w|\.|\-]+@\w[\w|\.|\-]+\.[a-zA-Z]{2,4}$/)) {
+                        surrounding_element.attr("class", baseclases).addClass("error");
+                        my_error = true;
+                    } else {
+                        surrounding_element.attr("class", baseclases).addClass("valid");
+                    }
+                }
+
+                if (check_for == "content") {
+                    surrounding_element.removeClass("error valid");
+                    baseclases = surrounding_element.attr("class");
+                    if (value == "" || value == "Write your content...") {
+                        surrounding_element.attr("class", baseclases).addClass("error");
+                        my_error = true;
+                    } else if (filterSqlStr(value)) {
+                        alert("<spring:message code="message.error.content.illegal.character" /> " + sql_str() + "!");
+                        surrounding_element.attr("class", baseclases).addClass("error");
+                        my_error = true;
+                    } else if (value.length > 200) {
+                        alert("<spring:message code="message.error.content.length.200" />!");
+                        surrounding_element.attr("class", baseclases).addClass("error");
+                        my_error = true;
+                    } else {
+                        surrounding_element.attr("class", baseclases).addClass("valid");
+                    }
+                }
+
+                if (required && check_for != "email" && check_for != "content") {
+                    surrounding_element.removeClass("error valid");
+                    baseclases = surrounding_element.attr("class");
+                    if (value == "") {
+                        surrounding_element.attr("class", baseclases).addClass("error");
+                        my_error = true;
+                    } else {
+                        surrounding_element.attr("class", baseclases).addClass("valid");
+                    }
+                }
+
+                if (jQuery(".ajax_form input, .ajax_form textarea, .ajax_form radio, .ajax_form select").length == i + 1) {
+                    if (my_error == false) {
+                        jQuery(".ajax_form").slideUp(400);
+
+                        var $datastring = "";
+                        jQuery(".ajax_form input, .ajax_form textarea, .ajax_form radio, .ajax_form select").each(function (i) {
+                            var $name = jQuery(this).attr('name');
+                            var $value = encodeURIComponent(jQuery(this).attr('value'));
+                            $datastring = $datastring + "&" + $name + "=" + $value;
+                        });
+
+                        jQuery(".ajax_form #send").fadeOut(100);
+
+                        jQuery.ajax({
+                            cache: true,
+                            type: "POST",
+                            url: "feedback/ajax/addFeedback.do",
+//                            data: $('#contactForm').serialize(),
+                            dataType: "json",
+                            data: $datastring,
+                            success: function (response) {
+                                if (response) {
+                                    alert(response.message);
+                                    jQuery(".ajax_form").before("<div class='ajaxresponse' style='display: none;'></div>");
+                                    jQuery(".ajaxresponse").html(response).slideDown(400);
+                                    jQuery(".ajax_form #send").fadeIn(400);
+                                    jQuery(".ajax_form input, .ajax_form textarea, .ajax_form radio, .ajax_form select").val("");
+                                }
+                            }
+                        });
+                    }
+                }
+
+            });
+            return false;
+        });
+    }
+
+</script>
 </html>

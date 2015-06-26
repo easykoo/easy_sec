@@ -3,7 +3,7 @@ package com.easykoo.util;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import java.io.InputStream;
+import java.io.*;
 import java.util.Properties;
 
 
@@ -14,17 +14,18 @@ import java.util.Properties;
 public class ConfigUtils {
     private Log logger = LogFactory.getLog(getClass());
 
+    private static String _configPath = "config.properties";
     private static ConfigUtils _instance = null;
     private Properties properties = new Properties();
 
     private ConfigUtils() {
         try {
-            InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("config.properties");
+            InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(_configPath);
             properties.load(inputStream);
             if (inputStream != null)
                 inputStream.close();
         } catch (Exception e) {
-            logger.error("config.properties not found or wrong format");
+            logger.error(_configPath + " not found or wrong format!");
         }
     }
 
@@ -59,12 +60,20 @@ public class ConfigUtils {
         return properties.getProperty("product.directory");
     }
 
+    public String getProductViewDirectory() {
+        return properties.getProperty("product.view.directory");
+    }
+
     public String getProductPreviewDirectory() {
         return properties.getProperty("product.preview.directory");
     }
 
     public String getPictureSizeLimit() {
         return properties.getProperty("picture.limit.size");
+    }
+
+    public int getViewPictureWidth() {
+        return Integer.parseInt(properties.getProperty("view.picture.width"));
     }
 
     public Integer getPreviewPictureWidth() {

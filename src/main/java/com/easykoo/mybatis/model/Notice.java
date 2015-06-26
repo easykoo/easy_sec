@@ -13,7 +13,7 @@ public class Notice extends Page {
 
     private String content;
 
-    private String cnTitle;
+    private String lang;
 
     private String cnContent;
 
@@ -27,12 +27,12 @@ public class Notice extends Page {
 
     private Date updateDate;
 
-    public String getCnTitle() {
-        return cnTitle;
+    public String getLang() {
+        return lang;
     }
 
-    public void setCnTitle(String cnTitle) {
-        this.cnTitle = cnTitle;
+    public void setLang(String lang) {
+        this.lang = lang;
     }
 
     public String getCnContent() {

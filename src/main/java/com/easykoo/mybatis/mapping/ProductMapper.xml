@@ -9,6 +9,7 @@
         <result column="cn_description" property="cnDescription" jdbcType="VARCHAR"/>
         <result column="category_id" property="categoryId" jdbcType="INTEGER"/>
         <result column="img_path" property="imgPath" jdbcType="VARCHAR"/>
+        <result column="view_img_path" property="viewImgPath" jdbcType="VARCHAR"/>
         <result column="pre_img_path" property="preImgPath" jdbcType="VARCHAR"/>
         <result column="priority" property="priority" jdbcType="INTEGER"/>
         <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
@@ -20,7 +21,7 @@
         </association>
     </resultMap>
     <sql id="Base_Column_List">
-    product_id, name, description, cn_name, cn_description, category_id, img_path, pre_img_path, priority,
+    product_id, name, description, cn_name, cn_description, category_id, img_path, view_img_path, pre_img_path, priority,
     create_user, create_date, update_user, update_date
   </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -34,11 +35,11 @@
     where product_id = #{productId,jdbcType=INTEGER}
   </delete>
     <insert id="insert" parameterType="com.easykoo.mybatis.model.Product">
-    insert into product ( name, description, cn_name, cn_description, category_id, img_path, pre_img_path, priority,
+    insert into product ( name, description, cn_name, cn_description, category_id, img_path, view_img_path, pre_img_path, priority,
       create_user, create_date, update_user, update_date)
     values (#{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
       #{cnName,jdbcType=VARCHAR}, #{cnDescription,jdbcType=VARCHAR},
-      #{categoryId,jdbcType=VARCHAR}, #{imgPath,jdbcType=VARCHAR},
+      #{categoryId,jdbcType=VARCHAR}, #{imgPath,jdbcType=VARCHAR}, #{viewImgPath,jdbcType=VARCHAR},
       #{preImgPath,jdbcType=VARCHAR}, #{priority,jdbcType=INTEGER},
       #{createUser,jdbcType=VARCHAR}, now(), #{updateUser,jdbcType=VARCHAR}, now())
   </insert>
@@ -65,6 +66,9 @@
             </if>
             <if test="imgPath != null">
                 img_path,
+            </if>
+            <if test="viewImgPath != null">
+                view_img_path,
             </if>
             <if test="preImgPath != null">
                 pre_img_path,
@@ -107,6 +111,9 @@
             <if test="imgPath != null">
                 #{img_path,jdbcType=VARCHAR},
             </if>
+            <if test="viewImgPath != null">
+                #{view_img_path,jdbcType=VARCHAR},
+            </if>
             <if test="preImgPath != null">
                 #{pre_img_path,jdbcType=VARCHAR},
             </if>
@@ -148,6 +155,9 @@
             <if test="imgPath != null">
                 img_path = #{imgPath,jdbcType=VARCHAR},
             </if>
+            <if test="viewImgPath != null">
+                view_img_path = #{viewImgPath,jdbcType=VARCHAR},
+            </if>
             <if test="preImgPath != null">
                 pre_img_path = #{preImgPath,jdbcType=VARCHAR},
             </if>
@@ -177,6 +187,7 @@
       cn_description = #{cnDescription,jdbcType=VARCHAR},
       category_id = #{categoryId,jdbcType=VARCHAR},
       img_path = #{imgPath,jdbcType=VARCHAR},
+      view_img_path = #{viewImgPath,jdbcType=VARCHAR},
       pre_img_path = #{preImgPath,jdbcType=VARCHAR},
       priority = #{priority,jdbcType=INTEGER},
       create_user = #{createUser,jdbcType=VARCHAR},
@@ -186,48 +197,54 @@
     where product_id = #{productId,jdbcType=INTEGER}
   </update>
     <select id="findProductWithPage" resultMap="BaseResultMap" parameterType="com.easykoo.mybatis.model.Product">
-        select
-        <include refid="Base_Column_List"/>
-        from product
-        where 1=1
+        select pd.* from product pd, category ct
+        where pd.category_id = ct.category_id
         <if test="productId != null">
-            and product_id = #{productId,jdbcType=INTEGER},
+            and product_id = #{productId,jdbcType=INTEGER}
         </if>
         <if test="name != null">
-            name = #{name,jdbcType=VARCHAR},
+            and name = #{name,jdbcType=VARCHAR}
         </if>
         <if test="description != null">
-            description = #{description,jdbcType=VARCHAR},
+            and pd.description = #{description,jdbcType=VARCHAR}
         </if>
         <if test="cnName != null">
-            cn_name = #{cnName,jdbcType=VARCHAR},
+            and cn_name = #{cnName,jdbcType=VARCHAR}
         </if>
         <if test="cnDescription != null">
-            cn_description = #{cnDescription,jdbcType=VARCHAR},
+            and pd.cn_description = #{cnDescription,jdbcType=VARCHAR}
         </if>
         <if test="categoryId != null and categoryId!=''">
-            category_id = #{categoryId,jdbcType=VARCHAR},
+            and (pd.category_id = #{categoryId,jdbcType=VARCHAR}
+          or (pd.category_id in (select category_id from category where parent_category = #{categoryId,jdbcType=VARCHAR}
+          or (parent_category in (select category_id from category where parent_category = #{categoryId,jdbcType=VARCHAR} ))
+          ))
+          )
+
         </if>
         <if test="imgPath != null">
-            img_path = #{imgPath,jdbcType=VARCHAR},
+            and img_path = #{imgPath,jdbcType=VARCHAR}
+        </if>
+        <if test="viewImgPath != null">
+            and view_img_path = #{viewImgPath,jdbcType=VARCHAR}
         </if>
         <if test="preImgPath != null">
-            pre_img_path = #{preImgPath,jdbcType=VARCHAR},
+            and pre_img_path = #{preImgPath,jdbcType=VARCHAR}
         </if>
         <if test="priority != null">
-            priority = #{priority,jdbcType=INTEGER},
+            and pd.priority = #{priority,jdbcType=INTEGER}
         </if>
         <if test="createUser != null">
-            create_user = #{createUser,jdbcType=VARCHAR},
+            and pd.create_user = #{createUser,jdbcType=VARCHAR}
         </if>
         <if test="createDate != null">
-            create_date = #{createDate,jdbcType=TIMESTAMP},
+            and pd.create_date = #{createDate,jdbcType=TIMESTAMP}
         </if>
         <if test="updateUser != null">
-            update_user = #{updateUser,jdbcType=VARCHAR},
+            and pd.update_user = #{updateUser,jdbcType=VARCHAR}
         </if>
         <if test="updateDate != null">
-            update_date = #{updateDate,jdbcType=TIMESTAMP},
+            and pd.update_date = #{updateDate,jdbcType=TIMESTAMP}
         </if>
     </select>
     <select id="selectByCategory" resultMap="BaseResultMap" parameterType="java.lang.String">

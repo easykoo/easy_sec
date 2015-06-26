@@ -26,9 +26,13 @@ public class Product extends Page {
 
     private String imgPath;
 
+    private String viewImgPath;
+
     private String preImgPath;
 
     private Integer priority;
+
+    private boolean newArrival;
 
     private String createUser;
 
@@ -38,6 +42,27 @@ public class Product extends Page {
     private String updateUser;
 
     private Date updateDate;
+
+    public boolean isNewArrival() {
+        long createDateTime = createDate.getTime();
+        long currentDateTime = new Date().getTime();
+        if (currentDateTime - createDateTime <= 1000*60*60*60*24*30) {
+            return true;
+        }
+        return false;
+    }
+
+    public void setNewArrival(boolean newArrival) {
+        this.newArrival = newArrival;
+    }
+
+    public String getViewImgPath() {
+        return viewImgPath;
+    }
+
+    public void setViewImgPath(String viewImgPath) {
+        this.viewImgPath = viewImgPath;
+    }
 
     public Integer getPriority() {
         return priority;

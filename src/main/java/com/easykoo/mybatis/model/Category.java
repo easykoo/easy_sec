@@ -3,6 +3,8 @@ package com.easykoo.mybatis.model;
 import com.easykoo.model.Page;
 import org.codehaus.jackson.annotate.JsonProperty;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +20,8 @@ public class Category extends Page {
 
     private List<Category> children;
 
+    private Integer priority;
+
     private String createUser;
 
     private Date createDate;
@@ -25,6 +29,14 @@ public class Category extends Page {
     private String updateUser;
 
     private Date updateDate;
+
+    public Integer getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Integer priority) {
+        this.priority = priority;
+    }
 
     public String getCnDescription() {
         return cnDescription;
@@ -35,6 +47,12 @@ public class Category extends Page {
     }
 
     public List<Category> getChildren() {
+        Collections.sort(children, new Comparator<Category>() {
+            @Override
+            public int compare(Category o1, Category o2) {
+                return o1.getPriority() - o2.getPriority();
+            }
+        });
         return children;
     }
 

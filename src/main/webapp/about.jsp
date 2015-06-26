@@ -1,9 +1,9 @@
-﻿<%@ page import="com.easykoo.util.ConfigUtils" %>
-<%@ page import="org.springframework.web.servlet.support.RequestContextUtils" %>
+﻿<%@ page import="org.springframework.web.servlet.support.RequestContextUtils" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=utf-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="au" uri="authorize-tag" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
@@ -12,7 +12,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="shortcut icon" href="img/favicon.ico">
     <title><spring:message code="main.title"/> - <spring:message code="label.about.us"/></title>
+    <meta name="keywords" content="${sessionScope.settings.keywords}" />
+    <meta name="description" content="${sessionScope.settings.description}" />
 
     <link href="css/styles.css" media="screen" rel="stylesheet" type="text/css"/>
 
@@ -49,10 +52,12 @@
 
                 <ul class="topmenu">
                     <li class="first"><a href="index.do"><span><spring:message code="label.home"/></span></a></li>
-                    <li><a href="product.do"><span><spring:message code="label.product"/></span></a></li>
                     <li class="current-menu-item"><a href="javascript:"><span><spring:message
                             code="label.about.us"/></span></a>
                     </li>
+                    <li><a href="product.do"><span><spring:message code="label.product.display"/></span></a></li>
+                    <li><a href="news.do"><span><spring:message code="label.news.center"/></span></a></li>
+                    <li><a href="join.do"><span><spring:message code="label.join.us"/></span></a></li>
                     <li class="last"><a href="contacts.do"><span><spring:message code="label.contact.us"/></span></a>
                     </li>
                     <li>
@@ -76,8 +81,8 @@
                                         <spring:message
                                                 code="label.dashboard"/></span></a></li>
                                     </au:check>
-                                        <%--<au:check test="/admin/settings.do">
-                                            <li><a href="admin/settings.do"><i class="fa fa-gear fa-fw"></i> <spring:message
+                                        <%--<au:check test="/settings/settings.do">
+                                            <li><a href="settings/settings.do"><i class="fa fa-gear fa-fw"></i> <spring:message
                                                     code="label.settings"/></a></li>
                                         </au:check>--%>
                                     <au:check test="/profile/profile.do">
@@ -91,9 +96,9 @@
                             </li>
                         </c:when>
                         <c:otherwise>
-                            <li><a href="login.do?url=<%=request.getRequestURL()%>"><span><spring:message
+                            <li><a href="login.do?url=<%=request.getHeader("Referer")%>"><span><spring:message
                                     code="label.sign.in"/></span></a></li>
-                            <li><a href="register.do"><span><spring:message code="label.sign.up"/></span></a></li>
+                            <%--<li><a href="register.do"><span><spring:message code="label.sign.up"/></span></a></li>--%>
                         </c:otherwise>
                     </c:choose>
                 </ul>
@@ -138,19 +143,6 @@
 
 
                 <div class="widget-container widget_categories">
-                    <%--<h3>Styles:</h3>
-                    <ul>
-                        <li><a href="styles-typography.html">Typography</a></li>
-                        <li><a href="styles-shortcodes.html">HTML Shortcodes</a></li>
-                        <li><a href="styles-columns.html">Column Layouts</a></li>
-                        <li><a href="styles-colors.html">Colors</a>
-                            <ul>
-                                <li><a href="#">Blue</a></li>
-                                <li><a href="#">Orange</a></li>
-                                <li><a href="#">Green</a></li>
-                            </ul>
-                        </li>
-                    </ul>--%>
                 </div>
 
 
@@ -172,17 +164,13 @@
 
             <div class="col_2_3 col">
                 <div class="inner">
-                    <a href="#" class="link-twitter" title="Twitter">Twitter</a>
-                    <a href="#" class="link-fb" title="Facebook">Facebook</a>
-                    <a href="#" class="link-flickr" title="Flickr">Flickr</a>
-                    <a href="#" class="link-da" title="deviantART">deviantART</a>
-                    <a href="#" class="link-rss" title="RSS Feed">RSS Feed</a></div>
+                    <a href="http://${sessionScope.settings.twitter}" class="link-twitter" title="Twitter">Twitter</a>
+                    <a href="http://${sessionScope.settings.facebook}" class="link-fb" title="Facebook">Facebook</a>
+                </div>
             </div>
-
             <div class="col_1_3 col">
                 <div class="inner">
-                    <p class="copyright">&copy; 2014 <a href="http://easykoo.com/" target="_blank">easykoo.com</a>. All
-                        rights reserved!</p>
+                    <p class="copyright">&copy; 2014 Anhui Northen. All rights reserved!</p>
                 </div>
             </div>
             <div class="clear"></div>

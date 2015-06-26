@@ -67,6 +67,11 @@
         <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
     </listener>
 
+    <listener>
+        <description>Session Counter Listener</description>
+        <listener-class>com.easykoo.web.listener.SessionCounterListener</listener-class>
+    </listener>
+
     <jsp-config>
         <taglib>
             <taglib-uri>authorize</taglib-uri>

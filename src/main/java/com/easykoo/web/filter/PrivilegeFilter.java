@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.easykoo.model.ResponseMessage;
+import com.easykoo.model.Settings;
+import com.easykoo.service.ISettingsService;
 import com.easykoo.util.ConfigUtils;
 import com.easykoo.util.CookiesUtil;
 import org.apache.commons.logging.Log;
@@ -37,6 +39,7 @@ public class PrivilegeFilter extends OncePerRequestFilter {
     private static IPrivilegeService privilegeService;
     private static IAccountService accountService;
     private static IAccountSessionService accountSessionService;
+    private static ISettingsService settingsService;
     private static MessageSource messageSource;
 
     private final static String[] noNeedFilter = ConfigUtils.getInstance().getNoNeedFilterUrl();
@@ -46,6 +49,14 @@ public class PrivilegeFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain)
             throws ServletException, IOException {
+
+        HttpSession session = request.getSession(true);
+        Settings settings = (Settings) session.getAttribute("settings");
+        if (settings == null || settings.getKeywords() == null) {
+            settings = settingsService.getSettings();
+            session.setAttribute("settings", settings);
+        }
+
         String path = request.getServletPath();
         logger.debug("Filter:" + path);
 
@@ -74,7 +85,7 @@ public class PrivilegeFilter extends OncePerRequestFilter {
         }
 
         //check if there's an user logged in.
-        HttpSession session = request.getSession(true);
+
         AccountSecurity accountSecurity = (AccountSecurity) session.getAttribute("currentAccountSecurity");
         if (accountSecurity == null || accountSecurity.getUsername() == null) {
             logger.debug("Current AccountSecurity is null...");
@@ -145,6 +156,15 @@ public class PrivilegeFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    public ISettingsService getSettingsService() {
+        return settingsService;
+    }
+
+    @Autowired
+    public void setSettingsService(ISettingsService settingsService) {
+        this.settingsService = settingsService;
     }
 
     public MessageSource getMessageSource() {

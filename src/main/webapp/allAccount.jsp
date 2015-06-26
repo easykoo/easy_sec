@@ -455,10 +455,8 @@ $(document).ready(function () {
             return;
         }
         bootbox.dialog({
-            message: "Are you sure to delete these accounts?",
-            title: "Batch delete Accounts",
-            message: '<spring:message code="message.sure.delete.accounts" />',
-            title: '<spring:message code="title.batch.delete.accounts" />',
+            message: '<spring:message code="message.sure.batch.delete.records" />',
+            title: '<spring:message code="title.batch.delete.records" />',
             buttons: {
                 main: {
                     label: '<spring:message code="label.cancel" />',

@@ -34,12 +34,6 @@
                             code="label.dashboard"/></a>
                 </li>
             </au:check>
-            <%--<au:check test="/admin/settings.do">
-                <li id="settings">
-                    <a href="admin/settings.do"><i class="fa fa-gear fa-fw"></i> <spring:message
-                            code="label.settings"/></a>
-                </li>
-            </au:check>--%>
             <au:check test="/account/allAccount.do">
                 <li id="account">
                     <a href="account/allAccount.do"><i class="fa fa-users fa-fw"></i> <spring:message
@@ -104,6 +98,37 @@
                     <!-- /.nav-second-level -->
                 </li>
             </au:check>
+            <au:check test="/news/allNews.do">
+                <li id="news">
+                    <a href="javascript:"><i class="fa fa-file-text-o fa-fw"></i> <spring:message
+                            code="label.news"/><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <au:check test="/news/allNews.do">
+                            <li id="allNews">
+                                <a href="news/allNews.do"> <spring:message
+                                        code="label.all.news"/></a>
+                            </li>
+                        </au:check>
+                        <au:check test="/news/publishNews.do">
+                            <li id="publishNews">
+                                <a href="/news/publishNews.do"> <spring:message
+                                        code="label.publish.news"/></a>
+                            </li>
+                        </au:check>
+                        <%--<au:check test="/news/allNotice.do">
+                            <li id="allNotice">
+                                <a href="/news/allNotice.do"> <spring:message
+                                        code="label.all.notice"/></a>
+                            </li>
+                            <li id="publishNotice">
+                                <a href="/news/publishNotice.do"> <spring:message
+                                        code="label.publish.notice"/></a>
+                            </li>
+                        </au:check>--%>
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
+            </au:check>
             <au:check test="/profile/profile.do">
                 <li id="profile">
                     <a href="javascript:"><i class="fa fa-wrench fa-fw"></i> <spring:message
@@ -135,6 +160,12 @@
                             </li>--%>
                     </ul>
                     <!-- /.nav-second-level -->
+                </li>
+            </au:check>
+            <au:check test="/settings/settings.do">
+                <li id="settings">
+                    <a href="settings/settings.do"><i class="fa fa-gear fa-fw"></i> <spring:message
+                            code="label.settings"/></a>
                 </li>
             </au:check>
         </ul>
